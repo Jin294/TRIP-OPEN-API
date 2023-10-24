@@ -64,8 +64,14 @@ for index, row in df.iterrows():
     if search_results:
         # 검색 결과가 있을 때 contentId 및 숙소 정보 추출
         for result in search_results:
-            room_name = result.find_element(By.CLASS_NAME, 'name').find_element(By.TAG_NAME, 'strong').text
-            results.append({'id': id, 'hotel': room_name})
+            # 숙소 정보: 숙소 이름, 숙소 타입, 주소, 별점, 사진, 가격
+            accommodation_name = result.find_element(By.CLASS_NAME, 'name').find_element(By.TAG_NAME, 'strong').text
+            accommodation_type = result.find_element(By.CLASS_NAME, 'right_badges').text
+            accommodation_addr = 
+            accommodation_score = result.find_element(By.CLASS_NAME, 'score').find_element(By.TAG_NAME,'em').text
+            accommodation_pic = 
+            accommodation_price =
+            results.append({'id': id, 'accommodation_name': accommodation_name})
     elif driver.find_elements(By.CLASS_NAME, 'result_empty'):
         # 검색창을 여는 버튼을 찾아 # 검색어 창
         search_open_btn = driver.find_element(By.CSS_SELECTOR, 'button.btn_srch.srch_open')
@@ -83,8 +89,13 @@ for index, row in df.iterrows():
         if search_results:
             # 검색 결과가 있을 때 contentId 및 숙소 정보 추출
             for result in search_results:
-                room_name = result.find_element(By.CLASS_NAME, 'name').find_element(By.TAG_NAME, 'strong').text
-                results.append({'id': id, 'hotel': room_name})
+                accommodation_name = result.find_element(By.CLASS_NAME, 'name').find_element(By.TAG_NAME, 'strong').text
+                accommodation_type = result.find_element(By.CLASS_NAME, 'right_badges').text
+                accommodation_addr = 
+                accommodation_score = result.find_element(By.CLASS_NAME, 'score').find_element(By.TAG_NAME,'em').text
+                accommodation_pic = 
+                accommodation_price = 
+                results.append({'id': id, 'accommodation_name': accommodation_name})
 
 # 검색 결과를 pandas DataFrame으로 만들고 CSV 파일에 저장
 result_df = pd.DataFrame(results)
