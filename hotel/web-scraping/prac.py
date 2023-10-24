@@ -6,6 +6,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
+# Selenium에서 요소의 로딩이나 조건을 기다릴 때 사용
+from selenium.webdriver.support.ui import WebDriverWait
 # selenium으로 키를 조작하기 위한 import
 from selenium.webdriver.common.keys import Keys
 # 페이지 로딩을 기다리는데에 사용할 time 모듈 import
@@ -23,57 +25,66 @@ service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
 # CSV 파일 경로
-csv_file_path = '판팡지주소csv.csv'
+csv_file_path = 'searchData.csv'
 output_csv_file = '관광지별숙소.csv'
-
-# CSV 파일을 pandas로 읽기
-df = pd.read_csv(csv_file_path, encoding='utf-8')
 
 # 결과를 저장할 리스트
 results = []
 
 # 웹페이지 주소
 url = 'https://www.goodchoice.kr/' # 여기어때
+driver.get(url)
+time.sleep(3)
+
+
+# CSV 파일을 pandas로 읽기
+df = pd.read_csv(csv_file_path, encoding='utf-8')
 
 # CSV 파일에서 검색어 및 contentId 읽어오기
 for index, row in df.iterrows():
-    content_id = row['contentId']
-    add1 = row['add1']
-    add2 = row['add2']
+    id = row['id']
+    addr1 = row['addr1']
+    addr2 = row['addr2']    
 
-    driver.get(url)
-    time.sleep(3)
     # 검색창을 여는 버튼을 찾아 # 검색어 창
     search_open_btn = driver.find_element(By.CSS_SELECTOR, 'button.btn_srch.srch_open')
-    search_box = driver.find_element(By.XPATH, '//*[@id="keyword"]')
+    search_box = driver.find_element(By.CLASS_NAME, 'srch_bar').find_element(By.TAG_NAME, 'input')
 
-    # 먼저 add1로 검색 시도
+    # 먼저 add2로 검색 시도
+    # 검색 로직
+    if index == 0: #  첫 진입시에만 동작
+        search_open_btn.click() # 검색 창을 여는 버튼 클릭
     search_box.clear()
-    search_box.send_keys(add1)
+    search_box.send_keys(addr2)
     search_box.send_keys(Keys.RETURN)
     time.sleep(3)
-
+ 
     # 검색 결과 확인 
-    search_results = driver.find_elements(By.CLASS_NAME, 'goodChoiceItem')
+    search_results = driver.find_elements(By.CLASS_NAME, 'list_4')
     if search_results:
         # 검색 결과가 있을 때 contentId 및 숙소 정보 추출
         for result in search_results:
-            room_name = result.find_element(By.CLASS_NAME, 'item_desc').text
-            results.append({'contentId': content_id, '숙소': room_name})
-    else:
-        # add1 검색 결과가 없을 때 add2로 검색 시도
+            room_name = result.find_element(By.CLASS_NAME, 'name').find_element(By.TAG_NAME, 'strong').text
+            results.append({'id': id, 'hotel': room_name})
+    elif driver.find_elements(By.CLASS_NAME, 'result_empty'):
+        # 검색창을 여는 버튼을 찾아 # 검색어 창
+        search_open_btn = driver.find_element(By.CSS_SELECTOR, 'button.btn_srch.srch_open')
+        search_box = driver.find_element(By.CLASS_NAME, 'srch_bar').find_element(By.TAG_NAME, 'input')
+    
+        # add2 검색 결과가 없을 때 add1로 검색 시도
+        # search_open_btn.click() # 검색 창을 여는 버튼 클릭
         search_box.clear()
-        search_box.send_keys(add2)
+        search_box.send_keys(addr1)
         search_box.send_keys(Keys.RETURN)
         time.sleep(3)
 
         # 검색 결과 확인
-        search_results = driver.find_elements(By.CLASS_NAME, 'goodChoiceItem')
+        search_results = driver.find_elements(By.CLASS_NAME, 'list_4')
         if search_results:
             # 검색 결과가 있을 때 contentId 및 숙소 정보 추출
             for result in search_results:
-                room_name = result.find_element(By.CLASS_NAME, 'item_desc').text
-                results.append({'contentId': content_id, '숙소': room_name})
+                room_name = result.find_element(By.CLASS_NAME, 'name').find_element(By.TAG_NAME, 'strong').text
+                results.append({'id': id, 'hotel': room_name})
 
 # 검색 결과를 pandas DataFrame으로 만들고 CSV 파일에 저장
 result_df = pd.DataFrame(results)
