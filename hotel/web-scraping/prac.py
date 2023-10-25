@@ -23,7 +23,8 @@ chrome_ver = chromedriver_autoinstaller.get_chrome_version()
 # driver = webdriver.Chrome() 
 options = Options()
 options.add_experimental_option("detach", True)
-service = Service(ChromeDriverManager().install())
+# options.add_argument("--start-maximized")
+service = Service(executable_path=ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
 # CSV 파일 경로
@@ -46,22 +47,38 @@ df = pd.read_csv(csv_file_path, encoding='utf-8')
 for index, row in df.iterrows():
     id = row['id']
     addr1 = row['addr1']
-    addr2 = row['addr2'] 
-       
-    if index == 200: break
+    addr2 = row['addr2']        
     
     # 검색창을 여는 버튼, 검색창
     search_open_btn = driver.find_element(By.CSS_SELECTOR, 'button.btn_srch.srch_open')
     search_box = driver.find_element(By.CLASS_NAME, 'srch_bar').find_element(By.TAG_NAME, 'input')
 
+    time.sleep(1)
+
     # 먼저 add2로 검색 시도
     # 검색 로직
-    if index == 0: #  첫 진입시에만 동작
+    
+    # 처음에만 동작하는 로직
+    if index == 0: 
         search_open_btn.click() # 검색 창을 여는 버튼 클릭
+
     search_box.clear()
     search_box.send_keys(addr2)
     search_box.send_keys(Keys.RETURN)
-    time.sleep(3)
+    time.sleep(2)
+
+    # 처음에만 동작하는 로직
+        # 달력 열고 다음달 15일 클릭하는 로직
+    # if index == 0:
+    #     date_btn = driver.find_element(By.XPATH, '//*[@id="content"]/div[1]/section[1]/div') # 날짜 선택 버튼
+    #     date_btn.click()
+    #     next_month_btn = driver.find_element(By.CLASS_NAME, 'ui-icon-circle-triangle-e')
+    #     next_month_btn.click()
+    #     day_15_btn = driver.find_element(By.XPATH,  "//table[@class='ui-datepicker-calendar']//a[text()='15']")
+    #     day_15_btn.click()
+    #     day_select_complete_btn = driver.find_element(By.XPATH, '/html/body/div[4]/div[2]/div/button[1]')
+    #     day_select_complete_btn.click()
+
     # 검색 결과 확인 
     search_results = driver.find_elements(By.CLASS_NAME, 'list_4')
     if search_results:
@@ -115,7 +132,7 @@ for index, row in df.iterrows():
         search_box.clear()
         search_box.send_keys(addr1)
         search_box.send_keys(Keys.RETURN)
-        time.sleep(3)
+        time.sleep(2)
 
         # 검색 결과 확인
         search_results = driver.find_elements(By.CLASS_NAME, 'list_4')
