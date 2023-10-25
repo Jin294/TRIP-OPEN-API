@@ -13,7 +13,6 @@ def textSimilarity(fromStr, toStr):
     sm = difflib.SequenceMatcher(None, answer_bytes_list, input_bytes_list)
     similar = sm.ratio()
 
-    print(similar)
     return similar
 
 
