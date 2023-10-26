@@ -187,13 +187,15 @@ for index, row in df.iterrows():
                 accommodation_lat = result.find_element(By.TAG_NAME, 'a').get_attribute('data-alat')
                 accommodation_lng = result.find_element(By.TAG_NAME, 'a').get_attribute('data-alng')
                 # csv에 저장할 결과
-                results.append({'id': id, 'accommodation_name': accommodation_name, 'accommodation_type': accommodation_type, 'accommodation_addr': accommodation_addr, 'accommodation_score': accommodation_score, 'accommodation_pic': accommodation_pic, 'accommodation_price': accommodation_price, 'accommodation_lat': accommodation_lat, 'accommodation_lng': accommodation_lng})
-  
+                results.append({'id': id, 'accommodation_name': accommodation_name, 'accommodation_type': accommodation_type, 'accommodation_addr': accommodation_addr, 'accommodation_score': accommodation_score, 'accommodation_pic': accommodation_pic, 'accommodation_price': accommodation_price, 'accommodation_lat': accommodation_lat, 'accommodation_lng': accommodation_lng})  
         elif driver.find_elements(By.CLASS_NAME, 'result_empty'):
             continue
-# 검색 결과를 pandas DataFrame으로 만들고 CSV 파일에 저장
-result_df = pd.DataFrame(results)
-result_df.to_csv(output_csv_file, index=False, encoding='utf-8')
+
+    # 검색 결과를 pandas DataFrame으로 만들고 CSV 파일에 저장 (인덱스 하나마다 저장)
+    result_df = pd.DataFrame(results)
+    result_df.to_csv(output_csv_file, mode='a', index=False, encoding='utf-8')
+    # 결과 리스트 초기화
+    results = []
 
 # 브라우저 종료
 driver.quit()
