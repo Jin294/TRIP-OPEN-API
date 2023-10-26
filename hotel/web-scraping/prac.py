@@ -52,6 +52,8 @@ for index, row in df.iterrows():
     addr1 = row['addr1']
     addr2 = row['addr2']        
 
+    print(f'{index}: start')
+
     # 검색창을 여는 버튼, 검색창
     search_open_btn = driver.find_element(By.CSS_SELECTOR, 'button.btn_srch.srch_open')
     search_open_btn.click() # 검색 창을 여는 버튼 클릭
@@ -186,7 +188,7 @@ for index, row in df.iterrows():
                 accommodation_lng = result.find_element(By.TAG_NAME, 'a').get_attribute('data-alng')
                 # csv에 저장할 결과
                 results.append({'id': id, 'accommodation_name': accommodation_name, 'accommodation_type': accommodation_type, 'accommodation_addr': accommodation_addr, 'accommodation_score': accommodation_score, 'accommodation_pic': accommodation_pic, 'accommodation_price': accommodation_price, 'accommodation_lat': accommodation_lat, 'accommodation_lng': accommodation_lng})
-                
+  
         elif driver.find_elements(By.CLASS_NAME, 'result_empty'):
             continue
 # 검색 결과를 pandas DataFrame으로 만들고 CSV 파일에 저장
