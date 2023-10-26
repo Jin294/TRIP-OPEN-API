@@ -197,5 +197,9 @@ for index, row in df.iterrows():
     # 결과 리스트 초기화
     results = []
 
+    # TXT 파일에 index 번호 입력
+    with open('index_numbers.txt', 'w', encoding='utf-8') as txt_file:
+        txt_file.write(f'{index}\n')
+
 # 브라우저 종료
 driver.quit()
