@@ -11,7 +11,7 @@ id,accommodation_name,accommodation_type,accommodation_addr,accommodation_score,
 125266,횡성 까사 408,펜션,강원 횡성군 둔내면 두원리,9.3,https://image.goodchoice.kr/images/web_v3/bg_trans.png,"90,000원",37.497660041886,128.24778741157
 125266,횡성 모모의다락방펜션,펜션,봉복사 차량 16분,9.6,https://image.goodchoice.kr/images/web_v3/bg_trans.png,"120,000원",37.550621344283,128.21965962978
 125266,횡성 페이지102 풀빌라&스파 펜션,펜션,휘닉스평창 차량 13분,9.7,https://image.goodchoice.kr/images/web_v3/bg_trans.png,"190,000
-160,000원",37.574806810911,128.25715893392
+159,000원",37.574806810911,128.25715893392
 125266,횡성 꿈나무펜션,펜션,웰리힐리파크 차량 6분,9.7,https://image.goodchoice.kr/images/web_v3/bg_trans.png,"80,000원",37.498854340327,128.24227457722
 125266,횡성 화이트프로포즈펜션,펜션,금당계곡 차량 33분,10.0,https://image.goodchoice.kr/images/web_v3/bg_trans.png,"70,000원",37.496884742313,128.24257710829
 125266,횡성 숲속의사랑별펜션,펜션,웰리힐리파크 차량 7분,9.7,https://image.goodchoice.kr/images/web_v3/bg_trans.png,"79,000원",37.500459532208,128.2426973052
@@ -104,8 +104,7 @@ id,accommodation_name,accommodation_type,accommodation_addr,accommodation_score,
 125405,경주 러브앤러브펜션,펜션,관성솥밭해변 차량 11분,9.9,https://image.goodchoice.kr/images/web_v3/bg_trans.png,"69,000원",35.664884093588,129.40622199518
 125405,유포리아 스파펜션,펜션,관성솔밭해변 차량 10분,8.9,https://image.goodchoice.kr/images/web_v3/bg_trans.png,"68,500원",35.663407927495,129.40476652048
 125405,경주 앨리스 스파펜션,펜션,양남카트레이싱 차량 6분,9.9,https://image.goodchoice.kr/images/web_v3/bg_trans.png,"69,000원",35.664670727157,129.40487430051
-125405,소소정,펜션,첨성대 차량 4분,10.0,https://image.goodchoice.kr/images/web_v3/bg_trans.png,"210,000
-178,000원",35.835804950523,129.20837742843
+125405,소소정,펜션,첨성대 차량 4분,10.0,https://image.goodchoice.kr/images/web_v3/bg_trans.png,"210,000원",35.835804950523,129.20837742843
 125405,경주 썬 호텔,모텔,경북 경주시 양남면 수렴리,9.8,https://image.goodchoice.kr/images/web_v3/bg_trans.png,"숙박 예약 60,000원",35.670568325198,129.46276314508
 125405,소노벨 경주,호텔,보문관광단지 부근,8.9,https://image.goodchoice.kr/images/web_v3/bg_trans.png,"126,000원",35.846238428109,129.2822227023
 125405,하토르풀빌라,펜션,경북 경주시 조양동,9.9,https://image.goodchoice.kr/images/web_v3/bg_trans.png,"199,000

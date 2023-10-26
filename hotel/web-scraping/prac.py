@@ -21,7 +21,9 @@ chrome_ver = chromedriver_autoinstaller.get_chrome_version()
 
 # 크롬드라이버 실행
 options = Options()
-options.add_experimental_option("detach", True)
+# options.add_experimental_option("detach", True)
+options.add_argument('--no-sandbox')
+options.add_argument('--disable-dev-shm-usage')
 # options.add_argument("--start-maximized")
 options.add_argument('--window-size=1920,1080')
 options.add_argument('--headless')  # headless 모드 활성화
@@ -50,11 +52,12 @@ for index, row in df.iterrows():
     addr1 = row['addr1']
     addr2 = row['addr2']        
     
-    if index == 5: break
+    if index == 2: break
 
     # 검색창을 여는 버튼, 검색창
     search_open_btn = driver.find_element(By.CSS_SELECTOR, 'button.btn_srch.srch_open')
-    search_open_btn.click() # 검색 창을 여는 버튼 클릭
+    # search_open_btn.click() # 검색 창을 여는 버튼 클릭
+    search_open_btn.send_keys(Keys.ENTER) # 검색 창을 여는 버튼 클릭
 
     time.sleep(1)
 
@@ -65,16 +68,20 @@ for index, row in df.iterrows():
     search_box.send_keys(addr2)
     search_box.send_keys(Keys.RETURN)
     time.sleep(2)
-
+    
     # 달력 열고 다음달 15일 클릭하는 로직
     date_btn = driver.find_element(By.XPATH, '//*[@id="content"]/div[1]/section[1]/div') # 날짜 선택 버튼
-    date_btn.click()
+    # date_btn.click()
+    date_btn.send_keys(Keys.ENTER)
     next_month_btn = driver.find_element(By.CLASS_NAME, 'ui-icon-circle-triangle-e')
-    next_month_btn.click()
+    # next_month_btn.click()
+    next_month_btn.send_keys(Keys.ENTER)
     day_15_btn = driver.find_element(By.XPATH,  "//table[@class='ui-datepicker-calendar']//a[text()='15']")
-    day_15_btn.click()
+    # day_15_btn.click()
+    day_15_btn.send_keys(Keys.ENTER)
     day_select_complete_btn = driver.find_element(By.XPATH, '/html/body/div[4]/div[2]/div/button[1]')
-    day_select_complete_btn.click()
+    # day_select_complete_btn.click()
+    day_select_complete_btn.send_keys(Keys.ENTER)
 
     # 검색 결과 확인 
     search_results = driver.find_elements(By.CLASS_NAME, 'list_4')
@@ -122,7 +129,8 @@ for index, row in df.iterrows():
     elif driver.find_elements(By.CLASS_NAME, 'result_empty'):
         # 검색창을 여는 버튼을 찾아 # 검색어 창
         search_open_btn = driver.find_element(By.CSS_SELECTOR, 'button.btn_srch.srch_open')
-        search_open_btn.click() # 검색 창을 여는 버튼 클릭
+        # search_open_btn.click() # 검색 창을 여는 버튼 클릭
+        search_open_btn.send_keys(Keys.ENTER) # 검색 창을 여는 버튼 클릭
 
         time.sleep(1)
         # add2 검색 결과가 없을 때 add1로 검색 시도
@@ -134,13 +142,17 @@ for index, row in df.iterrows():
 
         # 달력 열고 다음달 15일 클릭하는 로직
         date_btn = driver.find_element(By.XPATH, '//*[@id="content"]/div[1]/section[1]/div') # 날짜 선택 버튼
-        date_btn.click()
+        # date_btn.click()
+        date_btn.send_keys(Keys.ENTER)
         next_month_btn = driver.find_element(By.CLASS_NAME, 'ui-icon-circle-triangle-e')
-        next_month_btn.click()
+        # next_month_btn.click()
+        next_month_btn.send_keys(Keys.ENTER)
         day_15_btn = driver.find_element(By.XPATH,  "//table[@class='ui-datepicker-calendar']//a[text()='15']")
-        day_15_btn.click()
+        # day_15_btn.click()
+        day_15_btn.send_keys(Keys.ENTER)
         day_select_complete_btn = driver.find_element(By.XPATH, '/html/body/div[4]/div[2]/div/button[1]')
-        day_select_complete_btn.click()
+        # day_select_complete_btn.click()
+        day_select_complete_btn.send_keys(Keys.ENTER)
 
         # 검색 결과 확인
         search_results = driver.find_elements(By.CLASS_NAME, 'list_4')
