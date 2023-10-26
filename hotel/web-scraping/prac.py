@@ -20,11 +20,12 @@ import chromedriver_autoinstaller
 chrome_ver = chromedriver_autoinstaller.get_chrome_version()
 
 # 크롬드라이버 실행
-# driver = webdriver.Chrome() 
 options = Options()
 options.add_experimental_option("detach", True)
-options.add_argument("--start-maximized")
-service = Service(ChromeDriverManager().install())
+# options.add_argument("--start-maximized")
+options.add_argument('--window-size=1920,1080')
+options.add_argument('--headless')  # headless 모드 활성화
+service = Service(executable_path=ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
 # CSV 파일 경로
@@ -49,6 +50,8 @@ for index, row in df.iterrows():
     addr1 = row['addr1']
     addr2 = row['addr2']        
     
+    if index == 5: break
+
     # 검색창을 여는 버튼, 검색창
     search_open_btn = driver.find_element(By.CSS_SELECTOR, 'button.btn_srch.srch_open')
     search_open_btn.click() # 검색 창을 여는 버튼 클릭
