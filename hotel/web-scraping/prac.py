@@ -51,10 +51,6 @@ for index, row in df.iterrows():
     id = row['id']
     addr1 = row['addr1']
     addr2 = row['addr2']        
-    
-    if index == 2: break
-
-    time.sleep(10)
 
     # 검색창을 여는 버튼, 검색창
     search_open_btn = driver.find_element(By.CSS_SELECTOR, 'button.btn_srch.srch_open')
@@ -69,24 +65,17 @@ for index, row in df.iterrows():
     search_box.clear()
     search_box.send_keys(addr2)
     search_box.send_keys(Keys.RETURN)
-    time.sleep(10)
+    time.sleep(2)
     
     # 달력 열고 다음달 15일 클릭하는 로직
-    date_btn = driver.find_element(By.XPATH, '//*[@id="content"]/div[1]/section[1]/div') # 날짜 선택 버튼
-    date_btn.click()
-    # date_btn.send_keys(Keys.ENTER)
-    next_month_btn = driver.find_element(By.CLASS_NAME, 'ui-icon-circle-triangle-e')
-    time.sleep(10)
-    next_month_btn.click()
-    # next_month_btn.send_keys(Keys.ENTER)
-    day_15_btn = driver.find_element(By.XPATH,  "//table[@class='ui-datepicker-calendar']//a[text()='15']")
-    time.sleep(10)
-    day_15_btn.click()
-    # day_15_btn.send_keys(Keys.ENTER)
-    day_select_complete_btn = driver.find_element(By.XPATH, '/html/body/div[4]/div[2]/div/button[1]')
-    time.sleep(10)
-    day_select_complete_btn.click()
-    # day_select_complete_btn.send_keys(Keys.ENTER)
+    # date_btn = driver.find_element(By.XPATH, '//*[@id="content"]/div[1]/section[1]/div') # 날짜 선택 버튼
+    # date_btn.click()
+    # next_month_btn = driver.find_element(By.CLASS_NAME, 'ui-icon-circle-triangle-e')
+    # next_month_btn.click()
+    # day_15_btn = driver.find_element(By.XPATH,  "//table[@class='ui-datepicker-calendar']//a[text()='15']")
+    # day_15_btn.click()
+    # day_select_complete_btn = driver.find_element(By.XPATH, '/html/body/div[4]/div[2]/div/button[1]')
+    # day_select_complete_btn.click()
 
     # 검색 결과 확인 
     search_results = driver.find_elements(By.CLASS_NAME, 'list_4')
@@ -137,30 +126,22 @@ for index, row in df.iterrows():
         search_open_btn.click() # 검색 창을 여는 버튼 클릭
         # search_open_btn.send_keys(Keys.ENTER) # 검색 창을 여는 버튼 클릭
 
-        time.sleep(10)
+        time.sleep(2)
         # add2 검색 결과가 없을 때 add1로 검색 시도
         search_box = driver.find_element(By.CLASS_NAME, 'srch_bar').find_element(By.CLASS_NAME, 'wrap_inp').find_element(By.TAG_NAME, 'input')
         search_box.clear()
         search_box.send_keys(addr1)
         search_box.send_keys(Keys.RETURN)
-        time.sleep(10)
 
         # 달력 열고 다음달 15일 클릭하는 로직
-        date_btn = driver.find_element(By.XPATH, '//*[@id="content"]/div[1]/section[1]/div') # 날짜 선택 버튼
-        date_btn.click()
-        # date_btn.send_keys(Keys.ENTER)
-        time.sleep(10)
-        next_month_btn = driver.find_element(By.CLASS_NAME, 'ui-icon-circle-triangle-e')
-        next_month_btn.click()
-        # next_month_btn.send_keys(Keys.ENTER)
-        time.sleep(10)
-        day_15_btn = driver.find_element(By.XPATH,  "//table[@class='ui-datepicker-calendar']//a[text()='15']")
-        day_15_btn.click()
-        # day_15_btn.send_keys(Keys.ENTER)
-        time.sleep(10)
-        day_select_complete_btn = driver.find_element(By.XPATH, '/html/body/div[4]/div[2]/div/button[1]')
-        day_select_complete_btn.click()
-        # day_select_complete_btn.send_keys(Keys.ENTER)
+        # date_btn = driver.find_element(By.XPATH, '//*[@id="content"]/div[1]/section[1]/div') # 날짜 선택 버튼
+        # date_btn.click()
+        # next_month_btn = driver.find_element(By.CLASS_NAME, 'ui-icon-circle-triangle-e')
+        # next_month_btn.click()
+        # day_15_btn = driver.find_element(By.XPATH,  "//table[@class='ui-datepicker-calendar']//a[text()='15']")
+        # day_15_btn.click()
+        # day_select_complete_btn = driver.find_element(By.XPATH, '/html/body/div[4]/div[2]/div/button[1]')
+        # day_select_complete_btn.click()
 
         # 검색 결과 확인
         search_results = driver.find_elements(By.CLASS_NAME, 'list_4')
