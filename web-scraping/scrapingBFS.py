@@ -12,25 +12,51 @@ from MongoDBConnector import MongoDBConnector
 import time 
 import chromedriver_autoinstaller
 from text_similarity import textSimilarity
-# print(chromedriver_autoinstaller.get_chrome_version()) # 크롬드라이버 버전확인
+import pymysql
+
+
+
+# web scrapping 설정
+options = Options()
+options.add_experimental_option("detach", True)
+service = Service(ChromeDriverManager().install())
+wd = webdriver.Chrome(service=service, options=options)
+
 
 connector = MongoDBConnector()
 
-def getKeyWord(attractionName):
-    # mongoDB 연결
-    options = Options()
-    options.add_experimental_option("detach", True)
-    service = Service(ChromeDriverManager().install())
-    wd = webdriver.Chrome(service=service, options=options)
+mysqlConnector = pymysql.connect(host='k9b205.p.ssafy.io', user='b205', password='9gi_ssafy_final', db='b205', charset='utf8')
+cur = mysqlConnector.cursor()
+sql = 'select title from attraction_info'
 
+result = cur.execute(sql)
+attractionArr = cur.fetchall()
+
+
+# 여행지로부터 키워드 추출
+# BFS 알고리즘 사용하여 관련있는 page 수집 후 mongoDB에 저장하는 과정 
+
+# parameter:
+#           attractionName : 관광지 이름
+def getKeyWord(attractionName):
+    
     # URI BFS위한 큐와 뎁스
     depth = 0
     queue = []
+    
     queue.append([f"https://namu.wiki/w/{attractionName}", depth, attractionName])
+    queue.append([f"https://namu.wiki/Search?q={attractionName}", depth, attractionName])
+    # wd.get(f"https://namu.wiki/w/{attractionName}")
+    # if wd.find_element(By.ID, "app").text.find("해당 문서를 찾을 수 없습니다."):
+    #     queue.append([f"https://namu.wiki/Search?q={attractionName}", depth, attractionName])
+    # else:
+    #     queue.append([f"https://namu.wiki/w/{attractionName}", depth, attractionName])
+
     #BFS 방문 체크
     visited = {} # URI 방문 체크
     visitedName = set() # 키워드 방문체크
     visited[f"https://namu.wiki/w/{attractionName}"] = 1
+    visited[f"https://namu.wiki/Search?q={attractionName}"] = 1
     visitedName.add(attractionName)
 
     #BFS 연산
@@ -38,6 +64,7 @@ def getKeyWord(attractionName):
         node = queue.pop()
         url, curDepth, name = node #uri, BFS depth, 키워드 이름 순
 
+        # html fetch
         wd.get(url)
         totalHTML = wd.find_element(By.ID, "app") #uri 불러온 후 ID tag의 web element 저장
       
@@ -82,9 +109,12 @@ def getKeyWord(attractionName):
                 # 계산한 값이 0.5를 넘어가면 BFS 탐색범위에 들어간다.
                 continue
            
-            
             queue.append([nxtUrl, curDepth + 1, nxtName])
             visited[nxtUrl] = 1
             visitedName.add(nxtName)
 
-getKeyWord("해운대")
+for index, title in attractionArr:
+    attraction_title = remove_non_korean(title[0])
+    getKeyWord(attraction_title)
+    with open('attraction_index_numbers.txt', 'w', encoding='utf-8') as txt_file:
+        txt_file.write(f'{index}\n')
