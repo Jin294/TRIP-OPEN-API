@@ -113,8 +113,10 @@ def getKeyWord(attractionName):
             visited[nxtUrl] = 1
             visitedName.add(nxtName)
 
-for index, title in attractionArr:
+cnt = 0
+for title in attractionArr:
     attraction_title = remove_non_korean(title[0])
     getKeyWord(attraction_title)
     with open('attraction_index_numbers.txt', 'w', encoding='utf-8') as txt_file:
-        txt_file.write(f'{index}\n')
+        txt_file.write(f'{cnt}\n')
+        cnt+=1
