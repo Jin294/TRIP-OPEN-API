@@ -1,0 +1,16 @@
+spring:
+  elasticsearch:
+    uris: http://43.201.103.156:9200
+    username: "shinchanghakshinchanghakshinchanghak"
+    password: "b205b205b205b205b205b205b205b205b205b205"
+    connection-timeout: 5s
+    socket-timeout: 30s
+    host: 43.201.103.156
+    port: 9200
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+logging:
+  level:
+    org.springframework.data.elasticsearch.client.WIRE: TRACE
