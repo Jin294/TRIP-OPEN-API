@@ -1,5 +1,6 @@
 package com.ssafy.i5i.hotelAPI.hotel.entity;
 
+import com.ssafy.i5i.hotelAPI.hotel.dto.response.AccommodationResponseDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,8 +22,8 @@ public class Accommodation {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "attraction_id")
-    private Attraction Attraction;
+    @JoinColumn (name = "attraction_id")
+    private Attraction attraction;
 
     @Column(name = "accommodation_name")
     private String accommodationName;
@@ -47,4 +48,11 @@ public class Accommodation {
 
     @Column(name = "accommodation_longitude")
     private BigDecimal accommodationLongitude;
+
+
+    public AccommodationResponseDto toDto (){
+
+        return new AccommodationResponseDto(this.accommodationName, this.accommodationType, this.accommodationAddr, this.accommodationScore, this.accommodationImg, this.accommodationPrice, this.accommodationLatitude, this.accommodationLongitude);
+    }
 }
+
