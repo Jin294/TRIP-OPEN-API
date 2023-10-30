@@ -14,20 +14,18 @@ import chromedriver_autoinstaller
 from text_similarity import textSimilarity
 import pymysql
 
+# driver 설정
+chrome_options = Options()
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
 
+chrome_options.add_experimental_option("detach", True)
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--window-size=1920,1080')
+chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
 
-options = Options()
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-dev-shm-usage')
-options.add_argument('--window-size=1920,1080') # 윈도우 창 설정
-# UserAgent값을 바꿔줌(headless 탐지 막기)
-#options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
-# options.add_argument("--start-maximized")
-# options.add_experimental_option("detach", True)
-options.add_argument('--headless')  # headless 모드 활성화 # 백 그라운드에서 실행 
 service = Service(executable_path=ChromeDriverManager().install())
-wd = webdriver.Chrome(service=service, options=options)
-
+wd = webdriver.Chrome(service=service, options=chrome_options)
 
 connector = MongoDBConnector()
 
@@ -52,11 +50,6 @@ def getKeyWord(attractionName):
     
     queue.append([f"https://namu.wiki/w/{attractionName}", depth, attractionName])
     queue.append([f"https://namu.wiki/Search?q={attractionName}", depth, attractionName])
-    # wd.get(f"https://namu.wiki/w/{attractionName}")
-    # if wd.find_element(By.ID, "app").text.find("해당 문서를 찾을 수 없습니다."):
-    #     queue.append([f"https://namu.wiki/Search?q={attractionName}", depth, attractionName])
-    # else:
-    #     queue.append([f"https://namu.wiki/w/{attractionName}", depth, attractionName])
 
     #BFS 방문 체크
     visited = {} # URI 방문 체크
@@ -72,9 +65,12 @@ def getKeyWord(attractionName):
 
         # html fetch
         wd.get(url)
+        wd.implicitly_wait(10) 
+        body = wd.find_element(By.TAG_NAME, "body") #uri 불러온 후 ID tag의 web element 저장
+        print(body.text)
         totalHTML = wd.find_element(By.ID, "app") #uri 불러온 후 ID tag의 web element 저장
-      
-        time.sleep(2)
+        
+
         name = remove_non_korean(name) # 이름에서 한글 제외한 내용 정규식으로 제거
 
         if name == "": # 이름 비어있으면 continue
@@ -126,3 +122,4 @@ for title in attractionArr:
     with open('attraction_index_numbers.txt', 'w', encoding='utf-8') as txt_file:
         txt_file.write(f'{cnt}\n')
         cnt+=1
+        
