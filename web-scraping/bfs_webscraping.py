@@ -11,7 +11,7 @@ import asyncio
 from MongoDBConnector import MongoDBConnector
 import time 
 import chromedriver_autoinstaller
-from text_similarity import textSimilarity
+from textSimilarity import textSimilarity
 import pymysql
 
 # driver 설정
