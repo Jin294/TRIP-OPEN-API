@@ -27,7 +27,7 @@ public class AccommodationController {
         return accommodationService.getAccommodationByName(attractionNameRequestDto);
     }
 
-    @GetMapping("/{latitude}/[longitude}/{distance}/{sorted}")
+    @GetMapping("/{latitude}/{longitude}/{distance}/{sorted}")
     public List<AccommodationResponseDto> getAccomodationByCoordinate(@PathVariable("latitude") BigDecimal latitude, @PathVariable("longitude") BigDecimal longitude, @PathVariable("distance") long distance, @PathVariable("sorted") String sorted){
         AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(latitude, longitude, distance, sorted);
 

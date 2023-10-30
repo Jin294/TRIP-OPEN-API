@@ -22,7 +22,7 @@ public class Accommodation {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn (name = "attraction_id")
+    @JoinColumn (name = "attraction_id", referencedColumnName = "content_id")
     private Attraction attraction;
 
     @Column(name = "accommodation_name")

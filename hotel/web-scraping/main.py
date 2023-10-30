@@ -122,6 +122,9 @@ for index, row in df.iterrows():
     id = row['id']
     addr1 = row['addr1']
     addr2 = row['addr2']        
+    
+    if index < 19607: 
+        continue
 
     # 지금 몇 번째 관광지에 대한 숙소 검색중인지 print
     print(f'{index}: start')

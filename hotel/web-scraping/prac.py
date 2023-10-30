@@ -50,7 +50,10 @@ df = pd.read_csv(csv_file_path, encoding='utf-8')
 for index, row in df.iterrows():
     id = row['id']
     addr1 = row['addr1']
-    addr2 = row['addr2']        
+    addr2 = row['addr2']
+
+    if index < 19607: 
+        continue        
 
     print(f'{index}: start')
 
