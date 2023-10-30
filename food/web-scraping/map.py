@@ -267,7 +267,7 @@ try:
         jibun_address = row['소재지전체주소']
 
         # if index == 200: break
-        if index == 5: break
+        # if index == 5: break
 
         # (1) 검색창에 검색하기
         browser.switch_to.default_content() #다시 검색창을 찾아야 해서 초기화 
