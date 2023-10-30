@@ -1,0 +1,122 @@
+.backBody {
+    background-color: #282c34;
+    min-height: 100vh;
+    background-size: cover;
+    position: relative;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.imageContainer {
+    max-width: 60%;
+    height: auto;
+}
+
+.table {
+    width: 760px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 20px;
+    word-break: keep-all;
+    line-height: 1.5;
+}
+
+.table th {
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: left;
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
+}
+
+.table td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.table td:nth-child(1) {
+    width: 20%;
+}
+.table td:nth-child(2) {
+    width: 20%;
+}
+.table td:nth-child(3) {
+    width: 60%;
+}
+.code {
+    width: 600px;
+    font-family: 'Pretendard-Lighter';
+    padding: 20px 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    /* border-radius: 20px; */
+    font-size: 14px;
+    margin-bottom: 40px;
+    overflow-x: scroll;
+}
+
+.text {
+    text-align: left;
+    margin-right: 400px;
+    width: 370px;
+}
+
+.text2 {
+    text-align: left;
+    margin-right: 600px;
+}
+
+.eximage {
+    margin: 10px;
+}
+
+.imgs {
+    display: flex;
+}
+
+.eximage img {
+    width: 420px;
+    height: 270px;
+}
+
+.oauthButton {
+    font-family: 'Pretendard-Regular';
+    color: white;
+    font-size: 16px;
+    margin: 0 20px;
+    padding: 10px;
+    background-color: #202c3e;
+    box-shadow: 2px 1px 3px 2px gray inset;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/*맨 윗부분 */
+.oAuthTitle {
+    margin: 0px 0;
+    margin-top: 70px;
+    font-size: 40px;
+    /* text-decoration: underline;
+    text-decoration-thickness: 1px; */
+}
+.titleExplain {
+    font-size: 17px;
+    width: 1000px;
+    margin: 0px 480px 50px 600px;
+    font-style: italic;
+    color: #bcb8b8;
+}
+.step0Title {
+    margin-top: 50px;
+}
+.step0Explain {
+    font-size: 16px;
+    width: 770px;
+    margin: 10px 300px 50px;
+}
+.step1Explain {
+    font-size: 16px;
+    width: 770px;
+    margin: 10px 0px 30px;
+}

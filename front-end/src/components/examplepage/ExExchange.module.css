@@ -1,0 +1,190 @@
+/* Card */
+.chartContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.chartCard {
+    width: 60%;
+    background-color: #fbfbfb;
+    padding: 50px;
+    box-shadow: 1px 1px 30px 10px #dfe2e4;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+/* Title */
+.chartTitle {
+    text-align: center;
+}
+.chartTitle h1 {
+    color: black;
+    font-size: 60px;
+    margin-bottom: 0;
+}
+.chartTitle p {
+    color: #a3a8cd;
+    margin-top: 8px;
+    margin-bottom: 25px;
+}
+
+/* Rancking */
+.chartBox {
+    width: 80%;
+    height: 150px;
+    margin: 50px auto;
+}
+
+/* Number */
+.chartNumber {
+    float: left;
+    font-weight: bold;
+    font-size: 50px;
+    width: 50px;
+    height: 150px;
+    line-height: 150px;
+    color: #dfe2e4;
+    margin-right: 25px;
+    margin-left: 25px;
+}
+
+/* Cover */
+.chartCover {
+    float: left;
+    height: 150px;
+    margin-right: 25px;
+    padding-top: 12px;
+}
+
+.chartCover img {
+    height: 125px;
+}
+
+/* Name */
+.chartName {
+    display: flex;
+    flex-direction: column;
+    float: left;
+    margin-top: 30px;
+    font-size: 18px;
+    color: #23252a;
+}
+
+.chartName span {
+    font-weight: bold;
+    color: black;
+}
+.price {
+    font-weight: bold;
+    color: #f57064;
+}
+.priceContainer {
+    display: flex;
+    width: 100%;
+    margin: 20px 40px 20px 40px;
+}
+.priceTitle {
+    margin: 0px 40px 0px 40px;
+}
+.priceContent {
+    margin: 0px 40px 0px 40px;
+}
+
+/* Button */
+.link {
+    text-align: right;
+    line-height: 150px;
+    margin-right: 25px;
+}
+
+.link a {
+    padding: 9px 12px;
+    border: 1px solid #dfe2e4;
+    color: #a3a8cd;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* Separator */
+.separator {
+    width: 80%;
+    height: 1px;
+    margin: auto;
+    background-color: #dfe2e4;
+}
+
+/* :hover */
+.chartBox:hover {
+    box-shadow: 1px 1px 40px 0px #dfe2e4;
+}
+.chartBox:hover .chartNumber {
+    color: #f5ce64;
+}
+.chartBox:hover span {
+    color: #f5ce64;
+}
+
+.link a:hover {
+    background-color: #f5ce64;
+    color: #fff;
+    border: none;
+}
+
+.link a:focus {
+    background-color: #fff;
+    color: #f5ce64;
+    border: none;
+}
+
+/* Mobile devices */
+@media screen and (max-width: 767px) {
+    .chartCard {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .chartTitle h1 {
+        font-size: 30px;
+    }
+
+    .chartBox {
+        width: 90%;
+    }
+
+    .chartNumber {
+        font-size: 30px;
+        width: 30px;
+        height: 100px;
+        line-height: 100px;
+    }
+
+    .chartCover img {
+        height: 80px;
+    }
+
+    .chartName {
+        font-size: 14px;
+        margin-top: 20px;
+    }
+
+    .link a {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+}
+
+/* Tablets and smaller laptops */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .chartCard {
+        width: 70%;
+    }
+}
+
+/* Larger laptops and desktops */
+@media screen and (min-width: 1024px) {
+    .chartCard {
+        width: 60%;
+    }
+}

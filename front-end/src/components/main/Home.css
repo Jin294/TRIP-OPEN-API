@@ -1,0 +1,23 @@
+.Home-body-logo {
+    margin: 0px;
+    font-size: 80px;
+    font-weight: 700;
+    font-family: 'Campton', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
+}
+
+.Home-body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+    /*
+    메인화면 배경 도형
+  */
+    background-color: #282c34;
+    background-image: url('../../assets/img/background.png');
+    background-size: cover;
+}
