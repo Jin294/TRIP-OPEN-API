@@ -96,11 +96,11 @@ const OauthExplain = () => {
 			<div className={styles.text2}>
 				<h3>요청 예시</h3>
 			</div>
-			<pre id="json" className={styles.code}>
+			{/* <pre id="json" className={styles.code}>
 				https://j9b309.p.ssafy.io/oauth/authorize?response_type=code&client_id={"${client_id}"}
 				&redirect_uri=
 				{"${redirect_uri}"}&scope=read
-			</pre>
+			</pre> */}
 
 			<div className={styles.text2}>
 				<h3>응답 예시</h3>
@@ -123,7 +123,7 @@ const OauthExplain = () => {
 				</div>
 				<p>
 					요청 <span>&nbsp;</span> <strong>POST</strong> <span>&nbsp;</span>
-					https://j9b309.p.ssafy.io/oauth/token
+					{/* https://j9b309.p.ssafy.io/oauth/token */}
 				</p>
 			</div>
 
@@ -179,7 +179,7 @@ const OauthExplain = () => {
 			<div className={styles.text2}>
 				<h3>요청 예시</h3>
 			</div>
-			<pre id="json" className={styles.code}>
+			{/* <pre id="json" className={styles.code}>
 				curl -v -X POST "https://j9b309.p.ssafy.io/oauth/token" <br />
 				-H "Content-Type:application/x-www-form-urlencoded"
 				<br />
@@ -188,7 +188,7 @@ const OauthExplain = () => {
 				-d "grant_type=authorization_code" \ -d "client_id={"${client-id}"}"<br />
 				-d "redirect_uri={"${REDIRECT_URI}"}"<br />
 				-d "code={"${AUTHORIZE_CODE}"}"
-			</pre>
+			</pre> */}
 
 			<div className={styles.text2}>
 				<h3>응답 예시</h3>
@@ -209,7 +209,7 @@ const OauthExplain = () => {
 					OAuth 사용 예시
 					<a
 						className={styles.oauthButton}
-						href="https://j9b309.p.ssafy.io/excard"
+						// href="https://j9b309.p.ssafy.io/excard"
 						target="_blank"
 						rel="noopener noreferrer"
 					>

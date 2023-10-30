@@ -8,7 +8,6 @@ import { logout } from '../redux/userInfo';
 // 토큰이 필요한 인증에 사용
 
 const baseURL = process.env.REACT_APP_SERVER_URL;
-// const baseURL = 'http://j9b309.p.ssafy.io:8089';
 
 const tokenHttp = axios.create({
     baseURL,

@@ -29,7 +29,7 @@ const ExCard = () => {
                 </div>
                 <div className={styles.link}>
                     <a
-                        href="https://j9b309.p.ssafy.io/oauth/authorize?response_type=code&client_id=5caa02bf-f494-4c83-a7b5-7d7a1591ba2a&redirect_uri=https://j9b309.p.ssafy.io/excardcontent&scope=read"
+                        href=""
                     >
                         내 카드내역 불러오기
                     </a>
