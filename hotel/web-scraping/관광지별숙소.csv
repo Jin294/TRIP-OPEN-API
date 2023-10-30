@@ -1,4 +1,4 @@
-id,accommodation_name,accommodation_type,accommodation_addr,accommodation_score,accommodation_pic,accommodation_price,accommodation_lat,accommodation_lng
+accommodation_id, accommodation_name,accommodation_type,accommodation_addr,accommodation_score,accommodation_img, accommodation_price,accommodation_lat,accommodation_lng
 125266,보리카라반,캠핑,호수공원 차량 21분,10.0,https://image.goodchoice.kr/resize_1000X500x0/affiliate/2023/10/23/15/1684490173883hdUEEG6tVnj9YnsW0M2.jpg,판매 완료,37.531683787529,128.22601205131
 125266,너머 애견펜션,펜션,강원특별자치도 횡성군 둔내면 궁종리 산,10.0,https://image.goodchoice.kr/resize_1000X500x0/affiliate/2023/07/26/18/1690357214232tA4NsAtdA7jqzvWHBks.jpg,"350,000원",37.509221214473,128.14872858858
 125266,횡성 로즈오브샤론펜션,펜션,강원 횡성군 둔내면 두원리,-1,https://image.goodchoice.kr/resize_1000X500x0/affiliate/2023/10/10/6525093b42993.jpg,"90,000원",37.497918379776,128.24686264975
