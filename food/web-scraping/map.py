@@ -281,7 +281,7 @@ try:
         jibun_address = row['소재지전체주소']
 
         # if index == 200: break
-        if index == 3: break
+        # if index == 3: break
 
         # (1) 검색창에 검색하기
         browser.switch_to.default_content() #다시 검색창을 찾아야 해서 초기화 
@@ -298,6 +298,7 @@ try:
             #검색 시 바로 나옴 
             print("검색시 바로 나옴 시작")
             # 상세 프레임으로 이동
+            time.sleep(1)
             time_wait_frame(10,'entryIframe')
 
             switch_frame('entryIframe')
@@ -308,6 +309,7 @@ try:
         except Exception as e:
             #검색해도 안 나오거나 여러 개 검색됨 
             print(e)
+            time.sleep(1)
             time_wait_frame(10,'searchIframe')
             switch_frame('searchIframe') 
             print("searchIframe 변경")
@@ -332,6 +334,10 @@ try:
                 except Exception as e:
                     print(e)
         finally:
+            result_df = pd.DataFrame(food_dict)
+            result_df.to_csv(output_csv_file, mode='a', header=False, index=False, encoding='utf-8-sig')
+            result_df_v1 = pd.DataFrame(food_menu_dict)
+            result_df_v1.to_csv(output_csv_file_v1,mode='a',header=False, index=False, encoding='utf-8-sig')
             
             print(f'[{key_word}데이터 수집 완료]\n소요 시간 :', time.time() - startone)
 
@@ -344,10 +350,7 @@ finally:
     print('[데이터 수집 완료]\n소요 시간 :', time.time() - start)
     browser.quit()  # 작업이 끝나면 창을 닫는다.
 
-    result_df = pd.DataFrame(food_dict)
-    result_df.to_csv(output_csv_file, mode='a', header=False, index=False, encoding='utf-8-sig')
-    result_df_v1 = pd.DataFrame(food_menu_dict)
-    result_df_v1.to_csv(output_csv_file_v1,mode='a',header=False, index=False, encoding='utf-8-sig')
+    
        
             
 
