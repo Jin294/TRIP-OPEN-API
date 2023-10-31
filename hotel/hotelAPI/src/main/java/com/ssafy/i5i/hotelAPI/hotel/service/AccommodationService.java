@@ -22,12 +22,27 @@ public class AccommodationService {
 
     private final AccommodationRepository accommodationRepository;
     private final AttractionRepository attractionRepository;
+
+    public List<AccommodationResponseDto> sort(List<AccommodationResponseDto> data, String type){
+        if(type.equalsIgnoreCase("DISTANCE")){
+            data.sort((o1, o2) -> ());
+        } else if (type.equalsIgnoreCase("SCORE")) {
+            data.sort(((o1, o2) -> o1.getAccommodationScore().compareTo(o2.getAccommodationScore())));
+        } else if (type.equalsIgnoreCase("TYPE")) {
+            data.sort(((o1, o2) -> o1.getAccommodationType().compareTo(o2.getAccommodationType())));
+        } else{
+            throw new CommonException(ExceptionType.SORTED_TYPE_EXCEPTION);
+        }
+
+        return data;
+    }
     public List<AccommodationResponseDto> getAccommodationByName(AttractionNameRequestDto requestDto){
         Attraction attraction = attractionRepository.findByTitle(requestDto.getAttractionName());
         if(attraction == null){
             throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);
         }
         List<Accommodation> entity = accommodationRepository.findByAttractionId(attraction.getContentId());
+
         List<AccommodationResponseDto> response = new ArrayList<>();
 
         for(Accommodation data : entity){
