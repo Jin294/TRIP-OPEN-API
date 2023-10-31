@@ -257,6 +257,11 @@ food_dict = []
 food_menu_dict = []
 
 iidx = 0
+header_df = pd.DataFrame(columns=['food_idx', 'food_id', 'food_name','food_type','food_addr1','food_addr2','food_tel','food_star','food_realview','food_blogview','food_menu','food_longtitude','food_latitude'])
+header_df.to_csv(output_csv_file, mode='w', index=False, encoding='utf-8-sig')
+header_df_v1 = pd.DataFrame(columns=['foodmenu_idx', 'foodmenu_id', 'foodmenu_name','foodmenu_price'])
+header_df_v1.to_csv(output_csv_file_v1, mode='w',index=False, encoding='utf-8-sig')
+
 try:
     for index, row in df.iterrows():
         startone = time.time()
@@ -268,7 +273,7 @@ try:
         jibun_address = row['소재지전체주소']
 
         # if index == 200: break
-        # if index == 5: break
+        if index == 3: break
 
         # (1) 검색창에 검색하기
         browser.switch_to.default_content() #다시 검색창을 찾아야 해서 초기화 
@@ -287,12 +292,14 @@ try:
             # 상세 프레임으로 이동
             switch_frame('entryIframe')
             scraping(iidx)
+            iidx+=1
             print("검색시 바로 나옴 끝")
 
         except Exception as e:
             #검색해도 안 나오거나 여러 개 검색됨 
             print(e)
             switch_frame('searchIframe') 
+            print("searchIframe 변경")
             food_list = browser.find_elements(By.CSS_SELECTOR, 'li.UEzoS') # 음식점 리스트
             print(len(food_list))
             if len(food_list) != 1 :
@@ -310,11 +317,11 @@ try:
                     print("크롤링")
                     switch_frame('entryIframe')
                     scraping(iidx)
-            
+                    iidx+=1
                 except Exception as e:
                     print(e)
         finally:
-            iidx+=1
+            
             print(f'[{key_word}데이터 수집 완료]\n소요 시간 :', time.time() - startone)
 
 
@@ -327,9 +334,9 @@ finally:
     browser.quit()  # 작업이 끝나면 창을 닫는다.
 
     result_df = pd.DataFrame(food_dict)
-    result_df.to_csv(output_csv_file, index=False, encoding='utf-8-sig')
+    result_df.to_csv(output_csv_file, mode='a', header=False, index=False, encoding='utf-8-sig')
     result_df_v1 = pd.DataFrame(food_menu_dict)
-    result_df_v1.to_csv(output_csv_file_v1, index=False, encoding='utf-8-sig')
+    result_df_v1.to_csv(output_csv_file_v1,mode='a',header=False, index=False, encoding='utf-8-sig')
        
             
 
