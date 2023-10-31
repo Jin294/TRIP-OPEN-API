@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 
 @Entity
@@ -51,8 +52,9 @@ public class Accommodation {
 
 
     public AccommodationResponseDto toDto (){
-
-        return new AccommodationResponseDto(this.accommodationName, this.accommodationType, this.accommodationAddr, this.accommodationScore, this.accommodationImg, this.accommodationPrice, this.accommodationLatitude, this.accommodationLongitude);
+        return new AccommodationResponseDto(this.accommodationName, this.accommodationType, this.accommodationAddr, this.accommodationScore, this.accommodationImg, this.accommodationPrice, this.accommodationLatitude, this.accommodationLongitude, null);
     }
+
+
 }
 

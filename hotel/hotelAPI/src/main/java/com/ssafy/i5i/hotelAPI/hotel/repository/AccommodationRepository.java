@@ -7,10 +7,11 @@ import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 public interface AccommodationRepository extends JpaRepository<Accommodation, Long> {
     @Query("SELECT c FROM Accommodation c WHERE c.attraction.contentId = :attractionId")
-    List<Accommodation> findByAttractionId(@Param("attractionId") long attractionId);
+    Optional<List<Accommodation>> findByAttractionId(@Param("attractionId") long attractionId);
 
     @Query(value = "SELECT *, " +
             "(6371 * 2 * ASIN(SQRT(POW(SIN(RADIANS(Accommodation.accommodationLatitude  - :latitude) / 2), 2) + " +
@@ -18,6 +19,6 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
             "AS distance " +
             "FROM Accommodation " +  // FROM 절 추가
             "HAVING distance <= :distance", nativeQuery = true)
-    List<Accommodation> findByCoordinate(@Param("latitude") BigDecimal latitude, @Param("longitude") BigDecimal longitude,
-                                         @Param("distance") Long distance);
+    Optional<List<Accommodation>> findByCoordinate(@Param("latitude") BigDecimal latitude, @Param("longitude") BigDecimal longitude,
+                                                  @Param("distance") Long distance);
 }

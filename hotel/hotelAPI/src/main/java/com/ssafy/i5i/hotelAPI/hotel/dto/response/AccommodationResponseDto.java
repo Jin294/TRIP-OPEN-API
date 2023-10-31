@@ -24,4 +24,6 @@ public class AccommodationResponseDto {
     private BigDecimal accommodationLatitude;
 
     private BigDecimal accommodationLongitude;
+
+    private BigDecimal relativeDistance;
 }
