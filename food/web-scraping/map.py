@@ -17,9 +17,9 @@ import os
 
 ''' 0.0.csv import & export '''
 # CSV 파일 경로
-csv_file_path = './food/web-scraping/FoodSearchData.csv'
-output_csv_file = './food/web-scraping/관광지별음식점.csv'
-output_csv_file_v1 = './food/web-scraping/관광지별음식점메뉴.csv'
+csv_file_path = 'FoodSearchData.csv'
+output_csv_file = '관광지별음식점.csv'
+output_csv_file_v1 = '관광지별음식점메뉴.csv'
 
 print(os.getcwd())
 # CSV 파일을 pandas로 읽기
