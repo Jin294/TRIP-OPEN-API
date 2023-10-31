@@ -23,7 +23,7 @@ public class AccommodationController {
     @GetMapping("/{name}/{distance}/{sorted}")
     public List<AccommodationResponseDto> getAccommodationByName(@PathVariable("name") String name, @PathVariable("distance") long distance, @PathVariable("sorted") String sorted){
         AttractionNameRequestDto attractionNameRequestDto = new AttractionNameRequestDto(name, distance, sorted);
-
+        System.out.println("!!!!");
         return accommodationService.getAccommodationByName(attractionNameRequestDto);
     }
 

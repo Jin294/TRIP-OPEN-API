@@ -33,7 +33,7 @@ public class Attraction {
     private String addr2;
 
     @Column(name = "zipcode")
-    private Long zipcode;
+    private String zipcode;
 
     @Column(name = "tel")
     private String tel;

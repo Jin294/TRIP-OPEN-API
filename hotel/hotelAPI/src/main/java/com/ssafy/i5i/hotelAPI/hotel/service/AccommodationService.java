@@ -1,5 +1,8 @@
 package com.ssafy.i5i.hotelAPI.hotel.service;
 
+import com.ssafy.i5i.hotelAPI.hotel.common.exception.CommonException;
+import com.ssafy.i5i.hotelAPI.hotel.common.exception.ExceptionType;
+import com.ssafy.i5i.hotelAPI.hotel.common.exception.GlobalExceptionAdvice;
 import com.ssafy.i5i.hotelAPI.hotel.dto.request.AttractionCoordinateRequestDto;
 import com.ssafy.i5i.hotelAPI.hotel.dto.request.AttractionNameRequestDto;
 import com.ssafy.i5i.hotelAPI.hotel.dto.response.AccommodationResponseDto;
@@ -21,6 +24,9 @@ public class AccommodationService {
     private final AttractionRepository attractionRepository;
     public List<AccommodationResponseDto> getAccommodationByName(AttractionNameRequestDto requestDto){
         Attraction attraction = attractionRepository.findByTitle(requestDto.getAttractionName());
+        if(attraction == null){
+            throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);
+        }
         List<Accommodation> entity = accommodationRepository.findByAttractionId(attraction.getContentId());
         List<AccommodationResponseDto> response = new ArrayList<>();
 
