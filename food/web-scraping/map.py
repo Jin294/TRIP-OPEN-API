@@ -31,7 +31,8 @@ chrome_options.add_experimental_option("detach",True)
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--window-size=1920,1080')
 chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
-
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
 
 
 service = Service(executable_path=ChromeDriverManager().install())  # Chrome driver 자동 업데이트
@@ -209,10 +210,10 @@ def scraping(iidx):
                 food_menu[menu_name] = menu_price
                 #food_menu용 엑셀
                 food_menu_dict_temp = {
-                    "idx" : iidx,
-                    "content_id" : id,
-                    "menu_name" : menu_name,
-                    "menu_price" : menu_price
+                    "foodmenu_idx" : iidx,
+                    "foodmenu_id" : id,
+                    "foodmenu_name" : menu_name,
+                    "foodmenu_price" : menu_price
                 }
                 food_menu_dict.append(food_menu_dict_temp)
 
@@ -223,19 +224,19 @@ def scraping(iidx):
     
     '''데이터 저장하기'''
     dict_temp = {
-        "idx" : iidx,
-        "content_id" : id,
-        'name': food_name,
+        "food_idx" : iidx,
+        "food_id" : id,
+        'food_name': food_name,
         'food_type': food_type,
-        'road_address': road_address,
-        'jibun_address': jibun_address,
-        'telephone' : telephone,
-        'star' : float(star),
-        'real_view' : real_view, 
-        'blog_view' : blog_view,
+        'food_addr1': road_address,
+        'food_addr2': jibun_address,
+        'food_tel' : telephone,
+        'food_star' : float(star),
+        'food_realview' : real_view, 
+        'food_blogview' : blog_view,
         'food_menu' : food_menu,
-        'x':x,
-        'y':y
+        'food_longtitude':x,
+        'food_latitude':y
         }
     food_dict.append(dict_temp)
     print(f'{food_name} ...완료')
