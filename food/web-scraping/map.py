@@ -55,6 +55,14 @@ def time_wait(num, code):
         browser.quit()
     return wait
 
+def time_wait_frame(num, code):
+    try:
+        wait = WebDriverWait(browser, num)
+        wait.until(EC.frame_to_be_available_and_switch_to_it(code))
+    except Exception as e:
+        print(e)
+        print("frame 못 찾음")
+
 # frame 변경 메소드
 def switch_frame(frame):
     browser.switch_to.default_content()  # frame 초기화
@@ -290,6 +298,8 @@ try:
             #검색 시 바로 나옴 
             print("검색시 바로 나옴 시작")
             # 상세 프레임으로 이동
+            time_wait_frame(10,'entryIframe')
+
             switch_frame('entryIframe')
             scraping(iidx)
             iidx+=1
@@ -298,6 +308,7 @@ try:
         except Exception as e:
             #검색해도 안 나오거나 여러 개 검색됨 
             print(e)
+            time_wait_frame(10,'searchIframe')
             switch_frame('searchIframe') 
             print("searchIframe 변경")
             food_list = browser.find_elements(By.CSS_SELECTOR, 'li.UEzoS') # 음식점 리스트
