@@ -26,7 +26,7 @@ df = pd.read_csv(csv_file_path, encoding='cp949')
 ''' 0.1.driver 설정 '''
 chrome_options = Options()
 chrome_options.add_experimental_option("detach",True)
-# chrome_options.add_argument('--headless')
+chrome_options.add_argument('--headless')
 chrome_options.add_argument('--window-size=1920,1080')
 chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
 chrome_options.add_argument('--no-sandbox')
@@ -139,30 +139,24 @@ try:
         id = row['content_id']
      
         # browser.implicitly_wait(10)
-        time.sleep(0.3)
+        time.sleep(0.5)
 
         try :
-            key_word = row['naddr2']+" 음식점"
+            key_word = row['naddr1']+" 음식점"
             browser.get(f"https://m.map.naver.com/search2/search.naver?query={key_word}")
             food_list = browser.find_elements(By.CSS_SELECTOR, 'li._item._lazyImgContainer') # 음식점 리스트
+            if len(food_list)== 0 :
+                key_word = row['naddr2']+" 음식점"
+                browser.get(f"https://m.map.naver.com/search2/search.naver?query={key_word}")
+                food_list = browser.find_elements(By.CSS_SELECTOR, 'li._item._lazyImgContainer') # 음식점 리스트
+            
             for data in range(len(food_list)):
                 scraping(iidx)
                 iidx+=1
         except Exception as e:
             #검색해도 안 나옴
             print(e)
-            key_word = row['naddr1']+" 음식점"
-            browser.get(f"https://m.map.naver.com/search2/search.naver?query={key_word}")
-            
-            try :
-                food_list = browser.find_elements(By.CSS_SELECTOR, 'li._item._lazyImgContainer') # 음식점 리스트
-                for data in range(len(food_list)):
-                    scraping(iidx)
-                    iidx+=1
-            except Exception as e:
-            #검색해도 안 나옴
-                print(e)
-                continue
+            continue
           
         finally:
             result_df = pd.DataFrame(food_dict)
