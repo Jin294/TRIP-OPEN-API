@@ -17,8 +17,8 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: update
-  jwt:
-    secretKey: itsSecrentkeyyouknowheyfuckyoufudmfsdkfmaskfsdkfsadfklsdflksdfsklfmdsklfsmdfklmsdflksdmf=
+jwt:
+  secretKey: itsSecrentkeyyouknowheyfuckyoufudmfsdkfmaskfsdkfsadfklsdflksdfsklfmdsklfsmdfklmsdflksdmf=
 
 
 # mongoDB

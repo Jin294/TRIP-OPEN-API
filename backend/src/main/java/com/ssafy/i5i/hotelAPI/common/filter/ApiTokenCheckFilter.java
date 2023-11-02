@@ -16,7 +16,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Slf4j
 public class ApiTokenCheckFilter implements Filter {
-    private TokenService tokenService;
+    private final TokenService tokenService;
     private ObjectMapper objectMapper = new ObjectMapper();
     private String[] checkUrl = {
             "/api",
