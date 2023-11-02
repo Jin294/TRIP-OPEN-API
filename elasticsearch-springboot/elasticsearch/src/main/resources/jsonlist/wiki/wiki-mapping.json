@@ -1,0 +1,40 @@
+{
+  "properties": {
+    "content_id": {
+      "type": "keyword"
+    },
+    "pk_id": {
+      "type": "keyword"
+    },
+    "number": {
+      "type": "keyword"
+    },
+    "attraction_name": {
+      "type": "text",
+      "fields": {
+        "keyword": {
+          "type": "keyword",
+          "ignore_above": 256
+        }
+      }
+    },
+    "wiki_title": {
+      "type": "text",
+      "fields": {
+        "keyword": {
+          "type": "keyword",
+          "ignore_above": 256
+        }
+      }
+    },
+    "wiki_content": {
+      "type": "text",
+      "fields": {
+        "keyword": {
+          "type": "keyword",
+          "ignore_above": 256
+        }
+      }
+    }
+  }
+}

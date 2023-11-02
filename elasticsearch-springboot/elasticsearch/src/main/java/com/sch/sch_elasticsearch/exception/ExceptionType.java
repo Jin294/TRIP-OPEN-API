@@ -15,9 +15,9 @@ public enum ExceptionType {
     NULL_POINT_EXCEPTION(4001, "데이터가 없습니다."),
     SORTED_TYPE_EXCEPTION(4002,"정렬 타입이 잘못되었습니다."),
 
-    ACCOMMODATION_SAVE_FAIL(1000, "숙소 데이터 저장 실패")
+    ACCOMMODATION_SAVE_FAIL(1000, "숙소 데이터 저장 실패"),
 
-    ;
+    SEARCH_ERR(2000, "검색 과정에서 문제 발생");
     private final int code;
     private final String message;
 }

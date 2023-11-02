@@ -1,15 +1,9 @@
 {
   "properties" : {
-    "id" : {"type" : "keyword"},
-    "pk_id" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
-        }
-      }
-    },
+    "pk_id" : {"type" : "keyword"},
+    "accommodation_pic" : {"type" : "keyword"},
+    "accommodation_lat" : {"type" : "keyword"},
+    "accommodation_lng" : {"type" : "keyword"},
     "accommodation_addr" : {
       "type" : "text",
       "fields" : {
@@ -19,34 +13,7 @@
         }
       }
     },
-    "accommodation_lat" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
-        }
-      }
-    },
-    "accommodation_lng" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
-        }
-      }
-    },
     "accommodation_name" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
-        }
-      }
-    },
-    "accommodation_pic" : {
       "type" : "text",
       "fields" : {
         "keyword" : {
@@ -74,15 +41,6 @@
       }
     },
     "accommodation_type" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
-        }
-      }
-    },
-    "id" : {
       "type" : "text",
       "fields" : {
         "keyword" : {
