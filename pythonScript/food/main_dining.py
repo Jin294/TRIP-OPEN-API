@@ -40,7 +40,7 @@ browser = webdriver.Chrome(service=service, options=chrome_options)
 browser.execute_script("Object.defineProperty(navigator, 'languages', {get: function() {return ['ko-KR', 'ko']}})")
 browser.execute_script("Object.defineProperty(navigator, 'plugins', {get: function() {return[1, 2, 3, 4, 5]}})")
 browser.get("https://www.diningcode.com/list.dc")
-browser.implicitly_wait(10)
+browser.implicitly_wait(5)
 
 ''' 0.2.함수'''
 # 크롤링
@@ -141,18 +141,19 @@ header_df.to_csv(output_csv_file, mode='w', index=False, encoding='utf-8-sig')
 try:
     for index, row in df.iterrows():
         # if index == 3: break
+        # if index < 321: continue
         startone = time.time()
         id = row['content_id']
         search = browser.find_element(By.CSS_SELECTOR, 'div.sc-iBdmCd.kcCZjE.Input__Wrap > input.sc-kFCsca.bZIkjH.Search__Input')
         search.click()
+        time.sleep(0.5)
         search.clear() #검색어 초기화
-      
+
         try :
             key_word = row['naddr1']
             search.send_keys(key_word) #검색어 입력 
-            time.sleep(0.2)
             search.send_keys(Keys.ENTER) #엔터버튼 누르기 
-            time.sleep(1)
+            time.sleep(0.5)
             print("======naddr1 키워드 검색함======")
             
             food_list = browser.find_elements(By.CSS_SELECTOR, 'a.sc-ilxdoh.dCXsNO.PoiBlock') # 음식점 리스트
@@ -162,12 +163,14 @@ try:
             print("data 없으면 True => ",len(food_list)== 0)
             if len(food_list)== 0 :
                 print("======data가 없어서 naddr2로 검색======")
+                search.click()
+                time.sleep(0.5)
+                search.clear() #검색어 초기화
+                time.sleep(0.5)
                 key_word = row['naddr2']
-                
                 search.send_keys(key_word) #검색어 입력 
-                time.sleep(0.2)
                 search.send_keys(Keys.ENTER) #엔터버튼 누르기 
-                time.sleep(1)
+                time.sleep(0.5)
                 print("======naddr2 키워드 검색함======")
 
                 more()#버튼 클릭하기 
