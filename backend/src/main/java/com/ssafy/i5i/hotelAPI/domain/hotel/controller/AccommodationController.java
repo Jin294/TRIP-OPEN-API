@@ -1,10 +1,9 @@
-package com.ssafy.i5i.hotelAPI.hotel.controller;
+package com.ssafy.i5i.hotelAPI.domain.hotel.controller;
 
-import com.ssafy.i5i.hotelAPI.hotel.dto.request.AttractionCoordinateRequestDto;
-import com.ssafy.i5i.hotelAPI.hotel.dto.request.AttractionNameRequestDto;
-import com.ssafy.i5i.hotelAPI.hotel.dto.response.AccommodationResponseDto;
-import com.ssafy.i5i.hotelAPI.hotel.entity.Attraction;
-import com.ssafy.i5i.hotelAPI.hotel.service.AccommodationService;
+import com.ssafy.i5i.hotelAPI.domain.hotel.dto.request.AttractionCoordinateRequestDto;
+import com.ssafy.i5i.hotelAPI.domain.hotel.dto.request.AttractionNameRequestDto;
+import com.ssafy.i5i.hotelAPI.domain.hotel.dto.response.AccommodationResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.hotel.service.AccommodationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

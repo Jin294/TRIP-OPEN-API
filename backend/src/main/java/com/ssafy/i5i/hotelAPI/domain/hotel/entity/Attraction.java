@@ -1,4 +1,4 @@
-package com.ssafy.i5i.hotelAPI.hotel.entity;
+package com.ssafy.i5i.hotelAPI.domain.hotel.entity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,10 +18,10 @@ public class Attraction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "content_id")
-    private Long contentId;
+    private Integer contentId;
 
     @Column(name = "content_type_id")
-    private Long contentTypeId;
+    private Integer contentTypeId;
 
     @Column(name = "title")
     private String title;
@@ -45,13 +45,13 @@ public class Attraction {
     private String firstImage2;
 
     @Column(name = "readcount")
-    private Long readCount;
+    private Integer readCount;
 
     @Column(name = "sido_code")
-    private Long sidoCode;
+    private Integer sidoCode;
 
     @Column(name = "gugun_code")
-    private Long gugunCode;
+    private Integer gugunCode;
 
     @Column(name = "latitude")
     private BigDecimal latitude;

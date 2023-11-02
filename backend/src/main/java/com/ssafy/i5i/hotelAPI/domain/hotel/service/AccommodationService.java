@@ -1,15 +1,14 @@
-package com.ssafy.i5i.hotelAPI.hotel.service;
+package com.ssafy.i5i.hotelAPI.domain.hotel.service;
 
-import com.ssafy.i5i.hotelAPI.hotel.common.exception.CommonException;
-import com.ssafy.i5i.hotelAPI.hotel.common.exception.ExceptionType;
-import com.ssafy.i5i.hotelAPI.hotel.common.exception.GlobalExceptionAdvice;
-import com.ssafy.i5i.hotelAPI.hotel.dto.request.AttractionCoordinateRequestDto;
-import com.ssafy.i5i.hotelAPI.hotel.dto.request.AttractionNameRequestDto;
-import com.ssafy.i5i.hotelAPI.hotel.dto.response.AccommodationResponseDto;
-import com.ssafy.i5i.hotelAPI.hotel.entity.Accommodation;
-import com.ssafy.i5i.hotelAPI.hotel.entity.Attraction;
-import com.ssafy.i5i.hotelAPI.hotel.repository.AccommodationRepository;
-import com.ssafy.i5i.hotelAPI.hotel.repository.AttractionRepository;
+import com.ssafy.i5i.hotelAPI.common.exception.CommonException;
+import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
+import com.ssafy.i5i.hotelAPI.domain.hotel.entity.Accommodation;
+import com.ssafy.i5i.hotelAPI.domain.hotel.entity.Attraction;
+import com.ssafy.i5i.hotelAPI.domain.hotel.dto.request.AttractionCoordinateRequestDto;
+import com.ssafy.i5i.hotelAPI.domain.hotel.dto.request.AttractionNameRequestDto;
+import com.ssafy.i5i.hotelAPI.domain.hotel.dto.response.AccommodationResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.hotel.repository.AccommodationRepository;
+import com.ssafy.i5i.hotelAPI.domain.hotel.repository.AttractionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

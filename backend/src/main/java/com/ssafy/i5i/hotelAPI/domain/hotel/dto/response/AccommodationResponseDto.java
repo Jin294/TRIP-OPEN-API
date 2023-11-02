@@ -1,4 +1,4 @@
-package com.ssafy.i5i.hotelAPI.hotel.dto.response;
+package com.ssafy.i5i.hotelAPI.domain.hotel.dto.response;
 
 import lombok.*;
 

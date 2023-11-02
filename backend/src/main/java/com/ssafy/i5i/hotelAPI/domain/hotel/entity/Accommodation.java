@@ -1,6 +1,6 @@
-package com.ssafy.i5i.hotelAPI.hotel.entity;
+package com.ssafy.i5i.hotelAPI.domain.hotel.entity;
 
-import com.ssafy.i5i.hotelAPI.hotel.dto.response.AccommodationResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.hotel.dto.response.AccommodationResponseDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.math.MathContext;
 
 
 @Entity

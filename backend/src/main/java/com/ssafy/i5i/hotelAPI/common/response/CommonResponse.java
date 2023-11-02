@@ -1,4 +1,4 @@
-package com.ssafy.i5i.hotelAPI.hotel.common.response;
+package com.ssafy.i5i.hotelAPI.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.ssafy.i5i.hotelAPI.hotel.repository;
+package com.ssafy.i5i.hotelAPI.domain.hotel.repository;
 
-import com.ssafy.i5i.hotelAPI.hotel.entity.Accommodation;
+import com.ssafy.i5i.hotelAPI.domain.hotel.entity.Accommodation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

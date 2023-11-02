@@ -1,4 +1,4 @@
-package com.ssafy.i5i.hotelAPI.hotel.common.exception;
+package com.ssafy.i5i.hotelAPI.common.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

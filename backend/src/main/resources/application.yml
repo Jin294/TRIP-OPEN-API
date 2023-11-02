@@ -1,5 +1,5 @@
 server:
-  port: 9999
+  port: 8080
 
 
 spring:
@@ -10,13 +10,13 @@ spring:
       uri: mongodb+srv://S09P31B205:z5HxUpl4gB@ssafy.ngivl.mongodb.net/S09B31B205?authSource=admin
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/enjoytrip?serverTimezone=Asia/Seoul
-    username: root
-    password: ssafy
+    url: jdbc:mysql://k9b205.p.ssafy.io:3306/b205
+    username: b205
+    password: 9gi_ssafy_final
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
 # mongoDB
 
