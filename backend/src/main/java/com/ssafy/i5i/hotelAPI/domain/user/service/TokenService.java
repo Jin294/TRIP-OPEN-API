@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class TokenService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public boolean checkValidToken(String token) {
         Optional<User> user = userRepository.findByToken(token);
