@@ -1,18 +1,36 @@
 import pandas as pd
 
-pd.set_option('display.max_columns',None)
-csv_file_path = './food/web-scraping/fulldata_07_24_04_P_일반음식점.csv'
-output_csv_file = './food/web-scraping/FoodSearchData.csv'
+csv_file_path = 'searchData_ori.csv'
+output_csv_file = 'searchData_new.csv'
 
 # CSV 파일을 pandas로 읽기
 df = pd.read_csv(csv_file_path, encoding='cp949')
-df = df.loc[df['영업상태명'] != '폐업']
-df = df[['번호','개방서비스명','소재지전체주소','도로명전체주소','사업장명','업태구분명','좌표정보(x)','좌표정보(y)']]
+df = df.dropna(subset=['addr1'])
 
-tmp = df['소재지전체주소'].str.split(" ")
-df['지역'] = tmp.str.get(2)
-df['사업장명'] = df['사업장명'].str.rstrip('0123456789') #사업장명 마지막글자에 숫자가 있으면 제거 
-df = df.drop_duplicates(subset=['사업장명'], keep='first') #중복사업자명 제거 
-# print(df.head)
+# 데이터 정제하기
+df['title'] = df['title'].str.replace(r'\([^)]*\)|\[[^\]]*\]', '', regex=True)
+
+def custom_modify_address(addr):
+    parts = addr.split(' ')
+    if(len(parts) <= 3):
+      return ' '.join(parts[:3])
+    else:
+      if parts[-1].isdigit() or'-' in parts[-1]:
+        return ' '.join(parts[:-1])
+      elif parts[3].isdigit() or'-' in parts[3]: 
+        # If the last part is a number, take the first three parts
+        return ' '.join(parts[:3])
+      else:
+        # Otherwise, take the first four parts
+        return ' '.join(parts[:4])
+
+# 'addr1' 열을 수정
+df['naddr1'] = df['addr1'].apply(custom_modify_address)
+
+# 'addr1' 열을 수정
+df['naddr1'] = df['addr1'].apply(custom_modify_address)
+df['naddr2'] = df['addr1'].str.split(' ').str[:3].str.join(' ')
+df['naddr1'] = df['naddr1'].str.replace(',', '')
+df['naddr2'] = df['naddr2'].str.replace(',', '')
 
 df.to_csv(output_csv_file, index=False, encoding='cp949')

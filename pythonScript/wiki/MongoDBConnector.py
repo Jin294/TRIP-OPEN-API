@@ -23,4 +23,8 @@ class MongoDBConnector:
         result = self.collection.find_one({"title":data})         
         return result                                                                                                                                                                            
     
+    def find_all(self):
+        result = self.collection.find({})
+        time.sleep(60)
+        return result
 
