@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.token = :token AND u.isDeleted = false")
     Optional<User> findByToken(String token);
+
+    Optional<User> findById(String id);
 }
