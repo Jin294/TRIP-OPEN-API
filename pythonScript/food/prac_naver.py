@@ -15,6 +15,7 @@ import time
 from bs4 import BeautifulSoup
 import os
 
+
 ''' 0.0.csv import & export '''
 # CSV 파일 경로
 csv_file_path = 'searchData_new.csv'
@@ -28,7 +29,8 @@ chrome_options = Options()
 chrome_options.add_experimental_option("detach",True)
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--window-size=1920,1080')
-chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
+# chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
+chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36")
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
 
@@ -79,22 +81,22 @@ def scraping(iidx):
     ''' (1) 기본 정보 가져오기 '''
     try:    
         food_name = food_list[data].get_attribute('data-title') #음식점명
-        print(food_name)
+        print("음식점 이름: ",food_name)
         food_type = food_list[data].find_element(By.CSS_SELECTOR,".item_tit._title > em").text #음식점 카테고리
-        print(food_type)
+        # print(food_type)
         telephone = food_list[data].get_attribute('data-tel') #전화번호
-        print(telephone)
+        # print(telephone)
         address = food_list[data].find_element(By.CSS_SELECTOR,'.item_address ').text.replace('주소보기\n', '')
-        print(address)
+        # print(address)
         longtitude = float(food_list[data].get_attribute('data-longitude'))
-        print(longtitude)
+        # print(longtitude)
         latitude = float(food_list[data].get_attribute('data-latitude'))
-        print(latitude)
+        # print(latitude)
         try:
             jjim = food_list[data].find_element(By.CSS_SELECTOR,"em.u_cnt._cnt").text
         except Exception as e:
             jjim = ''
-        print("찜 : ",jjim)
+        # print("찜 : ",jjim)
     except Exception as e:
         print(e)
     
@@ -112,7 +114,6 @@ def scraping(iidx):
         }
     food_dict.append(dict_temp)
     print(f'{food_name} ...완료')
-    print(f'[{key_word} 관련 음식점 검색 ...완료]')
 
     # TXT 파일에 index 번호 입력
     with open('index_numbers.txt', 'w', encoding='utf-8') as txt_file:
@@ -134,32 +135,47 @@ header_df.to_csv(output_csv_file, mode='w', index=False, encoding='utf-8-sig')
 
 try:
     for index, row in df.iterrows():
-        # if index == 5: break
+        # if index < 667:
+        #     continue  
         startone = time.time()
         id = row['content_id']
-     
-        # browser.implicitly_wait(10)
-        time.sleep(0.5)
+        browser.implicitly_wait(3)
 
         try :
             key_word = row['naddr1']+" 음식점"
             browser.get(f"https://m.map.naver.com/search2/search.naver?query={key_word}")
+            time.sleep(1)
             food_list = browser.find_elements(By.CSS_SELECTOR, 'li._item._lazyImgContainer') # 음식점 리스트
+            body = browser.find_element(By.CSS_SELECTOR, 'body').text
+            print(body)
+   
+            print("data 있어?",len(food_list)== 0)
             if len(food_list)== 0 :
+                print("data가 없어서 naddr2로 검색")
                 key_word = row['naddr2']+" 음식점"
                 browser.get(f"https://m.map.naver.com/search2/search.naver?query={key_word}")
+                time.sleep(1)
                 food_list = browser.find_elements(By.CSS_SELECTOR, 'li._item._lazyImgContainer') # 음식점 리스트
+
+                for data in range(len(food_list)):
+                    scraping(iidx)
+                    iidx+=1
+            else:
+                for data in range(len(food_list)):
+                    scraping(iidx)
+                    iidx+=1
             
-            for data in range(len(food_list)):
-                scraping(iidx)
-                iidx+=1
+
         except Exception as e:
             #검색해도 안 나옴
+            print("ERROR!! "*3)
             print(e)
             continue
           
         finally:
             result_df = pd.DataFrame(food_dict)
+            print("--------result_df 출력------------")
+            print(result_df)
             result_df.to_csv(output_csv_file, mode='a', header=False, index=False, encoding='utf-8-sig')
 
             food_dict = []
