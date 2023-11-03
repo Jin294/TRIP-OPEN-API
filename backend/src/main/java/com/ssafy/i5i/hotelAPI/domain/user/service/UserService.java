@@ -17,4 +17,19 @@ public class UserService {
                 .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);});
         return user;
     }
+
+
+    //회원가입
+
+    //로그인
+
+    //로그아웃
+
+    //API용 토근 발급
+
+    //회원삭제
+
+    //아이디찾기
+
+    //비밀번호 수정 ( 이메일 )
 }
