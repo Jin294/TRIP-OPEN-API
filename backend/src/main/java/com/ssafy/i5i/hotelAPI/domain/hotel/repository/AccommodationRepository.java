@@ -19,6 +19,6 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
             "AS distance " +
             "FROM Accommodation " +  // FROM 절 추가
             "HAVING distance <= :distance", nativeQuery = true)
-    Optional<List<Accommodation>> findByCoordinate(@Param("latitude") BigDecimal latitude, @Param("longitude") BigDecimal longitude,
+    Optional<List<Accommodation>> findByCoordinate(@Param("latitude") Double latitude, @Param("longitude") Double longitude,
                                                   @Param("distance") Long distance);
 }

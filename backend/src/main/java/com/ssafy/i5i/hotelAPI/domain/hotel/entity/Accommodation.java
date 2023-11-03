@@ -41,13 +41,13 @@ public class Accommodation {
     private String accommodationImg;
 
     @Column(name = "accommodation_price")
-    private String accommodationPrice;
+    private Long accommodationPrice;
 
     @Column(name = "accommodation_latitude")
-    private BigDecimal accommodationLatitude;
+    private Double accommodationLatitude;
 
     @Column(name = "accommodation_longitude")
-    private BigDecimal accommodationLongitude;
+    private Double accommodationLongitude;
 
 
     public AccommodationResponseDto toDto (){
