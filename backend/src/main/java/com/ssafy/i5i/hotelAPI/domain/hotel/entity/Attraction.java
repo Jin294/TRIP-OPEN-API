@@ -54,10 +54,10 @@ public class Attraction {
     private Integer gugunCode;
 
     @Column(name = "latitude")
-    private BigDecimal latitude;
+    private Double latitude;
 
     @Column(name = "longitude")
-    private BigDecimal longitude;
+    private Double longitude;
 
     @Column(name = "mlevel")
     private String mlevel;
