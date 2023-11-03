@@ -1,12 +1,13 @@
 package com.sch.sch_elasticsearch;
 
-import com.sch.sch_elasticsearch.domain.accommodation.entity.Accommodation;
 import com.sch.sch_elasticsearch.domain.accommodation.service.AccommodationService;
 import com.sch.sch_elasticsearch.domain.test.TestDTO;
 import com.sch.sch_elasticsearch.domain.test.TestService;
-import lombok.ToString;
+import com.sch.sch_elasticsearch.domain.wiki.entity.Wiki;
+import com.sch.sch_elasticsearch.domain.wiki.service.WikiService;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.core.MainResponse;
+import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.web.bind.annotation.*;
 import org.elasticsearch.client.RequestOptions;
 
@@ -19,10 +20,13 @@ public class TestController {
     AccommodationService accommodationService;
     TestService testService;
 
-    public TestController(RestHighLevelClient client, AccommodationService accommodationService, TestService testService) {
+    private final WikiService wikiService;
+
+    public TestController(RestHighLevelClient client, AccommodationService accommodationService, TestService testService, WikiService wikiService) {
         this.client = client;
         this.accommodationService = accommodationService;
         this.testService = testService;
+        this.wikiService = wikiService;
     }
 
     @RequestMapping("boot")
@@ -37,21 +41,13 @@ public class TestController {
         }
     }
 
-//    @GetMapping("getall")
-//    public Iterable<Accommodation> getAll() {
-//        return accommodationService.getAllResidences();
-//    }
+    @GetMapping("t2")
+    public List<Wiki> t2(@RequestParam("typeNum") int typeNum, @RequestParam("input") String inputString) {
+        return wikiService.searchExact(typeNum, inputString);
+    }
 
-//    @GetMapping("search/{input}")
-//    public List<Accommodation> search(@PathVariable String input) {
-//        return accommodationService.search(input);
-//    }
-//
-//    @GetMapping("querytest/{input}")
-//    public List<Accommodation> test(@PathVariable String input) {return accommodationService.querytest(input);}
-
-    @PostMapping("t1")
-    public void t1(@RequestBody TestDTO testDTO) {
-        testService.saveTest(testDTO);
+    @GetMapping("t3")
+    public List<Wiki> t3(@RequestParam("typeNum") int typeNum, @RequestParam("inputString") String inputString) {
+        return wikiService.searchPartial(typeNum, inputString);
     }
 }

@@ -4,6 +4,7 @@ import com.sch.sch_elasticsearch.domain.wiki.entity.Wiki;
 import com.sch.sch_elasticsearch.domain.wiki.service.WikiService;
 import com.sch.sch_elasticsearch.exception.CommonException;
 import com.sch.sch_elasticsearch.exception.ExceptionType;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,26 +17,13 @@ import java.util.List;
 public class WikiController {
     private final WikiService wikiService;
 
-    //검색어 일치의 경우 반환
-    @GetMapping("/name-correct")
-    public List<Wiki> searchExactName(@RequestParam("input") String input) {
-        try {
-            return wikiService.searchExactName(input);
-        }
-        catch (Exception e) {
-            throw new CommonException(ExceptionType.SEARCH_ERR);
-        }
+    @GetMapping("search-exact")
+    public List<Wiki> searchExact(@RequestParam("typeNum") int typeNum, @RequestParam("input") String inputString) {
+        return wikiService.searchExact(typeNum, inputString);
     }
 
-    //부분 검색 반환
-    @GetMapping("/name-partial")
-    public List<Wiki> searchPartialName(@RequestBody String input) {
-        return wikiService.searchPartialName(input);
-//        try {
-//            return wikiService.searchPartialName(input);
-//        }
-//        catch (Exception e) {
-//            throw new CommonException(ExceptionType.SEARCH_ERR);
-//        }
+    @GetMapping("search-partial")
+    public List<Wiki> searchPartial(@RequestParam("typeNum") int typeNum, @RequestParam("inputString") String inputString) {
+        return wikiService.searchPartial(typeNum, inputString);
     }
 }
