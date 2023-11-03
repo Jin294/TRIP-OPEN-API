@@ -19,11 +19,11 @@ public class AccommodationResponseDto {
 
     private String accommodationImg;
 
-    private String accommodationPrice;
+    private Long accommodationPrice;
 
-    private BigDecimal accommodationLatitude;
+    private Double accommodationLatitude;
 
-    private BigDecimal accommodationLongitude;
+    private Double accommodationLongitude;
 
-    private BigDecimal relativeDistance;
+    private Double relativeDistance;
 }

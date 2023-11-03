@@ -23,7 +23,7 @@ public class AccommodationService {
 
     private final AccommodationRepository accommodationRepository;
     private final AttractionRepository attractionRepository;
-    public static final BigDecimal RADIUS_OF_EARTH = new BigDecimal("6371.0");
+    public static final Double RADIUS_OF_EARTH = 6371.0;
 
     public List<AccommodationResponseDto> sort(List<AccommodationResponseDto> data, String type){
         if(type.equalsIgnoreCase("DISTANCE")){
@@ -50,7 +50,7 @@ public class AccommodationService {
 
         List<AccommodationResponseDto> response = new ArrayList<>();
 
-        BigDecimal distance = new BigDecimal(requestDto.getDistance());
+        Double distance = requestDto.getDistance();
         for(Accommodation data : entity){
             AccommodationResponseDto now = data.toDto();
             now.setRelativeDistance(calculateDistance(attraction.getLatitude(), attraction.getLongitude(), now.getAccommodationLatitude(), now.getAccommodationLongitude()));
@@ -60,6 +60,7 @@ public class AccommodationService {
         //소트
         return response;
     }
+
     public List<AccommodationResponseDto> getAccommodationByCoordinate(AttractionCoordinateRequestDto requestDto){
         List<Accommodation> entity = accommodationRepository.findByCoordinate(requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getDistance())
                 .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);});
@@ -75,22 +76,20 @@ public class AccommodationService {
     }
 
 
-    private BigDecimal calculateDistance(BigDecimal lat1, BigDecimal lon1, BigDecimal lat2, BigDecimal lon2) {
+    private Double calculateDistance(Double lat1, Double lon1, Double lat2, Double lon2) {
         // 위도와 경도를 사용하여 거리를 계산하는 로직을 구현
-        BigDecimal lat1Rad = lat1.multiply(new BigDecimal(Math.PI)).divide(new BigDecimal(180), MathContext.DECIMAL128);
-        BigDecimal lon1Rad = lon1.multiply(new BigDecimal(Math.PI)).divide(new BigDecimal(180), MathContext.DECIMAL128);
-        BigDecimal lat2Rad = lat2.multiply(new BigDecimal(Math.PI)).divide(new BigDecimal(180), MathContext.DECIMAL128);
-        BigDecimal lon2Rad = lon2.multiply(new BigDecimal(Math.PI)).divide(new BigDecimal(180), MathContext.DECIMAL128);
+        Double lat1Rad = lat1 * Math.PI / 180;
+        Double lon1Rad = lon1 * Math.PI / 180;
+        Double lat2Rad = lat2 * Math.PI / 180;
+        Double lon2Rad = lon2 * Math.PI / 180;
 
         // Haversine 공식을 사용하여 거리 계산
-        BigDecimal dLat = lat2Rad.subtract(lat1Rad).abs();
-        BigDecimal dLon = lon2Rad.subtract(lon1Rad).abs();
-        BigDecimal a = new BigDecimal(Math.pow(Math.sin(dLat.doubleValue() / 2), 2), MathContext.DECIMAL128)
-                .add(new BigDecimal(Math.cos(lat1Rad.doubleValue())
-                        * Math.cos(lat2Rad.doubleValue())
-                        * Math.pow(Math.sin(dLon.doubleValue() / 2), 2), MathContext.DECIMAL128));
-        BigDecimal c = new BigDecimal(2 * Math.atan2(Math.sqrt(a.doubleValue()), Math.sqrt(1 - a.doubleValue())), MathContext.DECIMAL128);
-        BigDecimal distance = RADIUS_OF_EARTH.multiply(c, MathContext.DECIMAL128);
+        Double dLat = Math.abs(lat2Rad - lat1Rad);
+        Double dLon = Math.abs(lon2Rad - lon1Rad);
+        Double a = Math.pow(Math.sin(dLat / 2), 2)
+                + Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.pow(Math.sin(dLon / 2), 2);
+        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        Double distance = RADIUS_OF_EARTH * c;
 
         return distance;
     }
