@@ -1,6 +1,9 @@
 package com.ssafy.i5i.hotelAPI.common.config;
 
+import com.ssafy.i5i.hotelAPI.common.filter.ApiTokenCheckFilter;
 import com.ssafy.i5i.hotelAPI.common.filter.JwtAuthenticationFilter;
+import com.ssafy.i5i.hotelAPI.domain.user.service.TokenService;
+import com.ssafy.i5i.hotelAPI.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,10 +21,13 @@ public class SecurityConfig {
 //    public PasswordEncoder passwordEncoder(){
 //        return new BCryptPasswordEncoder();
 //    }
+    private final UserService userService;
+    private final TokenService tokenService;
 
     private static final String[] PERMIT_URL = {
             "/docs/service",
-            "/docs/service/login"
+            "/docs/service/login",
+            "/api/**"
     };
 
     @Bean
@@ -38,6 +44,8 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                //token 확인용 filter
+                .addFilterBefore(new ApiTokenCheckFilter(tokenService, userService), UsernamePasswordAuthenticationFilter.class)
 
                 //URL 허용
                 .authorizeHttpRequests()
@@ -47,7 +55,6 @@ public class SecurityConfig {
 
                 //docs용 로그인 jwt 검증 필터
                 .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-
         ;
         return http.build();
     }

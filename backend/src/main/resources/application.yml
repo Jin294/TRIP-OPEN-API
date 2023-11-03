@@ -23,6 +23,8 @@ spring:
     password: 9gi_ssafy_final
 jwt:
   secretKey: itsSecrentkeyyouknowheyfuckyoufudmfsdkfmaskfsdkfsadfklsdflksdfsklfmdsklfsmdfklmsdflksdmf=
+host:
+  url: http://localhost:8080
 
 
 

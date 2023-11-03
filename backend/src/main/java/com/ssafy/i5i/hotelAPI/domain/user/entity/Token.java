@@ -8,7 +8,8 @@ import org.springframework.data.redis.core.RedisHash;
 
 @Getter
 @Setter
-@RedisHash(value = "token", timeToLive = 3600L)
+//24시간 동안 토큰 정보 저장
+@RedisHash(value = "token", timeToLive = 86400L)
 @AllArgsConstructor
 public class Token {
     @Id

@@ -34,16 +34,18 @@ public class TokenService {
     }
 
     public boolean saveToken(String tokenId) {
-        Token token = new Token(tokenId, 1);
+        Token token = new Token(tokenId, 0);
         tokenRedisRepository.save(token);
         return true;
     }
 
     public boolean maxCheck(String tokenId) {
         Token token = tokenRedisRepository.findById(tokenId).orElse(null);
-        if(token.getCount() >= 1000) {
+        if(token != null && token.getCount() >= 3) {
             return false;
         }
+//        token.setCount(token.getCount() + 1);
+//        tokenRedisRepository.save(token);
         return true;
     }
 }
