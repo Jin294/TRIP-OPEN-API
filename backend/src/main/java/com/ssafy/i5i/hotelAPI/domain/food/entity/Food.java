@@ -32,7 +32,7 @@ public class Food {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "content_id")
+	@JoinColumn(name = "food_id", referencedColumnName = "content_id")
 	private Attraction attraction;
 
 	//음식점 이름
