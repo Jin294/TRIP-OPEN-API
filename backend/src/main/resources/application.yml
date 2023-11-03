@@ -17,6 +17,10 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: update
+  redis:
+    host: k9b205.p.ssafy.io
+    port: 6379
+    password: 9gi_ssafy_final
 jwt:
   secretKey: itsSecrentkeyyouknowheyfuckyoufudmfsdkfmaskfsdkfsadfklsdflksdfsklfmdsklfsmdfklmsdflksdmf=
 

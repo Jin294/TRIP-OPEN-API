@@ -18,8 +18,6 @@ public class TokenService {
         if(user.isPresent()) {
             return true;
         }
-        else {
-            return false;
-        }
+        return false;
     }
 }
