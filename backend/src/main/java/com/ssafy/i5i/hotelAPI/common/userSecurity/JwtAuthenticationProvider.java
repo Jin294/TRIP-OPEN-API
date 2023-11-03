@@ -1,5 +1,7 @@
 package com.ssafy.i5i.hotelAPI.common.userSecurity;
 
+import com.ssafy.i5i.hotelAPI.common.exception.CommonException;
+import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
 import com.ssafy.i5i.hotelAPI.domain.user.entity.User;
 import com.ssafy.i5i.hotelAPI.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class JwtAuthenticationProvider implements AuthenticationProvider {
     private final UserService userService;
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -26,7 +28,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         User user = userService.getUserById(userId);
 
         if(!this.passwordEncoder.matches(password, user.getPassword())){
-            throw new BadCredentialsException("password is wrong");
+            throw new CommonException(ExceptionType.USER_WRONGPASSWORD_EXCEPTION);
         }
         return new UsernamePasswordAuthenticationToken(user, null, null);
     }
