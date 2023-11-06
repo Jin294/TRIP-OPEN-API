@@ -32,4 +32,10 @@ public class FoodController {
 		return foodServiceImpl.getFoodFromLngLat(attractionCoordinateRequestDto);
 	}
 
+	@GetMapping("/test")
+	public String getString(){
+		String data = "Test";
+		return data;
+	}
+
 }
