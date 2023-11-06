@@ -1,6 +1,5 @@
 package com.ssafy.i5i.hotelAPI.domain.food.controller;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +21,13 @@ public class FoodController {
 	private final FoodServiceImpl foodServiceImpl;
 
 	@GetMapping("/{name}/{distance}/{sorted}")
-	public List<FoodResponseDto> getFoodFromTravle(@PathVariable("name")String name, @PathVariable("distance")Long distance, @PathVariable("sorted")String sorted ){
+	public List<FoodResponseDto> getFoodFromTravle(@PathVariable("name")String name, @PathVariable("distance")Double distance, @PathVariable("sorted")String sorted ){
 		AttractionNameRequestDto attractionNameRequestDto = new AttractionNameRequestDto(name, distance, sorted);
 		return foodServiceImpl.getFoodFromTravle(attractionNameRequestDto);
 	}
 
 	@GetMapping("/{longtitude}/{latitude}/{distance}/{sorted}")
-	public List<FoodResponseDto> getFoodFromLngLat(@PathVariable("longtitude")BigDecimal longitude, @PathVariable("latitude")BigDecimal latitude, @PathVariable("distance")Long distance, @PathVariable("sorted")String sorted){
+	public List<FoodResponseDto> getFoodFromLngLat(@PathVariable("longtitude")Double longitude, @PathVariable("latitude")Double latitude, @PathVariable("distance")Long distance, @PathVariable("sorted")String sorted){
 		AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(latitude, longitude, distance, sorted);
 		return foodServiceImpl.getFoodFromLngLat(attractionCoordinateRequestDto);
 	}
