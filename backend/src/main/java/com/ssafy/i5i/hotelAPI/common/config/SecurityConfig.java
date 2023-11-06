@@ -1,26 +1,23 @@
 package com.ssafy.i5i.hotelAPI.common.config;
 
-import com.ssafy.i5i.hotelAPI.common.userSecurity.JwtAuthenticationFilter;
+import com.ssafy.i5i.hotelAPI.common.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+public class SecurityConfig {
+//    @Bean
+//    public PasswordEncoder passwordEncoder(){
+//        return new BCryptPasswordEncoder();
+//    }
 
     private static final String[] PERMIT_URL = {
             "/docs/service",
@@ -28,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     };
 
     @Bean
-    public SecurityFilterChain securityFilterChain(@org.jetbrains.annotations.NotNull HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .csrf().disable() // Post나 Put과 같이 리소스를 변경하는 요청의 경우 내가 내보냈던 리소스에서 올라온 요청인지 확인
                 .formLogin().disable()
@@ -51,9 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //docs용 로그인 jwt 검증 필터
                 .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 
-                ;
+        ;
         return http.build();
     }
 
 
 }
+

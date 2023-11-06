@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface TokenRedisRepository extends CrudRepository<Token, String> {
-    public Optional<Token> findByToken(String token);
+    public Optional<Token> findById(String token);
 }

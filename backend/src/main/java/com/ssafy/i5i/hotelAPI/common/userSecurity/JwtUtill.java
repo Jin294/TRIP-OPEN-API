@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -27,6 +28,8 @@ public class JwtUtill {
     private void init(){
         jwtSecret = jwtSecretKeyValue;
     }
+
+    static private RedisTemplate<String,String> redisTemplate;
 
     public static String generateToken(String userId, String subject, Long expirationTime){
         Instant now = Instant.now();
@@ -51,13 +54,26 @@ public class JwtUtill {
 
     public static String generateRefreshToken(String userId){
         Long expirationTime = 1000L * 60 * 60; // 1시간
-        return generateToken(userId, "refresh-token", expirationTime);
+        String token = generateToken(userId, "refresh-token", expirationTime);
+        redisTemplate.opsForValue().append(userId,token);
+        return token;
+    }
+
+    public static void removeRefreshToken(String userId){
+        redisTemplate.opsForValue().getAndDelete(userId);
+    }
+
+    public static boolean validRefresh(String userId, String token){
+        String otherToken = redisTemplate.opsForValue().get(userId);
+        if(token.equals(otherToken)) return true;
+        return false;
     }
 
     private static boolean isExpired(String token){
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJwt(token).getBody()
                 .getExpiration().before(new Date());
     }
+
 
     public static Claims getPayloadAndCheckExpired(String jwt){
         if(isExpired(jwt)) throw new CommonException(ExceptionType.JWT_TOKEN_EXPIRED);
