@@ -6,7 +6,7 @@ class MongoDBConnector:
     def __init__(self, collection):
         try: 
             self.client = pymongo.MongoClient("mongodb+srv://S09P31B205:z5HxUpl4gB@ssafy.ngivl.mongodb.net/S09B31B205?authSource=admin")
-            time.sleep(5)
+            time.sleep(30)
             # print(f"connect check : {self.client}")
             self.db = self.client["S09P31B205"]
             self.collection = self.db[collection]
@@ -25,6 +25,6 @@ class MongoDBConnector:
     
     def find_all(self):
         result = self.collection.find({})
-        time.sleep(60)
+        time.sleep(70)
         return result
 

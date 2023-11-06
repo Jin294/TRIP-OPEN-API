@@ -27,13 +27,13 @@ public class ApiTokenCheckFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        log.info("filter start");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
         String requestURI = httpServletRequest.getRequestURI();
         String token = extractBearerToken(httpServletRequest);
         log.info("filter check, url = {}", requestURI);
+        log.info("filter check, token = {}", token);
         //url 검증 여부 확인. 검증 필요 없으면 넘어가고 검증 필요하면 체크
         if(!isTokenCheckPath(requestURI)) {
             chain.doFilter(request, response);
