@@ -15,7 +15,7 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 public class Accommodation {
     @Id
     private String id;
-    @Field(name = "pk_id")
+    @Field(name = "accommodation_id")
     private String pkId;
     @Field(name = "accommodation_lng")
     private String accommodationLng;

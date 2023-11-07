@@ -33,4 +33,7 @@ public class Wiki {
     @Field(name = "wiki_content")
     String wiki_content;
 
+    @Field(name = "overview")
+    String overview;
+
 }

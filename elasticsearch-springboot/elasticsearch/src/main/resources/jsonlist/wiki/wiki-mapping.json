@@ -1,38 +1,46 @@
 {
-  "properties": {
-    "content_id": {
-      "type": "keyword"
-    },
-    "pk_id": {
-      "type": "keyword"
-    },
-    "number": {
-      "type": "keyword"
-    },
-    "attraction_name": {
-      "type": "text",
-      "fields": {
-        "keyword": {
-          "type": "keyword",
-          "ignore_above": 256
+  "properties" : {
+    "id" : {"type" : "keyword"},
+    "content_id" : {"type" : "keyword"},
+    "pk_id" : {"type" : "keyword"},
+    "number" : {"type" : "keyword"},
+    "attraction_name" : {
+      "type" : "text",
+      "fielddata": true,
+      "fields" : {
+        "keyword" : {
+          "type" : "keyword",
+          "ignore_above" : 256
         }
       }
     },
-    "wiki_title": {
-      "type": "text",
-      "fields": {
-        "keyword": {
-          "type": "keyword",
-          "ignore_above": 256
+    "wiki_title" : {
+      "type" : "text",
+      "fielddata": true,
+      "fields" : {
+        "keyword" : {
+          "type" : "keyword",
+          "ignore_above" : 256
         }
       }
     },
-    "wiki_content": {
-      "type": "text",
-      "fields": {
-        "keyword": {
-          "type": "keyword",
-          "ignore_above": 256
+    "wiki_content" : {
+      "type" : "text",
+      "fielddata": true,
+      "fields" : {
+        "keyword" : {
+          "type" : "keyword",
+          "ignore_above" : 256
+        }
+      }
+    },
+    "overview" : {
+      "type" : "text",
+      "fielddata": true,
+      "fields" : {
+        "keyword" : {
+          "type" : "keyword",
+          "ignore_above" : 256
         }
       }
     }

@@ -1,7 +1,7 @@
 spring:
   elasticsearch:
     uris: http://43.201.103.156:9200
-    username: "shinchanghakshinchanghakshinchanghak"
+    username: "shinchanghak"
     password: "b205b205b205b205b205b205b205b205b205b205"
     connection-timeout: 5s
     socket-timeout: 30s

@@ -12,4 +12,5 @@ public class WikiDTO {
     String number;
     String wiki_title;
     String wiki_content;
+    String overview;
 }
