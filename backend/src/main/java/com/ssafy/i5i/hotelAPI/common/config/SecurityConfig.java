@@ -21,13 +21,13 @@ public class SecurityConfig {
 //    public PasswordEncoder passwordEncoder(){
 //        return new BCryptPasswordEncoder();
 //    }
-    private final UserService userService;
     private final TokenService tokenService;
 
     private static final String[] PERMIT_URL = {
             "/docs/service",
             "/docs/service/login",
-            "/api/**"
+            "/api/**",
+            "/**"
     };
 
     @Bean

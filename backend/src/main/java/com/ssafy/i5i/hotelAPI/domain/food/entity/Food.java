@@ -1,7 +1,5 @@
 package com.ssafy.i5i.hotelAPI.domain.food.entity;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,11 +26,11 @@ import lombok.NoArgsConstructor;
 public class Food {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "food_idx")
+	@Column(name = "food_id")
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "food_id", referencedColumnName = "content_id")
+	@JoinColumn(name = "attraction_id", referencedColumnName = "content_id")
 	private Attraction attraction;
 
 	//음식점 이름
@@ -44,12 +42,12 @@ public class Food {
 	private String foodType;
 
 	//음식점 경도
-	@Column(name = "food_longtitude")
-	private BigDecimal foodLongtitude;
+	@Column(name = "food_longitude")
+	private Double foodLongitude;
 
 	//음식점 위도
 	@Column(name = "food_latitude")
-	private BigDecimal foodLatitude;
+	private Double foodLatitude;
 
 	//음식점 찜
 	@Column(name = "food_jjim")
@@ -64,11 +62,11 @@ public class Food {
 	private Double foodStar;
 
 	//음식점 별점을 준 사람의 수
-	@Column(name = "food_starUser")
+	@Column(name = "food_stauser")
 	private Integer foodStarUser;
 
 	public FoodResponseDto convertToDto (){
-		return new FoodResponseDto(this.id, this.foodName, this.foodType, this.foodLongtitude, this.foodLatitude, this.foodJjim, this.foodScore, this.foodStar, this.foodStarUser, null);
+		return new FoodResponseDto(this.id, this.foodName, this.foodType, this.foodLongitude, this.foodLatitude, this.foodJjim, this.foodScore, this.foodStar, this.foodStarUser, null);
 	}
 
 }

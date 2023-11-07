@@ -20,14 +20,14 @@ public class AccommodationController {
     private final AccommodationService accommodationService;
 
     @GetMapping("/{name}/{distance}/{sorted}")
-    public List<AccommodationResponseDto> getAccommodationByName(@PathVariable("name") String name, @PathVariable("distance") double distance, @PathVariable("sorted") String sorted){
+    public List<AccommodationResponseDto> getAccommodationByName(@PathVariable("name") String name, @PathVariable("distance") int distance, @PathVariable("sorted") String sorted){
         AttractionNameRequestDto attractionNameRequestDto = new AttractionNameRequestDto(name, distance, sorted);
         System.out.println("!!!!");
         return accommodationService.getAccommodationByName(attractionNameRequestDto);
     }
 
     @GetMapping("/{latitude}/{longitude}/{distance}/{sorted}")
-    public List<AccommodationResponseDto> getAccomodationByCoordinate(@PathVariable("latitude") double latitude, @PathVariable("longitude") double longitude, @PathVariable("distance") long distance, @PathVariable("sorted") String sorted){
+    public List<AccommodationResponseDto> getAccomodationByCoordinate(@PathVariable("latitude") double latitude, @PathVariable("longitude") double longitude, @PathVariable("distance") int distance, @PathVariable("sorted") String sorted){
         AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(latitude, longitude, distance, sorted);
 
         return accommodationService.getAccommodationByCoordinate(attractionCoordinateRequestDto);

@@ -15,7 +15,10 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -42,37 +45,35 @@ public class AccommodationService {
         Attraction attraction = attractionRepository.findByTitle(requestDto.getAttractionName())
                 .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);});
 
-        if(attraction == null){
-            throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);
-        }
-        List<Accommodation> entity = accommodationRepository.findByAttractionId(attraction.getContentId())
-                .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);});
 
-        List<AccommodationResponseDto> response = new ArrayList<>();
+        List<AccommodationResponseDto> response = accommodationRepository.findByAttractionId(attraction.getContentId())
+                .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);})
+                .stream()
+                .map(data -> {
+                    AccommodationResponseDto now = data.toDto();
+                    now.setRelativeDistance(calculateDistance(attraction.getLatitude(), attraction.getLongitude(), now.getAccommodationLatitude(), now.getAccommodationLongitude()));
+                    return now;
+                })
+                .filter(dto -> dto.getRelativeDistance() < requestDto.getDistance())
+                .collect(Collectors.toList());
 
-        Double distance = requestDto.getDistance();
-        for(Accommodation data : entity){
-            AccommodationResponseDto now = data.toDto();
-            now.setRelativeDistance(calculateDistance(attraction.getLatitude(), attraction.getLongitude(), now.getAccommodationLatitude(), now.getAccommodationLongitude()));
-            if(now.getRelativeDistance().compareTo(distance) >= 0) continue;
-            response.add(data.toDto());
-        }
         //소트
-        return response;
+        return sort(response, requestDto.getSorted());
     }
 
     public List<AccommodationResponseDto> getAccommodationByCoordinate(AttractionCoordinateRequestDto requestDto){
-        List<Accommodation> entity = accommodationRepository.findByCoordinate(requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getDistance())
-                .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);});
+        List<AccommodationResponseDto> response = accommodationRepository.findByCoordinate(requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getDistance())
+                .orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
+                .stream()
+                .map(data -> {
+                    AccommodationResponseDto now = data.toDto();
+                    now.setRelativeDistance(calculateDistance(requestDto.getLatitude(), requestDto.getLongitude(), now.getAccommodationLatitude(), now.getAccommodationLongitude()));
+                    return now;
+                })
+                .filter(dto -> dto.getRelativeDistance() < requestDto.getDistance())
+                .collect(Collectors.toList());
 
-        List<AccommodationResponseDto> response = new ArrayList<>();
-        for(Accommodation data : entity){
-            AccommodationResponseDto now = data.toDto();
-            now.setRelativeDistance(calculateDistance(requestDto.getLatitude(),requestDto.getLongitude(),now.getAccommodationLatitude(),now.getAccommodationLongitude()));
-            response.add(now);
-        }
-        //소트
-        return response;
+        return sort(response, requestDto.getSorted());
     }
 
 
