@@ -19,7 +19,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizationToken = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if(authorizationToken != null && authorizationToken.startsWith("Bearer ")){
+        String requestURI = request.getRequestURI();
+        if(authorizationToken != null && authorizationToken.startsWith("Bearer ") && !requestURI.contains("/api/")){
             String token = authorizationToken.substring(7);
 
             String userId = JwtUtill.getPayloadAndCheckExpired(token).get("userId", String.class);

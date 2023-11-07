@@ -16,7 +16,7 @@ public class UserService {
 
     public boolean isValidToken(String tokenId) {
         User user = userRepository.findByToken(tokenId).orElse(null);
-        log.info("user service, user = {}", user.getToken());
+        log.info("UserService 19 lines, user = {}", user.getToken());
         if(user == null){
             return false;
         }

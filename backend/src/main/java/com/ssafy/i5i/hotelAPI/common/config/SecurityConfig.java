@@ -45,11 +45,12 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 //token 확인용 filter
-                .addFilterBefore(new ApiTokenCheckFilter(tokenService, userService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new ApiTokenCheckFilter(tokenService), UsernamePasswordAuthenticationFilter.class)
 
                 //URL 허용
                 .authorizeHttpRequests()
                 .antMatchers(PERMIT_URL).permitAll()
+                .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
 

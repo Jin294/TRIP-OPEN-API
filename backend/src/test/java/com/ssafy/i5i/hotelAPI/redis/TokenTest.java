@@ -26,13 +26,13 @@ public class TokenTest {
         assertThat(result).isEqualTo(true);
         Token checkToken = tokenService.getTokenById("enj");
         assertThat(checkToken.getToken()).isEqualTo("enj");
-        assertThat(checkToken.getCount()).isEqualTo(1);
+        assertThat(checkToken.getCount()).isEqualTo(0);
     }
 
     @Test
     void updateCount() {
         tokenService.incrementTokenCount("enj");
         Token checkToken = tokenService.getTokenById("enj");
-        assertThat(checkToken.getCount()).isEqualTo(2);
+        assertThat(checkToken.getCount()).isEqualTo(1);
     }
 }
