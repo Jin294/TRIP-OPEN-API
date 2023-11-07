@@ -55,11 +55,10 @@ public class AccommodationService {
                     return now;
                 })
                 .filter(dto -> dto.getRelativeDistance() < requestDto.getDistance())
-                .sorted(Comparator.comparing(AccommodationResponseDto::getRelativeDistance))
                 .collect(Collectors.toList());
 
         //소트
-        return response;
+        return sort(response, requestDto.getSorted());
     }
 
     public List<AccommodationResponseDto> getAccommodationByCoordinate(AttractionCoordinateRequestDto requestDto){
@@ -72,10 +71,9 @@ public class AccommodationService {
                     return now;
                 })
                 .filter(dto -> dto.getRelativeDistance() < requestDto.getDistance())
-                .sorted(Comparator.comparing(AccommodationResponseDto::getRelativeDistance))
                 .collect(Collectors.toList());
 
-        return response;
+        return sort(response, requestDto.getSorted());
     }
 
 

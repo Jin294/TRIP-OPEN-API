@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface AccommodationRepository extends JpaRepository<Accommodation, Long> {
     @Query("SELECT c FROM Accommodation c WHERE c.attraction.contentId = :attractionId")
-    Optional<List<Accommodation>> findByAttractionId(@Param("attractionId") long attractionId);
+    Optional<List<Accommodation>> findByAttractionId(@Param("attractionId") int attractionId);
 
     @Query(value = "SELECT *, " +
             "(6371 * 2 * ASIN(SQRT(POW(SIN(RADIANS(Accommodation.accommodationLatitude  - :latitude) / 2), 2) + " +
@@ -20,5 +20,5 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
             "FROM Accommodation " +  // FROM 절 추가
             "HAVING distance <= :distance", nativeQuery = true)
     Optional<List<Accommodation>> findByCoordinate(@Param("latitude") Double latitude, @Param("longitude") Double longitude,
-                                                  @Param("distance") Long distance);
+                                                  @Param("distance") Integer distance);
 }

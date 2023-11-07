@@ -21,7 +21,8 @@ public class SecurityConfig {
 
     private static final String[] PERMIT_URL = {
             "/docs/service",
-            "/docs/service/login"
+            "/docs/service/login",
+            "/**"
     };
 
     @Bean

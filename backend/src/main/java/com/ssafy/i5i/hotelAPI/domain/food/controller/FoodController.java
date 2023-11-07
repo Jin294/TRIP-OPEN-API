@@ -28,7 +28,7 @@ public class FoodController {
 	}
 
 	@GetMapping("/{longtitude}/{latitude}/{distance}/{sorted}")
-	public List<FoodResponseDto> getFoodFromLngLat(@PathVariable("longtitude")Double longitude, @PathVariable("latitude")Double latitude, @PathVariable("distance")Long distance, @PathVariable("sorted")String sorted){
+	public List<FoodResponseDto> getFoodFromLngLat(@PathVariable("longtitude")Double longitude, @PathVariable("latitude")Double latitude, @PathVariable("distance")int distance, @PathVariable("sorted")String sorted){
 		AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(latitude, longitude, distance, sorted);
 		return foodServiceImpl.getFoodFromLngLat(attractionCoordinateRequestDto);
 	}

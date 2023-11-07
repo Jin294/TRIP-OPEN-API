@@ -11,6 +11,6 @@ import java.math.BigDecimal;
 public class AttractionCoordinateRequestDto {
     private Double latitude;
     private Double longitude;
-    private Long distance;
+    private Integer distance;
     private String sorted;
 }
