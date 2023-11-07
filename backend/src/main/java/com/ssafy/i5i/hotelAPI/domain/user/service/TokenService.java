@@ -19,17 +19,19 @@ public class TokenService {
     private final UserRepository userRepository;
     @Transactional
     public boolean checkValidToken(String tokenId) {
-        Token tokenFromRedis = tokenRedisRepository.findById(tokenId).orElse(null);
-        if(tokenFromRedis == null) {
-            Optional<User> user = userRepository.findByToken(tokenId);
-            if(!user.isPresent()) return false;
-            saveToken(user.get().getToken());
-            return true;
+        synchronized (this) {
+            Token tokenFromRedis = tokenRedisRepository.findById(tokenId).orElse(null);
+            if (tokenFromRedis == null) {
+                Optional<User> user = userRepository.findByToken(tokenId);
+                if (!user.isPresent()) return false;
+                saveToken(user.get().getToken());
+                return true;
+            }
+            log.info("TokenService 22 lines, token = {}", tokenFromRedis.getToken());
+            log.info("TokenService 23 lines, count = {}", tokenFromRedis.getCount());
+            if (tokenFromRedis.getCount() < 100000) return true;
+            return false;
         }
-        log.info("TokenService 22 lines, token = {}", tokenFromRedis.getToken());
-        log.info("TokenService 23 lines, count = {}", tokenFromRedis.getCount());
-        if(tokenFromRedis.getCount() < 100000) return true;
-        return false;
     }
 
     @Transactional(readOnly = true)
