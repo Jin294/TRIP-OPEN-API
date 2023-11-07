@@ -9,11 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.i5i.hotelAPI.common.exception.CommonException;
 import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
+import com.ssafy.i5i.hotelAPI.domain.food.dto.request.AttractionCoordiRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.request.AttractionTitleRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodResponseDto;
 import com.ssafy.i5i.hotelAPI.domain.food.repository.FoodRepository;
-import com.ssafy.i5i.hotelAPI.domain.hotel.dto.request.AttractionCoordinateRequestDto;
-
 import com.ssafy.i5i.hotelAPI.domain.hotel.entity.Attraction;
 import com.ssafy.i5i.hotelAPI.domain.hotel.repository.AttractionRepository;
 
@@ -43,7 +42,7 @@ public class FoodServiceImpl implements FoodService{
 	}
 
 	@Override
-	public List<FoodResponseDto> getFoodFromLngLat(AttractionCoordinateRequestDto requestDto) {
+	public List<FoodResponseDto> getFoodFromLngLat(AttractionCoordiRequestDto requestDto) {
 		return foodRepository.findByCoordinate(requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getDistance())
 			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
 			.stream()

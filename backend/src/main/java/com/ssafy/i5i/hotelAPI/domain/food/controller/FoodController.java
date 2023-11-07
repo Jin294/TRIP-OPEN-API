@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.i5i.hotelAPI.domain.food.dto.request.AttractionCoordiRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.request.AttractionTitleRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodResponseDto;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodResponseDtoInterface;
@@ -28,9 +29,9 @@ public class FoodController {
 	}
 
 	@GetMapping("/{longtitude}/{latitude}/{distance}/{sorted}")
-	public List<FoodResponseDto> getFoodFromLngLat(@PathVariable("longtitude")Double longitude, @PathVariable("latitude")Double latitude, @PathVariable("distance")int distance, @PathVariable("sorted")String sorted){
-		AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(latitude, longitude, distance, sorted);
-		return foodServiceImpl.getFoodFromLngLat(attractionCoordinateRequestDto);
+	public List<FoodResponseDto> getFoodFromLngLat(@PathVariable("longtitude")Double longitude, @PathVariable("latitude")Double latitude, @PathVariable("distance")Long distance, @PathVariable("sorted")String sorted){
+		AttractionCoordiRequestDto attractionCoordiRequestDto = new AttractionCoordiRequestDto(latitude, longitude, distance, sorted);
+		return foodServiceImpl.getFoodFromLngLat(attractionCoordiRequestDto);
 	}
 
 	@GetMapping("/test")

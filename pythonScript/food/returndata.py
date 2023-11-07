@@ -1,12 +1,20 @@
-#스크래핑으로 받은 데이터 전처리하기 
+import pandas as pd
 
-'''좌표 처리'''
-#api를 통해 좌표 없으면 만들어주기 
-#x,y 좌표 변환
-#https://dabid.tistory.com/3
+csv_file_path = 'travelfood.csv'
+output_csv_file = 'travelfood_v1.csv'
 
-'''메뉴 전처리'''
-#숫자 뒤에 원 붙어있는 거 처리 
+df = pd.read_csv(csv_file_path, encoding='cp949')
+print(df.size)
+df['food_type'] = df['food_type'].str.replace(' ', '', regex=True)
+df['food_type'] = df['food_type'].str.replace('.', '/', regex=False) 
+df['food_name'] = df['food_name'].str.replace(',', ' ', regex=True)
+df['food_name'] = df['food_name'].str.replace('  ', ' ', regex=True)
 
+#컬럼명 변경 
+df.rename(columns={'food_id':'attraction_id'},inplace=True)
+df.rename(columns={'food_idx':'food_id'},inplace=True)
+df.rename(columns={'food_longtitude':'food_longitude'},inplace=True)
+df.rename(columns={'food_starUser':'food_staruser'},inplace=True)
 
-'''컬럼명 변경'''
+print(df[:3].head())
+df.to_csv(output_csv_file, index=False, encoding='utf-8-sig')
