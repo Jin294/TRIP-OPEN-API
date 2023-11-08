@@ -63,7 +63,7 @@ public class TokenService {
 //    }
 
     @Transactional(readOnly = true)
-    public synchronized boolean checkValidToken(String tokenId) {
+    public boolean checkValidToken(String tokenId) {
         Token tokenFromRedis = tokenRedisRepository.findById(tokenId).orElse(null);
         if (tokenFromRedis == null) {
             Optional<User> user = userRepository.findByToken(tokenId);
