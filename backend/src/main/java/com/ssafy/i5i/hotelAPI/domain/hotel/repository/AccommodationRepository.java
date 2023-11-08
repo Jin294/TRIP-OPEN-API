@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccommodationRepository extends JpaRepository<Accommodation, Long> {
-    @Query("SELECT c FROM Accommodation c WHERE c.attraction.contentId = :attractionId")
+    @Query("SELECT a FROM Accommodation a " +
+            "JOIN AttractionAccommodation aa ON a.id = aa.id " +
+            "WHERE aa.attraction.contentId = :attractionId")
     Optional<List<Accommodation>> findByAttractionId(@Param("attractionId") int attractionId);
 
     @Query(value = "SELECT *, " +

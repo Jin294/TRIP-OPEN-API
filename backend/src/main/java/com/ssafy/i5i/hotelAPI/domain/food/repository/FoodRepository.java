@@ -15,8 +15,14 @@ import com.ssafy.i5i.hotelAPI.domain.food.entity.Food;
 
 
 public interface FoodRepository extends JpaRepository<Food, Long> {
-	@Query("SELECT c FROM Food c WHERE c.attraction.contentId = :attractionId")
-	Optional<List<FoodResponseDto>> findByAttractionId(@Param("attractionId") Integer attractionId);
+	// @Query("select c from MemberChallenge c where c.member.idx = :memberIdx order by c.status asc,c.endTime asc")
+	// List<MemberChallenge> findMemberChallengeMemberIdx(@Param("memberIdx") Long memberIdx);
+
+	// @Query("SELECT c FROM Food c WHERE c.attraction.contentId = :attractionId")
+	// Optional<List<FoodResponseDto>> findByAttractionId(@Param("attractionId") Integer attractionId);
+
+	@Query("SELECT f FROM Food f WHERE f.foodLongitude >= :minX AND f.foodLongitude <= :maxX AND f.foodLatitude >= :minY AND f.foodLatitude <= :maxY")
+	Optional<List<Food>> getAroundFoodList(double maxY, double maxX, double minY, double minX);
 
 
 	@Query(value = "SELECT *, ST_Distance_Sphere(POINT(:longitude, :latitude), POINT(f.longitude, f.latitude)) as distance "
