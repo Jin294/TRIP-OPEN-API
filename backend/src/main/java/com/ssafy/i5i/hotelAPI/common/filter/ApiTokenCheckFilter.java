@@ -34,7 +34,6 @@ public class ApiTokenCheckFilter implements Filter {
 
         String requestURI = httpServletRequest.getRequestURI();
         String token = extractBearerToken(httpServletRequest);
-        log.info("ApiTokenCheckFilter 39 lines, token = {}", token);
         //url 검증 여부 확인. 검증 필요 없으면 넘어가고 검증 필요하면 체크
         if(!isTokenCheckPath(requestURI)) {
             chain.doFilter(request, response);
@@ -50,18 +49,18 @@ public class ApiTokenCheckFilter implements Filter {
         }
 
 //        //토큰 유효성 체크, 유효한 토큰 아니면 예외처리
-//        if (!tokenService.checkValidToken(token)) {
-//            log.error("ApiTokenCheckFilter 52 lines, invalid token");
-//            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//            httpServletResponse.getWriter().write("{\n \"status_code\" : \"401\",\n \"message\" : \"The token is either invalid or has exceeded the daily usage limit.\" \n}");
-//            return;
-//        }
-        if(!tokenUserService.checkValidToken(token)) {
-            log.error("not valid");
+        if (!tokenService.checkValidToken(token)) {
+            log.error("ApiTokenCheckFilter 52 lines, invalid token");
             httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             httpServletResponse.getWriter().write("{\n \"status_code\" : \"401\",\n \"message\" : \"The token is either invalid or has exceeded the daily usage limit.\" \n}");
             return;
         }
+//        if(!tokenUserService.checkValidToken(token)) {
+//            log.error("not valid");
+//            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//            httpServletResponse.getWriter().write("{\n \"status_code\" : \"401\",\n \"message\" : \"The token is either invalid or has exceeded the daily usage limit.\" \n}");
+//            return;
+//        }
 
         chain.doFilter(request, response);
     }
