@@ -58,7 +58,7 @@ public class Food {
 	private Double foodStar;
 
 	//음식점 별점을 준 사람의 수
-	@Column(name = "food_stauser")
+	@Column(name = "food_staruser")
 	private Integer foodStarUser;
 
 	public FoodResponseDto convertToDto (){
