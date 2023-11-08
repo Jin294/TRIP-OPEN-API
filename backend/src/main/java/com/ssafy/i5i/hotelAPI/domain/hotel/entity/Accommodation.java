@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 
 @Entity
@@ -20,10 +19,6 @@ public class Accommodation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "accommodation_id")
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn (name = "attraction_id", referencedColumnName = "content_id")
-    private Attraction attraction;
 
     @Column(name = "accommodation_name")
     private String accommodationName;
@@ -53,7 +48,5 @@ public class Accommodation {
     public AccommodationResponseDto toDto (){
         return new AccommodationResponseDto(this.accommodationName, this.accommodationType, this.accommodationAddr, this.accommodationScore, this.accommodationImg, this.accommodationPrice, this.accommodationLatitude, this.accommodationLongitude, null);
     }
-
-
 }
 
