@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.i5i.hotelAPI.common.exception.CommonException;
 import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
 import com.ssafy.i5i.hotelAPI.domain.user.service.TokenService;
+import com.ssafy.i5i.hotelAPI.domain.user.service.TokenUserService;
 import com.ssafy.i5i.hotelAPI.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.PatternMatchUtils;
 
@@ -19,6 +21,8 @@ import java.io.IOException;
 @Slf4j
 public class ApiTokenCheckFilter implements Filter {
     private final TokenService tokenService;
+    private final TokenUserService tokenUserService;
+
     private String[] checkUrl = {
             "/api/**"
     };
@@ -30,8 +34,6 @@ public class ApiTokenCheckFilter implements Filter {
 
         String requestURI = httpServletRequest.getRequestURI();
         String token = extractBearerToken(httpServletRequest);
-        log.info("filter check, url = {}", requestURI);
-        log.info("filter check, token = {}", token);
         //url 검증 여부 확인. 검증 필요 없으면 넘어가고 검증 필요하면 체크
         if(!isTokenCheckPath(requestURI)) {
             chain.doFilter(request, response);
@@ -46,16 +48,20 @@ public class ApiTokenCheckFilter implements Filter {
             return;
         }
 
-        //토큰 유효성 체크, 유효한 토큰 아니면 예외처리
-        if (!tokenService.checkValidToken(token)) {
-            log.error("ApiTokenCheckFilter 52 lines, invalid token");
-            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            httpServletResponse.getWriter().write("{\n \"status_code\" : \"401\",\n \"message\" : \"The token is either invalid or has exceeded the daily usage limit.\" \n}");
-            return;
-        }
+////        //토큰 유효성 체크, 유효한 토큰 아니면 예외처리
+//        if (!tokenService.checkValidToken(token)) {
+//            log.error("ApiTokenCheckFilter 52 lines, invalid token");
+//            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//            httpServletResponse.getWriter().write("{\n \"status_code\" : \"401\",\n \"message\" : \"The token is either invalid or has exceeded the daily usage limit.\" \n}");
+//            return;
+//        }
+//        if(!tokenUserService.checkValidToken(token)) {
+//            log.error("not valid");
+//            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//            httpServletResponse.getWriter().write("{\n \"status_code\" : \"401\",\n \"message\" : \"The token is either invalid or has exceeded the daily usage limit.\" \n}");
+//            return;
+//        }
 
-        // token 요청 횟수 증가
-        tokenService.incrementTokenCount(token);
         chain.doFilter(request, response);
     }
 
