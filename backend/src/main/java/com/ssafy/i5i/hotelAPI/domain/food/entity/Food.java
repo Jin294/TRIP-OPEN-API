@@ -29,10 +29,6 @@ public class Food {
 	@Column(name = "food_id")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "attraction_id", referencedColumnName = "content_id")
-	private Attraction attraction;
-
 	//음식점 이름
 	@Column(name = "food_name")
 	private String foodName;
