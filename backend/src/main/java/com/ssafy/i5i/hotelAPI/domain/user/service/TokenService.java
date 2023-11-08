@@ -73,9 +73,9 @@ public class TokenService {
             return true;
         }
 //        log.info("TokenService 22 lines, token = {}", tokenFromRedis.getToken());
-//        log.info("TokenService 23 lines, count = {}", tokenFromRedis.getCount());
+        log.info("TokenService 23 lines, count = {}", tokenFromRedis.getCount());
         if (tokenFromRedis.getCount() < 100000) {
-//            incrementTokenCount(tokenFromRedis.getToken());
+            incrementTokenCount(tokenFromRedis.getToken());
             return true;
         }
         return false;
