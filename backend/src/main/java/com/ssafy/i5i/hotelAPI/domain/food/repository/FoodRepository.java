@@ -25,9 +25,39 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
 	Optional<List<Food>> getAroundFoodList(double maxY, double maxX, double minY, double minX);
 
 
-	@Query(value = "SELECT *, ST_Distance_Sphere(POINT(:longitude, :latitude), POINT(f.longitude, f.latitude)) as distance "
-		+ "From food f "
+	@Query(value = "SELECT f.food_id as id, f.food_name as foodName, f.food_type as foodType, "
+		+ "f.food_longitude as foodLongitude, f.food_latitude as foodLatitude, "
+		+ "f.food_jjim as foodJjim, f.food_score as foodScore, "
+		+ "f.food_star as foodStar, f.food_staruser as foodStarUser, "
+		+ "ST_Distance_Sphere(POINT(:longitude, :latitude), POINT(food_longitude, food_latitude)) as distance "
+		+ "From food as f "
 		+ "HAVING distance <= :distance", nativeQuery = true)
 	Optional<List<FoodResponseDtoInterface>> findByCoordinate(@Param("latitude") Double latitude, @Param("longitude") Double longitude,
 		@Param("distance") Long distance);
+
+
+	@Query(value = "SELECT f.food_id as id, f.food_name as foodName, f.food_type as foodType, "
+		+ "f.food_longitude as foodLongitude, f.food_latitude as foodLatitude, "
+		+ "f.food_jjim as foodJjim, f.food_score as foodScore, "
+		+ "f.food_star as foodStar, f.food_staruser as foodStarUser, "
+		+ "(6371*acos(cos(radians(:latitude))*cos(radians(food_latitude))*cos(radians(food_longitude) "
+		+ "-radians(:longitude))+sin(radians(:latitude))*sin(radians(food_latitude)))) "
+		+ "as distance "
+		+ "From food as f "
+		+ "HAVING distance <= :distance", nativeQuery = true)
+	Optional<List<FoodResponseDtoInterface>> findByCoordinate3(@Param("latitude") Double latitude, @Param("longitude") Double longitude,
+		@Param("distance") Long distance);
+
+
+	// @Query("SELECT f, "
+	// 	+ "(6371 * acos(cos(radians(:latitude)) * cos(radians(f.foodLatitude)) * cos(radians(f.foodLongitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(f.foodLatitude))) as distance) "
+	// 	+ "FROM Food f WHERE "
+	// 	+ "6371 * acos(cos(radians(:latitude)) * cos(radians(f.foodLatitude)) * cos(radians(f.foodLongitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(f.foodLatitude)) <= :distance)")
+	// Optional<List<Food>> findFoodWithinDistance(@Param("latitude") Double latitude, @Param("longitude") Double longitude, @Param("distance") Long distance);
+
+
+	@Query("SELECT f FROM Food f WHERE f.foodName = :name")
+	Food findByFoodName(@Param("name") String name);
+
+
 }

@@ -13,6 +13,7 @@ import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.request.AttractionCoordiRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.request.AttractionTitleRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.food.entity.Food;
 import com.ssafy.i5i.hotelAPI.domain.food.repository.FoodRepository;
 import com.ssafy.i5i.hotelAPI.domain.hotel.dto.request.AttractionCoordinateRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.hotel.dto.response.AccommodationResponseDto;
@@ -45,19 +46,19 @@ public class FoodServiceImpl implements FoodService{
 			.collect(Collectors.toList());
 	}
 
-	// @Override
-	// public List<FoodResponseDto> getFoodFromLngLat(AttractionCoordiRequestDto requestDto) {
-	// 	return foodRepository.findByCoordinate(requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getDistance())
-	// 		.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
-	// 		.stream()
-	// 		.map(FoodResponseDto::new)
-	// 		.sorted(getFoodComparator(requestDto.getSorted()))
-	// 		.collect(Collectors.toList());
-	// }
+	@Override
+	public List<FoodResponseDto> getFoodFromLngLatv1(AttractionCoordiRequestDto requestDto) {
+		return foodRepository.findByCoordinate(requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getDistance())
+			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
+			.stream()
+			.map(FoodResponseDto::new)
+			.sorted(getFoodComparator(requestDto.getSorted()))
+			.collect(Collectors.toList());
+	}
 
 
 	@Override
-	public List<FoodResponseDto> getFoodFromLngLat(AttractionCoordiRequestDto requestDto) {
+	public List<FoodResponseDto> getFoodFromLngLatv2(AttractionCoordiRequestDto requestDto) {
 		//현재 위도 좌표 (y 좌표)
 		double nowLatitude = requestDto.getLatitude();
 
@@ -74,6 +75,7 @@ public class FoodServiceImpl implements FoodService{
 		double minY = nowLatitude -(requestDto.getDistance()* mForLatitude);
 		double maxX = nowLongitude +(requestDto.getDistance()* mForLongitude);
 		double minX = nowLongitude -(requestDto.getDistance()* mForLongitude);
+
 
 		return foodRepository.getAroundFoodList(maxY, maxX, minY, minX)
 			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
@@ -110,6 +112,57 @@ public class FoodServiceImpl implements FoodService{
 			// 기본 정렬 기준을 제공
 			return Comparator.comparing(FoodResponseDto::getId);
 		}
+	}
+
+
+	@Override
+	public List<FoodResponseDto> getFoodFromLngLatv3(AttractionCoordiRequestDto requestDto) {
+		return foodRepository.findByCoordinate3(requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getDistance())
+			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
+			.stream()
+			.map(FoodResponseDto::new)
+			.sorted(getFoodComparator(requestDto.getSorted()))
+			.collect(Collectors.toList());
+	}
+
+	// @Override
+	// public List<FoodResponseDto> getFoodFromLngLatv5(AttractionCoordiRequestDto requestDto) {
+	// 	return foodRepository.findFoodWithinDistance(requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getDistance())
+	// 		.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
+	// 		.stream()
+	// 		.map(data -> data.convertToDto())
+	// 		// .sorted(getFoodComparator(requestDto.getSorted()))
+	// 		.collect(Collectors.toList());
+	// }
+
+	@Override
+	public Food findFoodByName(String name){
+		long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
+
+		//실험할 코드 추가
+		Food result = foodRepository.findByFoodName(name);
+
+		long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
+		long secDiffTime = (afterTime - beforeTime); //두 시간에 차 계산
+
+		log.info("시간차이(m) : {} ",secDiffTime);
+
+		return result;
+	}
+
+	@Override
+	public Food findFoodByIdx(Long idx){
+		long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
+
+		//실험할 코드 추가
+		Food result = foodRepository.findById(idx).orElseThrow();
+
+		long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
+		long secDiffTime = (afterTime - beforeTime); //두 시간에 차 계산
+
+		log.info("db 속도(ms) : {} ",secDiffTime);
+
+		return result;
 	}
 }
 
