@@ -20,15 +20,27 @@ public class ElkConfig extends AbstractElasticsearchConfiguration {
     @Value("${spring.elasticsearch.port}")
     private String port;
 
+    @Value("${spring.elasticsearch.username}")
+    private String username;
+
+    @Value("${spring.elasticsearch.password}")
+    private String password;
+
+
     @Override
     @Bean //bean 등록해줄 것.
     public RestHighLevelClient elasticsearchClient() {
         final ClientConfiguration clientConfiguration = ClientConfiguration.builder()
                 .connectedTo(host + ":" + port)
+                .usingSsl() //ssl 사용 설정
+                .withBasicAuth(username, password)
                 .build();
 
         return RestClients.create(clientConfiguration).rest();
     }
+
+
+
 
     /*
      Elasticsearch 인덱스와 데이터를 읽고 쓰는 데 사용

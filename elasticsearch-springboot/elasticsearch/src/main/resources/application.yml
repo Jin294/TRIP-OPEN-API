@@ -1,12 +1,12 @@
 spring:
   elasticsearch:
-    uris: http://43.201.103.156:9200
-    username: "shinchanghak"
-    password: "b205b205b205b205b205b205b205b205b205b205"
+#    uris: "https://k9b205a.p.ssafy.io:443"
+    username: "csg1353"
+    password: "51@tlrlckd"
     connection-timeout: 5s
     socket-timeout: 30s
-    host: 43.201.103.156
-    port: 9200
+    host: "k9b205a.p.ssafy.io"
+    port: 443
   data:
     elasticsearch:
       repositories:

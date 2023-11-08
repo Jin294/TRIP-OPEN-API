@@ -1,48 +1,60 @@
 {
   "properties" : {
-    "id" : {"type" : "keyword"},
-    "content_id" : {"type" : "keyword"},
-    "pk_id" : {"type" : "keyword"},
-    "number" : {"type" : "keyword"},
-    "attraction_name" : {
-      "type" : "text",
-      "fielddata": true,
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
-        }
-      }
-    },
-    "wiki_title" : {
-      "type" : "text",
-      "fielddata": true,
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
-        }
-      }
+    "number" : {
+      "type" : "keyword"
     },
     "wiki_content" : {
+      "fielddata" : true,
+      "analyzer" : "korean",
       "type" : "text",
-      "fielddata": true,
       "fields" : {
         "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
+          "ignore_above" : 256,
+          "type" : "keyword"
         }
       }
     },
     "overview" : {
+      "fielddata" : true,
+      "analyzer" : "korean",
       "type" : "text",
-      "fielddata": true,
       "fields" : {
         "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
+          "ignore_above" : 256,
+          "type" : "keyword"
         }
       }
+    },
+    "pk_id" : {
+      "type" : "keyword"
+    },
+    "attraction_name" : {
+      "fielddata" : true,
+      "analyzer" : "korean",
+      "type" : "text",
+      "fields" : {
+        "keyword" : {
+          "ignore_above" : 256,
+          "type" : "keyword"
+        }
+      }
+    },
+    "content_id" : {
+      "type" : "keyword"
+    },
+    "wiki_title" : {
+      "fielddata" : true,
+      "analyzer" : "korean",
+      "type" : "text",
+      "fields" : {
+        "keyword" : {
+          "ignore_above" : 256,
+          "type" : "keyword"
+        }
+      }
+    },
+    "id" : {
+      "type" : "keyword"
     }
   }
 }

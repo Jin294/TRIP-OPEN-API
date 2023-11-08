@@ -7,7 +7,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.Mapping;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
-@Document(indexName = "scrap_wiki_1102")
+@Document(indexName = "scrap_wiki_1107")
 @Mapping(mappingPath = "jsonlist/wiki/wiki-mapping.json")
 @Setting(settingPath = "jsonlist/wiki/wiki-setting.json")
 @Getter

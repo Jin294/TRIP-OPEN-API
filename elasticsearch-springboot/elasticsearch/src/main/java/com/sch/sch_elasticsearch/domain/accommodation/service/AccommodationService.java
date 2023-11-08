@@ -14,22 +14,7 @@ import java.util.List;
 @Slf4j
 public class AccommodationService {
     private final AccommodationRepository accommodationRepository;
-//    public AccommodationService(AccommodationRepository accommodationRepository) {
-//        this.accommodationRepository = accommodationRepository;
-//    }
-//
-//    public Iterable<Accommodation> getAllResidences() {
-//        Iterable<Accommodation> accommodations = accommodationRepository.findAll();
-//        return accommodations;
-//    }
-//
-//    public List<Accommodation> search(String input) {
-//        return accommodationRepository.findByAccommodationName(input);
-//    }
-//
-//    public List<Accommodation> querytest(String input) {
-//        return accommodationRepository.querytest4(input);
-//    }
+
 
     public void saveData(AccommodationDTO accommodationDTO) {
         Accommodation accommodation = new Accommodation(
