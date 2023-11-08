@@ -15,8 +15,20 @@ spring:
     password: 9gi_ssafy_final
   jpa:
     open-in-view: false
-    hibernate:
-      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        ddl-auto: none
+  logging:
+    level:
+      org:
+        hibernate:
+          type:
+            descriptor:
+              sql: trace
+
   redis:
     host: k9b205.p.ssafy.io
     port: 6379
@@ -25,6 +37,5 @@ jwt:
   secretKey: itsSecrentkeyyouknowheyfuckyoufudmfsdkfmaskfsdkfsadfklsdflksdfsklfmdsklfsmdfklmsdflksdmf=
 host:
   url: http://localhost:8080
-
 
 
