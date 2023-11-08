@@ -55,12 +55,12 @@ public class ApiTokenCheckFilter implements Filter {
 //            httpServletResponse.getWriter().write("{\n \"status_code\" : \"401\",\n \"message\" : \"The token is either invalid or has exceeded the daily usage limit.\" \n}");
 //            return;
 //        }
-        if(!tokenUserService.checkValidToken(token)) {
-            log.error("not valid");
-            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            httpServletResponse.getWriter().write("{\n \"status_code\" : \"401\",\n \"message\" : \"The token is either invalid or has exceeded the daily usage limit.\" \n}");
-            return;
-        }
+//        if(!tokenUserService.checkValidToken(token)) {
+//            log.error("not valid");
+//            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//            httpServletResponse.getWriter().write("{\n \"status_code\" : \"401\",\n \"message\" : \"The token is either invalid or has exceeded the daily usage limit.\" \n}");
+//            return;
+//        }
 
         chain.doFilter(request, response);
     }
