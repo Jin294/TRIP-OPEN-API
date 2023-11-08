@@ -17,29 +17,25 @@ import java.util.Optional;
 public class TokenService {
     private final TokenRedisRepository tokenRedisRepository;
     private final UserRepository userRepository;
-    @Transactional
-    public boolean checkValidToken(String tokenId) {
-        synchronized (this) {
-            Token tokenFromRedis = tokenRedisRepository.findById(tokenId).orElse(null);
-            if (tokenFromRedis == null) {
-                Optional<User> user = userRepository.findByToken(tokenId);
-                if (!user.isPresent()) return false;
-                saveToken(user.get().getToken());
-                return true;
-            }
-            log.info("TokenService 22 lines, token = {}", tokenFromRedis.getToken());
-            log.info("TokenService 23 lines, count = {}", tokenFromRedis.getCount());
-            if (tokenFromRedis.getCount() < 100000) return true;
-            return false;
-        }
-    }
-
     @Transactional(readOnly = true)
-    public Token getTokenById(String tokenId) {
-        return tokenRedisRepository.findById(tokenId).orElse(null);
+    public synchronized boolean checkValidToken(String tokenId) {
+        Token tokenFromRedis = tokenRedisRepository.findById(tokenId).orElse(null);
+        if (tokenFromRedis == null) {
+            Optional<User> user = userRepository.findByToken(tokenId);
+            if (!user.isPresent()) return false;
+            saveToken(user.get().getToken());
+            incrementTokenCount(user.get().getToken());
+            return true;
+        }
+        log.info("TokenService 22 lines, token = {}", tokenFromRedis.getToken());
+        log.info("TokenService 23 lines, count = {}", tokenFromRedis.getCount());
+        if (tokenFromRedis.getCount() < 100) {
+            incrementTokenCount(tokenFromRedis.getToken());
+            return true;
+        }
+        return false;
     }
 
-    @Transactional
     public boolean incrementTokenCount(String tokenId) {
         Token token = tokenRedisRepository.findById(tokenId).orElse(null);
         if (token != null) {
@@ -49,18 +45,9 @@ public class TokenService {
         }
         return false;
     }
-    @Transactional
     public boolean saveToken(String tokenId) {
         Token token = new Token(tokenId, 0);
         tokenRedisRepository.save(token);
-        return true;
-    }
-    @Transactional(readOnly = true)
-    public boolean maxCheck(String tokenId) {
-        Token token = tokenRedisRepository.findById(tokenId).orElse(null);
-        if(token != null && token.getCount() >= 3) {
-            return false;
-        }
         return true;
     }
 }
