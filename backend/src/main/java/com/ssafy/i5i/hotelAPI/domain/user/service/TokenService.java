@@ -23,63 +23,63 @@ public class TokenService {
     private final UserRepository userRepository;
     private final RedissonClient redissonClient;
 
-//    @Transactional
-//    public boolean checkValidToken(String tokenId) {
-//        boolean flag = false;
-//        RLock lock = redissonClient.getLock(tokenId);
-//        try {
-//            boolean isLocked = lock.tryLock(5, 5, TimeUnit.SECONDS);
-//            if(!isLocked) {
-//                throw new Exception();
-//            }
-//            Token tokenFromRedis = tokenRedisRepository.findById(tokenId).orElse(null);
-//            if (tokenFromRedis == null) {
-//                Optional<User> user = userRepository.findByToken(tokenId);
-//                if (user.isPresent()) {
-//                    saveToken(user.get().getToken());
-//                    incrementTokenCount(user.get().getToken());
-//                    flag = true;
-//                }
-//            }
-//            else {
-//                log.info("TokenService 23 lines, count = {}", tokenFromRedis.getCount());
-//                if (tokenFromRedis.getCount() < 100000) {
-//                    incrementTokenCount(tokenFromRedis.getToken());
-//                    flag = true;
-//                }
-//            }
-//        }
-//        catch (Exception e) {
-//
-//        }
-//        finally {
-//            try {
-//                lock.unlock();   // (4)
-//            } catch (IllegalMonitorStateException e) {
-//                log.info("Redisson Lock Already UnLock");
-//            }
-//        }
-//        return flag;
-//    }
+    @Transactional
+    public boolean checkValidToken(String tokenId) {
+        boolean flag = false;
+        RLock lock = redissonClient.getLock(tokenId);
+        try {
+            boolean isLocked = lock.tryLock(5, 5, TimeUnit.SECONDS);
+            if(!isLocked) {
+                throw new Exception();
+            }
+            Token tokenFromRedis = tokenRedisRepository.findById(tokenId).orElse(null);
+            if (tokenFromRedis == null) {
+                Optional<User> user = userRepository.findByToken(tokenId);
+                if (user.isPresent()) {
+                    saveToken(user.get().getToken());
+                    incrementTokenCount(user.get().getToken());
+                    flag = true;
+                }
+            }
+            else {
+                log.info("TokenService 23 lines, count = {}", tokenFromRedis.getCount());
+                if (tokenFromRedis.getCount() < 100000) {
+                    incrementTokenCount(tokenFromRedis.getToken());
+                    flag = true;
+                }
+            }
+        }
+        catch (Exception e) {
 
-    @Transactional(readOnly = true)
-    public synchronized boolean checkValidToken(String tokenId) {
-        Token tokenFromRedis = tokenRedisRepository.findById(tokenId).orElse(null);
-        if (tokenFromRedis == null) {
-            Optional<User> user = userRepository.findByToken(tokenId);
-            if (!user.isPresent()) return false;
-            saveToken(user.get().getToken());
-            incrementTokenCount(user.get().getToken());
-            return true;
         }
-//        log.info("TokenService 22 lines, token = {}", tokenFromRedis.getToken());
-        log.info("TokenService 23 lines, count = {}", tokenFromRedis.getCount());
-        if (tokenFromRedis.getCount() < 100000) {
-            incrementTokenCount(tokenFromRedis.getToken());
-            return true;
+        finally {
+            try {
+                lock.unlock();   // (4)
+            } catch (IllegalMonitorStateException e) {
+                log.info("Redisson Lock Already UnLock");
+            }
         }
-        return false;
+        return flag;
     }
+
+//    @Transactional(readOnly = true)
+//    public synchronized boolean checkValidToken(String tokenId) {
+//        Token tokenFromRedis = tokenRedisRepository.findById(tokenId).orElse(null);
+//        if (tokenFromRedis == null) {
+//            Optional<User> user = userRepository.findByToken(tokenId);
+//            if (!user.isPresent()) return false;
+//            saveToken(user.get().getToken());
+//            incrementTokenCount(user.get().getToken());
+//            return true;
+//        }
+////        log.info("TokenService 22 lines, token = {}", tokenFromRedis.getToken());
+//        log.info("TokenService 23 lines, count = {}", tokenFromRedis.getCount());
+//        if (tokenFromRedis.getCount() < 100000) {
+//            incrementTokenCount(tokenFromRedis.getToken());
+//            return true;
+//        }
+//        return false;
+//    }
 //
 //    @Transactional(readOnly = true)
 //    public boolean checkValidToken(String tokenId) {
