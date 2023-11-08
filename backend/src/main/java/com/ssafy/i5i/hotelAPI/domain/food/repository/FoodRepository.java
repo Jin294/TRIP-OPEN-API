@@ -22,7 +22,7 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
 	// Optional<List<FoodResponseDto>> findByAttractionId(@Param("attractionId") Integer attractionId);
 
 	@Query("SELECT f FROM Food f WHERE f.foodLongitude >= :minX AND f.foodLongitude <= :maxX AND f.foodLatitude >= :minY AND f.foodLatitude <= :maxY")
-	Optional<List<FoodResponseDto>> getAroundFoodList(double maxY, double maxX, double minY, double minX);
+	Optional<List<Food>> getAroundFoodList(double maxY, double maxX, double minY, double minX);
 
 
 	@Query(value = "SELECT *, ST_Distance_Sphere(POINT(:longitude, :latitude), POINT(f.longitude, f.latitude)) as distance "
