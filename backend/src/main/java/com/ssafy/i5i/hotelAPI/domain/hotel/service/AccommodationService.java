@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
-public class AccommodationService {
+public class  AccommodationService {
 
     private final AccommodationRepository accommodationRepository;
     private final AttractionRepository attractionRepository;
