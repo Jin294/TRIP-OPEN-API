@@ -48,19 +48,19 @@ public class ApiTokenCheckFilter implements Filter {
             return;
         }
 
-//        //토큰 유효성 체크, 유효한 토큰 아니면 예외처리
-        if (!tokenService.checkValidToken(token)) {
-            log.error("ApiTokenCheckFilter 52 lines, invalid token");
-            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            httpServletResponse.getWriter().write("{\n \"status_code\" : \"401\",\n \"message\" : \"The token is either invalid or has exceeded the daily usage limit.\" \n}");
-            return;
-        }
-//        if(!tokenUserService.checkValidToken(token)) {
-//            log.error("not valid");
+////        //토큰 유효성 체크, 유효한 토큰 아니면 예외처리
+//        if (!tokenService.checkValidToken(token)) {
+//            log.error("ApiTokenCheckFilter 52 lines, invalid token");
 //            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 //            httpServletResponse.getWriter().write("{\n \"status_code\" : \"401\",\n \"message\" : \"The token is either invalid or has exceeded the daily usage limit.\" \n}");
 //            return;
 //        }
+        if(!tokenUserService.checkValidToken(token)) {
+            log.error("not valid");
+            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            httpServletResponse.getWriter().write("{\n \"status_code\" : \"401\",\n \"message\" : \"The token is either invalid or has exceeded the daily usage limit.\" \n}");
+            return;
+        }
 
         chain.doFilter(request, response);
     }
