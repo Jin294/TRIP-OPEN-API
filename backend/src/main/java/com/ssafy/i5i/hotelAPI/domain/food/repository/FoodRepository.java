@@ -18,11 +18,11 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
 	// @Query("select c from MemberChallenge c where c.member.idx = :memberIdx order by c.status asc,c.endTime asc")
 	// List<MemberChallenge> findMemberChallengeMemberIdx(@Param("memberIdx") Long memberIdx);
 
-	@Query("SELECT c FROM Food c WHERE c.attraction.contentId = :attractionId")
-	Optional<List<FoodResponseDto>> findByAttractionId(@Param("attractionId") Integer attractionId);
+	// @Query("SELECT c FROM Food c WHERE c.attraction.contentId = :attractionId")
+	// Optional<List<FoodResponseDto>> findByAttractionId(@Param("attractionId") Integer attractionId);
 
-	@Query("SELECT f FROM Food f WHERE :minX <= f.foodLongitude <= :maxX and :minY <= f. <= maxY")
-	Optional<List<FoodResponseDto>> getAroundShopList(double maxY, double maxX, double minY, double minX);
+	// @Query("SELECT f FROM Food f WHERE :minX <= f.foodLongitude <= :maxX and :minY <= f. <= maxY")
+	// Optional<List<FoodResponseDto>> getAroundShopList(double maxY, double maxX, double minY, double minX);
 	//
 	// "SELECT f FROM Food f " +
 	// 	"WHERE f.foodLongitude >= :minLongitude AND f.foodLongitude <= :maxLongitude " +
