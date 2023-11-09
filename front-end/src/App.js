@@ -27,13 +27,12 @@ function App() {
 
     // routes 배열에 포함된 원소가 아니라면 강제로 Home으로 리다이렉트
     const routes = useRef([
-        "",
+        "/",
         "/signup",
         "/login",
         "/mypage",
         "/serviceinfo",
         "/apidock",
-        "/apidock/:tab",
         "/exexchange",
         "/excard",
         "/excardcontent",
@@ -41,11 +40,13 @@ function App() {
     ]);
     
     useEffect(() => {
-        if (!routes.current.includes(location.pathname)) {
-            navigate('/');
+        if (!routes.current.some(path => location.pathname.startsWith(path))) {
+            if (location.pathname !== '/') {
+                navigate('/');
+            }
         }
-    }, [location, navigate]);
-;
+    }, [location.pathname, navigate]);
+
     return (
         <div className="App">
             <Routes>
