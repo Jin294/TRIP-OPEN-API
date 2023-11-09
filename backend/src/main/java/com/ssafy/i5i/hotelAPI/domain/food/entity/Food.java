@@ -2,16 +2,12 @@ package com.ssafy.i5i.hotelAPI.domain.food.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodResponseDto;
-import com.ssafy.i5i.hotelAPI.domain.hotel.entity.Attraction;
+import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodCoordiResponseDto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -61,8 +57,8 @@ public class Food {
 	@Column(name = "food_staruser")
 	private Integer foodStarUser;
 
-	public FoodResponseDto convertToDto (){
-		return new FoodResponseDto(this.id, this.foodName, this.foodType, this.foodLongitude, this.foodLatitude, this.foodJjim, this.foodScore, this.foodStar, this.foodStarUser, null);
+	public FoodCoordiResponseDto convertToDto (){
+		return new FoodCoordiResponseDto(this.id, this.foodName, this.foodType, this.foodLongitude, this.foodLatitude, this.foodJjim, this.foodScore, this.foodStar, this.foodStarUser, null);
 	}
 
 }
