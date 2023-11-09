@@ -25,4 +25,5 @@ public class WikiController {
         return wikiServiceBasic.searchPartial(typeNum, inputString);
     }
 
+
 }

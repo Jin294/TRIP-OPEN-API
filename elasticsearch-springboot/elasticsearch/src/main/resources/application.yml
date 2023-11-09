@@ -14,3 +14,12 @@ spring:
 logging:
   level:
     org.springframework.data.elasticsearch.client.WIRE: TRACE
+
+
+info:
+  analyzer:
+    nori : "korean"
+  index:
+    wiki:
+      gt-two-token: "scrap_wiki_1108" #2글자 이상 term 분리된 필터 사용
+      legacy-token: "scrap_wiki_1107" #글자 단위 신경쓰지 않음

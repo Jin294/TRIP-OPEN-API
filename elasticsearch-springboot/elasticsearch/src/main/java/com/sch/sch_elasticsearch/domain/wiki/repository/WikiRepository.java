@@ -29,4 +29,6 @@ public interface WikiRepository extends ElasticsearchRepository<Wiki, String> {
             "\"query\":{\"" +
             "match\":{\"attraction_name\":\"새로운 관광지 이름\"}}}")
     void updataNameAndContent(String attName, String title, String content);
+
+
 }

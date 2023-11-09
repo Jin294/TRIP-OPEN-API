@@ -3,18 +3,33 @@ package com.sch.sch_elasticsearch.domain.wiki.service;
 import com.sch.sch_elasticsearch.domain.wiki.entity.Wiki;
 import com.sch.sch_elasticsearch.exception.CommonException;
 import com.sch.sch_elasticsearch.exception.ExceptionType;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.AnalyzeRequest;
+import org.elasticsearch.client.indices.AnalyzeResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
- * 서비스에서 사용하는 공통 메서드 모음
+ * 다수 서비스에서 사용하는 유용한 공통 메서드들의 모음입니다.
  */
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class ToolsForWikiService {
+
+
+
+
     /**
      * SearchHits 에서 Content 가져와서 리스트로 변환 후 출력
      * @param SearchHits<Wiki> result

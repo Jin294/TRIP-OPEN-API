@@ -3,6 +3,10 @@ package com.sch.sch_elasticsearch.domain.wiki.service;
 import com.sch.sch_elasticsearch.domain.wiki.entity.Wiki;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.AnalyzeRequest;
+import org.elasticsearch.client.indices.AnalyzeResponse;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.FuzzyQueryBuilder;
@@ -11,6 +15,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 
 import org.elasticsearch.script.Script;
 import org.elasticsearch.script.ScriptType;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
@@ -18,20 +23,23 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+
 /**
  * Script 등 2차 가공 이상 복잡한 쿼리 로직의 집합입니다.
  */
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class WikiServiceExtend {
     private final ElasticsearchRestTemplate elasticsearchRestTemplate;
     private final ToolsForWikiService toolsForWikiService;
+
 
     /**
      * Attraction_name과 Wiki_Title이 입력 검색어와 같은 쿼리 반환
@@ -99,4 +107,5 @@ public class WikiServiceExtend {
         SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
         return toolsForWikiService.getListBySearchHits(searchHits);
     }
+
 }
