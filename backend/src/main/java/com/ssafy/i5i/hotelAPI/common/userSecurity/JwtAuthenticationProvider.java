@@ -3,6 +3,7 @@ package com.ssafy.i5i.hotelAPI.common.userSecurity;
 import com.ssafy.i5i.hotelAPI.common.exception.CommonException;
 import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
 import com.ssafy.i5i.hotelAPI.domain.user.entity.User;
+import com.ssafy.i5i.hotelAPI.domain.user.service.JwtUserService;
 import com.ssafy.i5i.hotelAPI.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationProvider implements AuthenticationProvider {
-    private final UserService userService;
+    private final JwtUserService userService;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();;
 
     @Override

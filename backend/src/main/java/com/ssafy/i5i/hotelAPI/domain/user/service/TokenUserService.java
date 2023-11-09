@@ -1,8 +1,7 @@
 package com.ssafy.i5i.hotelAPI.domain.user.service;
 
 import com.ssafy.i5i.hotelAPI.domain.user.entity.TokenUser;
-import com.ssafy.i5i.hotelAPI.domain.user.entity.User;
-import com.ssafy.i5i.hotelAPI.domain.user.repository.TokenUserRepository;
+import com.ssafy.i5i.hotelAPI.domain.user.repository.TokenSqlRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class TokenUserService {
-    private final TokenUserRepository tokenUserRepository;
+    private final TokenSqlRepository tokenUserRepository;
 
     @Transactional
     public boolean checkValidToken(String token) {

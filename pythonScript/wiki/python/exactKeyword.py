@@ -12,32 +12,33 @@ connector = MongoDBConnector("summary_exact_overview")
 
 pageList = fromConnector.find_all()
 
-print("mongodb save start")
+memo = {}
 
 for page in pageList:
     flag = False
     attractionName = page["attraction_name"]
+    if page["wiki_content"] == "":
+        continue
+
+    connector.insert_data(page)
+    # attractionName = re.sub(r'\([^)]*\)', '', attractionName)
+    # print(attractionName)
+
+    # wikiTitle = page["wiki_title"]
+    # nameLen = len(attractionName)
+    # checkArr= [attractionName]
+    # for i in range(nameLen):
+    #     first = attractionName[0:i]
+    #     second = attractionName[i:]
+    #     checkArr.append(first + " " + second)
+
+    # for check in checkArr:
+    #     if check == wikiTitle:
+    #         connector.insert_data(page)
+    #         flag = True
+    #         break
     
-    attractionName = re.sub(r'\([^)]*\)', '', attractionName)
-    print(attractionName)
-
-    wikiTitle = page["wiki_title"]
-
-    nameLen = len(attractionName)
-
-    checkArr= [attractionName]
-    for i in range(nameLen):
-        first = attractionName[0:i]
-        second = attractionName[i:]
-        checkArr.append(first + " " + second)
-
-    for check in checkArr:
-        if check == wikiTitle:
-            connector.insert_data(page)
-            flag = True
-            break
-    
-    if flag is False:
-        page["wiki_content"] = "null"
-        page["wiki_title"] = "null"
-        connector.insert_data(page)
+    # if flag is False:
+    #     page["wiki_content"] = "null"
+    #     page["wiki_title"] = "null"
+    #     connector.insert_data(page)
