@@ -7,7 +7,9 @@ import com.ssafy.i5i.hotelAPI.domain.hotel.entity.Attraction;
 import com.ssafy.i5i.hotelAPI.domain.hotel.dto.request.AttractionCoordinateRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.hotel.dto.request.AttractionNameRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.hotel.dto.response.AccommodationResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.hotel.entity.AttractionAccommodation;
 import com.ssafy.i5i.hotelAPI.domain.hotel.repository.AccommodationRepository;
+import com.ssafy.i5i.hotelAPI.domain.hotel.repository.AttractionAccommdodationRepository;
 import com.ssafy.i5i.hotelAPI.domain.hotel.repository.AttractionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,10 +26,12 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class  AccommodationService {
 
-    private final AccommodationRepository accommodationRepository;
-    private final AttractionRepository attractionRepository;
+//    private final AccommodationRepository accommodationRepository;
+    private final AttractionAccommdodationRepository attractionAccommdodationRepository;
+//    private final AttractionRepository attractionRepository;
     public static final Double RADIUS_OF_EARTH = 6371.0;
 
+    // sort
     public List<AccommodationResponseDto> sort(List<AccommodationResponseDto> data, String type){
         if(type.equalsIgnoreCase("DISTANCE")){
             data.sort((o1, o2) -> (o1.getRelativeDistance().compareTo(o2.getRelativeDistance())));
@@ -38,29 +42,27 @@ public class  AccommodationService {
         } else{
             throw new CommonException(ExceptionType.SORTED_TYPE_EXCEPTION);
         }
-
         return data;
     }
+
+    // input: attraction_id -> output: Accommodation
     public List<AccommodationResponseDto> getAccommodationByName(AttractionNameRequestDto requestDto){
-        Attraction attraction = attractionRepository.findByTitle(requestDto.getAttractionName())
-                .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);});
-
-
-        List<AccommodationResponseDto> response = accommodationRepository.findByAttractionId(attraction.getContentId())
+        List<AccommodationResponseDto> response = attractionAccommdodationRepository.findByTitle(requestDto.getAttractionName())
                 .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);})
                 .stream()
                 .map(data -> {
                     AccommodationResponseDto now = data.toDto();
-                    now.setRelativeDistance(calculateDistance(attraction.getLatitude(), attraction.getLongitude(), now.getAccommodationLatitude(), now.getAccommodationLongitude()));
+                    now.setRelativeDistance(calculateDistance(data.getAttraction().getLatitude(), data.getAttraction().getLongitude(), now.getAccommodationLatitude(), now.getAccommodationLongitude()));
                     return now;
                 })
                 .filter(dto -> dto.getRelativeDistance() < requestDto.getDistance())
                 .collect(Collectors.toList());
 
-        //소트
+        // sort
         return sort(response, requestDto.getSorted());
     }
 
+    // input: coordinate -> output: Accommodation
     public List<AccommodationResponseDto> getAccommodationByCoordinate(AttractionCoordinateRequestDto requestDto){
         List<AccommodationResponseDto> response = accommodationRepository.findByCoordinate(requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getDistance())
                 .orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
