@@ -6,8 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodCoordiResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodResponseDto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -57,8 +56,8 @@ public class Food {
 	@Column(name = "food_staruser")
 	private Integer foodStarUser;
 
-	public FoodCoordiResponseDto convertToDto (){
-		return new FoodCoordiResponseDto(this.id, this.foodName, this.foodType, this.foodLongitude, this.foodLatitude, this.foodJjim, this.foodScore, this.foodStar, this.foodStarUser, null);
+	public FoodResponseDto.Coordi convertToDto (){
+		return new FoodResponseDto.Coordi(this.id, this.foodName, this.foodType, this.foodLongitude, this.foodLatitude, this.foodJjim, this.foodScore, this.foodStar, this.foodStarUser, null);
 	}
 
 }
