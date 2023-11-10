@@ -16,7 +16,7 @@ import java.util.List;
 public class AccommodationController {
     private final AccommodationService accommodationService;
 
-    @GetMapping("/byName")
+    @GetMapping("/by-name")
     public List<AccommodationResponseDto> getAccommodationByName(
             @RequestParam("name") String name,
             @RequestParam("distance") int distance,
@@ -26,7 +26,7 @@ public class AccommodationController {
         return accommodationService.getAccommodationByName(attractionNameRequestDto);
     }
 
-    @GetMapping("/byCoordinate")
+    @GetMapping("/by-coordinate")
     public List<AccommodationResponseDto> getAccomodationByCoordinate(
             @RequestParam("latitude") Double latitude,
             @RequestParam("longtitude") Double longitude,
