@@ -1,9 +1,6 @@
 package com.ssafy.i5i.hotelAPI.domain.user.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,6 +10,7 @@ import java.util.Date;
 @Table(name = "user")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +26,6 @@ public class User {
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted;
 
-    @Column(name = "created_time", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdTime;
-
-    @Column(name = "deleted_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date deletedTime;
 }
 
 

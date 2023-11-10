@@ -20,7 +20,7 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
-        ddl-auto: update
+        ddl-auto: none
   logging:
     level:
       org.hibernate.SQL: debug
@@ -31,7 +31,7 @@ spring:
     port: 6379
     password: 9gi_ssafy_final
 jwt:
-  secretKey: itsSecrentkeyyouknowheyfuckyoufudmfsdkfmaskfsdkfsadfklsdflksdfsklfmdsklfsmdfklmsdflksdmf=
+  secretKey: c3ByaW5nYm9vdC1qd3stdHV0b3JpYwwtc3ByaW5nYm921C33d3ktdHVhb3JpYWkta3ByaW5nYm9vdC1qd3QtdHV0b3JpYWk=
 host:
   url: http://localhost:8080
 

@@ -36,7 +36,7 @@ public class JwtUtill {
         Instant expirationInstant = now.plusMillis(expirationTime);
 
         Claims claims = Jwts.claims();
-        claims.put("userId",userId);
+        claims.put("id",userId);
         claims.setExpiration(Date.from(expirationInstant));
         claims.setSubject(subject);
 
@@ -48,7 +48,7 @@ public class JwtUtill {
                 .compact();
     }
     public static String generateAccessToken(String userId){
-        Long expirationTime = 1000L * 60 * 20; // 20분
+        Long expirationTime = 1000L * 60 * 20 * 3; // 60분
         return generateToken(userId, "access-token", expirationTime);
     }
 
@@ -70,7 +70,8 @@ public class JwtUtill {
     }
 
     private static boolean isExpired(String token){
-        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJwt(token).getBody()
+        log.info("JwtUtil 73 lines, Date = {}",new Date().toString());
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody()
                 .getExpiration().before(new Date());
     }
 
