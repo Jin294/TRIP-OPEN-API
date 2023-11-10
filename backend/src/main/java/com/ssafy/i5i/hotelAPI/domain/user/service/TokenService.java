@@ -74,7 +74,7 @@ public class TokenService {
             return true;
         }
         log.info("TokenService 23 lines, count = {}", tokenFromRedis.getCount());
-        if (tokenFromRedis.getCount() < 100000) {
+        if (tokenFromRedis.getCount() < 10000000) {
             incrementTokenCount(tokenFromRedis.getToken());
             return true;
         }
