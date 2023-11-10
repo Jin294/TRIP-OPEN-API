@@ -8,9 +8,7 @@ import com.ssafy.i5i.hotelAPI.domain.hotel.dto.request.AttractionCoordinateReque
 import com.ssafy.i5i.hotelAPI.domain.hotel.dto.request.AttractionNameRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.hotel.dto.response.AccommodationResponseDto;
 import com.ssafy.i5i.hotelAPI.domain.hotel.entity.AttractionAccommodation;
-import com.ssafy.i5i.hotelAPI.domain.hotel.repository.AccommodationRepository;
 import com.ssafy.i5i.hotelAPI.domain.hotel.repository.AttractionAccommdodationRepository;
-import com.ssafy.i5i.hotelAPI.domain.hotel.repository.AttractionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +24,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class  AccommodationService {
 
-//    private final AccommodationRepository accommodationRepository;
     private final AttractionAccommdodationRepository attractionAccommdodationRepository;
-//    private final AttractionRepository attractionRepository;
     public static final Double RADIUS_OF_EARTH = 6371.0;
 
     // sort
@@ -51,7 +47,7 @@ public class  AccommodationService {
                 .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);})
                 .stream()
                 .map(data -> {
-                    AccommodationResponseDto now = data.toDto();
+                    AccommodationResponseDto now = data.getAccommodation().toDto();
                     now.setRelativeDistance(calculateDistance(data.getAttraction().getLatitude(), data.getAttraction().getLongitude(), now.getAccommodationLatitude(), now.getAccommodationLongitude()));
                     return now;
                 })
@@ -64,7 +60,23 @@ public class  AccommodationService {
 
     // input: coordinate -> output: Accommodation
     public List<AccommodationResponseDto> getAccommodationByCoordinate(AttractionCoordinateRequestDto requestDto){
-        List<AccommodationResponseDto> response = accommodationRepository.findByCoordinate(requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getDistance())
+        //현재 위도 좌표 (y 좌표)
+        double nowLatitude = requestDto.getLatitude();
+        //현재 경도 좌표 (x 좌표)
+        double nowLongitude = requestDto.getLongitude();
+
+        //km당 y 좌표 이동 값
+        double mForLatitude =(1 /(RADIUS_OF_EARTH* 1 *(Math.PI/ 180)));
+        //km당 x 좌표 이동 값
+        double mForLongitude =(1 /(RADIUS_OF_EARTH* 1 *(Math.PI/ 180)* Math.cos(Math.toRadians(nowLatitude))));
+
+        //현재 위치 기준 검색 거리 좌표
+        double maxY = nowLatitude +(requestDto.getDistance()* mForLatitude);
+        double minY = nowLatitude -(requestDto.getDistance()* mForLatitude);
+        double maxX = nowLongitude +(requestDto.getDistance()* mForLongitude);
+        double minX = nowLongitude -(requestDto.getDistance()* mForLongitude);
+
+        List<AccommodationResponseDto> response = attractionAccommdodationRepository.findByCoordinate(maxY, maxX, minY, minX)
                 .orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
                 .stream()
                 .map(data -> {
