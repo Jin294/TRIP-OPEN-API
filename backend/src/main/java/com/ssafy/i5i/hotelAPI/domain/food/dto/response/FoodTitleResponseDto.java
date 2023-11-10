@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor()
 public class FoodTitleResponseDto {
-	private Integer AttractionId;
-	private String AttracionName;
-	private Double AttractionLongitude;
-	private Double AttractionLatitude;
+	private Integer attractionId;
+	private String attracionName;
+	private Double attractionLongitude;
+	private Double attractionLatitude;
 	private Long foodId;
 	private String foodName;
 	private String foodType;
@@ -22,5 +22,12 @@ public class FoodTitleResponseDto {
 	private Integer foodScore;
 	private Double foodStar;
 	private Integer foodStarUser;
-	private Double Distance;
+
+	public FoodResponseDto.TitleD convertToFDto (){
+		return new FoodResponseDto.TitleD(this.attractionId, this.attracionName,
+			this.attractionLongitude,this.attractionLatitude,
+			this.foodId,this.foodName,this.foodType,
+			this.foodLongitude, this.foodLatitude, this.foodJjim, this.foodScore, this.foodStar,
+			this.foodStarUser, null);
+	}
 }

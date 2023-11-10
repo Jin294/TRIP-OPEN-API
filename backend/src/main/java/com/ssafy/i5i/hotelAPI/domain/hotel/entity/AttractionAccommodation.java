@@ -17,7 +17,7 @@ public class AttractionAccommodation {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attraction_accommodation_id")
-    private Long id;
+    private Long attractionAccommodationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "attraction_id", referencedColumnName = "content_id")

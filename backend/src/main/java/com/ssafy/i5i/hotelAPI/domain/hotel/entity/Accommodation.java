@@ -18,7 +18,7 @@ public class Accommodation {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "accommodation_id")
-    private Long id;
+    private Long accommodationId;
 
     @Column(name = "accommodation_name")
     private String accommodationName;
@@ -43,7 +43,6 @@ public class Accommodation {
 
     @Column(name = "accommodation_longitude")
     private Double accommodationLongitude;
-
 
     public AccommodationResponseDto toDto (){
         return new AccommodationResponseDto(this.accommodationName, this.accommodationType, this.accommodationAddr, this.accommodationScore, this.accommodationImg, this.accommodationPrice, this.accommodationLatitude, this.accommodationLongitude, null);
