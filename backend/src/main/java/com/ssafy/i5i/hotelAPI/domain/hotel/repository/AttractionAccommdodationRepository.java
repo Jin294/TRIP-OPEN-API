@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface AttractionAccommdodationRepository extends JpaRepository<AttractionAccommodation, Long> {
     // input: title -> AttractionAccommodation
-    @Query("SELECT a, ai FROM Accommodation a " +
+    @Query("SELECT aa FROM Accommodation a " +
             "JOIN fetch AttractionAccommodation aa ON a.accommodationId = aa.accommodation.accommodationId  " +
             "JOIN fetch Attraction ai ON ai.contentId = aa.attraction.contentId " +
             "WHERE ai.title = :title")
