@@ -2,6 +2,7 @@ package com.ssafy.i5i.hotelAPI.domain.food.service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -138,19 +139,19 @@ public class FoodServiceImpl implements FoodService{
 		}
 	}
 
-	private Comparator<FoodResponseDto.TitleD> getFoodTitleComparator(String sortingKey) {
-		if(sortingKey.isEmpty() || sortingKey == null || sortingKey.equals("DISTANCE")){
-			return Comparator.comparing(FoodResponseDto.TitleD::getDistance);
-		}
-		else if ("JJIM".equals(sortingKey)) {
-			return Comparator.comparing(FoodResponseDto.TitleD::getFoodJjim);
-		} else if ("SCORE".equals(sortingKey)) {
-			return Comparator.comparing(FoodResponseDto.TitleD::getFoodScore);
-		} else if ("STAR".equals(sortingKey)) {
-			return Comparator.comparing(FoodResponseDto.TitleD::getFoodStar);
-		} else {
-			throw new CommonException(ExceptionType.SORTED_TYPE_EXCEPTION);
-		}
-	}
+	// private Comparator<FoodResponseDto.TitleD> getFoodTitleComparator(String sortingKey) {
+	// 	if(sortingKey.isEmpty() || sortingKey == null || sortingKey.equals("DISTANCE")){
+	// 		return Comparator.comparing(FoodResponseDto.TitleD::getDistance);
+	// 	}
+	// 	else if ("JJIM".equals(sortingKey)) {
+	// 		return Comparator.comparing(FoodResponseDto.TitleD::getFoodJjim);
+	// 	} else if ("SCORE".equals(sortingKey)) {
+	// 		return Comparator.comparing(FoodResponseDto.TitleD::getFoodScore);
+	// 	} else if ("STAR".equals(sortingKey)) {
+	// 		return Comparator.comparing(FoodResponseDto.TitleD::getFoodStar);
+	// 	} else {
+	// 		throw new CommonException(ExceptionType.SORTED_TYPE_EXCEPTION);
+	// 	}
+	// }
 }
 
