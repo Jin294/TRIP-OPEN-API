@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FoodController {
 	private final FoodServiceImpl foodServiceImpl;
-	@GetMapping
+	@GetMapping("/byName")
 	public List<FoodResponseDto.Coordi> getFoodFromTravle(
 			@RequestParam("name") String name,
 			@RequestParam("distance") Long distance,
@@ -25,7 +25,7 @@ public class FoodController {
 		FoodRequestDto.Title attractionTitleRequestDto = new FoodRequestDto.Title(name, distance, sorted);
 		return foodServiceImpl.getFoodFromTravle(attractionTitleRequestDto);
 	}
-	@GetMapping
+	@GetMapping("/byCoordinate")
 	public List<FoodResponseDto.Coordi> getFoodFromLngLatv(
 			@RequestParam("longtitude") Double longitude,
 			@RequestParam("latitude") Double latitude,

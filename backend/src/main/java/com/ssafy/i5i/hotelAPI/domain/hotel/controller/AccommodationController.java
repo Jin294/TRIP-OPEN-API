@@ -16,21 +16,21 @@ import java.util.List;
 public class AccommodationController {
     private final AccommodationService accommodationService;
 
-    @GetMapping
+    @GetMapping("/byName")
     public List<AccommodationResponseDto> getAccommodationByName(
             @RequestParam("name") String name,
-            @RequestParam("distance") Integer distance,
+            @RequestParam("distance") int distance,
             @RequestParam("sorted") String sorted){
         AttractionNameRequestDto attractionNameRequestDto = new AttractionNameRequestDto(name, distance, sorted);
         System.out.println("!!!!");
         return accommodationService.getAccommodationByName(attractionNameRequestDto);
     }
 
-    @GetMapping
+    @GetMapping("/byCoordinate")
     public List<AccommodationResponseDto> getAccomodationByCoordinate(
             @RequestParam("latitude") Double latitude,
             @RequestParam("longtitude") Double longitude,
-            @RequestParam("distance") Integer distance,
+            @RequestParam("distance") int distance,
             @RequestParam("sorted") String sorted){
         AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(latitude, longitude, distance, sorted);
 
