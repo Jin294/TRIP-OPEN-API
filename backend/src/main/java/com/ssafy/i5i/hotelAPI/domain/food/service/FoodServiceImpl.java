@@ -96,8 +96,10 @@ public class FoodServiceImpl implements FoodService{
 			return Comparator.comparing(FoodResponseDto.Coordi::getFoodJjim);
 		} else if ("SCORE".equals(sortingKey)) {
 			return Comparator.comparing(FoodResponseDto.Coordi::getFoodScore);
-		} else {
+		} else if ("STAR".equals(sortingKey)) {
 			return Comparator.comparing(FoodResponseDto.Coordi::getFoodStar);
+		}else {
+			throw new CommonException(ExceptionType.SORTED_TYPE_EXCEPTION);
 		}
 	}
 
@@ -109,8 +111,10 @@ public class FoodServiceImpl implements FoodService{
 			return Comparator.comparing(FoodResponseDto.TitleD::getFoodJjim);
 		} else if ("SCORE".equals(sortingKey)) {
 			return Comparator.comparing(FoodResponseDto.TitleD::getFoodScore);
-		} else {
+		} else if ("STAR".equals(sortingKey)) {
 			return Comparator.comparing(FoodResponseDto.TitleD::getFoodStar);
+		} else {
+			throw new CommonException(ExceptionType.SORTED_TYPE_EXCEPTION);
 		}
 	}
 }
