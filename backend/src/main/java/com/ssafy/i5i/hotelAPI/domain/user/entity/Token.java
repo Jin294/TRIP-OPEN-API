@@ -17,5 +17,4 @@ public class Token {
     @Id
     private String token;
     private Integer count;
-//    private AtomicInteger count;
 }

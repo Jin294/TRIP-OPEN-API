@@ -17,13 +17,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.id = :id AND u.isDeleted = false")
     Optional<User> selectUserById(@Param("id") String id);
 
-    Optional<User> findById(String id);
+    @Query("SELECT u FROM User u WHERE u.id = :id")
+    Optional<User> selectAllUserById(@Param("id") String id);
+
+    @Query("SELECT u FROM User u WHERE u.id = :id AND u.isDeleted = false")
+    Optional<User> findById(@Param("id") String id);
 
     @Modifying
     @Query("update User u set u.token = :token where u.id = :id")
     void updateUserToken(@Param("id") String id, @Param("token") String token);
 
     @Modifying
-    @Query("update User u set u.isDeleted = true where u.id = :id")
+    @Query("update User u set u.isDeleted = true where u.id = :id and u.isDeleted = false")
     void deleteUser(@Param("id") String id);
 }

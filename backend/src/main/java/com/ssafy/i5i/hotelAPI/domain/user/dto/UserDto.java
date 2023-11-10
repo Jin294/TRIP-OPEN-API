@@ -18,9 +18,17 @@ public class UserDto {
     public static class UserInfo {
         private Long user_id;
         private String id;
-        private String password;
-        private String token;
-        private boolean is_deleted;
+        private String api_token;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class LoginInfo {
+        private String access_token;
+        private UserInfo user_info;
     }
 
     @Getter
