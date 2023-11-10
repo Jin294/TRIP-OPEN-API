@@ -11,11 +11,6 @@ import java.util.Optional;
 
 // input: accommodation_name -> output: accommodation
 public interface AccommodationRepository extends JpaRepository<Accommodation, Long> {
-        @Query("SELECT a FROM Accommodation a " +
-                "JOIN AttractionAccommodation aa ON a.id = aa.id " +
-                "WHERE aa.attraction.contentId = :attractionId")
-        Optional<List<Accommodation>> findByAttractionId(@Param("attractionId") int attractionId);
-
     @Query("SELECT a FROM Accommodation a WHERE a.accommodationLongitude >= :minX AND a.accommodationLongitude <= :maxX AND a.accommodationLatitude >= :minY AND a.accommodationLatitude <= :maxY")
     Optional<List<Accommodation>> findByCoordinate(double maxY, double maxX, double minY, double minX);
 }

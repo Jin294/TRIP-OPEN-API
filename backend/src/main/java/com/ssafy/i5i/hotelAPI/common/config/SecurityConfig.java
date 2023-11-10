@@ -3,8 +3,6 @@ package com.ssafy.i5i.hotelAPI.common.config;
 import com.ssafy.i5i.hotelAPI.common.filter.ApiTokenCheckFilter;
 import com.ssafy.i5i.hotelAPI.common.filter.JwtAuthenticationFilter;
 import com.ssafy.i5i.hotelAPI.domain.user.service.TokenService;
-import com.ssafy.i5i.hotelAPI.domain.user.service.TokenUserService;
-import com.ssafy.i5i.hotelAPI.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +31,6 @@ public class SecurityConfig {
     }
 
     private final TokenService tokenService;
-    private final TokenUserService tokenUserService;
 
     private static final String[] PERMIT_URL = {
             "/docs/service",
@@ -57,7 +54,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 //token 확인용 filter
-                .addFilterBefore(new ApiTokenCheckFilter(tokenService, tokenUserService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new ApiTokenCheckFilter(tokenService), UsernamePasswordAuthenticationFilter.class)
 
                 //URL 허용
                 .authorizeHttpRequests()

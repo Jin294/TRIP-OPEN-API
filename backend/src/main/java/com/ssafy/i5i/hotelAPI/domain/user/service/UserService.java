@@ -43,13 +43,23 @@ public class UserService {
         return true;
     }
 
+    public UserDto.UserInfo getUserInfo(String id) {
+        User user = userRepository.selectUserById(id).orElseThrow(()->{
+            throw new CommonException(ExceptionType.USER_INVALID_EXCEPTION);
+        });
+        UserDto.UserInfo userInfo = UserDto.UserInfo.builder()
+                .user_id(user.getUserId())
+                .id(user.getId())
+                .api_token(user.getToken())
+                .build();
 
-
+        return userInfo;
+    }
 
     //회원가입
     public void signUp(UserDto.SignUp signUp) {
         signUp.setPassword(passwordEncoder.encode(signUp.getPassword()));
-        if(userRepository.findById(signUp.getId()).isPresent()) {
+        if(userRepository.selectAllUserById(signUp.getId()).isPresent()) {
             log.error("UserService 50 lines, userId dupplicate error");
             throw new CommonException(ExceptionType.USER_DUPLICATE_EXCEPTION);
         }
@@ -62,7 +72,7 @@ public class UserService {
     }
 
     //로그인
-    public Map<String, String> login(UserDto.LoginDto loginDto) {
+    public UserDto.LoginInfo login(UserDto.LoginDto loginDto) {
         UsernamePasswordAuthenticationToken authenticationToken
                 = new UsernamePasswordAuthenticationToken(loginDto.getId(), loginDto.getPassword());
 
@@ -70,9 +80,15 @@ public class UserService {
         User principal = (User) authentication.getPrincipal();
 
         String accessToken = JwtUtill.generateAccessToken(String.valueOf(principal.getId()));
-        Map<String, String> result = new HashMap<>();
-        result.put("access_token", accessToken);
-        return result;
+        UserDto.UserInfo userInfo = UserDto.UserInfo.builder()
+                .user_id(principal.getUserId())
+                .id(principal.getId())
+                .api_token(principal.getToken())
+                .build();
+
+        UserDto.LoginInfo loginInfo = new UserDto.LoginInfo(accessToken, userInfo);
+
+        return loginInfo;
     }
 
     //API용 토근 재발급
@@ -83,14 +99,14 @@ public class UserService {
             throw new CommonException(ExceptionType.USER_INVALID_EXCEPTION);
         });
         String newTokenId = "";
-        Token tokenFromRedis = tokenRedisRepository.findById(userId).orElse(null);
-
+        Token tokenFromRedis = tokenRedisRepository.findById(user.getToken()).orElse(null);
+//        Token newToken = new Token();
         try {
             //새로운 토큰 생성
             newTokenId = generateRandomToken(userId);
             //새로운 토큰 하루 요청 수 redis에 저장 및 이전 토큰 레디스에서 삭제
             if(tokenFromRedis != null) {
-                setRedisToken(tokenFromRedis);
+                setRedisToken(newTokenId, tokenFromRedis);
                 tokenRedisRepository.deleteById(tokenFromRedis.getToken());
             }
             //생성한 새로운 토큰 sql 업데이트
@@ -98,9 +114,7 @@ public class UserService {
             UserDto.UserInfo userInfo = UserDto.UserInfo.builder()
                     .user_id(user.getUserId())
                     .id(user.getId())
-                    .password(user.getPassword())
-                    .token(newTokenId)
-                    .is_deleted(user.isDeleted())
+                    .api_token(newTokenId)
                     .build();
 
             return userInfo;
@@ -118,9 +132,10 @@ public class UserService {
         }
     }
 
-    public synchronized Token setRedisToken(Token tokenFromRedis) {
+    public synchronized Token setRedisToken(String newTokenId, Token tokenFromRedis) {
         if (tokenFromRedis == null) return null;
-        Token token = new Token(tokenFromRedis.getToken(), tokenFromRedis.getCount());
+        log.info("UserService 123 lines, token count = {}", tokenFromRedis.getCount());
+        Token token = new Token(newTokenId, tokenFromRedis.getCount());
         tokenRedisRepository.save(token);
         return token;
     }
@@ -130,7 +145,6 @@ public class UserService {
     public void deleteUser(String userId) {
         userRepository.deleteUser(userId);
     }
-
 
     private String generateRandomToken(String userId) {
         byte[] tokenBytes = new byte[TOKEN_LENGTH];

@@ -18,6 +18,12 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
 
+    @GetMapping("/user")
+    public DataResponse<?> getUserInfo(Principal principal) {
+        UserDto.UserInfo userInfo = userService.getUserInfo(principal.getName());
+        return new DataResponse<UserDto.UserInfo>(200, "success", userInfo);
+    }
+
     @PutMapping("/token")
     public DataResponse<?> updateToken(Principal principal) {
         log.info("UserController 23 lines, id = {}", principal.getName());
@@ -27,9 +33,8 @@ public class UserController {
 
     @PostMapping("/service/login")
     public DataResponse<?> login(@RequestBody UserDto.LoginDto loginDto) {
-        Map<String, String> data = userService.login(loginDto);
-        log.info(data.get("access_token"));
-        return new DataResponse<Map<String, String>>(200, "success", data);
+        UserDto.LoginInfo data = userService.login(loginDto);
+        return new DataResponse<UserDto.LoginInfo>(200, "success", data);
     }
 
     @PostMapping("/service/login/signup")

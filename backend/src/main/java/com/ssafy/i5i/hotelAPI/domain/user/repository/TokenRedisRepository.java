@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface TokenRedisRepository extends CrudRepository<Token, String> {
     public Optional<Token> findById(String token);
+    public void deleteById(String tokenId);
 }
