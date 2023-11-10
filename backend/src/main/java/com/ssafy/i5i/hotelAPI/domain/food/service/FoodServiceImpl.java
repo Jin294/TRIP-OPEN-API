@@ -12,7 +12,8 @@ import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.request.FoodRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodResponseDto;
 import com.ssafy.i5i.hotelAPI.domain.food.repository.FoodRepository;
-
+import com.ssafy.i5i.hotelAPI.domain.hotel.entity.Attraction;
+import com.ssafy.i5i.hotelAPI.domain.hotel.repository.AttractionRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,21 +25,55 @@ import lombok.extern.slf4j.Slf4j;
 public class FoodServiceImpl implements FoodService{
 
 	private final FoodRepository foodRepository;
+	private final AttractionRepository attractionRepository;
 
 	public static final Double EARTH_RADIUS = 6371.0;
 	@Override
-	public List<FoodResponseDto.TitleD> getFoodFromTravle(FoodRequestDto.Title requestDto) {
-		log.info("title : {}",requestDto.getAttractionName());
-		return foodRepository.getFoodFromTravle(requestDto.getAttractionName())
+	// public List<FoodResponseDto.TitleD> getFoodFromTravle(FoodRequestDto.Title requestDto) {
+	// 	log.info("title : {}",requestDto.getAttractionName());
+	// 	return foodRepository.getFoodFromTravle(requestDto.getAttractionName())
+	// 		.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
+	// 		.stream()
+	// 		.map(data -> {
+	// 			FoodResponseDto.TitleD now = data.convertToFDto();
+	// 			now.setDistance(calculateDistance(now.getAttractionLatitude(), now.getAttractionLongitude(), now.getFoodLatitude(), now.getFoodLongitude()));
+	// 			return now;
+	// 		})
+	// 		.filter(dto -> dto.getDistance() < requestDto.getDistance())
+	// 		.sorted(getFoodTitleComparator(requestDto.getSorted()))
+	// 		.collect(Collectors.toList());
+	// }
+	public List<FoodResponseDto.Coordi> getFoodFromTravle(FoodRequestDto.Title requestDto) {
+		Attraction attraction = attractionRepository.findByTitle(requestDto.getAttractionName())
+			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION));
+
+		//현재 위도 좌표 (y 좌표)
+		double nowLatitude = attraction.getLatitude();
+
+		//현재 경도 좌표 (x 좌표)
+		double nowLongitude = attraction.getLongitude();
+
+		//km당 y 좌표 이동 값
+		double mForLatitude =(1 /(EARTH_RADIUS* 1 *(Math.PI/ 180)));
+		//km당 x 좌표 이동 값
+		double mForLongitude =(1 /(EARTH_RADIUS* 1 *(Math.PI/ 180)* Math.cos(Math.toRadians(nowLatitude))));
+
+		//현재 위치 기준 검색 거리 좌표
+		double maxY = nowLatitude +(requestDto.getDistance()* mForLatitude);
+		double minY = nowLatitude -(requestDto.getDistance()* mForLatitude);
+		double maxX = nowLongitude +(requestDto.getDistance()* mForLongitude);
+		double minX = nowLongitude -(requestDto.getDistance()* mForLongitude);
+
+		return foodRepository.getFoodFromLngLatv(maxY, maxX, minY, minX)
 			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
 			.stream()
 			.map(data -> {
-				FoodResponseDto.TitleD now = data.convertToFDto();
-				now.setDistance(calculateDistance(now.getAttractionLatitude(), now.getAttractionLongitude(), now.getFoodLatitude(), now.getFoodLongitude()));
+				FoodResponseDto.Coordi now = data.convertToDto();
+				now.setDistance(calculateDistance(attraction.getLatitude(), attraction.getLongitude(), now.getFoodLatitude(), now.getFoodLongitude()));
 				return now;
 			})
 			.filter(dto -> dto.getDistance() < requestDto.getDistance())
-			.sorted(getFoodTitleComparator(requestDto.getSorted()))
+			.sorted(getFoodCoordiComparator(requestDto.getSorted()))
 			.collect(Collectors.toList());
 	}
 
@@ -89,7 +124,7 @@ public class FoodServiceImpl implements FoodService{
 
 	//정렬
 	private Comparator<FoodResponseDto.Coordi> getFoodCoordiComparator(String sortingKey) {
-		if(sortingKey.isEmpty() || sortingKey == null || sortingKey.equals("DSITANCE")){
+		if(sortingKey.isEmpty() || sortingKey == null || sortingKey.equals("DISTANCE")){
 			return Comparator.comparing(FoodResponseDto.Coordi::getDistance);
 		}
 		else if ("JJIM".equals(sortingKey)) {
@@ -104,7 +139,7 @@ public class FoodServiceImpl implements FoodService{
 	}
 
 	private Comparator<FoodResponseDto.TitleD> getFoodTitleComparator(String sortingKey) {
-		if(sortingKey.isEmpty() || sortingKey == null || sortingKey.equals("DSITANCE")){
+		if(sortingKey.isEmpty() || sortingKey == null || sortingKey.equals("DISTANCE")){
 			return Comparator.comparing(FoodResponseDto.TitleD::getDistance);
 		}
 		else if ("JJIM".equals(sortingKey)) {

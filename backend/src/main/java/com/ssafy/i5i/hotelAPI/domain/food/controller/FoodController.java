@@ -23,7 +23,7 @@ public class FoodController {
 
 
 	@GetMapping("/{name}/{distance}/{sorted}")
-	public List<FoodResponseDto.TitleD> getFoodFromTravle(@PathVariable("name")String name, @PathVariable("distance")Long distance, @PathVariable("sorted")String sorted ){
+	public List<FoodResponseDto.Coordi> getFoodFromTravle(@PathVariable("name")String name, @PathVariable("distance")Long distance, @PathVariable("sorted")String sorted ){
 		FoodRequestDto.Title attractionTitleRequestDto = new FoodRequestDto.Title(name, distance, sorted);
 		return foodServiceImpl.getFoodFromTravle(attractionTitleRequestDto);
 	}
