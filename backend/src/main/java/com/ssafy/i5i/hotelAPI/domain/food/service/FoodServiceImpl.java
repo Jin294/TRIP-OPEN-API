@@ -32,6 +32,7 @@ public class FoodServiceImpl implements FoodService{
 	public static final Double EARTH_RADIUS = 6371.0;
 	@Override
 	public List<FoodResponseDto.TitleD> getFoodFromTravle(AttractionTitleRequestDto requestDto) {
+		log.info("title : {}",requestDto.getAttractionName());
 		return foodRepository.getFoodFromTravle(requestDto.getAttractionName())
 			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
 			.stream()
@@ -72,8 +73,8 @@ public class FoodServiceImpl implements FoodService{
 				now.setDistance(calculateDistance(requestDto.getLatitude(), requestDto.getLongitude(), now.getFoodLatitude(), now.getFoodLongitude()));
 				return now;
 			})
-			.filter(dto -> dto.getDistance() < requestDto.getDistance())
-			.sorted(getFoodCoordiComparator(requestDto.getSorted()))
+			// .filter(dto -> dto.getDistance() < requestDto.getDistance())
+			// .sorted(getFoodCoordiComparator(requestDto.getSorted()))
 			.collect(Collectors.toList());
 	}
 
