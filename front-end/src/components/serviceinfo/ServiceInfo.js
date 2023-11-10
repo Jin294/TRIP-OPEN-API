@@ -50,7 +50,7 @@ const ServiceInfo = () => {
 		<div className={styles.backBody}>
 			<div className={styles.boardContainer}>
 				<div className={styles.boardTop}>
-					<h3>제공하는 API 서비스를 소개합니다</h3>
+					<h2>제공하는 API를 소개합니다</h2>
 				</div>
 				<div className={styles.cardList}>
 					{title.map((item, index) => (
