@@ -22,12 +22,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
         if(authorizationToken != null && authorizationToken.startsWith("Bearer ") && !requestURI.contains("/api/")){
             String token = authorizationToken.substring(7);
-
-            String userId = JwtUtill.getPayloadAndCheckExpired(token).get("userId", String.class);
+            log.info("JwtAuthenticationFilter 25 lines, token = {}", token);
+            String userId = JwtUtill.getPayloadAndCheckExpired(token).get("id", String.class);
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, null, null);
-
-            log.info("jwt authentication filter userId={}", userId);
 
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);

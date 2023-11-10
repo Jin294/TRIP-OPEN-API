@@ -10,19 +10,28 @@ spring:
       uri: mongodb+srv://S09P31B205:z5HxUpl4gB@ssafy.ngivl.mongodb.net/S09B31B205?authSource=admin
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://k9b205.p.ssafy.io:3306/b205
+    url: jdbc:mysql://k9b205.p.ssafy.io:4000/b205
     username: b205
     password: 9gi_ssafy_final
   jpa:
     open-in-view: false
-    hibernate:
-      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        ddl-auto: none
+  logging:
+    level:
+      org.hibernate.SQL: debug
+      org.hibernate.type: trace
+
   redis:
     host: k9b205.p.ssafy.io
     port: 6379
     password: 9gi_ssafy_final
 jwt:
-  secretKey: itsSecrentkeyyouknowheyfuckyoufudmfsdkfmaskfsdkfsadfklsdflksdfsklfmdsklfsmdfklmsdflksdmf=
+  secretKey: c3ByaW5nYm9vdC1qd3stdHV0b3JpYwwtc3ByaW5nYm921C33d3ktdHVhb3JpYWkta3ByaW5nYm9vdC1qd3QtdHV0b3JpYWk=
 host:
   url: http://localhost:8080
 

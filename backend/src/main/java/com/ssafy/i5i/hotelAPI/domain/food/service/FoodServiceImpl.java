@@ -1,6 +1,5 @@
 package com.ssafy.i5i.hotelAPI.domain.food.service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,11 +11,10 @@ import com.ssafy.i5i.hotelAPI.common.exception.CommonException;
 import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.request.AttractionCoordiRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.request.AttractionTitleRequestDto;
+import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodCoordiResponseDto;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodTitleResponseDto;
 import com.ssafy.i5i.hotelAPI.domain.food.repository.FoodRepository;
-import com.ssafy.i5i.hotelAPI.domain.hotel.dto.request.AttractionCoordinateRequestDto;
-import com.ssafy.i5i.hotelAPI.domain.hotel.dto.response.AccommodationResponseDto;
-import com.ssafy.i5i.hotelAPI.domain.hotel.entity.Attraction;
 import com.ssafy.i5i.hotelAPI.domain.hotel.repository.AttractionRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -33,31 +31,22 @@ public class FoodServiceImpl implements FoodService{
 
 	public static final Double EARTH_RADIUS = 6371.0;
 	@Override
-	public List<FoodResponseDto> getFoodFromTravle(AttractionTitleRequestDto requestDto) {
-		Attraction attraction = attractionRepository.findByTitle(requestDto.getAttractionName())
-			.orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);});
-
-		return foodRepository.findByCoordinate(attraction.getLatitude(), attraction.getLongitude(), requestDto.getDistance())
+	public List<FoodResponseDto.TitleD> getFoodFromTravle(AttractionTitleRequestDto requestDto) {
+		log.info("title : {}",requestDto.getAttractionName());
+		return foodRepository.getFoodFromTravle(requestDto.getAttractionName())
 			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
 			.stream()
-			.map(FoodResponseDto::new)
-			.sorted(getFoodComparator(requestDto.getSorted()))
+			.map(data -> {
+				FoodResponseDto.TitleD now = data.convertToFDto();
+				now.setDistance(calculateDistance(now.getAttractionLatitude(), now.getAttractionLongitude(), now.getFoodLatitude(), now.getFoodLongitude()));
+				return now;
+			})
+			.sorted(getFoodTitleComparator(requestDto.getSorted()))
 			.collect(Collectors.toList());
 	}
 
-	// @Override
-	// public List<FoodResponseDto> getFoodFromLngLat(AttractionCoordiRequestDto requestDto) {
-	// 	return foodRepository.findByCoordinate(requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getDistance())
-	// 		.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
-	// 		.stream()
-	// 		.map(FoodResponseDto::new)
-	// 		.sorted(getFoodComparator(requestDto.getSorted()))
-	// 		.collect(Collectors.toList());
-	// }
-
-
 	@Override
-	public List<FoodResponseDto> getFoodFromLngLat(AttractionCoordiRequestDto requestDto) {
+	public List<FoodCoordiResponseDto> getFoodFromLngLatv(AttractionCoordiRequestDto requestDto) {
 		//현재 위도 좌표 (y 좌표)
 		double nowLatitude = requestDto.getLatitude();
 
@@ -75,16 +64,17 @@ public class FoodServiceImpl implements FoodService{
 		double maxX = nowLongitude +(requestDto.getDistance()* mForLongitude);
 		double minX = nowLongitude -(requestDto.getDistance()* mForLongitude);
 
-		return foodRepository.getAroundFoodList(maxY, maxX, minY, minX)
+
+		return foodRepository.getFoodFromLngLatv(maxY, maxX, minY, minX)
 			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
 			.stream()
 			.map(data -> {
-				FoodResponseDto now = data.convertToDto();
+				FoodCoordiResponseDto now = data.convertToDto();
 				now.setDistance(calculateDistance(requestDto.getLatitude(), requestDto.getLongitude(), now.getFoodLatitude(), now.getFoodLongitude()));
 				return now;
 			})
-			.filter(dto -> dto.getDistance() < requestDto.getDistance())
-			.sorted(getFoodComparator(requestDto.getSorted()))
+			// .filter(dto -> dto.getDistance() < requestDto.getDistance())
+			// .sorted(getFoodCoordiComparator(requestDto.getSorted()))
 			.collect(Collectors.toList());
 	}
 
@@ -101,15 +91,78 @@ public class FoodServiceImpl implements FoodService{
 	}
 
 	//정렬
-	private Comparator<FoodResponseDto> getFoodComparator(String sortingKey) {
+	private Comparator<FoodCoordiResponseDto> getFoodCoordiComparator(String sortingKey) {
 		if ("STAR".equals(sortingKey)) {
-			return Comparator.comparing(FoodResponseDto::getFoodStar);
+			return Comparator.comparing(FoodCoordiResponseDto::getFoodStar);
 		} else if ("DISTANCE".equals(sortingKey)) {
-			return Comparator.comparing(FoodResponseDto::getDistance);
+			return Comparator.comparing(FoodCoordiResponseDto::getDistance);
 		} else {
 			// 기본 정렬 기준을 제공
-			return Comparator.comparing(FoodResponseDto::getId);
+			return Comparator.comparing(FoodCoordiResponseDto::getId);
 		}
 	}
+
+	private Comparator<FoodResponseDto.TitleD> getFoodTitleComparator(String sortingKey) {
+		if ("STAR".equals(sortingKey)) {
+			return Comparator.comparing(FoodResponseDto.TitleD::getFoodStar);
+		} else if ("DISTANCE".equals(sortingKey)) {
+			return Comparator.comparing(FoodResponseDto.TitleD::getDistance);
+		} else {
+			// 기본 정렬 기준을 제공
+			return Comparator.comparing(FoodResponseDto.TitleD::getFoodJjim);
+		}
+	}
+
+	// @Override
+	// public List<FoodResponseDto> getFoodFromLngLatv1(AttractionCoordiRequestDto requestDto) {
+	// 	return foodRepository.findByCoordinate(requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getDistance())
+	// 		.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
+	// 		.stream()
+	// 		.map(FoodResponseDto::new)
+	// 		.sorted(getFoodComparator(requestDto.getSorted()))
+	// 		.collect(Collectors.toList());
+	// }
+	//
+	// @Override
+	// public List<FoodResponseDto> getFoodFromLngLatv3(AttractionCoordiRequestDto requestDto) {
+	// 	return foodRepository.findByCoordinate3(requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getDistance())
+	// 		.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
+	// 		.stream()
+	// 		.map(FoodResponseDto::new)
+	// 		.sorted(getFoodComparator(requestDto.getSorted()))
+	// 		.collect(Collectors.toList());
+	// }
+	//
+	//
+	//
+	// @Override
+	// public Food findFoodByName(String name){
+	// 	long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
+	//
+	// 	//실험할 코드 추가
+	// 	Food result = foodRepository.findByFoodName(name);
+	//
+	// 	long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
+	// 	long secDiffTime = (afterTime - beforeTime); //두 시간에 차 계산
+	//
+	// 	log.info("시간차이(m) : {} ",secDiffTime);
+	//
+	// 	return result;
+	// }
+	//
+	// @Override
+	// public Food findFoodByIdx(Long idx){
+	// 	long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
+	//
+	// 	//실험할 코드 추가
+	// 	Food result = foodRepository.findById(idx).orElseThrow();
+	//
+	// 	long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
+	// 	long secDiffTime = (afterTime - beforeTime); //두 시간에 차 계산
+	//
+	// 	log.info("db 속도(ms) : {} ",secDiffTime);
+	//
+	// 	return result;
+	// }
 }
 
