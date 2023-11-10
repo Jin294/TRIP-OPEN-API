@@ -33,11 +33,11 @@ public class  AccommodationService {
 
     // sort
     public List<AccommodationResponseDto> sort(List<AccommodationResponseDto> data, String type){
-        if(type.equalsIgnoreCase("DISTANCE")){
+        if(type.equalsIgnoreCase("distance")){
             data.sort((o1, o2) -> (o1.getRelativeDistance().compareTo(o2.getRelativeDistance())));
-        } else if (type.equalsIgnoreCase("SCORE")) {
+        } else if (type.equalsIgnoreCase("score")) {
             data.sort(((o1, o2) -> o1.getAccommodationScore().compareTo(o2.getAccommodationScore())));
-        } else if (type.equalsIgnoreCase("TYPE")) {
+        } else if (type.equalsIgnoreCase("type")) {
             data.sort(((o1, o2) -> o1.getAccommodationType().compareTo(o2.getAccommodationType())));
         } else{
             throw new CommonException(ExceptionType.SORTED_TYPE_EXCEPTION);
