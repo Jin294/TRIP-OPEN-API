@@ -12,6 +12,7 @@ import com.ssafy.i5i.hotelAPI.domain.hotel.repository.AttractionAccommdodationRe
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
@@ -22,9 +23,10 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class  AccommodationService {
 
-    private final AttractionAccommdodationRepository attractionAccommdodationRepository;
+//  private final AttractionAccommdodationRepository attractionAccommdodationRepository;
     public static final Double RADIUS_OF_EARTH = 6371.0;
 
     // sort
@@ -43,6 +45,7 @@ public class  AccommodationService {
 
     // input: attraction_id -> output: Accommodation
     public List<AccommodationResponseDto> getAccommodationByName(AttractionNameRequestDto requestDto){
+        Attraction attraction = attractionR
         List<AccommodationResponseDto> response = attractionAccommdodationRepository.findByTitle(requestDto.getAttractionName())
                 .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);})
                 .stream()
@@ -90,7 +93,6 @@ public class  AccommodationService {
         return sort(response, requestDto.getSorted());
     }
 
-
     private Double calculateDistance(Double lat1, Double lon1, Double lat2, Double lon2) {
         // 위도와 경도를 사용하여 거리를 계산하는 로직을 구현
         Double lat1Rad = lat1 * Math.PI / 180;
@@ -108,5 +110,52 @@ public class  AccommodationService {
 
         return distance;
     }
+
+//    List<AccommodationResponseDto> response = attractionAccommdodationRepository.findByTitle(requestDto.getAttractionName())
+//            .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);})
+//            .stream()
+//            .map(data -> {
+//                AccommodationResponseDto now = data.getAccommodation().toDto();
+//                now.setRelativeDistance(calculateDistance(data.getAttraction().getLatitude(), data.getAttraction().getLongitude(), now.getAccommodationLatitude(), now.getAccommodationLongitude()));
+//                return now;
+//            })
+//            .filter(dto -> dto.getRelativeDistance() < requestDto.getDistance())
+//            .collect(Collectors.toList());
+//
+//    // sort
+//        return sort(response, requestDto.getSorted());
+//}
+//
+//    // input: coordinate -> output: Accommodation
+//    public List<AccommodationResponseDto> getAccommodationByCoordinate(AttractionCoordinateRequestDto requestDto){
+//        //현재 위도 좌표 (y 좌표)
+//        double nowLatitude = requestDto.getLatitude();
+//        //현재 경도 좌표 (x 좌표)
+//        double nowLongitude = requestDto.getLongitude();
+//
+//        //km당 y 좌표 이동 값
+//        double mForLatitude =(1 /(RADIUS_OF_EARTH* 1 *(Math.PI/ 180)));
+//        //km당 x 좌표 이동 값
+//        double mForLongitude =(1 /(RADIUS_OF_EARTH* 1 *(Math.PI/ 180)* Math.cos(Math.toRadians(nowLatitude))));
+//
+//        //현재 위치 기준 검색 거리 좌표
+//        double maxY = nowLatitude +(requestDto.getDistance()* mForLatitude);
+//        double minY = nowLatitude -(requestDto.getDistance()* mForLatitude);
+//        double maxX = nowLongitude +(requestDto.getDistance()* mForLongitude);
+//        double minX = nowLongitude -(requestDto.getDistance()* mForLongitude);
+//
+//        List<AccommodationResponseDto> response = attractionAccommdodationRepository.findByCoordinate(maxY, maxX, minY, minX)
+//                .orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
+//                .stream()
+//                .map(data -> {
+//                    AccommodationResponseDto now = data.toDto();
+//                    now.setRelativeDistance(calculateDistance(requestDto.getLatitude(), requestDto.getLongitude(), now.getAccommodationLatitude(), now.getAccommodationLongitude()));
+//                    return now;
+//                })
+//                .filter(dto -> dto.getRelativeDistance() < requestDto.getDistance())
+//                .collect(Collectors.toList());
+//
+//        return sort(response, requestDto.getSorted());
+//    }
 
 }
