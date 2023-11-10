@@ -28,7 +28,7 @@ const NavBar = () => {
     navigate("/");
   };
   return (
-    <div>
+    <div className="NavBar">
       {!hideNavBar && (
         // NavBar 내용
         <div className={styles.mainNav}>
