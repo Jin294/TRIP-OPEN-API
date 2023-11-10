@@ -1,17 +1,18 @@
 .backBody {
-  background-color: #282c34;
+  /* border: 1px solid red; */
+  /* background-color: #282c34; */
   /* min-height: 100vh;
   display: flex;
   background-image: url("../../assets/img/background.png");
   background-size: cover;
   position: relative; */
-
 }
 
 .boardContainer {
   /* position: absolute; */
 
-  background-color: #282c34;
+  /* background-color: #282c34; */
+  /* border: 1px solid blue; */
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   justify-content: center;
@@ -25,11 +26,13 @@
 }
 
 .boardTop {
+  background-image: url("../../assets/img/wave.png");
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
-  color: white;
+  /* margin-bottom: 20px; */
+  color: black;
   border-bottom: 2px solid white;
   padding-bottom: 10px;
 }
