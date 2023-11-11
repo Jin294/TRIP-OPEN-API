@@ -18,7 +18,6 @@ import ExExchange from './components/examplepage/ExExchange';
 import ExCard from './components/examplepage/ExCard';
 import ExCardContent from './components/examplepage/ExCardContent';
 
-import Oauth from './components/oauth/Oauth';
 import { useEffect, useRef } from 'react';
 
 function App() {
@@ -36,7 +35,6 @@ function App() {
         "/exexchange",
         "/excard",
         "/excardcontent",
-        "/oauthexplain"
     ]);
     
     useEffect(() => {
@@ -60,7 +58,6 @@ function App() {
                 <Route path="/exexchange" element={<ExExchange />}></Route>
                 <Route path="/excard" element={<ExCard />}></Route>
                 <Route path="/excardcontent" element={<ExCardContent />}></Route>
-                <Route path="/oauthexplain" element={<Oauth />}></Route>
                 <Route path="/*" element={<Home />} />
             </Routes>
         </div>

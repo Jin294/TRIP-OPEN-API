@@ -45,10 +45,6 @@ const NavBar = () => {
             <Link className={styles.navMenu} to="/apidock/financialdata">
               API문서
             </Link>
-
-            <Link className={styles.navMenu} to="/oauthexplain">
-              OAuth2.0
-            </Link>
           </div>
           {/* 로그인 상태에 따라 Login 또는 Mypage로 링크 변경 */}
           {userInfo !== null ? (
@@ -56,9 +52,9 @@ const NavBar = () => {
               <Link className={styles.navMenu} to="/mypage">
                 마이페이지
               </Link>
-              <a className={styles.navMenu} onClick={onClickLogout}>
+              <button className={styles.navMenu} onClick={onClickLogout}>
                 로그아웃
-              </a>
+              </button>
             </div>
           ) : (
             <div className={styles.navRight}>
