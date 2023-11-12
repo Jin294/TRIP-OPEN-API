@@ -32,7 +32,9 @@ const CardComponent = ({ index }) => {
         <div className={`${styles['card-upside-title']} ${isCardHovered ? styles['text-hovered'] : ''}`}>
           {titleArray[index]}
         </div>
-        <img className={styles["card-upside-icon"]} src={icons[index]} alt="" />
+        <img className={styles["card-upside-icon"]} src={icons[index]} alt=""
+          style={{ transform: index === 2 ? 'scale(1.3)' : 'scale(1)' }} />
+
         <div className={`${styles['card-upside-desc']} ${isCardHovered ? styles['text-hovered'] : ''}`}>
           {descArray[index]}
         </div>
