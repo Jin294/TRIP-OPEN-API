@@ -7,10 +7,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 90vh;
   font-size: calc(10px + 2vmin);
   background-image: url('../../assets/img/mainImg.jpg');
-  background-size: 100% auto;
+  background-size: 100%;
   background-repeat: no-repeat;
   position: relative;
 }
@@ -86,7 +86,7 @@
 }
 
 .home-info {
-  height: 50vh;
+  height: 80vh;
   display: flex;
   justify-content: center;
   position: relative;
@@ -98,7 +98,7 @@
   display: flex;
   justify-content: space-evenly;
   position: relative;
-  top: -150px;
+  top: -100px;
   background-color: none;
 }
 
@@ -106,8 +106,7 @@
   width: 300px;
   height: 600px;
   background-color: #fff;
-  /* border: 3px solid #15A656;
-  border-radius: 10px 10px 0 0; */
+  border-radius: 10px;
 }
 
 .card-upside {

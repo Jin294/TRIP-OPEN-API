@@ -83,7 +83,7 @@ const Home = () => {
       <div className={styles["home"]}>
         <div className={styles["home-title"]}>여행지 정보 OPEN API</div>
         <div className={styles["home-subtitle"]}>
-          여행지와 숙소, 음식점을 소개
+          여행지와 숙소, 음식점을 소개합니다
         </div>
         <div className={styles["home-search"]}>
           <div className={styles["home-search-bar"]}>
