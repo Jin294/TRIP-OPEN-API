@@ -4,6 +4,7 @@ import com.ssafy.i5i.hotelAPI.domain.docs.dto.TypeResponseDto;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,6 +20,9 @@ public class ApiType {
 
     @Column(length = 1000)
     private String detail;
+
+    @OneToMany(mappedBy = "apiType", fetch = FetchType.LAZY)
+    private List<ApiData> apiData;
 
     public TypeResponseDto toDto(){
         return new TypeResponseDto(apiTypeId, title, detail);

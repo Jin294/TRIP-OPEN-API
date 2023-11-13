@@ -84,14 +84,23 @@ public class DocsService {
                 .collect(Collectors.toList());
     }
 
-    public List<ApiDataDto> getApiDataList(long type){
-//        return apiDataRepository.getApiDataById(type)
-//                .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);})
-//                .stream()
-//                .map(data -> {
-//                    return data.toDto();
-//                })
-//                .collect(Collectors.toList());
-        return null;
+    public List<ApiDataDto.ApiDataList> getApiByTypeId(Long typeId){
+        List<ApiData> apiDataList = apiDataRepository.getDataByType(typeId).orElseThrow(()->{
+            throw new CommonException(ExceptionType.TYPE_INVALID_EXCEPTION);
+        });
+        return apiDataList.stream()
+                .map(apiData -> {
+                    return ApiDataDto.ApiDataList.builder()
+                            .api_data_id(apiData.getApiDataId())
+                            .title(apiData.getTitle())
+                            .content(apiData.getContent())
+                            .method(apiData.getMethod())
+                            .return_type(apiData.getReturnType())
+                            .content_type(apiData.getContentType())
+                            .endpoint(apiData.getEndpoint())
+                            .return_example(apiData.getReturnExample())
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 }
