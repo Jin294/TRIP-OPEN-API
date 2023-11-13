@@ -33,6 +33,7 @@ public class SecurityConfig {
     private final TokenService tokenService;
 
     private static final String[] PERMIT_URL = {
+            "/docs/data/**",
             "/docs/service",
             "/docs/service/login",
             "/api/**",

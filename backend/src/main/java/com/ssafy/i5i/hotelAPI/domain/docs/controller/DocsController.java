@@ -1,7 +1,8 @@
 package com.ssafy.i5i.hotelAPI.domain.docs.controller;
 
-import com.ssafy.i5i.hotelAPI.domain.docs.dto.responseDto.ApiDataResponseDto;
-import com.ssafy.i5i.hotelAPI.domain.docs.dto.responseDto.TypeResponseDto;
+import com.ssafy.i5i.hotelAPI.common.response.DataResponse;
+import com.ssafy.i5i.hotelAPI.domain.docs.dto.ApiDataResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.docs.dto.TypeResponseDto;
 import com.ssafy.i5i.hotelAPI.domain.docs.service.DocsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,15 +21,14 @@ public class DocsController {
     private final DocsService docsService;
 
     @GetMapping("/apitype")
-    public List<TypeResponseDto> getType(){
-        return docsService.getTypeList();
+    public DataResponse<?> getType(){
+        List<TypeResponseDto> data = docsService.getTypeList();
+        return new DataResponse<>(200, "success", data);
     }
 
     @GetMapping("/apidata/{api_type_id}")
-    public List<ApiDataResponseDto> getData(@PathVariable("api_type_id") Long id){
-        return docsService.getApiDataList(id);
+    public DataResponse<?> getData(@PathVariable("api_type_id") Long id){
+        List<ApiDataResponseDto> data = docsService.getApiDataList(id);
+        return new DataResponse<>(200, "success", data);
     }
-
-
-
 }

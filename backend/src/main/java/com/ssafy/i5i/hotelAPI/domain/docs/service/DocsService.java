@@ -2,8 +2,8 @@ package com.ssafy.i5i.hotelAPI.domain.docs.service;
 
 import com.ssafy.i5i.hotelAPI.common.exception.CommonException;
 import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
-import com.ssafy.i5i.hotelAPI.domain.docs.dto.responseDto.ApiDataResponseDto;
-import com.ssafy.i5i.hotelAPI.domain.docs.dto.responseDto.TypeResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.docs.dto.ApiDataResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.docs.dto.TypeResponseDto;
 import com.ssafy.i5i.hotelAPI.domain.docs.repository.ApiDataRepository;
 import com.ssafy.i5i.hotelAPI.domain.docs.repository.ApiTypeRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,6 @@ public class DocsService {
     private final ApiDataRepository apiDataRepository;
     private final ApiTypeRepository apiTypeRepository;
 
-
     public List<TypeResponseDto> getTypeList(){
         return apiTypeRepository.findAll()
                 .stream()
@@ -31,12 +30,13 @@ public class DocsService {
     }
 
     public List<ApiDataResponseDto> getApiDataList(long type){
-        return apiDataRepository.getApiDataById(type)
-                .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);})
-                .stream()
-                .map(data -> {
-                    return data.toDto();
-                })
-                .collect(Collectors.toList());
+//        return apiDataRepository.getApiDataById(type)
+//                .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);})
+//                .stream()
+//                .map(data -> {
+//                    return data.toDto();
+//                })
+//                .collect(Collectors.toList());
+        return null;
     }
 }

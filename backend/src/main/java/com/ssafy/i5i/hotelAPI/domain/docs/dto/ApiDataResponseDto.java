@@ -1,4 +1,4 @@
-package com.ssafy.i5i.hotelAPI.domain.docs.dto.responseDto;
+package com.ssafy.i5i.hotelAPI.domain.docs.dto;
 
 import com.ssafy.i5i.hotelAPI.domain.docs.dto.VariableDto;
 import com.ssafy.i5i.hotelAPI.domain.docs.entity.ApiData;
