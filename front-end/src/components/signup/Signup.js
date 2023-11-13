@@ -57,7 +57,7 @@ const Signup = () => {
     return (
         <div className={styles.signupBody}>
             <div className={styles.signupContainer}>
-                <div className={styles.logoText}>회원가입</div>
+                <div className={styles.logoText}>여행지 정보 OPEN API</div>
                 <div className={styles.signupBox}>
                     <label htmlFor="email" className={styles.signupText}>
                         아이디(이메일)

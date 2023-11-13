@@ -56,7 +56,7 @@ const Login = () => {
     return (
         <div className={styles.loginBody}>
             <div className={styles.loginContainer}>
-                <div className={styles.logoText}>S.F.O.API</div>
+                <div className={styles.logoText}>여행지 정보 OPEN API</div>
                 <input
                     className={styles.loginInput}
                     value={email}
