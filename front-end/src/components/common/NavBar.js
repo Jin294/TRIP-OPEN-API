@@ -27,6 +27,10 @@ const NavBar = () => {
     dispatch(logout());
     navigate("/");
   };
+
+  const onClick = () => {
+    navigate("/mypage");
+  };
   return (
     <div className="NavBar">
       {!hideNavBar && (
@@ -52,9 +56,9 @@ const NavBar = () => {
           {/* 로그인 상태에 따라 Login 또는 Mypage로 링크 변경 */}
           {userInfo !== null ? (
             <div className={styles.navRight}>
-              <Link className={styles.navMenu} to="/mypage">
+              <button className={styles.navMenu} onclick={onClick}>
                 마이페이지
-              </Link>
+              </button>
               <button className={styles.navMenu} onClick={onClickLogout}>
                 로그아웃
               </button>
