@@ -47,7 +47,16 @@ const NavBar = () => {
             </Link>
           </div>
           {/* 로그인 상태에 따라 Login 또는 Mypage로 링크 변경 */}
-          {userInfo !== null ? (
+          {userInfo === null || Object.keys(userInfo).length === 0 ? (
+            <div className={styles.navRight}>
+            <Link className={styles.navMenu} to="/login">
+              로그인
+            </Link>
+            <Link className={styles.navMenu} to="/signup">
+              회원가입
+            </Link>
+          </div>
+          ) : (
             <div className={styles.navRight}>
               <Link className={styles.navMenu} to="/mypage">
                 마이페이지
@@ -55,15 +64,6 @@ const NavBar = () => {
               <button className={styles.navMenu} onClick={onClickLogout}>
                 로그아웃
               </button>
-            </div>
-          ) : (
-            <div className={styles.navRight}>
-              <Link className={styles.navMenu} to="/login">
-                로그인
-              </Link>
-              <Link className={styles.navMenu} to="/signup">
-                회원가입
-              </Link>
             </div>
           )}
         </div>
