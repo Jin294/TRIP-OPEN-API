@@ -16,7 +16,7 @@ public class ApiData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "api_id")
-    private Long id;
+    private Long apiDataId;
 
     @JoinColumn(name = "api_type_id")
     @ManyToOne(fetch = FetchType.LAZY)
