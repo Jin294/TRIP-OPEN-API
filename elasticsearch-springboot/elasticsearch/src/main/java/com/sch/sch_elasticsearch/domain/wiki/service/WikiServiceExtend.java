@@ -1,22 +1,26 @@
 package com.sch.sch_elasticsearch.domain.wiki.service;
 
+import com.sch.sch_elasticsearch.domain.wiki.dto.SearchAllDTO;
+import com.sch.sch_elasticsearch.domain.wiki.dto.TermDTO;
 import com.sch.sch_elasticsearch.domain.wiki.entity.Wiki;
+import com.sch.sch_elasticsearch.exception.CommonException;
+import com.sch.sch_elasticsearch.exception.ExceptionType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.lucene.index.Term;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.AnalyzeRequest;
 import org.elasticsearch.client.indices.AnalyzeResponse;
 import org.elasticsearch.common.unit.Fuzziness;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.FuzzyQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.*;
 
 import org.elasticsearch.script.Script;
 import org.elasticsearch.script.ScriptType;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
@@ -24,6 +28,7 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +50,7 @@ public class WikiServiceExtend {
      * Attraction_name과 Wiki_Title이 입력 검색어와 같은 쿼리 반환
      * @return List<Wiki>
      */
-    public List<Wiki> getSameAttNameAndWikiTitle(String inputString) {
+    public List<Wiki> getSameAttNameAndWikiTitle(String inputString, boolean useReliableSearch) {
 
         // Script 문자열을 정의한다.
         String scriptStr = "if (doc['attraction_name.keyword'].size() != 0 && doc['wiki_title.keyword'].size() != 0) { " +
@@ -75,7 +80,7 @@ public class WikiServiceExtend {
 
         // Elasticsearch에서 쿼리 실행 후 결과값 가져오기
         SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
-        return toolsForWikiService.getListBySearchHits(searchHits);
+        return toolsForWikiService.getListBySearchHits(searchHits, useReliableSearch);
     }
 
     /**
@@ -85,9 +90,8 @@ public class WikiServiceExtend {
      * @param fuzziness
      * @return List<Wiki>
      */
-    public List<Wiki> fuzzinessSearch(String inputString, int typeNum, int fuzziness) {
+    public List<Wiki> fuzzinessSearch(int typeNum, String inputString, boolean useReliableSearch, int maxResults, int fuzziness) {
         String type = toolsForWikiService.getType(typeNum);
-
         // fuzziness를 설정하는 방법. 'AUTO'로 설정하면 Elasticsearch가 자동으로 fuzziness 수준을 결정합니다.
         Fuzziness fuzzinessLevel;
         if (fuzziness > 0) {
@@ -101,11 +105,75 @@ public class WikiServiceExtend {
         //NativeQuery 생성
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(fuzzyBuilder)
+                .withPageable(PageRequest.of(0, maxResults)) // 결과 개수 제한
                 .build();
 
         // Elasticsearch에서 쿼리 실행 후 결과값 가져오기
         SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
-        return toolsForWikiService.getListBySearchHits(searchHits);
+        return toolsForWikiService.getListBySearchHits(searchHits, useReliableSearch);
+    }
+
+    /**
+     * DTO 입력을 토대로 가장 유사도가 높은 내용을 검색하여 반환한다.
+     * 입력 파라미터로 검색 문장, 가중치, 반환 개수를 가진다.
+     * @param searchAllDTO
+     * @return List<Wiki>
+     */
+    public List<Wiki> searchAll(SearchAllDTO searchAllDTO) {
+        try {
+            QueryBuilder multiyMatchQuery = new MultiMatchQueryBuilder(
+                    searchAllDTO.getSearchContent(), // 검색어
+                    "attraction_name", "overview", "wiki_title", "wiki_content"
+            )
+                    .field("attraction_name", searchAllDTO.getAttractionNameCorrectionFactor())
+                    .field("overview", searchAllDTO.getOverviewCorrectionFactor())
+                    .field("wiki_title", searchAllDTO.getWikiTitleCorrectionFactor())
+                    .field("wiki_content", searchAllDTO.getWikiContentCorrectionFactor());
+            //NativeQuery 생성
+            NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
+                    .withQuery(multiyMatchQuery)
+                    .withCollapseField("content_id")
+                    .withPageable(PageRequest.of(0, searchAllDTO.getMaxResults())) // 결과 개수 제한
+                    .build();
+
+            // Elasticsearch에서 쿼리 실행 후 결과값 가져오기
+            SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
+            return toolsForWikiService.getListBySearchHits(searchHits, searchAllDTO.isUseReliableSearch());
+        } catch (Exception e) {
+            log.error("[ERR LOG]{}", e);
+            throw new CommonException(ExceptionType.CALCULATE_SIMILARY_TERMS);
+        }
+    }
+
+    /**
+     * 동일 메서드 Overload, 텍스트와 반환 개수만 지정
+     * @param inputString, maxResults, useReliableSearch
+     * @return searchAll
+     */
+    public List<Wiki> searchAll(String inputString, int maxResults, boolean useReliableSearch ) {
+        try {
+            QueryBuilder multiyMatchQuery = new MultiMatchQueryBuilder(
+                    inputString, // 검색어
+                    "attraction_name", "overview", "wiki_title", "wiki_content"
+            )
+                    .field("attraction_name", 4)
+                    .field("overview", 3)
+                    .field("wiki_title", 2)
+                    .field("wiki_content", 1);
+            //NativeQuery 생성
+            NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
+                    .withQuery(multiyMatchQuery)
+                    .withCollapseField("content_id")
+                    .withPageable(PageRequest.of(0, maxResults)) // 결과 개수 제한
+                    .build();
+
+            // Elasticsearch에서 쿼리 실행 후 결과값 가져오기
+            SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
+            return toolsForWikiService.getListBySearchHits(searchHits, useReliableSearch);
+        } catch (Exception e) {
+            log.error("[ERR LOG]{}", e);
+            throw new CommonException(ExceptionType.CALCULATE_SIMILARY_TERMS);
+        }
     }
 
 }

@@ -5,6 +5,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.RestClients;
 import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfiguration;
@@ -46,7 +47,8 @@ public class ElkConfig extends AbstractElasticsearchConfiguration {
 //    /*
 //     Elasticsearch 인덱스와 데이터를 읽고 쓰는 데 사용 Spring Data ElasticSearch
 //     */
-    @Bean(name = "customElasticsearchTemplate") //무언가 Bean 이름이 겹치는 게 있어 수정하였음.
+    @Bean(name = "customElasticsearchTemplate") //Bean 이름이 겹치는 게 있어 수정하였음.
+    @Primary
     public ElasticsearchOperations elasticsearchTemplate() {
         return new ElasticsearchRestTemplate(elasticsearchClient());
     }

@@ -13,9 +13,6 @@ import java.util.List;
 public interface WikiRepository extends ElasticsearchRepository<Wiki, String> {
     List<Wiki> findByAttractionName(String input);
 
-//    @Query("{\"match\":{\"attraction_name\":{\"query\":\"?0\",\"fuzziness\":1}}}")
-//    List<Wiki> findPartialAttractionName(String input);
-
     @Query("{\"bool\":{\"must\":[{\"match\":{\"attraction_name\":{\"query\":\"?0\",\"fuzziness\":1}}}]}}")
     List<Wiki> findPartialAttractionName(String name);
 
@@ -29,6 +26,5 @@ public interface WikiRepository extends ElasticsearchRepository<Wiki, String> {
             "\"query\":{\"" +
             "match\":{\"attraction_name\":\"새로운 관광지 이름\"}}}")
     void updataNameAndContent(String attName, String title, String content);
-
 
 }

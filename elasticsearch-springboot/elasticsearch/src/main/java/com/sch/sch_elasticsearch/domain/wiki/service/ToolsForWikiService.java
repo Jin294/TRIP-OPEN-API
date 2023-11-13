@@ -31,18 +31,26 @@ public class ToolsForWikiService {
 
 
     /**
-     * SearchHits 에서 Content 가져와서 리스트로 변환 후 출력
+     * SearchHits의 값을 전처리를 거쳐 List<Wiki> 값으로 출력
      * @param SearchHits<Wiki> result
      * @return List<Wiki>
      */
-    public List<Wiki> getListBySearchHits(SearchHits<Wiki> result) {
+    public List<Wiki> getListBySearchHits(SearchHits<Wiki> result, boolean useReliable) {
         // SearchHits 내부 Content를 List<Wiki>로 변환
         List<Wiki> wikiList = new ArrayList<>();
         for (SearchHit<Wiki> hit : result) {
-            wikiList.add(hit.getContent());
+            Wiki wiki = hit.getContent();
+            wiki.setScore(hit.getScore());
+
+            //신뢰성 판단 로직 사용
+            if(useReliable && (wiki.getMatchTerm() / (float)wiki.getTotalTerm()) <= 0.2f) {
+                wiki.setWikiContentAndWikiTitleNull();
+            }
+            wikiList.add(wiki);
         }
         return wikiList;
     }
+
 
     /**
      * TypeNum : Keyword change

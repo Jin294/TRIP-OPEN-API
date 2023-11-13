@@ -19,7 +19,8 @@ logging:
 info:
   analyzer:
     nori : "korean"
+    nori-with-length : "korean_with_length"
+    nori-ngram : "korean_ngram"
   index:
-    wiki:
-      gt-two-token: "scrap_wiki_1108" #2글자 이상 term 분리된 필터 사용
-      legacy-token: "scrap_wiki_1107" #글자 단위 신경쓰지 않음
+    wiki: "scrap_wiki_final" #2글자 이상 term 분리된 필터 사용
+

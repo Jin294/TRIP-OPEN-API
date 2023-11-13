@@ -7,13 +7,15 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.Mapping;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
-@Document(indexName = "scrap_wiki_1107")
+@Document(indexName = "scrap_wiki_final_1113")
 @Mapping(mappingPath = "jsonlist/wiki/wiki-mapping.json")
 @Setting(settingPath = "jsonlist/wiki/wiki-setting.json")
 @Getter
 public class Wiki {
     @Id
     private String id;
+
+    float score;
 
     @Field(name = "pk_id")
     String pkId;
@@ -36,4 +38,25 @@ public class Wiki {
     @Field(name = "overview")
     String overview;
 
+    @Field(name = "match_term")
+    Integer matchTerm;
+
+    @Field(name = "total_term")
+    Integer totalTerm;
+
+    public void setMatchTerm(int value) {
+        this.matchTerm = value;
+    }
+    public void setTotalTerm(int value) {
+        this.totalTerm = value;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public void setWikiContentAndWikiTitleNull() {
+        this.wiki_content = null;
+        this.wiki_title = null;
+    }
 }

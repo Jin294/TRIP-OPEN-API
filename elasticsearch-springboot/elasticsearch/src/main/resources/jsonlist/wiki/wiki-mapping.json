@@ -1,60 +1,120 @@
 {
   "properties" : {
-    "number" : {
-      "type" : "keyword"
+    "@timestamp" : {
+      "type" : "date"
     },
-    "wiki_content" : {
-      "fielddata" : true,
-      "analyzer" : "korean",
+    "@version" : {
       "type" : "text",
       "fields" : {
         "keyword" : {
-          "ignore_above" : 256,
-          "type" : "keyword"
+          "type" : "keyword",
+          "ignore_above" : 256
         }
       }
     },
-    "overview" : {
-      "fielddata" : true,
-      "analyzer" : "korean",
+    "_class" : {
       "type" : "text",
       "fields" : {
         "keyword" : {
-          "ignore_above" : 256,
-          "type" : "keyword"
+          "type" : "keyword",
+          "ignore_above" : 256
+        }
+      }
+    },
+    "attraction_name" : {
+      "type" : "text",
+      "fields" : {
+        "keyword" : {
+          "type" : "keyword",
+          "ignore_above" : 256
+        }
+      },
+      "analyzer" : "korean",
+      "fielddata" : true
+    },
+    "content_id" : {
+      "type" : "keyword"
+    },
+    "host" : {
+      "type" : "text",
+      "fields" : {
+        "keyword" : {
+          "type" : "keyword",
+          "ignore_above" : 256
+        }
+      }
+    },
+    "id" : {
+      "type" : "text",
+      "fields" : {
+        "keyword" : {
+          "type" : "keyword",
+          "ignore_above" : 256
+        }
+      }
+    },
+    "match_term" : {
+      "type" : "integer"
+    },
+    "message" : {
+      "type" : "text",
+      "fields" : {
+        "keyword" : {
+          "type" : "keyword",
+          "ignore_above" : 256
+        }
+      }
+    },
+    "number" : {
+      "type" : "keyword"
+    },
+    "overview" : {
+      "type" : "text",
+      "fields" : {
+        "keyword" : {
+          "type" : "keyword",
+          "ignore_above" : 256
+        }
+      },
+      "analyzer" : "korean",
+      "fielddata" : true
+    },
+    "path" : {
+      "type" : "text",
+      "fields" : {
+        "keyword" : {
+          "type" : "keyword",
+          "ignore_above" : 256
         }
       }
     },
     "pk_id" : {
       "type" : "keyword"
     },
-    "attraction_name" : {
-      "fielddata" : true,
-      "analyzer" : "korean",
+    "total_term" : {
+      "type" : "integer"
+    },
+    "wiki_content" : {
       "type" : "text",
       "fields" : {
         "keyword" : {
-          "ignore_above" : 256,
-          "type" : "keyword"
+          "type" : "keyword",
+          "ignore_above" : 256
         }
-      }
-    },
-    "content_id" : {
-      "type" : "keyword"
+      },
+      "analyzer" : "korean",
+      "fielddata" : true
     },
     "wiki_title" : {
-      "fielddata" : true,
-      "analyzer" : "korean",
       "type" : "text",
       "fields" : {
         "keyword" : {
-          "ignore_above" : 256,
-          "type" : "keyword"
+          "type" : "keyword",
+          "ignore_above" : 256
         }
-      }
-    },
-    "id" : {
-      "type" : "keyword"
+      },
+      "analyzer" : "korean",
+      "fielddata" : true
     }
   }
 }

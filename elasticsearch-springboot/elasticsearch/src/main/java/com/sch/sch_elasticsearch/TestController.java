@@ -2,11 +2,9 @@ package com.sch.sch_elasticsearch;
 
 import com.sch.sch_elasticsearch.domain.accommodation.service.AccommodationService;
 import com.sch.sch_elasticsearch.domain.test.TestService;
+import com.sch.sch_elasticsearch.domain.wiki.dto.TermDTO;
 import com.sch.sch_elasticsearch.domain.wiki.entity.Wiki;
-import com.sch.sch_elasticsearch.domain.wiki.service.ToolsForWikiService;
-import com.sch.sch_elasticsearch.domain.wiki.service.WikiSchedulerService;
-import com.sch.sch_elasticsearch.domain.wiki.service.WikiServiceBasic;
-import com.sch.sch_elasticsearch.domain.wiki.service.WikiServiceExtend;
+import com.sch.sch_elasticsearch.domain.wiki.service.*;
 import lombok.RequiredArgsConstructor;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.core.MainResponse;
@@ -24,10 +22,8 @@ public class TestController {
 
 
     private final WikiServiceBasic wikiService;
-    private final WikiServiceExtend wikiServiceExtend;
     private final RestHighLevelClient client;
-    private final ToolsForWikiService toolsForWikiService;
-    private final WikiSchedulerService wikiSchedulerService;
+    private final WikiServiceTermSimilary wikiServiceTermSimilary;
 
     @RequestMapping("boot")
     public String Test() {
@@ -41,35 +37,32 @@ public class TestController {
         }
     }
 
-    @GetMapping("t2")
-    public List<Wiki> t2(@RequestParam("typeNum") int typeNum, @RequestParam("input") String inputString) {
-        return wikiService.searchExact(typeNum, inputString);
-    }
+//    @GetMapping("t2")
+//    public List<Wiki> t2(@RequestParam("typeNum") int typeNum, @RequestParam("input") String inputString) {
+//        return wikiService.searchExact(typeNum, inputString);
+//    }
 
     @GetMapping("t3")
-    public List<Wiki> t3(@RequestParam("typeNum") int typeNum, @RequestParam("inputString") String inputString) {
-        return wikiService.searchPartial(typeNum, inputString);
+    public HashMap<String, Integer> t3() {
+        return wikiServiceTermSimilary.useAnalyzerAndGetTokens("산과 바람, 별과 바다가 아름다운 곳");
     }
 
     @GetMapping("t4")
-    public List<Wiki> t4(@RequestParam("typeNum") int typeNum, @RequestParam("inputString") String inputString) {
-//        return wikiService.searchPartial(typeNum, inputString);
-        return wikiServiceExtend.fuzzinessSearch(inputString, 0, 1);
+    public List<Wiki> t4(@RequestParam("searchCount") int searchCount) {
+        while(true) {
+            //1. searchCount만큼 데이터를 긁어온다.
+            List<Wiki> result = wikiServiceTermSimilary.findWikiMatchTermIsNull(searchCount);
+            if(result.isEmpty()) break;
+
+            //2. 반복 시행 : null인 경우 -1, 그 외에 분석 후 데이터 삽입
+            for(int i = 0; i < result.size(); i++) {
+                Wiki wiki = result.get(i);
+                if(wikiServiceTermSimilary.checkWikiContentIsNull(wiki)) continue; //null일경우 -1 값 업데이트
+                wikiServiceTermSimilary.updateNewTerms(wiki); //아닐 경우 계산 후 새로운 값 업데이트
+            }
+        }
+
+        return null;
     }
 
-    @PostMapping("t5")
-    public String t5(@RequestParam("inputString") String s1, @RequestBody String s2) throws IOException {
-        long startTime = System.nanoTime();
-
-        //문자열의 토큰 HM으로 저장하기
-        HashMap<String, Integer> h1 = wikiSchedulerService.useAnalyzerAndGetTokens(s1);
-        HashMap<String, Integer> h2 = wikiSchedulerService.useAnalyzerAndGetTokens(s2);
-
-        String result = wikiSchedulerService.calculateSimilarityByTerm(h1, h2);
-
-        long endTime = System.nanoTime();
-        long duration = endTime - startTime; // 실행 시간 측정 (나노초)
-        long durationInMs = TimeUnit.NANOSECONDS.toMillis(duration); // 밀리초로 변환
-        return result + " , 실행 시간 : " + durationInMs + "ms";
-    }
 }
