@@ -14,13 +14,19 @@ import java.util.List;
 @RequestMapping("/docs/data")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class DocsController {
     private final DocsService docsService;
 
     @GetMapping("/apilist")
     public DataResponse<?> getApiList() {
         List<ApiDataDto.ApiDataList> data = docsService.getApiList();
+        return new DataResponse<>(200, "success", data);
+    }
+
+    @GetMapping("/api/info/{apiId}")
+    public DataResponse<?> getApiInfo(@PathVariable("apiId") Long id) {
+        ApiDataDto.ApiDataInfo data = docsService.getApiInfo(id);
         return new DataResponse<>(200, "success", data);
     }
 

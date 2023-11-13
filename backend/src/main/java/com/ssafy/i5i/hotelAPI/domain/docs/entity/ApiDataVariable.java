@@ -14,7 +14,7 @@ public class ApiDataVariable {
     @Column(name = "variable_id")
     private Long id;
 
-    @JoinColumn(name = "api_data")
+    @JoinColumn(name = "api_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private ApiType apiId;
 

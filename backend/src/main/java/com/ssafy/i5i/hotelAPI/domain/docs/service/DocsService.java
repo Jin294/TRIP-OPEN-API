@@ -1,7 +1,10 @@
 package com.ssafy.i5i.hotelAPI.domain.docs.service;
 
+import com.ssafy.i5i.hotelAPI.common.exception.CommonException;
+import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
 import com.ssafy.i5i.hotelAPI.domain.docs.dto.ApiDataDto;
 import com.ssafy.i5i.hotelAPI.domain.docs.dto.TypeResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.docs.entity.ApiData;
 import com.ssafy.i5i.hotelAPI.domain.docs.repository.ApiDataRepository;
 import com.ssafy.i5i.hotelAPI.domain.docs.repository.ApiTypeRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +29,7 @@ public class DocsService {
                 .stream()
                 .map(api -> {
                     return ApiDataDto.ApiDataList.builder()
+                            .api_data_id(api.getId())
                             .title(api.getTitle())
                             .content(api.getContent())
                             .method(api.getMethod())
@@ -35,6 +40,16 @@ public class DocsService {
                             .build();
                 })
                 .collect(Collectors.toList());
+    }
+
+    public ApiDataDto.ApiDataInfo getApiInfo(Long apiId) {
+        log.info("DocsService getApiInfo, apiId = {}", apiId);
+        ApiData apiInfo = apiDataRepository.getApiInfo(apiId).orElseThrow(()->{
+            throw new CommonException(ExceptionType.API_TOKEN_EXCEPTION);
+        });
+
+        ApiDataDto.ApiDataInfo apiDataInfo = ApiDataDto.ApiDataInfo.setApiInfo(apiInfo);
+        return apiDataInfo;
     }
 
     public List<TypeResponseDto> getTypeList(){
