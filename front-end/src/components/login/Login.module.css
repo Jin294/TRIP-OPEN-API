@@ -9,7 +9,7 @@ a {
     메인화면 배경 도형
   */
     background-color: #282c34;
-    background-image: url('../../assets/img/background.png');
+    background-image: url('../../assets/img/mainImg.jpg');
     background-size: cover;
 }
 .loginContainer {
@@ -20,7 +20,7 @@ a {
     justify-content: center;
     align-items: center;
 
-    background-color: rgba(240, 240, 240, 0.3);
+    background-color: rgba(240, 240, 240, 0.8);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: 30%;
     min-width: 400px;
@@ -59,7 +59,7 @@ a {
     cursor: pointer;
 }
 .loginBtn:hover {
-    background-color: #182018;
+    background-color: #15A656;
     color: #fff;
 }
 .otherContainer {
