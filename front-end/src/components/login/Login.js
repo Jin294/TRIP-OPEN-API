@@ -55,29 +55,38 @@ const Login = () => {
     return (
         <div className={styles.loginBody}>
             <div className={styles.loginContainer}>
-                <div className={styles.logoText}>여행지 정보 OPEN API</div>
-                <input
-                    className={styles.loginInput}
-                    value={email}
-                    onChange={handleEmail}
-                    type="text"
-                    placeholder="아이디"
-                />
-                <input
-                    className={styles.loginInput}
-                    value={password}
-                    onChange={handlePassword}
-                    type="password"
-                    placeholder="비밀번호"
-                />
-                <button className={styles.loginBtn} onClick={onClickLogin}>
-                    로그인
-                </button>
-                <div className={styles.otherContainer}>
-                    <Link className={`${styles.alignRight} ${styles.otherBtn}`} to="/signup">
-                        <span>회원가입</span>
-                    </Link>
+                <div className={styles.textContainer}>
+                    <div className={styles.logoSubText}>다시 돌아온 걸 환영합니다!!</div>
+                    <div className={styles.logoText}>로그인해주세요</div>
                 </div>
+
+                <div className={styles.inputContainer}>
+                    <label for="id">아이디</label>
+                    <input
+                        className={styles.loginInput}
+                        value={email}
+                        onChange={handleEmail}
+                        type="text"
+                        placeholder="아이디"
+                        id="id"
+                    />
+                </div>
+
+                <div className={styles.inputContainer}>
+                    <label for="pw">비밀번호</label>
+                    <input
+                        className={styles.loginInput}
+                        value={password}
+                        onChange={handlePassword}
+                        type="password"
+                        placeholder="비밀번호"
+                        id="pw"
+                    />
+                </div>
+                
+                <button className={styles.loginBtn} onClick={onClickLogin}>
+                    로그인 ⇀
+                </button>
             </div>
         </div>
     );

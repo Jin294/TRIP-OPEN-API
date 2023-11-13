@@ -3,63 +3,93 @@ a {
     color: #000;
 }
 .loginBody {
-    min-height: 100vh;
+    height: 88vh;
     display: flex;
+    justify-content: center;
+    align-items: center;
     /*
     메인화면 배경 도형
   */
-    background-color: #282c34;
-    background-image: url('../../assets/img/mainImg.jpg');
+    background: rgba(21, 166, 86, 0.20);
     background-size: cover;
 }
 .loginContainer {
-    margin: 150px auto;
-    width: 336px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-
-    background-color: rgba(240, 240, 240, 0.8);
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 30%;
-    min-width: 400px;
-    /* height: 100%; */
-    padding: 10px 20px 20px;
-    border-radius: 50px;
+    background-color: #fff;
+    box-shadow: 0px 19px 40px 0px rgba(0, 0, 0, 0.1);
+    width: 450px;
+    height: 500px;
+    padding: 50px;
+    padding-top: 70px;
+    border-radius: 5px;
 }
-.logoText {
-    font-size: 2rem;
+
+.textContainer {
+    width: 75%;
+}
+
+.logoSubText{
+    color: gray;
     margin-bottom: 10px;
 }
+
+.logoText {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.inputContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: 600;
+}
+
 .loginInput {
     width: 100%;
-    padding: 20px 15px;
-    margin-top: 20px;
+    padding: 10px;
     font-size: 1rem;
-    border: 1px solid rgba(0, 0, 0, 0.26);
-    border-radius: 4px;
+    border: none;
+    border-radius: 3px;
     /* input 박스가 프레임밖으로 벗어나는걸 막음 */
     box-sizing: border-box;
+    background: rgba(21, 166, 86, 0.20);
 }
+
+.loginInput:first {
+    margin-bottom: 20px;
+}
+
 .loginInput:focus {
     outline: none;
 }
+
 .loginBtn {
-    width: 100%;
-    margin: 20px 0 40px 0;
-    padding: 20px 15px;
-    background-color: rgb(250, 250, 250);
-    color: #182018;
-    border: none;
-    font-size: 1.2rem;
-    font-weight: 700;
-    border-radius: 6px;
-    cursor: pointer;
-}
-.loginBtn:hover {
+    box-sizing: border-box;
+    width: 100px;
+    margin-top: 10px;
+    padding: 5px;
+    border: 3px solid #15A656;
     background-color: #15A656;
     color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    align-self: center;
+}
+.loginBtn:hover {
+    box-sizing: border-box;
+    border: 3px solid #15A656;
+    background-color: #fff;
+    color: #15A656;
 }
 .otherContainer {
     width: 100%;
