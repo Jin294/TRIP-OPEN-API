@@ -1,9 +1,6 @@
 package com.ssafy.i5i.hotelAPI.domain.docs.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -13,6 +10,7 @@ public class VariableDto {
     private String title;
     private String type;
     private String detail;
-    private Boolean is_essential;
+    private Boolean is_request;
     private Boolean is_parameter;
+    private Boolean is_essential;
 }

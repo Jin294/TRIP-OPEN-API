@@ -21,11 +21,13 @@ public enum ExceptionType {
     SORTED_TYPE_EXCEPTION(5002,"정렬 타입이 잘못되었습니다."),
     //6000번은 api token 관련 에러
 
-    API_TOKEN_EXCEPTION(6000, "api 토큰이 없습니다."),
+    API_TOKEN_EXCEPTION(6000, "pk와 일치하는 api 토큰이 없습니다."),
     TOKEN_UPDATE_EXCEPTION(6001, "api 토큰을 업데이트를 실패했습니다"),
 
     //7000번 api docs 데이터 에러
-    DATA_INVALID_EXCEPTION(7001, "api docs 정보가 없습니다.")
+    DATA_INVALID_EXCEPTION(7001, "api docs 정보가 없습니다."),
+    VARIABLE_INVALID_EXCEPTION(7002, "api 변수 정보가 없습니다.")
+
     ;
 
     private final int code;

@@ -25,20 +25,23 @@ public class ApiData {
     @OneToMany(mappedBy = "apiId", fetch = FetchType.LAZY)
     private List<ApiDataVariable> variable = new ArrayList<>();
 
+    @Column(length = 100)
     private String title;
+    @Column(length = 1000)
     private String content;
 
     @Column(length = 10)
     private String method;
 
-    @Column(name="return_type", length = 5)
+    @Column(name="return_type", length = 100)
     private String returnType;
 
-    @Column(name="content_type", length = 10)
+    @Column(name="content_type", length = 100)
     private String contentType;
 
+    @Column(name = "endpoint", length = 1000)
     private String endpoint;
 
-    @Column(name = "return_example")
+    @Column(name = "return_example", columnDefinition = "TEXT")
     private String returnExample;
 }
