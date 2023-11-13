@@ -1,7 +1,7 @@
 package com.ssafy.i5i.hotelAPI.domain.docs.entity;
 
 import com.ssafy.i5i.hotelAPI.domain.docs.dto.VariableDto;
-import com.ssafy.i5i.hotelAPI.domain.docs.dto.ApiDataResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.docs.dto.ApiDataDto;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -41,19 +41,17 @@ public class ApiData {
     @Column(name = "return_example")
     private String returnExample;
 
-    public ApiDataResponseDto toDto(){
-
-        List<VariableDto> request = variable.stream()
-                .filter(variable -> variable.getIsRequest())
-                .map(variable -> {return variable.toDto();})
-                .collect(Collectors.toList());
-
-        List<VariableDto> response = variable.stream()
-                .filter(variable -> !variable.getIsRequest())
-                .map(variable -> {return variable.toDto();})
-                .collect(Collectors.toList());
-
-
-        return new ApiDataResponseDto(title, content, method, returnType, contentType ,endpoint, returnExample, request, response);
-    }
+//    public ApiDataDto toDto(){
+//        List<VariableDto> request = variable.stream()
+//                .filter(variable -> variable.getIsRequest())
+//                .map(variable -> {return variable.toDto();})
+//                .collect(Collectors.toList());
+//        List<VariableDto> response = variable.stream()
+//                .filter(variable -> !variable.getIsRequest())
+//                .map(variable -> {return variable.toDto();})
+//                .collect(Collectors.toList());
+//
+//
+//        return new ApiDataDto.ApiDataList(title, content, method, returnType, contentType ,endpoint, returnExample);
+//    }
 }

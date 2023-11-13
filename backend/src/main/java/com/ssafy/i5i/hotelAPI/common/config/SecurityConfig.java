@@ -34,6 +34,7 @@ public class SecurityConfig {
 
     private static final String[] PERMIT_URL = {
             "/docs/data/**",
+            "/docs/service/**",
             "/docs/service",
             "/docs/service/login",
             "/api/**",
