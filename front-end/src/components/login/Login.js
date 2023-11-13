@@ -33,7 +33,7 @@ const Login = () => {
         }
 
         const userData = {
-            email: email,
+            id: email,
             password: password,
         };
 
