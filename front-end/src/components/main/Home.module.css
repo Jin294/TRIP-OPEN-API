@@ -9,7 +9,7 @@
   justify-content: center;
   height: 90vh;
   font-size: calc(10px + 2vmin);
-  background-image: url('../../assets/img/mainImg.jpg');
+  background-image: url("../../assets/img/mainImg.jpg");
   background-size: 100%;
   background-repeat: no-repeat;
   position: relative;
@@ -19,8 +19,6 @@
   margin: 0px;
   font-size: 80px;
   font-weight: 700;
-  font-family: 'Campton', sans-serif;
-  /* font-family: 'Montserrat', sans-serif; */
   color: white;
   flex: 50;
   display: flex;
@@ -31,6 +29,7 @@
 .home-subtitle {
   color: #fff;
   flex: 15;
+  font-weight: 600;
 }
 
 .home-search {
@@ -57,6 +56,8 @@
   width: 60%;
   height: 30px;
   font-size: 18px;
+  font-family: "Montserrat";
+  font-weight: 600;
 }
 
 .home-search-input:focus {
@@ -64,9 +65,9 @@
 }
 
 .home-search-btn {
-  background-color: #15A656;
+  background-color: #15a656;
   box-sizing: border-box;
-  border: 3px solid #15A656;
+  border: 3px solid #15a656;
   border-radius: 10px;
   width: 100px;
   color: white;
@@ -78,11 +79,14 @@
 
 .home-search-btn:hover {
   background-color: #fff;
-  color: #15A656;
+  color: #15a656;
 }
 
 .home-search-btn:hover > svg path {
-  fill: #15A656;
+  fill: #15a656;
+}
+.home-search-btn > span {
+  font-weight: 600;
 }
 
 .home-info {
@@ -120,9 +124,18 @@
   border-radius: 10px 10px 0 0;
 }
 
+.card-upside-desc {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+}
+.card-upside-desc > p {
+  margin-bottom: 0px;
+  text-align: center;
+}
 .card-upside-title {
   font-size: x-large;
-  font-weight: bolder;
+  font-weight: 700;
 }
 
 .card-upside-icon {
@@ -148,8 +161,6 @@
   color: #15A656;
 } */
 
-
-
 .card-downside-container {
   width: 100%;
 }
@@ -166,12 +177,12 @@
 
 .card-downside-info-title {
   margin-bottom: 20px;
+  font-weight: 600;
 }
 
 .card-downside-info:last-child {
   margin-top: 30px;
 }
-
 
 .card-downside-btn {
   color: white;
@@ -185,22 +196,22 @@
 }
 
 .text-hovered {
-  color: #15A656;
+  color: #036844;
 }
 
 .button-hovered {
-  background-color: #15A656;
+  background-color: #15a656;
 }
 
 .up-hovered {
-  border: 3px solid #15A656;
+  border: 3px solid #15a656;
   border-radius: 10px 10px 0 0;
   border-bottom: 3px solid lightgrey;
-  background: rgba(21, 166, 86, 0.20);
+  background: rgba(21, 166, 86, 0.2);
 }
 
 .down-hovered {
-  border: 3px solid #15A656;
+  border: 3px solid #15a656;
   border-radius: 0 0 10px 10px;
   border-top: none;
 }
