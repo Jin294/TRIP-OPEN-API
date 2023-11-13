@@ -125,14 +125,14 @@ public class FoodServiceImpl implements FoodService{
 
 	//정렬
 	private Comparator<FoodResponseDto.Coordi> getFoodCoordiComparator(String sortingKey) {
-		if(sortingKey.isEmpty() || sortingKey == null || sortingKey.equals("DISTANCE")){
+		if(sortingKey.isEmpty() || sortingKey == null || sortingKey.equals("distance")){
 			return Comparator.comparing(FoodResponseDto.Coordi::getDistance);
 		}
-		else if ("JJIM".equals(sortingKey)) {
+		else if ("jjim".equals(sortingKey)) {
 			return Comparator.comparing(FoodResponseDto.Coordi::getFoodJjim);
-		} else if ("SCORE".equals(sortingKey)) {
+		} else if ("score".equals(sortingKey)) {
 			return Comparator.comparing(FoodResponseDto.Coordi::getFoodScore);
-		} else if ("STAR".equals(sortingKey)) {
+		} else if ("star".equals(sortingKey)) {
 			return Comparator.comparing(FoodResponseDto.Coordi::getFoodStar);
 		}else {
 			throw new CommonException(ExceptionType.SORTED_TYPE_EXCEPTION);

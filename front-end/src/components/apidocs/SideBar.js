@@ -7,25 +7,23 @@ import { useParams } from "react-router-dom";
 const SideBar = ({onSetId}) => {
   const { tab } = useParams();
   const [tabsData, setTabsData] = useState([]);
-  const [selectedTab, setSelectedTab] = useState("금융 더미 데이터");
+  const [selectedTab, setSelectedTab] = useState("숙소 API");
   const [selectedSub, setSelectedSub] = useState(3);
   const setId = (data) => {
     onSetId(data)
   }
 
   useEffect(() => {
-    if(tab === 'exchange') handleTabClick("환율 정보");
-    else if(tab === 'investment') handleTabClick("투자 자산 분석");
-    else if(tab === 'consumption') handleTabClick("소비 내역 분석");
-    else handleTabClick("금융 더미 데이터");
+    if(tab === 'exchange') handleTabClick("음식점 API");
+    else if(tab === 'investment') handleTabClick("검색 API");
+    else handleTabClick("숙소 API");
   }, [tab]);
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
     
-    if(tab === "환율 정보") handleSubClick(5);
-    else if(tab === "투자 자산 분석") handleSubClick(13);
-    else if(tab === "소비 내역 분석") handleSubClick(19);
+    if(tab === "음식점 API") handleSubClick(5);
+    else if(tab === "검색 API") handleSubClick(13);
     else handleSubClick(3);
   };
 
@@ -44,24 +42,19 @@ const SideBar = ({onSetId}) => {
         if (responseData.data) {
           const groupedTabs = [
             {
-              title: "금융 더미 데이터",
-              url: "/apidock/financialdata",
+              title: "숙소 API",
+              url: "/apidock/accommodation",
               subTabs: responseData.data.slice(0, 2),
             },
             {
-              title: "환율 정보",
-              url: "/apidock/exchange",
+              title: "음식점 API",
+              url: "/apidock/restaurant",
               subTabs: responseData.data.slice(2, 10),
             },
             {
-              title: "투자 자산 분석",
-              url: "/apidock/investment",
+              title: "검색 API",
+              url: "/apidock/search",
               subTabs: responseData.data.slice(10, 16),
-            },
-            {
-              title: "소비 내역 분석",
-              url: "/apidock/consumption",
-              subTabs: responseData.data.slice(16, 17),
             },
           ];
           setTabsData(groupedTabs);
