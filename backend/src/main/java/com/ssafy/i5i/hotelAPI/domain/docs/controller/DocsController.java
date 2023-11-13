@@ -1,14 +1,12 @@
 package com.ssafy.i5i.hotelAPI.domain.docs.controller;
 
-import com.ssafy.i5i.hotelAPI.domain.docs.dto.responseDto.ApiDataResponseDto;
-import com.ssafy.i5i.hotelAPI.domain.docs.dto.responseDto.TypeResponseDto;
+import com.ssafy.i5i.hotelAPI.common.response.DataResponse;
+import com.ssafy.i5i.hotelAPI.domain.docs.dto.ApiDataDto;
+import com.ssafy.i5i.hotelAPI.domain.docs.dto.TypeResponseDto;
 import com.ssafy.i5i.hotelAPI.domain.docs.service.DocsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,19 +14,25 @@ import java.util.List;
 @RequestMapping("/docs/data")
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "*")
 public class DocsController {
     private final DocsService docsService;
 
+    @GetMapping("/apilist")
+    public DataResponse<?> getApiList() {
+        List<ApiDataDto.ApiDataList> data = docsService.getApiList();
+        return new DataResponse<>(200, "success", data);
+    }
+
     @GetMapping("/apitype")
-    public List<TypeResponseDto> getType(){
-        return docsService.getTypeList();
+    public DataResponse<?> getType(){
+        List<TypeResponseDto> data = docsService.getTypeList();
+        return new DataResponse<>(200, "success", data);
     }
 
     @GetMapping("/apidata/{api_type_id}")
-    public List<ApiDataResponseDto> getData(@PathVariable("api_type_id") Long id){
-        return docsService.getApiDataList(id);
+    public DataResponse<?> getData(@PathVariable("api_type_id") Long id){
+        List<ApiDataDto> data = docsService.getApiDataList(id);
+        return new DataResponse<>(200, "success", data);
     }
-
-
-
 }

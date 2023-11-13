@@ -1,4 +1,4 @@
-package com.ssafy.i5i.hotelAPI.domain.docs.dto.responseDto;
+package com.ssafy.i5i.hotelAPI.domain.docs.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

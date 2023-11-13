@@ -1,6 +1,6 @@
 package com.ssafy.i5i.hotelAPI.domain.docs.entity;
 
-import com.ssafy.i5i.hotelAPI.domain.docs.dto.responseDto.TypeResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.docs.dto.TypeResponseDto;
 import lombok.Getter;
 
 import javax.persistence.*;
