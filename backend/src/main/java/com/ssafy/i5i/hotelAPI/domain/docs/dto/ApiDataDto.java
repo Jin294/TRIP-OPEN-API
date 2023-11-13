@@ -63,6 +63,7 @@ public class ApiDataDto {
                         .detail(variable.getDetail())
                         .is_parameter(variable.getIsParameter())
                         .is_essential(variable.getIsEssential())
+                        .is_request(variable.getIsRequest())
                         .build();
                 apiDataInfo.getVariable_info().add(variableDto);
             });
