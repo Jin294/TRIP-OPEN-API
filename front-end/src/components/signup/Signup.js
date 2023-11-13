@@ -57,14 +57,14 @@ const Signup = () => {
     return (
         <div className={styles.signupBody}>
             <div className={styles.signupContainer}>
-                <div className={styles.logoText}>여행지 정보 OPEN API</div>
+                <div className={styles.logoText}>환영합니다!</div>
                 <div className={styles.signupBox}>
-                    <label htmlFor="email" className={styles.signupText}>
+                    <label for="email" className={styles.signupText}>
                         아이디(이메일)
                     </label>
                     <input
                         type="email"
-                        name="email"
+                        id="email"
                         value={email}
                         onChange={handleEmail}
                         className={styles.signupInput}
@@ -72,12 +72,12 @@ const Signup = () => {
                     />
                 </div>
                 <div className={styles.signupBox}>
-                    <label htmlFor="password" className={styles.signupText}>
+                    <label for="password" className={styles.signupText}>
                         비밀번호
                     </label>
                     <input
                         type="password"
-                        name="password"
+                        id="password"
                         value={password}
                         onChange={handlePassword}
                         className={styles.signupInput}
@@ -85,12 +85,12 @@ const Signup = () => {
                     />
                 </div>
                 <div className={styles.signupBox}>
-                    <label htmlFor="passwordConfirm" className={styles.signupText}>
+                    <label for="passwordConfirm" className={styles.signupText}>
                         비밀번호 확인
                     </label>
                     <input
                         type="password"
-                        name="passwordConfirm"
+                        id="passwordConfirm"
                         value={passwordConfirm}
                         onChange={handlePasswordConfirm}
                         className={styles.signupInput}
