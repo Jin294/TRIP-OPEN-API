@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/userInfo";
 
-import Logo from '../../assets/img/Logo.png';
+import Logo from "../../assets/img/Logo.png";
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -27,20 +27,27 @@ const NavBar = () => {
     dispatch(logout());
     navigate("/");
   };
+
+  const onClick = () => {
+    navigate("/mypage");
+  };
   return (
     <div className="NavBar">
       {!hideNavBar && (
         // NavBar 내용
         <div className={styles.mainNav}>
           <Link className={styles.navMenu} to="/">
-            <img className={styles.navLogo} src={Logo} alt=""/>
+            <img className={styles.navLogo} src={Logo} alt="" />
           </Link>
           <div className={styles.navLeft}>
             <Link className={styles.navMenu} to="/">
               Home
             </Link>
-            <Link className={styles.navMenu} to="/serviceinfo">
+            {/* <Link className={styles.navMenu} to="/serviceinfo">
               서비스 소개
+            </Link> */}
+            <Link className={styles.navMenu} to="/elasticinfo">
+              Elastic 소개
             </Link>
             <Link className={styles.navMenu} to="/apidock/financialdata">
               API문서
@@ -58,9 +65,9 @@ const NavBar = () => {
           </div>
           ) : (
             <div className={styles.navRight}>
-              <Link className={styles.navMenu} to="/mypage">
+              <button className={styles.navMenu} onclick={onClick}>
                 마이페이지
-              </Link>
+              </button>
               <button className={styles.navMenu} onClick={onClickLogout}>
                 로그아웃
               </button>

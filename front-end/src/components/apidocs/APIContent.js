@@ -17,7 +17,7 @@ const APIContent = (props) => {
   useEffect(() => {
     const getApiDocsData = async (api_docs_id) => {
       try {
-        const response = await basicHttp.get(`/docs/api/${api_docs_id}`);
+        const response = await basicHttp.get(`/docs/data/apidata/${api_docs_id}`);
         const responseData = response.data;
         // console.log("responseData", responseData.data);
         // console.log("api_docs_id", api_docs_id);
@@ -68,7 +68,7 @@ const APIContent = (props) => {
             </tr>
             <tr>
               <td>응답 예시</td>
-              <td>{apiContent.return_type}</td>
+              <td>{apiContent.returnType}</td>
             </tr>
           </tbody>
         </table>
@@ -76,39 +76,28 @@ const APIContent = (props) => {
      
         <p>응답 예시</p>
         <pre id="json" className={styles.code}>
-          {apiContent.return_example}
+          {apiContent.returnExample}
         </pre>
 
-        {(isRequestTrueData.length>0 || apiContent.authorization === "1") && <h4>요청 메세지 명세</h4>}
-        {(isRequestTrueData.length>0 || apiContent.authorization === "1") && <table className={styles.apiRequestDataTable}>
+        {(isRequestTrueData.length>0 ) && <h4>요청 메세지 명세</h4>}
+        {(isRequestTrueData.length>0 ) && <table className={styles.apiRequestDataTable}>
           <thead>
             <tr>
               <th>HTTP</th>
               <th>항목명</th>
               <th> 필수 </th>
+              <th>파라미터</th>
               <th>타입</th>
               <th>설명</th>
             </tr>
           </thead>
           <tbody>
-            {apiContent.authorization === "1" && (
-              <tr>
-                <td>Header</td>
-                <td>authorization</td>
-                <td></td>
-                <td></td>
-                <td>
-                  사용자 OAuth2.0 인증을 통해 access-token을 받아야 합니다.{" "}
-                  <br />
-                  헤더 정보: Authorization Bearer {"${access-token}"}
-                </td>
-              </tr>
-            )}
             {isRequestTrueData.map((dataItem, index) => (
               <tr key={index}>
                 {index==0 && <td rowSpan={isRequestTrueData.length}>{dataItem.is_parameter? "Parameter" : "Body"}</td>}
                 <td>{dataItem.title}</td>
-                <td>{dataItem.is_essential ? " Y " : " N "}</td>
+                <td>{dataItem.isEssential ? " Y " : " N "}</td>
+                <td>{dataItem.isParameter ? " Y " : " N "}</td>
                 <td>{dataItem.type}</td>
                 <td>{dataItem.detail}</td>
               </tr>
