@@ -19,8 +19,6 @@
   margin: 0px;
   font-size: 80px;
   font-weight: 700;
-  font-family: "Campton", sans-serif;
-  /* font-family: 'Montserrat', sans-serif; */
   color: white;
   flex: 50;
   display: flex;
@@ -31,6 +29,7 @@
 .home-subtitle {
   color: #fff;
   flex: 15;
+  font-weight: 600;
 }
 
 .home-search {
@@ -57,6 +56,8 @@
   width: 60%;
   height: 30px;
   font-size: 18px;
+  font-family: "Montserrat";
+  font-weight: 600;
 }
 
 .home-search-input:focus {
@@ -83,6 +84,9 @@
 
 .home-search-btn:hover > svg path {
   fill: #15a656;
+}
+.home-search-btn > span {
+  font-weight: 600;
 }
 
 .home-info {
@@ -123,6 +127,7 @@
 .card-upside-desc {
   display: flex;
   flex-direction: column;
+  font-weight: 600;
 }
 .card-upside-desc > p {
   margin-bottom: 0px;
@@ -130,7 +135,7 @@
 }
 .card-upside-title {
   font-size: x-large;
-  font-weight: bolder;
+  font-weight: 700;
 }
 
 .card-upside-icon {
@@ -172,6 +177,7 @@
 
 .card-downside-info-title {
   margin-bottom: 20px;
+  font-weight: 600;
 }
 
 .card-downside-info:last-child {
