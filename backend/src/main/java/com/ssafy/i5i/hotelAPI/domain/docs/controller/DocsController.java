@@ -3,6 +3,7 @@ package com.ssafy.i5i.hotelAPI.domain.docs.controller;
 import com.ssafy.i5i.hotelAPI.common.response.DataResponse;
 import com.ssafy.i5i.hotelAPI.domain.docs.dto.ApiDataDto;
 import com.ssafy.i5i.hotelAPI.domain.docs.dto.TypeResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.docs.dto.VariableDto;
 import com.ssafy.i5i.hotelAPI.domain.docs.service.DocsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,18 @@ public class DocsController {
     @GetMapping("/apilist")
     public DataResponse<?> getApiList() {
         List<ApiDataDto.ApiDataList> data = docsService.getApiList();
+        return new DataResponse<>(200, "success", data);
+    }
+
+    @GetMapping("/api/variable/{apiId}")
+    public DataResponse<?> getVariable(@PathVariable("apiId") Long id) {
+        List<VariableDto> data = docsService.getApiVariable(id);
+        return new DataResponse<>(200, "success", data);
+    }
+
+    @GetMapping("/api/info/{apiId}")
+    public DataResponse<?> getApiInfo(@PathVariable("apiId") Long id) {
+        ApiDataDto.ApiDataInfo data = docsService.getApiInfo(id);
         return new DataResponse<>(200, "success", data);
     }
 
