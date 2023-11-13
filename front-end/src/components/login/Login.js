@@ -4,7 +4,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserInfo } from '../../redux/userInfo';
 import basicHttp from '../../api/basicHttp';
-import tokenHttp from '../../api/basicHttp';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -39,11 +38,11 @@ const Login = () => {
 
         try {
             const res = await basicHttp.post(`/docs/service/login`, userData);
-            console.log(res);
+            console.log("res = " + res);
             console.log('로그인 성공');
-            // localStorage.setItem('access-token', res.data.data['access-token']);
-            // localStorage.setItem('refresh-token', res.data.data['refresh-token']);
-            // dispatch(setUserInfo({ accessToken: res.data.data['access-token'] }));
+            localStorage.setItem('access-token', res.data.data['access-token']);
+            localStorage.setItem('refresh-token', res.data.data['refresh-token']);
+            dispatch(setUserInfo({ accessToken: res.data.data['access-token'] }));
             console.log(userInfo);
             navigate('/');
             alert('로그인 성공');
@@ -75,9 +74,6 @@ const Login = () => {
                     로그인
                 </button>
                 <div className={styles.otherContainer}>
-                    <a className={`${styles.rightBorder} ${styles.otherBtn}`} href="#">
-                        <span>비밀번호 재설정</span>
-                    </a>
                     <Link className={`${styles.alignRight} ${styles.otherBtn}`} to="/signup">
                         <span>회원가입</span>
                     </Link>
