@@ -1,20 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import styles from "./Home.module.css";
-import Accept from '../../assets/img/accept-green-128.png'
+import Accept from "../../assets/img/accept-green-128.png";
 
 const CardComponent = ({ index }) => {
   const icons = [
-    require('../../assets/img/iconSite.png'),
-    require('../../assets/img/iconRestaurant.png'),
-    require('../../assets/img/iconSearchbar.png')
+    require("../../assets/img/iconSite.png"),
+    require("../../assets/img/iconRestaurant.png"),
+    require("../../assets/img/iconSearchbar.png"),
+  ];
+  const icons_g = [
+    require("../../assets/img/iconSite_g.png"),
+    require("../../assets/img/iconRestaurant_g.png"),
+    require("../../assets/img/iconSearchbar_g.png"),
   ];
   const titleArray = ["숙소 API", "음식점 API", "검색 API"];
-  const descArray = ["숙소 API 짧은 설명", "음식점 API 짧은 설명", "검색 API 짧은 설명"];
+  const descArray1 = [
+    `여행지명이나 사용자의 위치에 기반하여`,
+    `여행지명이나 사용자의 위치에 기반하여`,
+    `검색 API 짧은 설명`,
+  ];
+  const descArray2 = [
+    `숙소 데이터를 제공합니다.`,
+    `음식점 데이터를 제공합니다.`,
+    `검색 API 짧은 설명`,
+  ];
   const subtitle1Array = ["숙소 정보", "음식점 정보", "검색 정보"];
-  const subDesc1Array = ["숙소명, 장소, 특징3", "음식점명, 장소, 특징3", "검색어특징3"];
+  const subDesc1Array = [
+    "숙소명, 주소, 점수, 이미지, 가격, 위도, 경도, 거리",
+    "음식점명, 유형, 위도, 경도, 찜, 점수, 별점, 별점 유저수, 거리",
+  ];
   const subtitle2Array = ["정렬", "정렬", "정렬"];
-  const subDesc2Array = ["거리순, 인기순", "거리순, 인기순", "거리순, 인기순"];
+  const subDesc2Array = [
+    "거리순, 점수순, 타입순",
+    "거리순, 찜순, 점수순, 별점순",
+    "거리순, 인기순",
+  ];
 
   const [isCardHovered, setIsCardHovered] = useState(false);
 
@@ -27,19 +48,52 @@ const CardComponent = ({ index }) => {
   };
 
   return (
-    <div className={styles["card"]} onMouseEnter={handleCardHover} onMouseLeave={handleCardLeave}>
-      <div className={`${styles['card-upside']} ${isCardHovered ? styles['up-hovered'] : ''}`}>
-        <div className={`${styles['card-upside-title']} ${isCardHovered ? styles['text-hovered'] : ''}`}>
+    <div
+      className={styles["card"]}
+      onMouseEnter={handleCardHover}
+      onMouseLeave={handleCardLeave}
+    >
+      <div
+        className={`${styles["card-upside"]} ${
+          isCardHovered ? styles["up-hovered"] : ""
+        }`}
+      >
+        <div
+          className={`${styles["card-upside-title"]} ${
+            isCardHovered ? styles["text-hovered"] : ""
+          }`}
+        >
           {titleArray[index]}
         </div>
-        <img className={styles["card-upside-icon"]} src={icons[index]} alt=""
-          style={{ transform: index === 2 ? 'scale(1.3)' : 'scale(1)' }} />
-
-        <div className={`${styles['card-upside-desc']} ${isCardHovered ? styles['text-hovered'] : ''}`}>
-          {descArray[index]}
+        {isCardHovered ? (
+          <img
+            className={styles["card-upside-icon"]}
+            src={icons_g[index]}
+            alt=""
+            style={{ transform: index === 2 ? "scale(1.3)" : "scale(1)" }}
+          />
+        ) : (
+          <img
+            className={styles["card-upside-icon"]}
+            src={icons[index]}
+            alt=""
+            style={{ transform: index === 2 ? "scale(1.3)" : "scale(1)" }}
+          />
+        )}
+        <div
+          className={`${styles["card-upside-desc"]} ${
+            isCardHovered ? styles["text-hovered"] : ""
+          }`}
+        >
+          <p>{descArray1[index]}</p>
+          <p>{descArray2[index]}</p>
         </div>
       </div>
-      <div className={`${styles['card-downside']} ${isCardHovered ? styles['down-hovered'] : ''}`}>
+      <div
+        className={`${styles["card-downside"]} ${
+          isCardHovered ? styles["down-hovered"] : ""
+        }`}
+      >
         <div className={styles["card-downside-container"]}>
           <div className={styles["card-downside-info"]}>
             <div className={styles["card-downside-left"]}>
@@ -53,7 +107,6 @@ const CardComponent = ({ index }) => {
                 {subDesc1Array[index]}
               </div>
             </div>
-            
           </div>
           <div className={styles["card-downside-info"]}>
             <div className={styles["card-downside-left"]}>
@@ -69,8 +122,12 @@ const CardComponent = ({ index }) => {
             </div>
           </div>
         </div>
-        
-        <button className={`${styles['card-downside-btn']} ${isCardHovered ? styles['button-hovered'] : ''}`}>
+
+        <button
+          className={`${styles["card-downside-btn"]} ${
+            isCardHovered ? styles["button-hovered"] : ""
+          }`}
+        >
           보러가기
         </button>
       </div>
@@ -79,7 +136,6 @@ const CardComponent = ({ index }) => {
 };
 
 const Home = () => {
-
   return (
     <div className="home">
       <div className={styles["home"]}>
@@ -89,7 +145,10 @@ const Home = () => {
         </div>
         <div className={styles["home-search"]}>
           <div className={styles["home-search-bar"]}>
-            <input className={styles["home-search-input"]} placeholder="여행지 검색하기"></input>
+            <input
+              className={styles["home-search-input"]}
+              placeholder="여행지 검색하기"
+            ></input>
             <div className={styles["home-search-btn"]}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
