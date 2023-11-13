@@ -15,7 +15,7 @@ import java.util.Map;
 @RequestMapping("/docs")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class UserController {
     private final UserService userService;
 
