@@ -46,11 +46,10 @@ public class SecurityConfig {
         http
                 .csrf().disable() // Post나 Put과 같이 리소스를 변경하는 요청의 경우 내가 내보냈던 리소스에서 올라온 요청인지 확인
                 .formLogin().disable()
+                .headers().disable()
                 .httpBasic().disable()
                 .cors() //허가된 사이트나 클라이언트의 요청인지 검사하는 역할
-
                 .and()
-
                 //세선 사용 X ( JWT 사용 )
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
