@@ -19,33 +19,37 @@ import java.util.List;
 public class DocsController {
     private final DocsService docsService;
 
+    //전체 api 정보 list 반환
     @GetMapping("/apilist")
     public DataResponse<?> getApiList() {
         List<ApiDataDto.ApiDataList> data = docsService.getApiList();
         return new DataResponse<>(200, "success", data);
     }
 
+    //특정 api에 대한 상세 변수 정보 제공
     @GetMapping("/api/variable/{apiId}")
     public DataResponse<?> getVariable(@PathVariable("apiId") Long id) {
         List<VariableDto> data = docsService.getApiVariable(id);
         return new DataResponse<>(200, "success", data);
     }
 
+    //특정 api에 대한 상세 정보 제공
     @GetMapping("/api/info/{apiId}")
     public DataResponse<?> getApiInfo(@PathVariable("apiId") Long id) {
         ApiDataDto.ApiDataInfo data = docsService.getApiInfo(id);
         return new DataResponse<>(200, "success", data);
     }
 
+    //api type 제공
     @GetMapping("/apitype")
     public DataResponse<?> getType(){
         List<TypeResponseDto> data = docsService.getTypeList();
         return new DataResponse<>(200, "success", data);
     }
 
-    @GetMapping("/apidata/{api_type_id}")
-    public DataResponse<?> getData(@PathVariable("api_type_id") Long id){
-        List<ApiDataDto> data = docsService.getApiDataList(id);
-        return new DataResponse<>(200, "success", data);
-    }
+//    @GetMapping("/apidata/{api_type_id}")
+//    public DataResponse<?> getData(@PathVariable("api_type_id") Long id){
+//        List<ApiDataDto> data = docsService.getApiDataList(id);
+//        return new DataResponse<>(200, "success", data);
+//    }
 }
