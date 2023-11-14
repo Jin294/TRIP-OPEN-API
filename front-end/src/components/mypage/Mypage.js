@@ -7,7 +7,7 @@ import basicHttp from '../../api/basicHttp';
 import tokenHttp from '../../api/tokenHttp';
 import copyImg from '../../assets/img/copy.png';
 
-// 리덕스 사용
+// 리덕스 사용, tokenHttp 쓸때 추가해주세요
 import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/userInfo';
 
