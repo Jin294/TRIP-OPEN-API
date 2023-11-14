@@ -41,9 +41,9 @@ const Login = () => {
             console.log('res = ' + res);
             console.log(res.data);
             console.log('로그인 성공');
-            localStorage.setItem('access-token', res.data.data['access-token']);
-            localStorage.setItem('refresh-token', res.data.data['refresh-token']);
-            dispatch(setUserInfo({ accessToken: res.data.data['access-token'] }));
+            localStorage.setItem('access-token', res.data.data['access_token']);
+            // localStorage.setItem('refresh-token', res.data.data['refresh-token']);
+            dispatch(setUserInfo({ accessToken: res.data.data['access_token'] }));
             console.log(userInfo);
             navigate('/');
             alert('로그인 성공');
