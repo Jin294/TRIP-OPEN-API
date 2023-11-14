@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  word-break: keep-all;
 }
 
 .home {
@@ -117,6 +118,7 @@
   width: 300px;
   height: 300px;
   display: flex;
+  padding: 0 50px;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
@@ -129,10 +131,12 @@
   flex-direction: column;
   font-weight: 600;
 }
+
 .card-upside-desc > p {
   margin-bottom: 0px;
   text-align: center;
 }
+
 .card-upside-title {
   font-size: x-large;
   font-weight: 700;
@@ -169,6 +173,7 @@
   display: flex;
   /* justify-content: space-around; */
   width: 100%;
+  min-height: 96px;
 }
 
 .card-downside-left {
@@ -176,7 +181,7 @@
 }
 
 .card-downside-info-title {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-weight: 600;
 }
 
@@ -189,10 +194,11 @@
   background-color: lightgrey;
   border: none;
   border-radius: 5px;
-  width: 160px;
+  width: 140px;
   height: 40px;
   font-size: medium;
   font-weight: bolder;
+  margin-top: 10px;
 }
 
 .text-hovered {
