@@ -21,7 +21,7 @@ public class FoodController {
 	public List<FoodResponseDto.Coordi> getFoodFromTravle(
 			@RequestParam("name") String name,
 			@RequestParam("distance") Long distance,
-			@RequestParam("sorted") String sorted){
+			@RequestParam(value = "sorted", required = false) String sorted){
 		FoodRequestDto.Title attractionTitleRequestDto = new FoodRequestDto.Title(name, distance, sorted);
 		return foodServiceImpl.getFoodFromTravle(attractionTitleRequestDto);
 	}

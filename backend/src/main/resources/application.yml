@@ -1,6 +1,10 @@
 server:
   port: 8080
-
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 50
+    connection-timeout: 20000
 
 spring:
   jackson:
