@@ -12,14 +12,17 @@ public class ApiDataVariable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "variable_id")
-    private Long id;
+    private Long apiDataVariableId;
 
-    @JoinColumn(name = "api_data")
     @ManyToOne(fetch = FetchType.LAZY)
-    private ApiType apiId;
+    @JoinColumn(name = "api_id")
+    private ApiData apiId;
 
+    @Column(name = "title", length = 300)
     private String title;
+    @Column(name="type", length = 300)
     private String type;
+    @Column(name="detail", columnDefinition = "TEXT")
     private String detail;
 
     @Column(name="is_essential")
@@ -32,6 +35,6 @@ public class ApiDataVariable {
     private Boolean isParameter;
 
     public VariableDto toDto(){
-        return new VariableDto(title, type, detail, isEssential, isParameter);
+        return new VariableDto(title, type, detail, isEssential, isParameter, isParameter);
     }
 }
