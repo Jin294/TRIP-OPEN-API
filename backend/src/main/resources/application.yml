@@ -3,7 +3,7 @@ server:
   tomcat:
     threads:
       max: 200
-      min-spare: 50
+      min-spare: 100
     connection-timeout: 20000
 
 spring:
