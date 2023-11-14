@@ -13,21 +13,21 @@ public class FoodTitleResponseDto {
 	private String attracionName;
 	private Double attractionLongitude;
 	private Double attractionLatitude;
-	private Long foodId;
-	private String foodName;
-	private String foodType;
-	private Double foodLongitude;
-	private Double foodLatitude;
-	private Integer foodJjim;
-	private Integer foodScore;
-	private Double foodStar;
-	private Integer foodStarUser;
+	private Long restaurantId;
+	private String restaurantName;
+	private String restaurantType;
+	private Double restaurantLongitude;
+	private Double restaurantLatitude;
+	private Integer restaurantLike;
+	private Integer restaurantScore;
+	private Double restaurantStar;
+	private Integer restaurantStarUser;
 
 	public FoodResponseDto.TitleD convertToFDto (){
 		return new FoodResponseDto.TitleD(this.attractionId, this.attracionName,
 			this.attractionLongitude,this.attractionLatitude,
-			this.foodId,this.foodName,this.foodType,
-			this.foodLongitude, this.foodLatitude, this.foodJjim, this.foodScore, this.foodStar,
-			this.foodStarUser, null);
+			this.restaurantId,this.restaurantName,this.restaurantType,
+			this.restaurantLongitude, this.restaurantLatitude, this.restaurantLike, this.restaurantScore, this.restaurantStar,
+			this.restaurantStarUser, null);
 	}
 }

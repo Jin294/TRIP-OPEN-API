@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/food")
+@RequestMapping("/api/restaurant")
 @Slf4j
 public class FoodController {
 	private final FoodServiceImpl foodServiceImpl;

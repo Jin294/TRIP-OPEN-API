@@ -70,7 +70,7 @@ public class FoodServiceImpl implements FoodService{
 			.stream()
 			.map(data -> {
 				FoodResponseDto.Coordi now = data.convertToDto();
-				now.setDistance(calculateDistance(attraction.getLatitude(), attraction.getLongitude(), now.getFoodLatitude(), now.getFoodLongitude()));
+				now.setDistance(calculateDistance(attraction.getLatitude(), attraction.getLongitude(), now.getRestaurantLatitude(), now.getRestaurantLongitude()));
 				return now;
 			})
 			.filter(dto -> dto.getDistance() < requestDto.getDistance())
@@ -103,7 +103,7 @@ public class FoodServiceImpl implements FoodService{
 			.stream()
 			.map(data -> {
 				FoodResponseDto.Coordi now = data.convertToDto();
-				now.setDistance(calculateDistance(requestDto.getLatitude(), requestDto.getLongitude(), now.getFoodLatitude(), now.getFoodLongitude()));
+				now.setDistance(calculateDistance(requestDto.getLatitude(), requestDto.getLongitude(),  now.getRestaurantLatitude(), now.getRestaurantLongitude()));
 				return now;
 			})
 			.filter(dto -> dto.getDistance() < requestDto.getDistance())
@@ -128,12 +128,12 @@ public class FoodServiceImpl implements FoodService{
 		if(sortingKey.isEmpty() || sortingKey == null || sortingKey.equals("distance")){
 			return Comparator.comparing(FoodResponseDto.Coordi::getDistance);
 		}
-		else if ("jjim".equals(sortingKey)) {
-			return Comparator.comparing(FoodResponseDto.Coordi::getFoodJjim);
+		else if ("like".equals(sortingKey)) {
+			return Comparator.comparing(FoodResponseDto.Coordi::getRestaurantLike);
 		} else if ("score".equals(sortingKey)) {
-			return Comparator.comparing(FoodResponseDto.Coordi::getFoodScore);
+			return Comparator.comparing(FoodResponseDto.Coordi::getRestaurantScore);
 		} else if ("star".equals(sortingKey)) {
-			return Comparator.comparing(FoodResponseDto.Coordi::getFoodStar);
+			return Comparator.comparing(FoodResponseDto.Coordi::getRestaurantStar);
 		}else {
 			throw new CommonException(ExceptionType.SORTED_TYPE_EXCEPTION);
 		}

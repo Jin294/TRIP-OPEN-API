@@ -26,38 +26,38 @@ public class Food {
 
 	//음식점 이름
 	@Column(name = "food_name")
-	private String foodName;
+	private String restaurantName;
 
 	//음식점 카테고리
 	@Column(name = "food_type")
-	private String foodType;
+	private String restaurantType;
 
 	//음식점 경도
 	@Column(name = "food_longitude")
-	private Double foodLongitude;
+	private Double restaurantLongitude;
 
 	//음식점 위도
 	@Column(name = "food_latitude")
-	private Double foodLatitude;
+	private Double restaurantLatitude;
 
 	//음식점 찜
 	@Column(name = "food_jjim")
-	private Integer foodJjim;
+	private Integer restaurantLike;
 
 	//음식점 점수
 	@Column(name = "food_score")
-	private Integer foodScore;
+	private Integer restaurantScore;
 
 	//음식점 별점
 	@Column(name = "food_star")
-	private Double foodStar;
+	private Double restaurantStar;
 
 	//음식점 별점을 준 사람의 수
 	@Column(name = "food_staruser")
-	private Integer foodStarUser;
+	private Integer restaurantStarUser;
 
 	public FoodResponseDto.Coordi convertToDto (){
-		return new FoodResponseDto.Coordi(this.id, this.foodName, this.foodType, this.foodLongitude, this.foodLatitude, this.foodJjim, this.foodScore, this.foodStar, this.foodStarUser, null);
+		return new FoodResponseDto.Coordi(this.id, this.restaurantName, this.restaurantType, this.restaurantLongitude, this.restaurantLatitude, this.restaurantLike, this.restaurantScore, this.restaurantStar, this.restaurantStarUser, null);
 	}
 
 }
