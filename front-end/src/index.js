@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import NavBar from './components/common/NavBar';
+import Footer from './components/common/Footer';
 // import reportWebVitals from './reportWebVitals';
 
 import { Provider } from 'react-redux';
@@ -19,6 +20,7 @@ root.render(
             <BrowserRouter>
                 <NavBar />
                 <App />
+                <Footer />
             </BrowserRouter>
         </PersistGate>
     </Provider>

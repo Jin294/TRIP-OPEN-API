@@ -4,7 +4,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserInfo } from '../../redux/userInfo';
 import basicHttp from '../../api/basicHttp';
-import tokenHttp from '../../api/basicHttp';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -33,20 +32,20 @@ const Login = () => {
         }
 
         const userData = {
-            email: email,
+            id: email,
             password: password,
         };
 
         try {
             const res = await basicHttp.post(`/docs/service/login`, userData);
-            console.log(res);
+            console.log(res.data);
             console.log('로그인 성공');
-            localStorage.setItem('access-token', res.data.data['access-token']);
-            localStorage.setItem('refresh-token', res.data.data['refresh-token']);
-            dispatch(setUserInfo({ accessToken: res.data.data['access-token'] }));
+            localStorage.setItem('access-token', res.data.data['access_token']);
+            // localStorage.setItem('refresh-token', res.data.data['refresh-token']);
+            dispatch(setUserInfo({ accessToken: res.data.data['access_token'] }));
             console.log(userInfo);
             navigate('/');
-            // alert('로그인 성공');
+            alert('로그인 성공');
         } catch (error) {
             console.error('로그인 실패:', error);
             alert('로그인 실패');
@@ -56,32 +55,38 @@ const Login = () => {
     return (
         <div className={styles.loginBody}>
             <div className={styles.loginContainer}>
-                <div className={styles.logoText}>S.F.O.API</div>
-                <input
-                    className={styles.loginInput}
-                    value={email}
-                    onChange={handleEmail}
-                    type="text"
-                    placeholder="아이디"
-                />
-                <input
-                    className={styles.loginInput}
-                    value={password}
-                    onChange={handlePassword}
-                    type="password"
-                    placeholder="비밀번호"
-                />
-                <button className={styles.loginBtn} onClick={onClickLogin}>
-                    로그인
-                </button>
-                <div className={styles.otherContainer}>
-                    <a className={`${styles.rightBorder} ${styles.otherBtn}`} href="#">
-                        <span>비밀번호 재설정</span>
-                    </a>
-                    <Link className={`${styles.alignRight} ${styles.otherBtn}`} to="/signup">
-                        <span>회원가입</span>
-                    </Link>
+                <div className={styles.textContainer}>
+                    <div className={styles.logoSubText}>다시 돌아온 걸 환영합니다!!</div>
+                    <div className={styles.logoText}>로그인해주세요</div>
                 </div>
+
+                <div className={styles.inputContainer}>
+                    <label htmlFor="id">아이디</label>
+                    <input
+                        className={styles.loginInput}
+                        value={email}
+                        onChange={handleEmail}
+                        type="text"
+                        placeholder="아이디"
+                        id="id"
+                    />
+                </div>
+
+                <div className={styles.inputContainer}>
+                    <label htmlFor="pw">비밀번호</label>
+                    <input
+                        className={styles.loginInput}
+                        value={password}
+                        onChange={handlePassword}
+                        type="password"
+                        placeholder="비밀번호"
+                        id="pw"
+                    />
+                </div>
+
+                <button className={styles.loginBtn} onClick={onClickLogin}>
+                    로그인 ⇀
+                </button>
             </div>
         </div>
     );

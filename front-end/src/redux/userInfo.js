@@ -3,7 +3,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-	//apiToken: "",
 };
 
 export let userInfoSlice = createSlice({
@@ -14,7 +13,7 @@ export let userInfoSlice = createSlice({
 			return {
 				...state,
 				...action.payload,
-			};
+			} || null;
 			// 참고 ) 리덕스는 Immer 라이브러리 있어서
 			// `...` 안써도 됨..!
 		},

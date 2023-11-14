@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import basicHttp from '../../api/basicHttp';
 
 import styles from './Signup.module.css';
 
 const Signup = () => {
-    const [ssafyArea, setSsafyArea] = useState('');
-    const [ssafyClass, setSsafyClass] = useState('');
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
-    const handleSsafyClass = (e) => {
-        setSsafyClass(e.target.value);
-    };
-    const handleSsafyArea = (e) => {
-        setSsafyArea(e.target.value);
-    };
+
     const handleEmail = (e) => {
         setEmail(e.target.value);
     };
@@ -28,18 +21,9 @@ const Signup = () => {
     };
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     // 회원가입 버튼 클릭
     async function onClickRegister() {
-        if (!ssafyArea) {
-            alert('싸피지역을 입력해주세요');
-            return;
-        }
-        if (!ssafyClass) {
-            alert('싸피반을 입력해주세요');
-            return;
-        }
         if (!email) {
             alert('이메일을 입력해주세요');
             return;
@@ -54,14 +38,12 @@ const Signup = () => {
         }
 
         const userData = {
-            email: email,
+            id: email,
             password: password,
-            ssafy_class: ssafyClass,
-            area: ssafyArea,
         };
 
         try {
-            const res = await basicHttp.post(`/docs/service`, userData);
+            const res = await basicHttp.post(`/docs/service/login/signup`, userData);
             console.log(res);
             console.log('회원가입 성공');
             navigate('/login');
@@ -75,44 +57,14 @@ const Signup = () => {
     return (
         <div className={styles.signupBody}>
             <div className={styles.signupContainer}>
-                <div className={styles.logoText}>S.F.O.API</div>
-                {/* <div className={styles.signupTitle}>회원가입</div> */}
-                <div className={styles.signupBox2}>
-                    <div className={styles.areaBox}>
-                        <label htmlFor="nickname" className={styles.signupText2}>
-                            싸피 지역
-                        </label>
-                        <input
-                            type="text"
-                            name="ssafyArea"
-                            value={ssafyArea}
-                            onChange={handleSsafyArea}
-                            className={styles.signupInput2}
-                            placeholder="ex) 대전"
-                        />
-                    </div>
-                    <div className={styles.classBox}>
-                        <label htmlFor="ssafyClass" className={styles.signupText2}>
-                            싸피 반
-                        </label>
-                        <input
-                            type="text"
-                            name="ssafyClass"
-                            value={ssafyClass}
-                            onChange={handleSsafyClass}
-                            className={styles.signupInput2}
-                            placeholder="ex) 3"
-                        />
-                    </div>
-                </div>
-
+                <div className={styles.logoText}>환영합니다!</div>
                 <div className={styles.signupBox}>
                     <label htmlFor="email" className={styles.signupText}>
                         아이디(이메일)
                     </label>
                     <input
                         type="email"
-                        name="email"
+                        id="email"
                         value={email}
                         onChange={handleEmail}
                         className={styles.signupInput}
@@ -125,7 +77,7 @@ const Signup = () => {
                     </label>
                     <input
                         type="password"
-                        name="password"
+                        id="password"
                         value={password}
                         onChange={handlePassword}
                         className={styles.signupInput}
@@ -138,7 +90,7 @@ const Signup = () => {
                     </label>
                     <input
                         type="password"
-                        name="passwordConfirm"
+                        id="passwordConfirm"
                         value={passwordConfirm}
                         onChange={handlePasswordConfirm}
                         className={styles.signupInput}

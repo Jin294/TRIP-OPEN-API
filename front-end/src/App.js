@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 
 // 메인페이지
 import Home from './components/main/Home';
@@ -18,9 +18,33 @@ import ExExchange from './components/examplepage/ExExchange';
 import ExCard from './components/examplepage/ExCard';
 import ExCardContent from './components/examplepage/ExCardContent';
 
-import Oauth from './components/oauth/Oauth';
+import { useEffect, useRef } from 'react';
 
 function App() {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    // routes 배열에 포함된 원소가 아니라면 강제로 Home으로 리다이렉트
+    const routes = useRef([
+        '/',
+        '/signup',
+        '/login',
+        '/mypage',
+        '/serviceinfo',
+        '/apidocs',
+        '/exexchange',
+        '/excard',
+        '/excardcontent',
+    ]);
+
+    useEffect(() => {
+        if (!routes.current.some((path) => location.pathname.startsWith(path))) {
+            if (location.pathname !== '/') {
+                navigate('/');
+            }
+        }
+    }, [location.pathname, navigate]);
+
     return (
         <div className="App">
             <Routes>
@@ -28,13 +52,13 @@ function App() {
                 <Route path="/signup" element={<Signup />}></Route>
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/mypage" element={<Mypage />}></Route>
-                <Route path="/serviceinfo" element={<ServiceInfo />}></Route>
-                <Route path="/apidock" element={<APIDocs />} />
-                <Route path="/apidock/:tab" element={<APIDocs />}></Route>
+                {/* <Route path="/serviceinfo" element={<ServiceInfo />}></Route> */}
+                <Route path="/apidocs" element={<APIDocs />} />
+                <Route path="/apidocs/:tab" element={<APIDocs />}></Route>
                 <Route path="/exexchange" element={<ExExchange />}></Route>
                 <Route path="/excard" element={<ExCard />}></Route>
                 <Route path="/excardcontent" element={<ExCardContent />}></Route>
-                <Route path="/oauthexplain" element={<Oauth />}></Route>
+                <Route path="/*" element={<Home />} />
             </Routes>
         </div>
     );

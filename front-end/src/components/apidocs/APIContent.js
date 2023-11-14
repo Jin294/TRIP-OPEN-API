@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./APIContent.module.css";
 import basicHttp from "../../api/basicHttp";
+//
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { vs } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const APIContent = (props) => {
   const [api_docs_id, setApiId] = useState("");
@@ -12,20 +16,23 @@ const APIContent = (props) => {
 
   useEffect(() => {
     setApiId(props.data);
+    console.log(props.data);
   }, [props]);
 
   useEffect(() => {
     const getApiDocsData = async (api_docs_id) => {
       try {
-        const response = await basicHttp.get(`/docs/api/${api_docs_id}`);
+        const response = await basicHttp.get(
+          `/docs/data/api/info/${api_docs_id}`
+        );
         const responseData = response.data;
         // console.log("responseData", responseData.data);
         // console.log("api_docs_id", api_docs_id);
 
         if (responseData.data) {
           setApiContent(responseData.data);
-          setApiData(responseData.data.api_data);
-          console.log(responseData.data.api_data);
+          setApiData(responseData.data.variable_info);
+          console.log(responseData.data.variable_info);
         }
       } catch (error) {
         console.log("Error fetching API data", error);
@@ -37,19 +44,30 @@ const APIContent = (props) => {
     }
   }, [api_docs_id]);
 
-  const isRequestTrueData = apiData.filter(
-    (dataItem) => dataItem.is_request === true
-  );
-  const isRequestFalseData = apiData.filter(
-    (dataItem) => dataItem.is_request === false
-  );
+  const isRequestTrueData = [];
+  const isRequestFalseData = [];
+
+  apiData.forEach((item) => {
+    if (item.is_request) {
+      isRequestTrueData.push(item);
+    } else {
+      isRequestFalseData.push(item);
+    }
+  });
+
+  // const isRequestTrueData = apiData.filter(
+  //   (dataItem) => dataItem.is_request === true
+  // );
+  // const isRequestFalseData = apiData.filter(
+  //   (dataItem) => dataItem.is_request === false
+  // );
 
   return (
     <div className={styles.contentBody}>
       <div>
-        <h3>{apiContent.title}</h3>
-        <div>{apiContent.content}</div>
-
+        <h2>{apiContent.title}</h2>
+        <div className={styles.contentText}>{apiContent.content}</div>
+        <h3>1. 기본 설명</h3>
         <table className={styles.firstTable}>
           <thead>
             <tr>
@@ -73,50 +91,46 @@ const APIContent = (props) => {
           </tbody>
         </table>
 
-     
-        <p>응답 예시</p>
-        <pre id="json" className={styles.code}>
-          {apiContent.return_example}
-        </pre>
-
-        {(isRequestTrueData.length>0 || apiContent.authorization === "1") && <h4>요청 메세지 명세</h4>}
-        {(isRequestTrueData.length>0 || apiContent.authorization === "1") && <table className={styles.apiRequestDataTable}>
-          <thead>
-            <tr>
-              <th>HTTP</th>
-              <th>항목명</th>
-              <th> 필수 </th>
-              <th>타입</th>
-              <th>설명</th>
-            </tr>
-          </thead>
-          <tbody>
-            {apiContent.authorization === "1" && (
+        {isRequestTrueData.length > 0 && (
+          <div>
+            <h3>2. 요청</h3>
+            <h4>* 쿼리 파라미터</h4>{" "}
+          </div>
+        )}
+        {isRequestTrueData.length > 0 && (
+          <table className={styles.apiRequestDataTable}>
+            <thead>
               <tr>
-                <td>Header</td>
-                <td>authorization</td>
-                <td></td>
-                <td></td>
-                <td>
-                  사용자 OAuth2.0 인증을 통해 access-token을 받아야 합니다.{" "}
-                  <br />
-                  헤더 정보: Authorization Bearer {"${access-token}"}
-                </td>
+                <th>HTTP</th>
+                <th>항목명</th>
+                <th> 필수 </th>
+                <th>파라미터</th>
+                <th>타입</th>
+                <th>설명</th>
               </tr>
-            )}
-            {isRequestTrueData.map((dataItem, index) => (
-              <tr key={index}>
-                {index==0 && <td rowSpan={isRequestTrueData.length}>{dataItem.is_parameter? "Parameter" : "Body"}</td>}
-                <td>{dataItem.title}</td>
-                <td>{dataItem.is_essential ? " Y " : " N "}</td>
-                <td>{dataItem.type}</td>
-                <td>{dataItem.detail}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>}
-
-        <h4>응답 메세지 명세</h4>
+            </thead>
+            <tbody>
+              {isRequestTrueData.map((dataItem, index) => (
+                <tr key={index}>
+                  {index == 0 && (
+                    <td rowSpan={isRequestTrueData.length}>
+                      {dataItem.is_parameter ? "Parameter" : "Body"}
+                    </td>
+                  )}
+                  <td>{dataItem.title}</td>
+                  <td>{dataItem.is_essential ? " Y " : " N "}</td>
+                  <td>{dataItem.is_parameter ? " Y " : " N "}</td>
+                  <td>{dataItem.type}</td>
+                  <td>{dataItem.detail}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        <div>
+          <h3>3. 응답</h3>
+          <h4>* 쿼리 파라미터</h4>
+        </div>
         <table className={styles.apiResponseDataTable}>
           <thead>
             <tr>
@@ -135,6 +149,20 @@ const APIContent = (props) => {
             ))}
           </tbody>
         </table>
+
+        <h3>4. 예제</h3>
+        <h4>* 요청</h4>
+        <pre id="bash" className={styles.code}>
+          <SyntaxHighlighter language="bash" style={vs}>
+            https://k9b205.p.ssafy.io/
+          </SyntaxHighlighter>
+        </pre>
+        <h4>* 응답</h4>
+        <pre id="json" className={styles.code}>
+          <SyntaxHighlighter language="json" style={vs}>
+            {apiContent.return_example}
+          </SyntaxHighlighter>
+        </pre>
       </div>
     </div>
   );
