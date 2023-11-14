@@ -5,20 +5,20 @@ a {
 .mypageBody {
     height: 94vh;
     display: flex;
-	justify-content: center;
-	align-items: center;
-	background: rgba(21, 166, 86, 0.20);
+    justify-content: center;
+    align-items: center;
+    background: rgba(21, 166, 86, 0.2);
 }
 .mypageContainer {
     display: flex;
-	flex-direction: column;
-	background-color: #fff;
-	box-shadow: 0px 19px 40px 0px rgba(0, 0, 0, 0.1);
-	width: 450px;
-	height: 500px;
-	padding: 50px;
-	padding-top: 70px;
-	border-radius: 5px;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0px 19px 40px 0px rgba(0, 0, 0, 0.1);
+    width: 450px;
+    height: 500px;
+    padding: 50px;
+    padding-top: 70px;
+    border-radius: 5px;
 }
 .logoText {
     display: flex;
@@ -28,15 +28,16 @@ a {
     align-self: center;
 }
 .textBox {
-	width: 100%;
-	padding: 10px;
-	font-size: 1rem;
-	border: none;
-	border-radius: 3px;
-	/* input 박스가 프레임밖으로 벗어나는걸 막음 */
-	box-sizing: border-box;
-	background: rgba(21, 166, 86, 0.20);
-	margin-bottom: 20px;
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 3px;
+    /* input 박스가 프레임밖으로 벗어나는걸 막음 */
+    word-break: break-all;
+    box-sizing: border-box;
+    background: rgba(21, 166, 86, 0.2);
+    margin-bottom: 20px;
 }
 .textBox img {
     width: 20px;
@@ -49,15 +50,15 @@ a {
     margin: 8px auto 16px;
 }
 .inputBox {
-	width: 100%;
-	padding: 10px;
-	font-size: 1rem;
-	border: none;
-	border-radius: 3px;
-	/* input 박스가 프레임밖으로 벗어나는걸 막음 */
-	box-sizing: border-box;
-	background: rgba(21, 166, 86, 0.20);
-	margin-bottom: 20px;
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 3px;
+    /* input 박스가 프레임밖으로 벗어나는걸 막음 */
+    box-sizing: border-box;
+    background: rgba(21, 166, 86, 0.2);
+    margin-bottom: 20px;
 }
 
 .inputBox:focus {
@@ -65,21 +66,21 @@ a {
 }
 .apiTokenRefreshBtn {
     box-sizing: border-box;
-	width: 150px;
+    width: 150px;
     margin-bottom: 20px;
-	padding: 5px;
-	border: 3px solid #15A656;
-	background-color: #15A656;
-	color: #fff;
-	font-size: 1rem;
-	font-weight: 700;
-	border-radius: 10px;
-	cursor: pointer;
-	align-self: center;
+    padding: 5px;
+    border: 3px solid #15a656;
+    background-color: #15a656;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    align-self: center;
 }
 .apiTokenRefreshBtn:hover {
     background-color: #fff;
-    color: #15A656;
+    color: #15a656;
 }
 .client {
     width: 95%;
