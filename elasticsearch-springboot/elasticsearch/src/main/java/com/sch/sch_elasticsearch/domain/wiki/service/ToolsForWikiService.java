@@ -35,22 +35,31 @@ public class ToolsForWikiService {
      * @param SearchHits<Wiki> result
      * @return List<Wiki>
      */
-    public List<Wiki> getListBySearchHits(SearchHits<Wiki> result, boolean useReliable) {
+    public List<Wiki> getListBySearchHits(SearchHits<Wiki> result, boolean reliable) {
         // SearchHits 내부 Content를 List<Wiki>로 변환
         List<Wiki> wikiList = new ArrayList<>();
         for (SearchHit<Wiki> hit : result) {
             Wiki wiki = hit.getContent();
-            wiki.setScore(hit.getScore());
-
             //신뢰성 판단 로직 사용
-            if(useReliable && (wiki.getMatchTerm() / (float)wiki.getTotalTerm()) <= 0.2f) {
-                wiki.setWikiContentAndWikiTitleNull();
-            }
+            wiki.setScore(hit.getScore());
+            wiki = setReliableWiki(wiki, reliable);
             wikiList.add(wiki);
         }
         return wikiList;
     }
 
+    /**
+     * Wiki에 Reliable 로직과 score 적용
+     * @param wiki
+     * @return wiki
+     */
+    public Wiki setReliableWiki(Wiki wiki, boolean reliable) {
+        //신뢰성 판단 로직 사용
+        if(reliable && (wiki.getMatchTerm() / (float)wiki.getTotalTerm()) <= 0.2f) {
+            wiki.setWikiContentAndWikiTitleNull();
+        }
+     return wiki;
+    }
 
     /**
      * TypeNum : Keyword change

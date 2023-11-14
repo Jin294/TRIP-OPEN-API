@@ -5,13 +5,18 @@ import com.sch.sch_elasticsearch.domain.wiki.entity.Wiki;
 import com.sch.sch_elasticsearch.domain.wiki.service.WikiServiceBasic;
 import com.sch.sch_elasticsearch.domain.wiki.service.WikiServiceExtend;
 import com.sch.sch_elasticsearch.domain.wiki.service.WikiServiceTitle;
+import com.sch.sch_elasticsearch.exception.CommonException;
+import com.sch.sch_elasticsearch.exception.ExceptionType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/api/wiki")
 public class WikiController {
     private final WikiServiceBasic wikiServiceBasic;
@@ -50,22 +55,39 @@ public class WikiController {
     }
 
     //통합 제목 검색 : 제목 일치 or (Fuzzy + ngram)
+    @GetMapping("/title/aggregate-search")
+    public List<Wiki> searchTitleComprehensive(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
+                                         @RequestParam("fuzziness") int fuzziness, @RequestParam("reliable") boolean reliable)
+    {
+        try {
+            Wiki wiki = wikiServiceTitle.searchTitleCorrect(title, reliable);
+            if (wiki != null) {
+                List<Wiki> wikiList = new ArrayList<>();
+                wikiList.add(wiki);
+                return wikiList;
+            } //1. 일치 제목 검색이 있다면 이를 리스트에 추가 후 리턴
+            return wikiServiceTitle.searchFuzzyAndNgram(title, maxResults, fuzziness, reliable); //2. 아니라면 두개 검색 비교후 리턴
+        } catch (Exception e) {
+            log.error("[ERR LOG] {}", e.getMessage());
+            throw new CommonException(ExceptionType.CALCULATE_SIMILARY_TERMS);
+        }
+    }
 
     //제목 일치 여부 검색
-    @GetMapping("title-correct")
+    @GetMapping("/title/correct")
     public Wiki searchTitleCorrect(@RequestParam("title") String title, @RequestParam("reliable") boolean reliable) {
         return wikiServiceTitle.searchTitleCorrect(title, reliable);
     }
 
     //Fuzzy 제목 검색
-    @GetMapping("/title-fuzzy")
+    @GetMapping("/title/fuzzy")
     public List<Wiki> searchTitleFuzzy(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                        @RequestParam("fuzziness") int fuzziness, @RequestParam("reliable") boolean reliable)
     {
         return wikiServiceTitle.searchTitleUseFuzzy(title, maxResults, fuzziness, reliable);
     }
     //ngram 제목 검색
-    @GetMapping("/title-ngram")
+    @GetMapping("/title/ngram")
     public List<Wiki> searchTitleNgram(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                        @RequestParam("reliable") boolean reliable)
     {

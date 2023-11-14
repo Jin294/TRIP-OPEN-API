@@ -7,15 +7,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ExceptionType {
     /**
-     * CODE : 4자리 양의 정수 (맨 앞자리는 HTTP 상태코드의 앞 글자)
+     * CODE : 4자리 양의 정수
      * MESSAGE : 예외 메시지
      */
+    INTERCEPTOR_TOO_MANY_MAX_RESULTS(1001, "너무 많은 maxResult 매개변수입니다. (100 이상) : CheckParameterInterceptor"),
 
+    ACCOMMODATION_SAVE_FAIL(2008, "숙소 데이터 저장 실패"),
+    SEARCH_SEARCHALL_FAIL(2009, " : 전문 검색에 실패하였습니다 : WikiServiceExtend/searchAll()"),
 
-    ACCOMMODATION_SAVE_FAIL(1000, "숙소 데이터 저장 실패"),
-    SEARCH_SEARCHALL_FAIL(1001, " : 전문 검색에 실해하였습니다 : WikiServiceExtend/searchAll()"),
-
-    SEARCH_ERR(2000, "검색 과정에서 문제 발생"),
+    SEARCH_ERR(2010, "검색 과정에서 문제 발생"),
 
     TYPENUM_IS_INVALID(2100, "키워드 검색용 TypeNum 번호가 유효하지 않습니다."),
 
@@ -29,10 +29,8 @@ public enum ExceptionType {
     ATTRACTION_NAME_NGRAMSEARCH_FAIL(3006, "Ngram 제목 검색이 실패하였습니다. : WikiServiceTitle/searchTitleUseNgram()"),
 
     SEARCH_TITLE_CORRECT_FAIL(3007, "일치하는 제목을 찾는 중 오류가 발생했습니다 : WikiServiceTitle/searchTitleCorrect()" ),
-
-
-
-
+    SEARCH_TITLE_COMPREHENSIVE_FAIL(3008, "통합 제목 검색 과정에서 문제가 발생했습니다. : WikiController/searchTitleComprehensive()"),
+    SEARCH_FUZZY_AND_NGRAM_FAIL(3008, "Fuzzy 검색과 Ngram 통합 검색을 집계하는 과정에서 문제가 발생했습니다 : WikiServiceTitle/searchTitleUseNgram()"),
     ;
     private final int code;
     private final String message;
