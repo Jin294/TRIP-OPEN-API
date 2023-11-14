@@ -24,3 +24,6 @@ info:
   index:
     wiki: "scrap_wiki_final" #2글자 이상 term 분리된 필터 사용
 
+server:
+  servlet:
+    context-path: "/elastic"

@@ -92,7 +92,6 @@ public class WikiServiceExtend {
      */
     public List<Wiki> fuzzinessSearch(int typeNum, String inputString, boolean useReliableSearch, int maxResults, int fuzziness) {
         String type = toolsForWikiService.getType(typeNum);
-        // fuzziness를 설정하는 방법. 'AUTO'로 설정하면 Elasticsearch가 자동으로 fuzziness 수준을 결정합니다.
         Fuzziness fuzzinessLevel;
         if (fuzziness > 0) {
             fuzzinessLevel = Fuzziness.build(fuzziness);

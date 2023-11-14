@@ -85,6 +85,9 @@ public class ToolsForWikiService {
             case 4:
                 type = "wiki_content";
                 break;
+            case 5:
+                type = "overview";
+                break;
             default:
                 throw new CommonException(ExceptionType.TYPENUM_IS_INVALID);
         }

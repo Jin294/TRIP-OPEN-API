@@ -32,7 +32,7 @@ public class WikiController {
         return wikiServiceBasic.searchExact(typeNum, inputString, reliable, maxResults);
     }
 
-    //특정 컬럼의 match-phrase 검색
+    //특정 컬럼의 match 검색
     @GetMapping("/partial")
     public List<Wiki> searchPartial(@RequestParam("typeNum") int typeNum,
                                     @RequestParam("inputString") String inputString,
@@ -41,7 +41,7 @@ public class WikiController {
         return wikiServiceBasic.searchPartial(typeNum, inputString, reliable, maxResults);
     }
 
-    //특정 칼럼의 match
+    //특정 칼럼의 fuzzy 검색
     @GetMapping("/fuzzy")
     public List<Wiki> searchFuzzy(@RequestParam("typeNum") int typeNum, @RequestParam("inputString") String inputString,
                                   @RequestParam("reliable") boolean reliable, @RequestParam("maxResults") int maxResults ,@RequestParam("fuzziness") int fuzziness) {
