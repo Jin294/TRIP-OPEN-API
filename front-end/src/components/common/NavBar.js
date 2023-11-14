@@ -58,16 +58,16 @@ const NavBar = () => {
           {/* 로그인 상태에 따라 Login 또는 Mypage로 링크 변경 */}
           {userInfo === null || JSON.stringify(userInfo).length === 2 ? (
             <div className={styles.navRight}>
-            <button className={styles.navBtn} onclick={onClickLogin} to="/login">
+            <button className={styles.navBtn} onClick={onClickLogin}>
               로그인
             </button>
-            <button className={styles.navBtn} onclick={onClickSignup} to="/signup">
+            <button className={styles.navBtn} onClick={onClickSignup}>
               회원가입
             </button>
           </div>
           ) : (
             <div className={styles.navRight}>
-              <button className={styles.navBtn} onclick={onClickMypage}>
+              <button className={styles.navBtn} onClick={onClickMypage}>
                 마이페이지
               </button>
               <button className={styles.navBtn} onClick={onClickLogout}>
