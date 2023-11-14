@@ -26,4 +26,4 @@ info:
 
 server:
   servlet:
-    context-path: "/elastic"
+    context-path: "/elastic/api"

@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/wiki")
+@RequestMapping("/wiki")
 public class WikiController {
     private final WikiServiceBasic wikiServiceBasic;
     private final WikiServiceExtend wikiServiceExtend;
