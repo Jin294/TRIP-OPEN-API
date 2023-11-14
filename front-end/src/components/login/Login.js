@@ -38,7 +38,8 @@ const Login = () => {
 
         try {
             const res = await basicHttp.post(`/docs/service/login`, userData);
-            console.log("res = " + res);
+            console.log('res = ' + res);
+            console.log(res.data);
             console.log('로그인 성공');
             localStorage.setItem('access-token', res.data.data['access-token']);
             localStorage.setItem('refresh-token', res.data.data['refresh-token']);
@@ -83,7 +84,7 @@ const Login = () => {
                         id="pw"
                     />
                 </div>
-                
+
                 <button className={styles.loginBtn} onClick={onClickLogin}>
                     로그인 ⇀
                 </button>
