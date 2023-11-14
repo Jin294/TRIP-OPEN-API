@@ -49,6 +49,7 @@
   border-spacing: 0;
   line-height: 1.5;
   word-break: keep-all;
+  margin-bottom: 5%;
 }
 
 .apiRequestDataTable th {

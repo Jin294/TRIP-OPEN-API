@@ -1,11 +1,5 @@
 .backBody {
-    border: 1px solid red;
-    /* background-color: #282c34; */
-    /* min-height: 100vh;
-  display: flex;
-  background-image: url("../../assets/img/background.png");
-  background-size: cover;
-  position: relative; */
+    border: 1px solid #fff;
 }
 
 .boardContainer {
