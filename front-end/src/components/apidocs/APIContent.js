@@ -4,7 +4,8 @@ import styles from "./APIContent.module.css";
 import basicHttp from "../../api/basicHttp";
 //
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { vs } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const APIContent = (props) => {
   const [api_docs_id, setApiId] = useState("");
@@ -90,9 +91,9 @@ const APIContent = (props) => {
           </tbody>
         </table>
 
-        <p>응답 예시</p>
+        <h4>응답 예시</h4>
         <pre id="json" className={styles.code}>
-          <SyntaxHighlighter language="json" style={atomOneDark}>
+          <SyntaxHighlighter language="json" style={vs}>
             {apiContent.return_example}
           </SyntaxHighlighter>
         </pre>
