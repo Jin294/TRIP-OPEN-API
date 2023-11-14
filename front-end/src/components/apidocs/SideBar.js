@@ -4,40 +4,40 @@ import { NavLink } from "react-router-dom";
 import basicHttp from "../../api/basicHttp";
 import { useParams } from "react-router-dom";
 
-const SideBar = ({onSetId}) => {
+const SideBar = ({ onSetId }) => {
   const { tab } = useParams();
   const [tabsData, setTabsData] = useState([]);
   const [selectedTab, setSelectedTab] = useState("숙소 API");
   const [selectedSub, setSelectedSub] = useState(3);
   const setId = (data) => {
-    onSetId(data)
-  }
+    onSetId(data);
+  };
 
   useEffect(() => {
-    if(tab === 'exchange') handleTabClick("음식점 API");
-    else if(tab === 'investment') handleTabClick("검색 API");
+    if (tab === "restaurant") handleTabClick("음식점 API");
+    else if (tab === "search") handleTabClick("검색 API");
     else handleTabClick("숙소 API");
   }, [tab]);
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
-    
-    if(tab === "음식점 API") handleSubClick(5);
-    else if(tab === "검색 API") handleSubClick(13);
+
+    if (tab === "음식점 API") handleSubClick(5);
+    else if (tab === "검색 API") handleSubClick(13);
     else handleSubClick(3);
   };
 
   const handleSubClick = (sub) => {
     setSelectedSub(sub);
     setId(sub);
-  }
+  };
 
   useEffect(() => {
     const getApiDocsList = async () => {
       try {
-        const response = await basicHttp.get("/docs/api");
+        const response = await basicHttp.get(`/docs/data/apilist`);
         const responseData = response.data;
-        // console.log("responseData", responseData);
+        console.log("responseData", responseData);
 
         if (responseData.data) {
           const groupedTabs = [
@@ -49,12 +49,12 @@ const SideBar = ({onSetId}) => {
             {
               title: "음식점 API",
               url: "/apidock/restaurant",
-              subTabs: responseData.data.slice(2, 10),
+              subTabs: responseData.data.slice(2, 4),
             },
             {
               title: "검색 API",
               url: "/apidock/search",
-              subTabs: responseData.data.slice(10, 16),
+              subTabs: responseData.data.slice(4, 5),
             },
           ];
           setTabsData(groupedTabs);
@@ -74,7 +74,9 @@ const SideBar = ({onSetId}) => {
           {tabsData.map((group) => (
             <li key={group.title}>
               <h3
-                className={selectedTab === group.title ? styles.selectedTab : ""}
+                className={
+                  selectedTab === group.title ? styles.selectedTab : ""
+                }
               >
                 <NavLink
                   to={group.url}
@@ -84,15 +86,20 @@ const SideBar = ({onSetId}) => {
                 </NavLink>
               </h3>
               <ul>
-               {
-                selectedTab === group.title &&
-                 group.subTabs.map((tab) => (
-                   <li key={tab.api_docs_id}>
-                    <div className={selectedSub === tab.api_docs_id? styles.selected: styles.noSelected} 
-                      onClick={() => handleSubClick(tab.api_docs_id)}>
-                      {tab.title}
-                    </div>
-                   {/* <NavLink
+                {selectedTab === group.title &&
+                  group.subTabs.map((tab) => (
+                    <li key={tab.api_docs_id}>
+                      <div
+                        className={
+                          selectedSub === tab.api_docs_id
+                            ? styles.selected
+                            : styles.noSelected
+                        }
+                        onClick={() => handleSubClick(tab.api_docs_id)}
+                      >
+                        {tab.title}
+                      </div>
+                      {/* <NavLink
                    to={`/apidock/${tab.api_docs_id}`}
                    className={selectedSub==tab.api_docs_id? styles.selected: styles.noSelected} 
                    onClick={() => handleSubClick(tab.api_docs_id)}

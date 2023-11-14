@@ -43,12 +43,6 @@ const NavBar = () => {
             <Link className={styles.navMenu} to="/">
               Home
             </Link>
-            {/* <Link className={styles.navMenu} to="/serviceinfo">
-              서비스 소개
-            </Link> */}
-            <Link className={styles.navMenu} to="/elasticinfo">
-              Elastic 소개
-            </Link>
             <Link className={styles.navMenu} to="/apidock/financialdata">
               API문서
             </Link>

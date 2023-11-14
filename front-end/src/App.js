@@ -12,7 +12,6 @@ import Mypage from "./components/mypage/Mypage";
 // 서비스 소개
 import ServiceInfo from "./components/serviceinfo/ServiceInfo";
 import APIDocs from "./components/apidocs/APIDocs";
-import ElasticInfo from "./components/elastic/ElasticInfo";
 // API문서
 // 예시 페이지
 import ExExchange from "./components/examplepage/ExExchange";
@@ -54,7 +53,6 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/mypage" element={<Mypage />}></Route>
         {/* <Route path="/serviceinfo" element={<ServiceInfo />}></Route> */}
-        <Route path="/elasticinfo" element={<ElasticInfo />} />
         <Route path="/apidock" element={<APIDocs />} />
         <Route path="/apidock/:tab" element={<APIDocs />}></Route>
         <Route path="/exexchange" element={<ExExchange />}></Route>

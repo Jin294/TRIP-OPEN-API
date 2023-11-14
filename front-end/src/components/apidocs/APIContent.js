@@ -17,7 +17,9 @@ const APIContent = (props) => {
   useEffect(() => {
     const getApiDocsData = async (api_docs_id) => {
       try {
-        const response = await basicHttp.get(`/docs/data/apidata/${api_docs_id}`);
+        const response = await basicHttp.get(
+          `/docs/data/api/info/${api_docs_id}`
+        );
         const responseData = response.data;
         // console.log("responseData", responseData.data);
         // console.log("api_docs_id", api_docs_id);
@@ -73,37 +75,42 @@ const APIContent = (props) => {
           </tbody>
         </table>
 
-     
         <p>응답 예시</p>
         <pre id="json" className={styles.code}>
           {apiContent.returnExample}
         </pre>
 
-        {(isRequestTrueData.length>0 ) && <h4>요청 메세지 명세</h4>}
-        {(isRequestTrueData.length>0 ) && <table className={styles.apiRequestDataTable}>
-          <thead>
-            <tr>
-              <th>HTTP</th>
-              <th>항목명</th>
-              <th> 필수 </th>
-              <th>파라미터</th>
-              <th>타입</th>
-              <th>설명</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isRequestTrueData.map((dataItem, index) => (
-              <tr key={index}>
-                {index==0 && <td rowSpan={isRequestTrueData.length}>{dataItem.is_parameter? "Parameter" : "Body"}</td>}
-                <td>{dataItem.title}</td>
-                <td>{dataItem.isEssential ? " Y " : " N "}</td>
-                <td>{dataItem.isParameter ? " Y " : " N "}</td>
-                <td>{dataItem.type}</td>
-                <td>{dataItem.detail}</td>
+        {isRequestTrueData.length > 0 && <h4>요청 메세지 명세</h4>}
+        {isRequestTrueData.length > 0 && (
+          <table className={styles.apiRequestDataTable}>
+            <thead>
+              <tr>
+                <th>HTTP</th>
+                <th>항목명</th>
+                <th> 필수 </th>
+                <th>파라미터</th>
+                <th>타입</th>
+                <th>설명</th>
               </tr>
-            ))}
-          </tbody>
-        </table>}
+            </thead>
+            <tbody>
+              {isRequestTrueData.map((dataItem, index) => (
+                <tr key={index}>
+                  {index == 0 && (
+                    <td rowSpan={isRequestTrueData.length}>
+                      {dataItem.is_parameter ? "Parameter" : "Body"}
+                    </td>
+                  )}
+                  <td>{dataItem.title}</td>
+                  <td>{dataItem.isEssential ? " Y " : " N "}</td>
+                  <td>{dataItem.isParameter ? " Y " : " N "}</td>
+                  <td>{dataItem.type}</td>
+                  <td>{dataItem.detail}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
 
         <h4>응답 메세지 명세</h4>
         <table className={styles.apiResponseDataTable}>
