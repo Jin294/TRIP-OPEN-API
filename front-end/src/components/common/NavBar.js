@@ -43,7 +43,7 @@ const NavBar = () => {
             <Link className={styles.navMenu} to="/">
               Home
             </Link>
-            <Link className={styles.navMenu} to="/apidock/financialdata">
+            <Link className={styles.navMenu} to="/apidocs/financialdata">
               API문서
             </Link>
           </div>
