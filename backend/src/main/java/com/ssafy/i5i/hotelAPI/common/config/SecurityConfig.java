@@ -6,6 +6,7 @@ import com.ssafy.i5i.hotelAPI.domain.user.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -13,6 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.security.SecureRandom;
 
@@ -33,6 +37,8 @@ public class SecurityConfig {
     private final TokenService tokenService;
 
     private static final String[] PERMIT_URL = {
+            "/docs/data/**",
+            "/docs/service/**",
             "/docs/service",
             "/docs/service/login",
             "/api/**",
@@ -44,11 +50,10 @@ public class SecurityConfig {
         http
                 .csrf().disable() // Post나 Put과 같이 리소스를 변경하는 요청의 경우 내가 내보냈던 리소스에서 올라온 요청인지 확인
                 .formLogin().disable()
+                .headers().disable()
                 .httpBasic().disable()
                 .cors() //허가된 사이트나 클라이언트의 요청인지 검사하는 역할
-
                 .and()
-
                 //세선 사용 X ( JWT 사용 )
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -58,6 +63,7 @@ public class SecurityConfig {
 
                 //URL 허용
                 .authorizeHttpRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers(PERMIT_URL).permitAll()
                 .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
@@ -68,7 +74,19 @@ public class SecurityConfig {
         ;
         return http.build();
     }
-
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.addAllowedOrigin("*"); // Allow requests from any origin
+//        configuration.addAllowedMethod("*"); // Allow all HTTP methods
+//        configuration.addAllowedHeader("*"); // Allow all headers
+//        configuration.setAllowCredentials(true); // Allow credentials (e.g., cookies)
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//
+//        return source;
+//    }
 
 }
 

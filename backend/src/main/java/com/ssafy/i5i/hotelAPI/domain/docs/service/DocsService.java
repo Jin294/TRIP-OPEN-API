@@ -1,9 +1,7 @@
 package com.ssafy.i5i.hotelAPI.domain.docs.service;
 
-import com.ssafy.i5i.hotelAPI.common.exception.CommonException;
-import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
-import com.ssafy.i5i.hotelAPI.domain.docs.dto.responseDto.ApiDataResponseDto;
-import com.ssafy.i5i.hotelAPI.domain.docs.dto.responseDto.TypeResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.docs.dto.ApiDataDto;
+import com.ssafy.i5i.hotelAPI.domain.docs.dto.TypeResponseDto;
 import com.ssafy.i5i.hotelAPI.domain.docs.repository.ApiDataRepository;
 import com.ssafy.i5i.hotelAPI.domain.docs.repository.ApiTypeRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +20,22 @@ public class DocsService {
     private final ApiDataRepository apiDataRepository;
     private final ApiTypeRepository apiTypeRepository;
 
+    public List<ApiDataDto.ApiDataList> getApiList() {
+        return apiDataRepository.findAll()
+                .stream()
+                .map(api -> {
+                    return ApiDataDto.ApiDataList.builder()
+                            .title(api.getTitle())
+                            .content(api.getContent())
+                            .method(api.getMethod())
+                            .return_type(api.getReturnType())
+                            .content_type(api.getContentType())
+                            .endpoint(api.getEndpoint())
+                            .return_example(api.getReturnExample())
+                            .build();
+                })
+                .collect(Collectors.toList());
+    }
 
     public List<TypeResponseDto> getTypeList(){
         return apiTypeRepository.findAll()
@@ -30,13 +44,14 @@ public class DocsService {
                 .collect(Collectors.toList());
     }
 
-    public List<ApiDataResponseDto> getApiDataList(long type){
-        return apiDataRepository.getApiDataById(type)
-                .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);})
-                .stream()
-                .map(data -> {
-                    return data.toDto();
-                })
-                .collect(Collectors.toList());
+    public List<ApiDataDto> getApiDataList(long type){
+//        return apiDataRepository.getApiDataById(type)
+//                .orElseThrow(() -> {throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);})
+//                .stream()
+//                .map(data -> {
+//                    return data.toDto();
+//                })
+//                .collect(Collectors.toList());
+        return null;
     }
 }
