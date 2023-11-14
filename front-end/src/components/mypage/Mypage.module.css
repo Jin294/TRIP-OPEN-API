@@ -7,7 +7,7 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(21, 166, 86, 0.2);
+    background: rgba(255, 255, 255, 0.2);
 }
 .mypageContainer {
     display: flex;
@@ -36,7 +36,7 @@ a {
     /* input 박스가 프레임밖으로 벗어나는걸 막음 */
     word-break: break-all;
     box-sizing: border-box;
-    background: rgba(21, 166, 86, 0.2);
+    background: rgba(220, 220, 220, 0.2);
     margin-bottom: 20px;
 }
 .textBox img {
