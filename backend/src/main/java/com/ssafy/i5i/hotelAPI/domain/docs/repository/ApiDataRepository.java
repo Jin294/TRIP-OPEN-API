@@ -11,8 +11,6 @@ import java.util.Optional;
 public interface ApiDataRepository extends JpaRepository<ApiData, Long> {
     List <ApiData> findAll();
 
-    @Query("SELECT a" +
-            "FROM ApiData a" +
-            "JOIN FETCH a.variable")
-    Optional<List<ApiData>> getApiDataById(@Param("apiDataId") Long apiId);
+//    @Query("SELECT a FROM ApiData a JOIN FETCH a.variable where a.id = :apiId")
+//    Optional<List<ApiData>> getApiDataById(@Param("apiDataId") Long apiId);
 }
