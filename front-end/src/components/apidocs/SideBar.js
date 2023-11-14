@@ -75,7 +75,7 @@ const SideBar = ({ onSetId }) => {
                         <li key={group.title}>
                             <h3 className={selectedTab === group.title ? styles.selectedTab : ''}>
                                 <NavLink to={group.url} onClick={() => handleTabClick(group.title)}>
-                                    {group.title}
+                                    <p className={selectedTab === group.title ? styles.selectedTabText : ''}>{group.title}</p>
                                 </NavLink>
                             </h3>
                             <ul>
