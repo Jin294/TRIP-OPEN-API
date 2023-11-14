@@ -56,7 +56,7 @@ const Login = () => {
         <div className={styles.loginBody}>
             <div className={styles.loginContainer}>
                 <div className={styles.textContainer}>
-                    <div className={styles.logoSubText}>다시 돌아온 걸 환영합니다!!</div>
+                    <div className={styles.logoSubText}>api 토큰 발급을 위해</div>
                     <div className={styles.logoText}>로그인해주세요</div>
                 </div>
 
@@ -85,7 +85,7 @@ const Login = () => {
                 </div>
 
                 <button className={styles.loginBtn} onClick={onClickLogin}>
-                    로그인 ⇀
+                    로그인
                 </button>
             </div>
         </div>
