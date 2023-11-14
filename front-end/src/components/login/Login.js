@@ -62,7 +62,7 @@ const Login = () => {
                 </div>
 
                 <div className={styles.inputContainer}>
-                    <label for="id">아이디</label>
+                    <label htmlFor="id">아이디</label>
                     <input
                         className={styles.loginInput}
                         value={email}
@@ -74,7 +74,7 @@ const Login = () => {
                 </div>
 
                 <div className={styles.inputContainer}>
-                    <label for="pw">비밀번호</label>
+                    <label htmlFor="pw">비밀번호</label>
                     <input
                         className={styles.loginInput}
                         value={password}

@@ -59,7 +59,7 @@ const Signup = () => {
             <div className={styles.signupContainer}>
                 <div className={styles.logoText}>환영합니다!</div>
                 <div className={styles.signupBox}>
-                    <label for="email" className={styles.signupText}>
+                    <label htmlFor="email" className={styles.signupText}>
                         아이디(이메일)
                     </label>
                     <input
@@ -72,7 +72,7 @@ const Signup = () => {
                     />
                 </div>
                 <div className={styles.signupBox}>
-                    <label for="password" className={styles.signupText}>
+                    <label htmlFor="password" className={styles.signupText}>
                         비밀번호
                     </label>
                     <input
@@ -85,7 +85,7 @@ const Signup = () => {
                     />
                 </div>
                 <div className={styles.signupBox}>
-                    <label for="passwordConfirm" className={styles.signupText}>
+                    <label htmlFor="passwordConfirm" className={styles.signupText}>
                         비밀번호 확인
                     </label>
                     <input
