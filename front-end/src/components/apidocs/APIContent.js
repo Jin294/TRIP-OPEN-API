@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./APIContent.module.css";
 import basicHttp from "../../api/basicHttp";
+//
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 const APIContent = (props) => {
   const [api_docs_id, setApiId] = useState("");
@@ -12,6 +15,7 @@ const APIContent = (props) => {
 
   useEffect(() => {
     setApiId(props.data);
+    console.log(props.data);
   }, [props]);
 
   useEffect(() => {
@@ -26,8 +30,8 @@ const APIContent = (props) => {
 
         if (responseData.data) {
           setApiContent(responseData.data);
-          setApiData(responseData.data.api_data);
-          console.log(responseData.data.api_data);
+          setApiData(responseData.data.variable_info);
+          console.log(responseData.data.variable_info);
         }
       } catch (error) {
         console.log("Error fetching API data", error);
@@ -39,12 +43,23 @@ const APIContent = (props) => {
     }
   }, [api_docs_id]);
 
-  const isRequestTrueData = apiData.filter(
-    (dataItem) => dataItem.is_request === true
-  );
-  const isRequestFalseData = apiData.filter(
-    (dataItem) => dataItem.is_request === false
-  );
+  const isRequestTrueData = [];
+  const isRequestFalseData = [];
+
+  apiData.forEach((item) => {
+    if (item.is_request) {
+      isRequestTrueData.push(item);
+    } else {
+      isRequestFalseData.push(item);
+    }
+  });
+
+  // const isRequestTrueData = apiData.filter(
+  //   (dataItem) => dataItem.is_request === true
+  // );
+  // const isRequestFalseData = apiData.filter(
+  //   (dataItem) => dataItem.is_request === false
+  // );
 
   return (
     <div className={styles.contentBody}>
@@ -70,14 +85,16 @@ const APIContent = (props) => {
             </tr>
             <tr>
               <td>응답 예시</td>
-              <td>{apiContent.returnType}</td>
+              <td>{apiContent.return_type}</td>
             </tr>
           </tbody>
         </table>
 
         <p>응답 예시</p>
         <pre id="json" className={styles.code}>
-          {apiContent.returnExample}
+          <SyntaxHighlighter language="json" style={atomOneDark}>
+            {apiContent.return_example}
+          </SyntaxHighlighter>
         </pre>
 
         {isRequestTrueData.length > 0 && <h4>요청 메세지 명세</h4>}
@@ -102,8 +119,8 @@ const APIContent = (props) => {
                     </td>
                   )}
                   <td>{dataItem.title}</td>
-                  <td>{dataItem.isEssential ? " Y " : " N "}</td>
-                  <td>{dataItem.isParameter ? " Y " : " N "}</td>
+                  <td>{dataItem.is_essential ? " Y " : " N "}</td>
+                  <td>{dataItem.is_parameter ? " Y " : " N "}</td>
                   <td>{dataItem.type}</td>
                   <td>{dataItem.detail}</td>
                 </tr>
