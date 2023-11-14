@@ -38,7 +38,6 @@ const Login = () => {
 
         try {
             const res = await basicHttp.post(`/docs/service/login`, userData);
-            console.log('res = ' + res);
             console.log(res.data);
             console.log('로그인 성공');
             localStorage.setItem('access-token', res.data.data['access_token']);
