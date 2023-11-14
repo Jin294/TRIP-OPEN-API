@@ -28,9 +28,17 @@ const NavBar = () => {
     navigate("/");
   };
 
-  const onClick = () => {
+  const onClickMypage = () => {
     navigate("/mypage");
   };
+
+  const onClickLogin = () => {
+    navigate("/login");
+  }
+
+  const onClickSignup = () => {
+    navigate("/signup");
+  }
   return (
     <div className="NavBar">
       {!hideNavBar && (
@@ -43,28 +51,28 @@ const NavBar = () => {
             <Link className={styles.navMenu} to="/">
               Home
             </Link>
-            <Link className={styles.navMenu} to="/apidock/financialdata">
+            <Link className={styles.navMenu} to="/apidocs/financialdata">
               API문서
             </Link>
           </div>
           {/* 로그인 상태에 따라 Login 또는 Mypage로 링크 변경 */}
-          {userInfo !== null ? (
+          {userInfo === null || JSON.stringify(userInfo).length === 2 ? (
             <div className={styles.navRight}>
-              <button className={styles.navMenu} onclick={onClick}>
-                마이페이지
-              </button>
-              <button className={styles.navMenu} onClick={onClickLogout}>
-                로그아웃
-              </button>
-            </div>
+            <button className={styles.navBtn} onClick={onClickLogin}>
+              로그인
+            </button>
+            <button className={styles.navBtn} onClick={onClickSignup}>
+              회원가입
+            </button>
+          </div>
           ) : (
             <div className={styles.navRight}>
-              <Link className={styles.navMenu} to="/login">
-                로그인
-              </Link>
-              <Link className={styles.navMenu} to="/signup">
-                회원가입
-              </Link>
+              <button className={styles.navBtn} onClick={onClickMypage}>
+                마이페이지
+              </button>
+              <button className={styles.navBtn} onClick={onClickLogout}>
+                로그아웃
+              </button>
             </div>
           )}
         </div>

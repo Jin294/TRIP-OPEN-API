@@ -73,10 +73,10 @@ const ServiceInfo = () => {
 
   const getTabUrls = () => {
     const urls = [
-      "/apidock/financialdata",
-      "/apidock/exchange",
-      "/apidock/investment",
-      "/apidock/consumption",
+      "/apidocs/financialdata",
+      "/apidocs/exchange",
+      "/apidocs/investment",
+      "/apidocs/consumption",
     ];
     setTabUrls(urls);
   };
