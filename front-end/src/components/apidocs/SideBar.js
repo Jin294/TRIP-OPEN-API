@@ -8,7 +8,7 @@ const SideBar = ({ onSetId }) => {
     const { tab } = useParams();
     const [tabsData, setTabsData] = useState([]);
     const [selectedTab, setSelectedTab] = useState('숙소 API');
-    const [selectedSub, setSelectedSub] = useState(3);
+    const [selectedSub, setSelectedSub] = useState(1);
     const setId = (data) => {
         onSetId(data);
     };
@@ -22,9 +22,9 @@ const SideBar = ({ onSetId }) => {
     const handleTabClick = (tab) => {
         setSelectedTab(tab);
 
-        if (tab === '음식점 API') handleSubClick(5);
-        else if (tab === '검색 API') handleSubClick(13);
-        else handleSubClick(3);
+        if (tab === '음식점 API') handleSubClick(3);
+        else if (tab === '검색 API') handleSubClick(5);
+        else handleSubClick(1);
     };
 
     const handleSubClick = (sub) => {
@@ -81,24 +81,18 @@ const SideBar = ({ onSetId }) => {
                             <ul>
                                 {selectedTab === group.title &&
                                     group.subTabs.map((tab) => (
-                                        <li key={tab.api_docs_id}>
+                                        <li key={tab.api_data_id}>
                                             <div
                                                 className={
-                                                    selectedSub === tab.api_docs_id
+                                                    selectedSub === tab.api_data_id
                                                         ? styles.selected
                                                         : styles.noSelected
                                                 }
-                                                onClick={() => handleSubClick(tab.api_docs_id)}
+                                                onClick={() => handleSubClick(tab.api_data_id)}
                                             >
                                                 {tab.title}
                                             </div>
-                                            {/* <NavLink
-                   to={`/apidocs/${tab.api_docs_id}`}
-                   className={selectedSub==tab.api_docs_id? styles.selected: styles.noSelected} 
-                   onClick={() => handleSubClick(tab.api_docs_id)}
-                    >
-                    {tab.title}
-                    </NavLink> */}
+                    
                                         </li>
                                     ))}
                             </ul>

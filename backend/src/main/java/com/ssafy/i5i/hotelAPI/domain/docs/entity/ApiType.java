@@ -4,6 +4,7 @@ import com.ssafy.i5i.hotelAPI.domain.docs.dto.TypeResponseDto;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -11,15 +12,19 @@ import javax.persistence.*;
 public class ApiType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "apt_type_id")
-    private Long id;
+    @Column(name = "api_type_id")
+    private Long apiTypeId;
 
+    @Column(name="title", length = 300)
     private String title;
 
     @Column(length = 1000)
     private String detail;
 
+    @OneToMany(mappedBy = "apiType", fetch = FetchType.LAZY)
+    private List<ApiData> apiData;
+
     public TypeResponseDto toDto(){
-        return new TypeResponseDto(id, title, detail);
+        return new TypeResponseDto(apiTypeId, title, detail);
     }
 }
