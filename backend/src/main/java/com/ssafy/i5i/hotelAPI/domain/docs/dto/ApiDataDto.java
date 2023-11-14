@@ -20,6 +20,7 @@ public class ApiDataDto {
     public static class ApiDataList {
         private Long api_data_id;
         private String title;
+        private String name;
         private String content;
         private String method;
         private String return_type;

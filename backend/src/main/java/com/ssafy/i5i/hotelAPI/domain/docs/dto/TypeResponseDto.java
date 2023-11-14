@@ -11,4 +11,5 @@ public class TypeResponseDto {
     private Long id;
     private String title;
     private String detail;
+    private String name;
 }

@@ -33,6 +33,7 @@ public class ApiData {
     @Column(length = 10)
     private String method;
 
+    private String name;
     @Column(name="return_type", length = 100)
     private String returnType;
 

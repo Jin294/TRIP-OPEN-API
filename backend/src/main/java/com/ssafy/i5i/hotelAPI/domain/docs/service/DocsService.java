@@ -57,6 +57,7 @@ public class DocsService {
                             .api_data_id(api.getApiDataId())
                             .title(api.getTitle())
                             .content(api.getContent())
+                            .name(api.getName())
                             .method(api.getMethod())
                             .return_type(api.getReturnType())
                             .content_type(api.getContentType())
