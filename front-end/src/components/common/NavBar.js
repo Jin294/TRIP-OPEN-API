@@ -28,9 +28,17 @@ const NavBar = () => {
     navigate("/");
   };
 
-  const onClick = () => {
+  const onClickMypage = () => {
     navigate("/mypage");
   };
+
+  const onClickLogin = () => {
+    navigate("/login");
+  }
+
+  const onClickSignup = () => {
+    navigate("/signup");
+  }
   return (
     <div className="NavBar">
       {!hideNavBar && (
@@ -48,21 +56,21 @@ const NavBar = () => {
             </Link>
           </div>
           {/* 로그인 상태에 따라 Login 또는 Mypage로 링크 변경 */}
-          {userInfo === null || Object.keys(userInfo).length === 0 ? (
+          {userInfo === null || JSON.stringify(userInfo).length === 2 ? (
             <div className={styles.navRight}>
-            <Link className={styles.navMenu} to="/login">
+            <button className={styles.navBtn} onclick={onClickLogin} to="/login">
               로그인
-            </Link>
-            <Link className={styles.navMenu} to="/signup">
+            </button>
+            <button className={styles.navBtn} onclick={onClickSignup} to="/signup">
               회원가입
-            </Link>
+            </button>
           </div>
           ) : (
             <div className={styles.navRight}>
-              <button className={styles.navMenu} onclick={onClick}>
+              <button className={styles.navBtn} onclick={onClickMypage}>
                 마이페이지
               </button>
-              <button className={styles.navMenu} onClick={onClickLogout}>
+              <button className={styles.navBtn} onClick={onClickLogout}>
                 로그아웃
               </button>
             </div>
