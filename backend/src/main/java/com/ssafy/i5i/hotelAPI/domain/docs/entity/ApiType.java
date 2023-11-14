@@ -21,10 +21,12 @@ public class ApiType {
     @Column(length = 1000)
     private String detail;
 
+    private String name;
+
     @OneToMany(mappedBy = "apiType", fetch = FetchType.LAZY)
     private List<ApiData> apiData;
 
     public TypeResponseDto toDto(){
-        return new TypeResponseDto(apiTypeId, title, detail);
+        return new TypeResponseDto(apiTypeId, title, detail, name);
     }
 }
