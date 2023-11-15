@@ -12,6 +12,7 @@ const Signup = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isCodeShow, setIsCodeShow] = useState(false);
   const [isBtn, setIsBtn] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const MINUTES_IN_MS = 5 * 60 * 1000;
   const INTERVAL = 1000;
@@ -63,6 +64,11 @@ const Signup = () => {
         setIsCodeShow(true);
         setIsBtn(true);
         setTimeLeft(MINUTES_IN_MS);
+        setIsButtonDisabled(true);
+
+        setTimeout(() => {
+          setIsButtonDisabled(false);
+        }, 15000);// 15초 후에 버튼 활성화
       } catch (error) {
         console.log(error);
       }
@@ -147,7 +153,11 @@ const Signup = () => {
               className={styles.signupInput}
               placeholder="아이디(이메일)를 입력해주세요"
             />
-            <button className={styles.checkBtn} onClick={checkEmailAuthor}>
+            <button
+            className={isButtonDisabled ? styles.disabledButton : styles.checkBtn}
+              onClick={checkEmailAuthor}
+              disabled={isButtonDisabled}
+            >
               인증요청
             </button>
           </div>
