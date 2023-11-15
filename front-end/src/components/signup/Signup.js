@@ -13,7 +13,7 @@ const Signup = () => {
   const [isCodeShow, setIsCodeShow] = useState(false);
   const [isBtn, setIsBtn] = useState(false);
 
-  const MINUTES_IN_MS = 1 * 60 * 1000;
+  const MINUTES_IN_MS = 5 * 60 * 1000;
   const INTERVAL = 1000;
   const [timeLeft, setTimeLeft] = useState(MINUTES_IN_MS);
 
@@ -31,12 +31,12 @@ const Signup = () => {
 
       if (timeLeft <= 0) {
         clearInterval(timer);
+        setIsBtn(false);
         console.log("타이머가 종료되었습니다.");
       }
 
       return () => {
         clearInterval(timer);
-        setIsBtn(false);
       };
     }
   }, [timeLeft, isCodeShow, isBtn]);
@@ -62,6 +62,7 @@ const Signup = () => {
         alert("해당 이메일로 인증번호를 보냈습니다!");
         setIsCodeShow(true);
         setIsBtn(true);
+        setTimeLeft(MINUTES_IN_MS);
       } catch (error) {
         console.log(error);
       }
@@ -82,7 +83,11 @@ const Signup = () => {
       alert("이메일 인증이 완료되었습니다!");
     } catch (error) {
       console.error("인증 실패:", error);
-      alert("인증번호가 올바르지 않습니다.");
+      if (error.data.code === "9004") {
+        alert("인증코드 시간이 초과되었습니다. ");
+      } else {
+        alert("인증번호가 올바르지 않습니다.");
+      }
     }
   }
 
@@ -153,6 +158,7 @@ const Signup = () => {
           </label>
           <div className={styles.signupInnerBox}>
             <input
+              style={{ margin: "0px" }}
               type="text"
               id="authCode"
               value={authCode}
@@ -164,14 +170,8 @@ const Signup = () => {
               본인인증
             </button>
           </div>
-          <p className={styles.authTimer}>
-            {isCodeShow ? (
-              <>
-                {minutes}:{seconds}
-              </>
-            ) : (
-              ""
-            )}
+          <p className={isCodeShow ? styles.authTimerY : styles.authTimerN}>
+            {minutes}:{seconds}
           </p>
         </div>
         <div className={styles.signupBox}>
