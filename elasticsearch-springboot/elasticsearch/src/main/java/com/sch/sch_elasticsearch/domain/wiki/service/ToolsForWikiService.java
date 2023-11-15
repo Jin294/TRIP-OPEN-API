@@ -77,15 +77,12 @@ public class ToolsForWikiService {
                 type = "wiki_title.keyword";
                 break;
             case 2:
-                type = "content_id";
-                break;
-            case 3:
                 type = "attraction_name";
                 break;
-            case 4:
+            case 3:
                 type = "wiki_content";
                 break;
-            case 5:
+            case 4:
                 type = "overview";
                 break;
             default:

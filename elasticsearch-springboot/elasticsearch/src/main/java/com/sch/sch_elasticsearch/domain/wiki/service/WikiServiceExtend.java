@@ -1,5 +1,6 @@
 package com.sch.sch_elasticsearch.domain.wiki.service;
 
+import com.sch.sch_elasticsearch.domain.shared_query.ToolsForQuery;
 import com.sch.sch_elasticsearch.domain.wiki.dto.ResponseWikiDto;
 import com.sch.sch_elasticsearch.domain.wiki.dto.SearchAllDTO;
 import com.sch.sch_elasticsearch.domain.wiki.dto.TermDTO;
@@ -45,7 +46,7 @@ import java.util.stream.Collectors;
 public class WikiServiceExtend {
     private final ElasticsearchRestTemplate elasticsearchRestTemplate;
     private final ToolsForWikiService toolsForWikiService;
-
+    private final ToolsForQuery toolsForQuery;
 
     /**
      * Attraction_name과 Wiki_Title이 입력 검색어와 같은 쿼리 반환
@@ -101,20 +102,7 @@ public class WikiServiceExtend {
     public List<ResponseWikiDto> fuzzinessSearch(int typeNum, String inputString, boolean reliable, int maxResults, int fuzziness) {
         try {
             String type = toolsForWikiService.getType(typeNum);
-            Fuzziness fuzzinessLevel;
-            if (fuzziness > 0) {
-                fuzzinessLevel = Fuzziness.build(fuzziness);
-            } else {
-                fuzzinessLevel = Fuzziness.AUTO;
-            }
-
-            QueryBuilder fuzzyBuilder = new FuzzyQueryBuilder(type, inputString)
-                    .fuzziness(fuzzinessLevel);
-            //NativeQuery 생성
-            NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
-                    .withQuery(fuzzyBuilder)
-                    .withPageable(PageRequest.of(0, maxResults)) // 결과 개수 제한
-                    .build();
+            NativeSearchQuery searchQuery = toolsForQuery.fuzzyQuery(type, inputString, fuzziness, maxResults);
 
             // Elasticsearch에서 쿼리 실행 후 결과값 가져오기
             SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);

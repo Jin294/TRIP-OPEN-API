@@ -5,10 +5,7 @@ import com.sch.sch_elasticsearch.domain.restaurant.service.RestaurantServiceBasi
 import com.sch.sch_elasticsearch.domain.restaurant.service.RestaurantServiceExtend;
 import com.sch.sch_elasticsearch.domain.wiki.dto.ResponseWikiDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,12 +32,20 @@ public class RestaurantController {
         return restaurantServiceBasic.searchPartial(typeNum, inputString, maxResults);
     }
 
-    //특정 필트의 Fuzzy 쿼리 조회
+    //특정 필드의 Fuzzy 쿼리 조회
     @GetMapping("/fuzzy")
-    public List<ResponseWikiDto> searchFuzzy(@RequestParam("typeNum") int typeNum,
+    public List<ResponseRestaurantDto> searchFuzzy(@RequestParam("typeNum") int typeNum,
                                              @RequestParam("inputString") String inputString,
                                              @RequestParam("maxResults") int maxResults,
                                              @RequestParam("fuzziness") int fuzziness) {
         return restaurantServiceExtend.fuzzinessSearch(typeNum, inputString, maxResults, fuzziness);
     }
+
+//    //통합 내용 검색(전문 검색)
+//    @PostMapping("/search")
+//    public List<ResponseRestaurantDto> searchAll() {
+//        return restaurantServiceExtend.searchAll();
+//    }
+
+
 }
