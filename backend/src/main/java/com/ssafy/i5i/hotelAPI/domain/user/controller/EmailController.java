@@ -18,5 +18,5 @@ public class EmailController {
         return new CommonResponse(200, "success");
     }
 
-    @GetMapping("")
+//    @GetMapping("auth")
 }

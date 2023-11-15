@@ -41,7 +41,15 @@ public class EmailService {
             emailRepository.setCode(verifiedCode, checkEmail.get().getEmailId());
             emailRepository.setCreatedTime(LocalDateTime.now(), checkEmail.get().getEmailId());
         }
+        sendMail(email, verifiedCode);
+    }
 
+    @Transactional
+    public void checkMail(String email, Long checkCode) {
+
+    }
+
+    private void sendMail(String email, long verifiedCode) {
         MimeMessageHelper messageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage(), "UTF-8");
         try {
             messageHelper.setTo(email);
@@ -69,6 +77,5 @@ public class EmailService {
             e.printStackTrace();
             throw new CommonException(ExceptionType.EMAIL_SEND_FAIL);
         }
-
     }
 }
