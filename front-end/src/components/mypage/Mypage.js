@@ -63,7 +63,7 @@ const Mypage = () => {
     return (
         <div className={styles.mypageBody}>
             <div className={styles.mypageContainer}>
-                <div className={styles.logoText}>마이페이지</div>
+                <div className={styles.logoText}>내 API 토큰</div>
                 <div className={styles.textBox}>
                     {apiToken}
                     <img alt="" src={copyImg} onClick={() => handleCopyClipBoardToken({ apiToken })} />
