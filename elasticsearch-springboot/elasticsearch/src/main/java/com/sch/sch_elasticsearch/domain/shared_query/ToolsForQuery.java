@@ -15,6 +15,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ToolsForQuery {
 
+    /**
+     * match 쿼리 생성
+     * @param fieldType
+     * @param inputString
+     * @param maxResults
+     * @return
+     */
     public NativeSearchQuery matchQuery(String fieldType, String inputString, int maxResults) {
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(QueryBuilders.matchQuery(fieldType, inputString))

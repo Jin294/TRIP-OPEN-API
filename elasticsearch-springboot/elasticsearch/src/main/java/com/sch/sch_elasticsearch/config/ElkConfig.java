@@ -54,7 +54,6 @@ public class ElkConfig extends AbstractElasticsearchConfiguration {
     }
 
     @Bean(name = "ElasticsearchTemplateBean")
-    @Primary
     public ElasticsearchRestTemplate elasticsearchRestTemplate() {
         return new ElasticsearchRestTemplate(elasticsearchClient());
     }
