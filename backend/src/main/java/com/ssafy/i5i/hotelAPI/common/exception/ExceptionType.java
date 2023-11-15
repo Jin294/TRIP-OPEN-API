@@ -27,7 +27,10 @@ public enum ExceptionType {
     //7000번 api docs 데이터 에러
     DATA_INVALID_EXCEPTION(7001, "api docs 정보가 없습니다."),
     VARIABLE_INVALID_EXCEPTION(7002, "api 변수 정보가 없습니다."),
-    TYPE_INVALID_EXCEPTION(7003, "type에 맞는 api data 정보가 없습니다")
+    TYPE_INVALID_EXCEPTION(7003, "type에 맞는 api data 정보가 없습니다"),
+
+    //8000번 웹 클라이언트 에러
+    WEBCLIENT_INVALID_EXCEPTION(8001, "WebClient 데이터 손실이 있습니다")
     ;
 
     private final int code;
