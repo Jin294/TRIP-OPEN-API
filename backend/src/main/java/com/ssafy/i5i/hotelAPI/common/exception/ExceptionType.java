@@ -27,7 +27,11 @@ public enum ExceptionType {
     //7000번 api docs 데이터 에러
     DATA_INVALID_EXCEPTION(7001, "api docs 정보가 없습니다."),
     VARIABLE_INVALID_EXCEPTION(7002, "api 변수 정보가 없습니다."),
-    TYPE_INVALID_EXCEPTION(7003, "type에 맞는 api data 정보가 없습니다")
+    TYPE_INVALID_EXCEPTION(7003, "type에 맞는 api data 정보가 없습니다"),
+
+    //8000번 email 에러
+    EMAIL_EXIST_EXCEPTION(8000, "이미 회원가입된 이메일입니다"),
+    EMAIL_SEND_FAIL(8001, "이메일 전송에 실패하였습니다")
     ;
 
     private final int code;
