@@ -1,5 +1,6 @@
 package com.sch.sch_elasticsearch.domain.wiki.service;
 
+import com.sch.sch_elasticsearch.domain.wiki.dto.ResponseWikiDto;
 import com.sch.sch_elasticsearch.domain.wiki.entity.Wiki;
 import com.sch.sch_elasticsearch.exception.CommonException;
 import com.sch.sch_elasticsearch.exception.ExceptionType;
@@ -37,7 +38,7 @@ public class WikiServiceTitle {
      * @param reliable
      * @return
      */
-    public Wiki searchTitleCorrect(String title, boolean reliable) {
+    public ResponseWikiDto searchTitleCorrect(String title, boolean reliable) {
         try {
             QueryBuilder queryBuilder = new MatchQueryBuilder("attraction_name.keyword", title);
             NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
@@ -47,7 +48,7 @@ public class WikiServiceTitle {
             SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
             List<Wiki> result = toolsForWikiService.getListBySearchHits(searchHits, reliable);
             if(result.size() == 0) return null;
-            return result.get(0);
+            return result.get(0).toDto();
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
             throw new CommonException(ExceptionType.SEARCH_TITLE_CORRECT_FAIL);
@@ -89,6 +90,37 @@ public class WikiServiceTitle {
         }
     }
 
+
+    public List<ResponseWikiDto> searchTitleUseFuzzyDto(String title, int maxResults, int fuzziness, boolean reliable) {
+        try {
+            // fuzziness 설정
+            Fuzziness fuzzinessLevel;
+            if (fuzziness > 0) {
+                fuzzinessLevel = Fuzziness.build(fuzziness);
+            } else {
+                fuzzinessLevel = Fuzziness.AUTO;
+            }
+
+            NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
+                    .withQuery(
+                            new FuzzyQueryBuilder("attraction_name.keyword", title)
+                                    .fuzziness(fuzzinessLevel)
+                    )
+                    .withPageable(PageRequest.of(0, maxResults)) // 결과 개수 제한
+                    .withCollapseField("content_id")
+                    .build();
+
+            SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
+            return toolsForWikiService.getListBySearchHits(searchHits, reliable)
+                    .stream()
+                    .map(wiki -> wiki.toDto())
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            log.error("[ERR LOG]{}", e);
+            throw new CommonException(ExceptionType.ATTRACTION_NAME_FUZZYSEARCH_FAIL);
+        }
+    }
+
     /** Ngram 방식을 사용한 제목 유사도 검색
      *
      * @param title
@@ -96,6 +128,28 @@ public class WikiServiceTitle {
      * @param reliable
      * @return
      */
+    public List<ResponseWikiDto> searchTitleUseNgramDto(String title, int maxResults, boolean reliable) {
+        try {
+            QueryBuilder queryBuilder = new QueryStringQueryBuilder(title)
+                    .defaultField("attraction_name")
+                    .analyzer(ngramAnalyzer);
+            NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
+                    .withQuery(queryBuilder)
+                    .withPageable(PageRequest.of(0, maxResults)) // 결과 개수 제한
+                    .withCollapseField("content_id")
+                    .build();
+
+            SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
+            return toolsForWikiService.getListBySearchHits(searchHits, reliable)
+                    .stream()
+                    .map(wiki -> wiki.toDto())
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            log.error("[ERR LOG]{}", e.getMessage());
+            throw new CommonException(ExceptionType.ATTRACTION_NAME_NGRAMSEARCH_FAIL);
+        }
+    }
+
     public List<Wiki> searchTitleUseNgram(String title, int maxResults, boolean reliable) {
         try {
             QueryBuilder queryBuilder = new QueryStringQueryBuilder(title)
@@ -123,7 +177,7 @@ public class WikiServiceTitle {
      * @param reliable
      * @return
      */
-    public List<Wiki> searchFuzzyAndNgram(String title, int maxResults, int fuzziness, boolean reliable) {
+    public List<ResponseWikiDto> searchFuzzyAndNgram(String title, int maxResults, int fuzziness, boolean reliable) {
         try {
             List<Wiki> fuzzyList = searchTitleUseFuzzy(title, maxResults, fuzziness, reliable);
             List<Wiki> ngramList = searchTitleUseNgram(title, maxResults, reliable);
@@ -174,6 +228,7 @@ public class WikiServiceTitle {
             return resultAttractionName.stream()
                     .flatMap(name -> searchResult.stream()
                             .filter(wiki -> wiki.getAttractionName().equals(name)))
+                    .map(wiki -> wiki.toDto())
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());

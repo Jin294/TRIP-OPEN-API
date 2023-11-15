@@ -1,5 +1,6 @@
 package com.sch.sch_elasticsearch.domain.wiki.controller;
 
+import com.sch.sch_elasticsearch.domain.wiki.dto.ResponseWikiDto;
 import com.sch.sch_elasticsearch.domain.wiki.dto.SearchAllDTO;
 import com.sch.sch_elasticsearch.domain.wiki.entity.Wiki;
 import com.sch.sch_elasticsearch.domain.wiki.service.WikiServiceBasic;
@@ -23,18 +24,18 @@ public class WikiController {
     private final WikiServiceExtend wikiServiceExtend;
     private final WikiServiceTitle wikiServiceTitle;
 
-    //특정 컬럼의 Keyword 매칭 검색
+    //특정 컬럼의 Keyword 매칭 검색 ->
     @GetMapping("/keyword")
-    public List<Wiki> searchExact(@RequestParam("typeNum") int typeNum,
-                                  @RequestParam("inputString") String inputString,
-                                  @RequestParam("reliable") boolean reliable,
-                                  @RequestParam("maxResults") int maxResults) {
+    public List<ResponseWikiDto> searchExact(@RequestParam("typeNum") int typeNum,
+                                             @RequestParam("inputString") String inputString,
+                                             @RequestParam("reliable") boolean reliable,
+                                             @RequestParam("maxResults") int maxResults) {
         return wikiServiceBasic.searchExact(typeNum, inputString, reliable, maxResults);
     }
 
     //특정 컬럼의 match 검색
     @GetMapping("/partial")
-    public List<Wiki> searchPartial(@RequestParam("typeNum") int typeNum,
+    public List<ResponseWikiDto> searchPartial(@RequestParam("typeNum") int typeNum,
                                     @RequestParam("inputString") String inputString,
                                     @RequestParam("reliable") boolean reliable,
                                     @RequestParam("maxResults") int maxResults) {
@@ -43,26 +44,26 @@ public class WikiController {
 
     //특정 칼럼의 fuzzy 검색
     @GetMapping("/fuzzy")
-    public List<Wiki> searchFuzzy(@RequestParam("typeNum") int typeNum, @RequestParam("inputString") String inputString,
+    public List<ResponseWikiDto> searchFuzzy(@RequestParam("typeNum") int typeNum, @RequestParam("inputString") String inputString,
                                   @RequestParam("reliable") boolean reliable, @RequestParam("maxResults") int maxResults ,@RequestParam("fuzziness") int fuzziness) {
         return wikiServiceExtend.fuzzinessSearch(typeNum, inputString, reliable, maxResults, fuzziness);
     }
 
     //통합 내용 검색(전문 검색)
     @PostMapping("/search")
-    public List<Wiki> searchAll(@RequestBody SearchAllDTO searchAllDTO) {
+    public List<ResponseWikiDto> searchAll(@RequestBody SearchAllDTO searchAllDTO) {
         return wikiServiceExtend.searchAll(searchAllDTO);
     }
 
     //통합 제목 검색 : 제목 일치 or (Fuzzy + ngram)
     @GetMapping("/title/aggregate-search")
-    public List<Wiki> searchTitleComprehensive(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
+    public List<ResponseWikiDto> searchTitleComprehensive(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                          @RequestParam("fuzziness") int fuzziness, @RequestParam("reliable") boolean reliable)
     {
         try {
-            Wiki wiki = wikiServiceTitle.searchTitleCorrect(title, reliable);
+            ResponseWikiDto wiki = wikiServiceTitle.searchTitleCorrect(title, reliable);
             if (wiki != null) {
-                List<Wiki> wikiList = new ArrayList<>();
+                List<ResponseWikiDto> wikiList = new ArrayList<>();
                 wikiList.add(wiki);
                 return wikiList;
             } //1. 일치 제목 검색이 있다면 이를 리스트에 추가 후 리턴
@@ -75,22 +76,22 @@ public class WikiController {
 
     //제목 일치 여부 검색
     @GetMapping("/title/correct")
-    public Wiki searchTitleCorrect(@RequestParam("title") String title, @RequestParam("reliable") boolean reliable) {
+    public ResponseWikiDto searchTitleCorrect(@RequestParam("title") String title, @RequestParam("reliable") boolean reliable) {
         return wikiServiceTitle.searchTitleCorrect(title, reliable);
     }
 
     //Fuzzy 제목 검색
     @GetMapping("/title/fuzzy")
-    public List<Wiki> searchTitleFuzzy(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
+    public List<ResponseWikiDto> searchTitleFuzzy(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                        @RequestParam("fuzziness") int fuzziness, @RequestParam("reliable") boolean reliable)
     {
-        return wikiServiceTitle.searchTitleUseFuzzy(title, maxResults, fuzziness, reliable);
+        return wikiServiceTitle.searchTitleUseFuzzyDto(title, maxResults, fuzziness, reliable);
     }
     //ngram 제목 검색
     @GetMapping("/title/ngram")
-    public List<Wiki> searchTitleNgram(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
+    public List<ResponseWikiDto> searchTitleNgram(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                        @RequestParam("reliable") boolean reliable)
     {
-        return wikiServiceTitle.searchTitleUseNgram(title, maxResults, reliable);
+        return wikiServiceTitle.searchTitleUseNgramDto(title, maxResults, reliable);
     }
 }

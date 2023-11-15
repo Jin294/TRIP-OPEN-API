@@ -1,5 +1,6 @@
 package com.sch.sch_elasticsearch.domain.wiki.service;
 
+import com.sch.sch_elasticsearch.domain.wiki.dto.ResponseWikiDto;
 import com.sch.sch_elasticsearch.domain.wiki.dto.SearchAllDTO;
 import com.sch.sch_elasticsearch.domain.wiki.dto.TermDTO;
 import com.sch.sch_elasticsearch.domain.wiki.entity.Wiki;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.stream.Collectors;
 
 
 /**
@@ -90,7 +91,7 @@ public class WikiServiceExtend {
      * @param fuzziness
      * @return List<Wiki>
      */
-    public List<Wiki> fuzzinessSearch(int typeNum, String inputString, boolean useReliableSearch, int maxResults, int fuzziness) {
+    public List<ResponseWikiDto> fuzzinessSearch(int typeNum, String inputString, boolean useReliableSearch, int maxResults, int fuzziness) {
         String type = toolsForWikiService.getType(typeNum);
         Fuzziness fuzzinessLevel;
         if (fuzziness > 0) {
@@ -109,7 +110,10 @@ public class WikiServiceExtend {
 
         // Elasticsearch에서 쿼리 실행 후 결과값 가져오기
         SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
-        return toolsForWikiService.getListBySearchHits(searchHits, useReliableSearch);
+        return toolsForWikiService.getListBySearchHits(searchHits, useReliableSearch)
+                .stream()
+                .map(wiki -> wiki.toDto())
+                .collect(Collectors.toList());
     }
 
     /**
@@ -118,7 +122,7 @@ public class WikiServiceExtend {
      * @param searchAllDTO
      * @return List<Wiki>
      */
-    public List<Wiki> searchAll(SearchAllDTO searchAllDTO) {
+    public List<ResponseWikiDto> searchAll(SearchAllDTO searchAllDTO) {
         try {
             QueryBuilder multiyMatchQuery = new MultiMatchQueryBuilder(
                     searchAllDTO.getSearchContent(), // 검색어
@@ -137,7 +141,11 @@ public class WikiServiceExtend {
 
             // Elasticsearch에서 쿼리 실행 후 결과값 가져오기
             SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
-            return toolsForWikiService.getListBySearchHits(searchHits, searchAllDTO.isUseReliableSearch());
+            return toolsForWikiService.getListBySearchHits(searchHits, searchAllDTO.isUseReliableSearch())
+                    .stream()
+                    .map(wiki -> wiki.toDto())
+                    .collect(Collectors.toList());
+
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
             throw new CommonException(ExceptionType.CALCULATE_SIMILARY_TERMS);

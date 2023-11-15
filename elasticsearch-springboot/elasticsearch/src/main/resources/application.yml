@@ -1,6 +1,6 @@
 spring:
   elasticsearch:
-#    uris: "https://k9b205a.p.ssafy.io:443"
+    uris: "https://k9b205a.p.ssafy.io:443"
     username: "csg1353"
     password: "51@tlrlckd"
     connection-timeout: 5s
