@@ -13,6 +13,7 @@ public enum ExceptionType {
     USER_WRONGPASSWORD_EXCEPTION(3000,"비밀번호가 틀렸습니다."),
     USER_INVALID_EXCEPTION(3001, "유저 정보가 없습니다"),
     USER_DUPLICATE_EXCEPTION(3002, "유저가 정보가 있습니다."),
+    USER_EMAIL_UNAUTHORIZED(3003, "이메일 인증이 되지 않은 유저입니다"),
     //4000번은 jwt 와 관련된 에러
     JWT_TOKEN_EXPIRED(4000, "토큰이 만료되었습니다."),
     JWT_PARSER_FAILED(4001, "토큰 파싱에 실패했습니다."),
@@ -27,7 +28,14 @@ public enum ExceptionType {
     //7000번 api docs 데이터 에러
     DATA_INVALID_EXCEPTION(7001, "api docs 정보가 없습니다."),
     VARIABLE_INVALID_EXCEPTION(7002, "api 변수 정보가 없습니다."),
-    TYPE_INVALID_EXCEPTION(7003, "type에 맞는 api data 정보가 없습니다")
+    TYPE_INVALID_EXCEPTION(7003, "type에 맞는 api data 정보가 없습니다"),
+
+    //8000번 email 에러
+    EMAIL_EXIST_EXCEPTION(8000, "이미 회원가입된 이메일입니다"),
+    EMAIL_SEND_FAIL(8001, "이메일 전송에 실패하였습니다"),
+    EMAIL_INVALID_EXCEPTION(8002, "등록된 이메일이 없습니다."),
+    CODE_INVALID_EXCEPTION(8003, "코드 번호가 틀렸습니다"),
+    CODE_TIME_FAIL(8004, "코드 시간이 초과되었습니다. 다시 이메일 인증을 해주세요")
     ;
 
     private final int code;
