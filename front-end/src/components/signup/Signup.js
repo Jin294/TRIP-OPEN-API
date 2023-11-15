@@ -11,6 +11,7 @@ const Signup = () => {
   const [authCode, setAuthCode] = useState("");
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isCodeShow, setIsCodeShow] = useState(false);
+  const [isBtn, setIsBtn] = useState(false);
 
   const MINUTES_IN_MS = 1 * 60 * 1000;
   const INTERVAL = 1000;
@@ -23,19 +24,22 @@ const Signup = () => {
   const seconds = String(Math.floor((timeLeft / 1000) % 60)).padStart(2, "0");
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prevTime) => prevTime - INTERVAL);
-    }, INTERVAL);
+    if (isBtn) {
+      const timer = setInterval(() => {
+        setTimeLeft((prevTime) => prevTime - INTERVAL);
+      }, INTERVAL);
 
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      console.log("타이머가 종료되었습니다.");
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        console.log("타이머가 종료되었습니다.");
+      }
+
+      return () => {
+        clearInterval(timer);
+        setIsBtn(false);
+      };
     }
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, [timeLeft, isCodeShow]);
+  }, [timeLeft, isCodeShow, isBtn]);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -57,6 +61,7 @@ const Signup = () => {
         console.log(res);
         alert("해당 이메일로 인증번호를 보냈습니다!");
         setIsCodeShow(true);
+        setIsBtn(true);
       } catch (error) {
         console.log(error);
       }
@@ -105,6 +110,7 @@ const Signup = () => {
     const userData = {
       id: email,
       password: password,
+      code: authCode,
     };
 
     try {
@@ -158,7 +164,7 @@ const Signup = () => {
               본인인증
             </button>
           </div>
-          <p>
+          <p className={styles.authTimer}>
             {isCodeShow ? (
               <>
                 {minutes}:{seconds}
