@@ -75,6 +75,16 @@
   top: 2px;
   position: relative;
 }
+.disabledButton {
+  border: 2px solid #c9e8cf;
+  background-color: white;
+  color: #c9e8cf;
+  border-radius: 10px;
+  width: 30%;
+  height: 32px;
+  margin-left: 2%;
+  font-weight: 700;
+}
 .authTimerY {
   font-size: 0.5em;
   font-weight: 500;
