@@ -139,7 +139,7 @@ const APIContent = (props) => {
                 )}
                 <div>
                     <h3>3. 응답</h3>
-                    <h4>* 쿼리 파라미터</h4>
+                    <h4>* 본문</h4>
                 </div>
                 <table className={styles.apiResponseDataTable}>
                     <thead>
@@ -176,7 +176,6 @@ const APIContent = (props) => {
 
                 <h3>5. 테스트(미리 보기)</h3>
                 <h4>* 요청 변수(Request Parameter)</h4>
-                <h4>쿼리 파라미터</h4>
                 {isRequestTrueData.length > 0 && (
                     <table className={styles.apiRequestDataTable}>
                         <thead>
