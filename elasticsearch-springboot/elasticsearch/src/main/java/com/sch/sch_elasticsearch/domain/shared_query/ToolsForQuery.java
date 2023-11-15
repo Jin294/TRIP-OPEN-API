@@ -3,6 +3,7 @@ package com.sch.sch_elasticsearch.domain.shared_query;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.FuzzyQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
@@ -13,6 +14,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ToolsForQuery {
+
+    public NativeSearchQuery matchQuery(String fieldType, String inputString, int maxResults) {
+        NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(QueryBuilders.matchQuery(fieldType, inputString))
+                .withPageable(PageRequest.of(0, maxResults))
+                .build();
+        return searchQuery;
+    }
 
     /**
      * Fuzzy 네이티브 쿼리 생성
