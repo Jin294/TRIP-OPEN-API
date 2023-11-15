@@ -54,7 +54,7 @@
   /* input 박스가 프레임밖으로 벗어나는걸 막음 */
   box-sizing: border-box;
   background: rgba(220, 220, 220, 0.2);
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .signupInput:focus {
@@ -74,6 +74,10 @@
 .checkBtn:active {
   top: 2px;
   position: relative;
+}
+.authTimer {
+  font-weight: 500;
+  margin: 0px 0px 20px 0px;
 }
 .signupBtn {
   box-sizing: border-box;
