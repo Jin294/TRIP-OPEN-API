@@ -35,7 +35,8 @@ public enum ExceptionType {
     EMAIL_SEND_FAIL(8001, "이메일 전송에 실패하였습니다"),
     EMAIL_INVALID_EXCEPTION(8002, "등록된 이메일이 없습니다."),
     CODE_INVALID_EXCEPTION(8003, "코드 번호가 틀렸습니다"),
-    CODE_TIME_FAIL(8004, "코드 시간이 초과되었습니다. 다시 이메일 인증을 해주세요")
+    CODE_TIME_FAIL(8004, "코드 시간이 초과되었습니다. 다시 이메일 인증을 해주세요"),
+    EMAIL_AUTH_FAIL(8005, "이메일 인증에 실패하였습니다.")
     ;
 
     private final int code;

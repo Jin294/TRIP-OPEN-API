@@ -65,7 +65,7 @@ public class UserService {
             log.error("UserService signUp, userId dupplicate error");
             throw new CommonException(ExceptionType.USER_DUPLICATE_EXCEPTION);
         }
-        if(emailRepository.selectAuthorizedEmail(signUp.getId()).isEmpty()) {
+        if(emailRepository.selectAuthorizedEmailWithCode(signUp.getId(), signUp.getCode()).isEmpty()) {
             throw new CommonException(ExceptionType.USER_EMAIL_UNAUTHORIZED);
         }
         User user = User.builder()

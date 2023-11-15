@@ -3,7 +3,9 @@ package com.ssafy.i5i.hotelAPI.domain.user.service;
 import com.ssafy.i5i.hotelAPI.common.exception.CommonException;
 import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
 import com.ssafy.i5i.hotelAPI.domain.user.entity.Email;
+import com.ssafy.i5i.hotelAPI.domain.user.entity.User;
 import com.ssafy.i5i.hotelAPI.domain.user.repository.EmailRepository;
+import com.ssafy.i5i.hotelAPI.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -21,48 +23,42 @@ import java.util.Optional;
 @Slf4j
 public class EmailService {
     private final JavaMailSender javaMailSender;
+    private final UserRepository userRepository;
     private final EmailRepository emailRepository;
 
     @Transactional
     public void sendEmail(String email) {
-        Optional<Email> authorizedEmail = emailRepository.selectAuthorizedEmail(email);
-        if(authorizedEmail.isPresent()) {
+        if(userRepository.selectAllUserById(email).isPresent()) {
+            log.error("UserService signUp, userId dupplicate error");
             throw new CommonException(ExceptionType.EMAIL_EXIST_EXCEPTION);
         }
 
         long verifiedCode = Math.round(100000 + Math.random() * 899999);
-        Optional<Email> checkEmail = emailRepository.selectUnAuthorizedEmail(email);
-        if(checkEmail.isEmpty()) {
-            Email newEmail = Email.builder()
-                    .email(email)
-                    .createdTime(LocalDateTime.now())
-                    .isAuthorized(false)
-                    .code(verifiedCode)
-                    .build();
-            emailRepository.save(newEmail);
-        }
-        else {
-            emailRepository.setCode(verifiedCode, checkEmail.get().getEmailId());
-            emailRepository.setCreatedTime(LocalDateTime.now(), checkEmail.get().getEmailId());
-        }
+        Email newEmail = Email.builder()
+                .email(email)
+                .createdTime(LocalDateTime.now())
+                .isAuthorized(false)
+                .code(verifiedCode)
+                .build();
+        emailRepository.save(newEmail);
         sendAuthCode(email, verifiedCode);
     }
 
     @Transactional
     public void checkMail(String email, Long checkCode) {
-        Email checkEmail = emailRepository.selectUnAuthorizedEmail(email).orElseThrow(() -> {
-            throw new CommonException(ExceptionType.EMAIL_INVALID_EXCEPTION);
-        });
-        if(checkEmail.getCode().longValue() != checkCode.longValue()) {
-            log.info("EmailService checkMail, checkEmail.getCode() = {}", checkEmail.getCode());
-            log.info("EmailService checkMail, checkCode() = {}", checkCode);
+        Email checkEmail = emailRepository.selectUnAuthorizedEmailWithCode(email, checkCode).orElseThrow(() -> {
             throw new CommonException(ExceptionType.CODE_INVALID_EXCEPTION);
-        }
+        });
         if(ChronoUnit.MINUTES.between(checkEmail.getCreatedTime(), LocalDateTime.now()) > 5) {
             throw new CommonException(ExceptionType.CODE_TIME_FAIL);
         }
-        emailRepository.setAuthorizedTime(LocalDateTime.now(), checkEmail.getEmailId());
-        emailRepository.setAuthorizedStatusTrue(checkEmail.getEmailId());
+        try {
+            emailRepository.setAuthorizedTimeWithCode(LocalDateTime.now(), email, checkCode);
+            emailRepository.setAuthorizedStatusTrueWithCode(email, checkCode);
+        }
+        catch(Exception e) {
+            throw new CommonException(ExceptionType.EMAIL_AUTH_FAIL);
+        }
     }
 
     private void sendAuthCode(String email, long verifiedCode) {
