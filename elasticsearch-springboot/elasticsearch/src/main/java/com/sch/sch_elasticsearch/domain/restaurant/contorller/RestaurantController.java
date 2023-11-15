@@ -13,8 +13,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/restaurant")
 public class RestaurantController {
-    RestaurantServiceExtend restaurantServiceExtend;
-    RestaurantServiceBasic restaurantServiceBasic;
+    private final RestaurantServiceExtend restaurantServiceExtend;
+    private final RestaurantServiceBasic restaurantServiceBasic;
 
     //정확한 음식점명의 결과 조회
     @GetMapping("/exact-restaurant")

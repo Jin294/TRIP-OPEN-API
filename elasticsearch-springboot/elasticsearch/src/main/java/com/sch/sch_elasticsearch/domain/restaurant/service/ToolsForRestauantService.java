@@ -59,7 +59,7 @@ public class ToolsForRestauantService {
      * @param typeNum
      * @return
      */
-    public static String getType(int typeNum) {
+    public String getType(int typeNum) {
         String type = "";
         switch (typeNum) {
             case 0:

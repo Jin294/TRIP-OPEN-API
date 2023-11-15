@@ -35,7 +35,7 @@ public class RestaurantServiceBasic {
      */
     public List<ResponseRestaurantDto> searchExactRestaurantName(String restaurantName, int maxResults) {
         try {
-            String type = ToolsForRestauantService.getType(0);
+            String type = toolsForRestauantService.getType(0);
             NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
                     .withQuery(QueryBuilders.termQuery(type, restaurantName))
                     .withPageable(PageRequest.of(0, maxResults))

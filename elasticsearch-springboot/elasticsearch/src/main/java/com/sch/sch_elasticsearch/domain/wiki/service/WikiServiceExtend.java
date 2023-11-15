@@ -50,7 +50,7 @@ public class WikiServiceExtend {
 
     /**
      * Attraction_name과 Wiki_Title이 입력 검색어와 같은 쿼리 반환
-     * @return List<Wiki>
+     * @return List<ResponseWikiDto>
      */
     public List<ResponseWikiDto> getSameAttNameAndWikiTitle(String inputString, boolean reliable) {
         try {
@@ -97,7 +97,7 @@ public class WikiServiceExtend {
      * @param inputString
      * @param typeNum
      * @param fuzziness
-     * @return List<Wiki>
+     * @return List<ResponseWikiDto>
      */
     public List<ResponseWikiDto> fuzzinessSearch(int typeNum, String inputString, boolean reliable, int maxResults, int fuzziness) {
         try {
@@ -121,7 +121,7 @@ public class WikiServiceExtend {
      * DTO 입력을 토대로 가장 유사도가 높은 내용을 검색하여 반환한다.
      * 입력 파라미터로 검색 문장, 가중치, 반환 개수를 가진다.
      * @param searchAllDTO
-     * @return List<Wiki>
+     * @return List<ResponseWikiDto>
      */
     public List<ResponseWikiDto> searchAll(SearchAllDTO searchAllDTO) {
         try {

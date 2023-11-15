@@ -1,6 +1,8 @@
 package com.sch.sch_elasticsearch.domain.restaurant.service;
 
 import com.sch.sch_elasticsearch.domain.restaurant.dto.ResponseRestaurantDto;
+import com.sch.sch_elasticsearch.domain.restaurant.entity.Restaurant;
+import com.sch.sch_elasticsearch.domain.shared_query.ToolsForQuery;
 import com.sch.sch_elasticsearch.domain.wiki.dto.ResponseWikiDto;
 import com.sch.sch_elasticsearch.domain.wiki.service.ToolsForWikiService;
 import com.sch.sch_elasticsearch.exception.CommonException;
@@ -12,6 +14,7 @@ import org.elasticsearch.index.query.FuzzyQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
@@ -24,10 +27,13 @@ import java.util.List;
 public class RestaurantServiceExtend {
     private final ElasticsearchRestTemplate elasticsearchRestTemplate;
     private final ToolsForRestauantService toolsForRestauantService;
+    private final ToolsForQuery toolsForQuery;
 
     public List<ResponseRestaurantDto> fuzzinessSearch(int typeNum, String inputString, int maxResults, int fuzziness) {
         try {
-            return null;
+            String type = toolsForRestauantService.getType(typeNum);
+            NativeSearchQuery searchQuery = toolsForQuery.fuzzyQuery(type, inputString, fuzziness, maxResults);
+            return toolsForRestauantService.getListBySearchHits(elasticsearchRestTemplate.search(searchQuery, Restaurant.class));
         } catch (Exception e) {
             log.info("[ERR LOG] {}", e.getMessage());
             throw new CommonException(ExceptionType.RESTAURANT_FUZZINESS_SEARCH_FAIL);
