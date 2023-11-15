@@ -38,6 +38,7 @@
   flex: 35;
   display: flex;
   justify-content: center;
+  visibility: hidden;
 }
 
 .home-search-bar {
@@ -135,6 +136,7 @@
 .card-upside-desc > p {
   margin-bottom: 0px;
   text-align: center;
+  line-height: 1.5;
 }
 
 .card-upside-title {
@@ -149,7 +151,7 @@
 
 .card-downside {
   width: 300px;
-  height: 300px;
+  height: 350px;
   border: 3px solid lightgrey;
   border-radius: 0 0 10px 10px;
   border-top: none;
@@ -183,6 +185,13 @@
 .card-downside-info-title {
   margin-bottom: 10px;
   font-weight: 600;
+  line-height: 1.5;
+}
+
+.card-downside-info-desc {
+  margin-bottom: 10px;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
 .card-downside-info:last-child {
