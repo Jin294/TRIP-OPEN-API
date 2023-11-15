@@ -20,7 +20,7 @@ public class FoodController {
 	@GetMapping("/by-name")
 	public List<FoodResponseDto.Coordi> getFoodFromTravle(
 			@RequestParam("name") String name,
-			@RequestParam("distance") Long distance,
+			@RequestParam("distance") Double distance,
 			@RequestParam(value = "sorted", required = false) String sorted){
 		FoodRequestDto.Title attractionTitleRequestDto = new FoodRequestDto.Title(name, distance, sorted);
 		return foodServiceImpl.getFoodFromTravle(attractionTitleRequestDto);
@@ -29,7 +29,7 @@ public class FoodController {
 	public List<FoodResponseDto.Coordi> getFoodFromLngLatv(
 			@RequestParam("longitude") Double longitude,
 			@RequestParam("latitude") Double latitude,
-			@RequestParam("distance") Long distance,
+			@RequestParam("distance") Double distance,
 			@RequestParam("sorted") String sorted){
 		FoodRequestDto.Coordi attractionCoordiRequestDto = new FoodRequestDto.Coordi(latitude, longitude, distance, sorted);
 		return foodServiceImpl.getFoodFromLngLatv(attractionCoordiRequestDto);

@@ -19,7 +19,7 @@ public class AccommodationController {
     @GetMapping("/by-name")
     public List<AccommodationResponseDto> getAccommodationByName(
             @RequestParam("name") String name,
-            @RequestParam("distance") int distance,
+            @RequestParam("distance") Double distance,
             @RequestParam("sorted") String sorted){
         AttractionNameRequestDto attractionNameRequestDto = new AttractionNameRequestDto(name, distance, sorted);
         System.out.println("!!!!");
@@ -30,7 +30,7 @@ public class AccommodationController {
     public List<AccommodationResponseDto> getAccomodationByCoordinate(
             @RequestParam("latitude") Double latitude,
             @RequestParam("longtitude") Double longitude,
-            @RequestParam("distance") int distance,
+            @RequestParam("distance") Double distance,
             @RequestParam("sorted") String sorted){
         AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(latitude, longitude, distance, sorted);
 
