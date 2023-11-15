@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import styles from './APIContent.module.css';
 import basicHttp from '../../api/basicHttp';
@@ -13,6 +14,19 @@ const APIContent = (props) => {
     const [apiContent, setApiContent] = useState([]);
     const [apiData, setApiData] = useState([]);
     const [nParam, setNParam] = useState(0);
+    // 상태 설정
+    const [authorizationValue, setAuthorizationValue] = useState('');
+    const [requestParameterValues, setRequestParameterValues] = useState([]);
+    // 값 변경 핸들러
+    const handleAuthorizationChange = (event) => {
+        setAuthorizationValue(event.target.value);
+    };
+
+    const handleRequestParameterChange = (index, event) => {
+        const updatedValues = [...requestParameterValues];
+        updatedValues[index] = event.target.value;
+        setRequestParameterValues(updatedValues);
+    };
 
     useEffect(() => {
         setApiId(props.data);
@@ -60,6 +74,44 @@ const APIContent = (props) => {
     //   (dataItem) => dataItem.is_request === false
     // );
 
+    // 5.test button function
+    const handleApiRequest = () => {
+        const baseURL = process.env.REACT_APP_SERVER_URL;
+        const queryParams = new URLSearchParams();
+
+        queryParams.append('authorization', authorizationValue);
+
+        requestParameterValues.forEach((value, index) => {
+            // 빈 문자열이나 null 체크하여 파라미터 추가
+            queryParams.append(`param${index + 1}`, value || '');
+        });
+
+        const fullUrl = `${baseURL}?${queryParams.toString()}`;
+
+        // Axios를 사용하여 POST 요청 보내기
+        axios
+            .get(
+                fullUrl,
+                {
+                    // 여기에 요청 본문 데이터 추가
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${authorizationValue}`,
+                    },
+                }
+            )
+            .then((response) => {
+                console.log('API 응답:', response.data);
+                // 응답을 처리하는 로직 추가
+            })
+            .catch((error) => {
+                console.error('API 요청 에러:', error);
+                // 에러를 처리하는 로직 추가
+            });
+    };
+
     return (
         <div className={styles.contentBody}>
             <div>
@@ -99,10 +151,33 @@ const APIContent = (props) => {
                 </table>
 
                 <h3>2. 요청</h3>
+                <h4>* 요청 헤더(Header)</h4>
+                <table className={styles.apiRequestDataTable}>
+                    <thead>
+                        <tr>
+                            <th>HTTP</th>
+                            <th>필드</th>
+                            <th> 타입 </th>
+                            <th>설명</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Header</td>
+                            <td>Authorization</td>
+                            <td>Baerer</td>
+                            <td>
+                                우측 상단 '내 API 토큰'을 입력합니다.
+                                <br />
+                                예시: 'Authorization': `Bearer [내 API 토큰]`
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
                 {isRequestTrueData.length > 0 && (
                     <div>
-                        <h4>* 쿼리 파라미터</h4>
+                        <h4>* 요청 변수(Request Parameter)</h4>
                     </div>
                 )}
                 {isRequestTrueData.length > 0 && (
@@ -112,7 +187,6 @@ const APIContent = (props) => {
                                 <th>HTTP</th>
                                 <th>항목명</th>
                                 <th> 필수 </th>
-                                <th>파라미터</th>
                                 <th>타입</th>
                                 <th>설명</th>
                             </tr>
@@ -127,9 +201,8 @@ const APIContent = (props) => {
                                     )}
                                     <td>{dataItem.title}</td>
                                     <td style={{ color: dataItem.is_essential ? 'red' : 'black' }}>
-                                        {dataItem.is_essential ? ' Y ' : ' N '}
+                                        {dataItem.is_essential ? ' O ' : ' X '}
                                     </td>
-                                    <td>{dataItem.is_parameter ? ' Y ' : ' N '}</td>
                                     <td>{dataItem.type}</td>
                                     <td>{dataItem.detail}</td>
                                 </tr>
@@ -139,7 +212,7 @@ const APIContent = (props) => {
                 )}
                 <div>
                     <h3>3. 응답</h3>
-                    <h4>* 본문</h4>
+                    <h4>* 본문(Body)</h4>
                 </div>
                 <table className={styles.apiResponseDataTable}>
                     <thead>
@@ -175,6 +248,27 @@ const APIContent = (props) => {
                 </pre>
 
                 <h3>5. 테스트(미리 보기)</h3>
+                <h4>* 요청 헤더(Header)</h4>
+                <table className={styles.apiRequestDataTable}>
+                    <thead>
+                        <tr>
+                            <th>HTTP</th>
+                            <th>필드</th>
+                            <th> 타입 </th>
+                            <th>샘플 데이터</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Header</td>
+                            <td>Authorization</td>
+                            <td>Baerer</td>
+                            <td>
+                                <input value={authorizationValue} onChange={handleAuthorizationChange} />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                 <h4>* 요청 변수(Request Parameter)</h4>
                 {isRequestTrueData.length > 0 && (
                     <table className={styles.apiRequestDataTable}>
@@ -183,7 +277,6 @@ const APIContent = (props) => {
                                 <th>HTTP</th>
                                 <th>항목명</th>
                                 <th> 필수 </th>
-                                <th>파라미터</th>
                                 <th>타입</th>
                                 <th>샘플 데이터</th>
                             </tr>
@@ -198,18 +291,21 @@ const APIContent = (props) => {
                                     )}
                                     <td>{dataItem.title}</td>
                                     <td style={{ color: dataItem.is_essential ? 'red' : 'black' }}>
-                                        {dataItem.is_essential ? ' Y ' : ' N '}
+                                        {dataItem.is_essential ? ' O ' : ' X '}
                                     </td>
-                                    <td>{dataItem.is_parameter ? ' Y ' : ' N '}</td>
                                     <td>{dataItem.type}</td>
                                     <td>
-                                        <input></input>
+                                        <input
+                                            value={requestParameterValues[index] || ''}
+                                            onChange={(event) => handleRequestParameterChange(index, event)}
+                                        />
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 )}
+                <button onClick={handleApiRequest}>요청 보내기</button>
                 <h4>* 응답</h4>
                 <pre id="json" className={styles.code}>
                     <SyntaxHighlighter language="json" style={vs}>

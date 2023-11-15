@@ -23,7 +23,6 @@
     border-spacing: 0;
     margin-bottom: 5%;
     text-align: center;
-    
 }
 
 .firstTable th {
@@ -56,6 +55,7 @@
     line-height: 1.5;
     word-break: keep-all;
     margin-bottom: 5%;
+    text-align: center;
 }
 
 .apiRequestDataTable th {
@@ -64,6 +64,7 @@
     text-align: left;
     padding: 10px;
     border-bottom: 2px solid #ccc;
+    text-align: center;
 }
 
 .apiRequestDataTable td {
@@ -90,6 +91,7 @@
     line-height: 1.5;
     word-break: keep-all;
     margin-bottom: 5%;
+    text-align: center;
 }
 
 .apiResponseDataTable th {
@@ -98,6 +100,7 @@
     text-align: left;
     padding: 10px;
     border-bottom: 2px solid #ccc;
+    text-align: center;
 }
 
 .apiResponseDataTable td {

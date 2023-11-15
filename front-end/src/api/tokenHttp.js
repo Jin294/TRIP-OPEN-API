@@ -11,6 +11,7 @@ const tokenHttp = axios.create({
     baseURL,
     header: {
         'Content-Type': 'application/json',
+        
     },
 });
 
@@ -31,6 +32,7 @@ tokenHttp.interceptors.request.use(async (req) => {
         req.headers['Authorization'] = `Bearer ${accessToken}`;
         return req;
     }
+
 
     // 만료되었다면 강제 로그아웃
     console.log('api/tokenHttp.js : access token 만료');
