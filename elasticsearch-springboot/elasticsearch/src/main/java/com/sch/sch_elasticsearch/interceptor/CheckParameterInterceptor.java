@@ -13,9 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 public class CheckParameterInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String paramValue = request.getParameter("maxResults");
-        if (paramValue != null && Integer.parseInt(paramValue) > 100) {
+        String maxResults = request.getParameter("maxResults");
+        String fuzziness = request.getParameter("fuzziness");
+        if (maxResults != null && Integer.parseInt(maxResults) > 100) {
             throw new CommonException(ExceptionType.INTERCEPTOR_TOO_MANY_MAX_RESULTS);
+        }
+        if (maxResults != null && Integer.parseInt(maxResults) > 10) {
+            throw new CommonException(ExceptionType.INTERCEPTOR_TOO_MANY_FUZZINESS);
         }
         return true;
     }

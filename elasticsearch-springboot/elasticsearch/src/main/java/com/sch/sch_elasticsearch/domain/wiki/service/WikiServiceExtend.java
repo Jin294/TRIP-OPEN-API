@@ -87,7 +87,7 @@ public class WikiServiceExtend {
                     .map(wiki -> wiki.toDto())
                     .collect(Collectors.toList());
         } catch (Exception e) {
-            throw new CommonException(ExceptionType.GET_SAME_ATTNAME_AND_WIKITITLE_FAIL);
+            throw new CommonException(ExceptionType.WIKI_GET_SAME_ATTNAME_AND_WIKITITLE_FAIL);
         }
     }
 
@@ -124,7 +124,7 @@ public class WikiServiceExtend {
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e.getMessage());
-            throw new CommonException(ExceptionType.FUZZINESS_SEARCH_FAIL);
+            throw new CommonException(ExceptionType.WIKI_FUZZINESS_SEARCH_FAIL);
         }
 
     }
@@ -161,7 +161,7 @@ public class WikiServiceExtend {
 
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e.getMessage());
-            throw new CommonException(ExceptionType.SEARCH_ALL_BY_DTO_FAIL);
+            throw new CommonException(ExceptionType.WIKI_SEARCH_ALL_BY_DTO_FAIL);
         }
     }
 
@@ -195,7 +195,7 @@ public class WikiServiceExtend {
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e.getMessage());
-            throw new CommonException(ExceptionType.SEARCH_ALL_BY_PARAM_FAIL);
+            throw new CommonException(ExceptionType.WIKI_SEARCH_ALL_BY_PARAM_FAIL);
         }
     }
 

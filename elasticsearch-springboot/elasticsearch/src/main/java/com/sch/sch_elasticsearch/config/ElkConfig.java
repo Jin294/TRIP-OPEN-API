@@ -47,9 +47,15 @@ public class ElkConfig extends AbstractElasticsearchConfiguration {
 //    /*
 //     Elasticsearch 인덱스와 데이터를 읽고 쓰는 데 사용 Spring Data ElasticSearch
 //     */
-    @Bean(name = "customElasticsearchTemplate") //Bean 이름이 겹치는 게 있어 수정하였음.
+    @Bean(name = "ElasticsearchOperationsBean") //Bean 이름이 겹치는 게 있어 수정하였음.
     @Primary
     public ElasticsearchOperations elasticsearchTemplate() {
+        return new ElasticsearchRestTemplate(elasticsearchClient());
+    }
+
+    @Bean(name = "ElasticsearchTemplateBean")
+    @Primary
+    public ElasticsearchRestTemplate elasticsearchRestTemplate() {
         return new ElasticsearchRestTemplate(elasticsearchClient());
     }
 }

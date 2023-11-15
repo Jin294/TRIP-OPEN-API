@@ -89,7 +89,7 @@ public class ToolsForWikiService {
                 type = "overview";
                 break;
             default:
-                throw new CommonException(ExceptionType.TYPENUM_IS_INVALID);
+                throw new CommonException(ExceptionType.WIKI_TYPENUM_IS_INVALID);
         }
         return type;
     }

@@ -73,7 +73,7 @@ public class WikiServiceTermSimilary {
             return new int[] {totalTermCount, matchTermCount};
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.CALCULATE_SIMILARY_OVERVIEW_AND_CONTENT);
+            throw new CommonException(ExceptionType.WIKI_CALCULATE_SIMILARY_OVERVIEW_AND_CONTENT);
         }
     }
 
@@ -100,7 +100,7 @@ public class WikiServiceTermSimilary {
             return hashMap;
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.USE_ANALYZER_AND_GET_TERMS_FAIL);
+            throw new CommonException(ExceptionType.WIKI_USE_ANALYZER_AND_GET_TERMS_FAIL);
         }
     }
 
@@ -128,7 +128,7 @@ public class WikiServiceTermSimilary {
             return toolsForWikiService.getListBySearchHits(searchHits, false);
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.FIND_WIKI_NOT_EXIST_TERMS);
+            throw new CommonException(ExceptionType.WIKI_FIND_WIKI_NOT_EXIST_TERMS);
         }
     }
 
@@ -150,7 +150,7 @@ public class WikiServiceTermSimilary {
             return false;
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.CHECK_CONTENT_IS_NULL);
+            throw new CommonException(ExceptionType.WIKI_CHECK_CONTENT_IS_NULL);
         }
     }
 
@@ -188,7 +188,7 @@ public class WikiServiceTermSimilary {
             wikiServiceBasic.insertWiki(wiki);
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.UPDATE_NULL_TERMS_FAIL);
+            throw new CommonException(ExceptionType.WIKI_UPDATE_NULL_TERMS_FAIL);
         }
     }
 }

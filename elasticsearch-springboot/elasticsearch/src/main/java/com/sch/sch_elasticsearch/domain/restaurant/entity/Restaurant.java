@@ -15,11 +15,19 @@ public class Restaurant {
     @Id
     private String id;
 
+    float score;
+
     @Field(name = "food_id")
     String foodId;
 
     @Field(name = "food_name")
-    String wiki_title;
+    String foodName;
+
+    @Field(name = "food_type_main")
+    String foodTypeMain;
+
+    @Field(name = "food_type_sub")
+    String foodTypeSub;
 
     @Field(name = "food_latitude")
     float foodLatitude;
@@ -31,12 +39,15 @@ public class Restaurant {
     Integer foodLike;
 
     @Field(name = "food_score")
-    float wiki_content;
+    Integer foodScore;
 
     @Field(name = "food_star")
-    Integer foodStar;
+    float foodStar;
 
     @Field(name = "food_staruser")
     Integer foodStarUser;
 
+    public void setScore(float score) {
+        this.score = score;
+    }
 }

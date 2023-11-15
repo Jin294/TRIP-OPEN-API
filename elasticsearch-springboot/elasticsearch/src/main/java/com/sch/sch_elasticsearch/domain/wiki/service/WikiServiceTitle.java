@@ -8,8 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
@@ -23,11 +25,15 @@ import java.util.stream.Collectors;
  * 제목 검색과 관련된 서비스 로직
  */
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class WikiServiceTitle {
-    private final ElasticsearchRestTemplate elasticsearchRestTemplate;
-    private final ToolsForWikiService toolsForWikiService;
+    private ElasticsearchRestTemplate elasticsearchRestTemplate;
+    private ToolsForWikiService toolsForWikiService;
+
+    public WikiServiceTitle(@Qualifier("ElasticsearchTemplateBean") ElasticsearchRestTemplate elasticsearchRestTemplate, ToolsForWikiService toolsForWikiService) {
+        this.elasticsearchRestTemplate = elasticsearchRestTemplate;
+        this.toolsForWikiService = toolsForWikiService;
+    }
 
     @Value("${info.analyzer.nori-ngram}")
     String ngramAnalyzer;
@@ -51,7 +57,7 @@ public class WikiServiceTitle {
             return result.get(0).toDto();
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.SEARCH_CORRECT_TITLE_FAIL);
+            throw new CommonException(ExceptionType.WIKI_SEARCH_CORRECT_TITLE_FAIL);
         }
     }
 
@@ -89,7 +95,7 @@ public class WikiServiceTitle {
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.SEARCH_FUZZY_TITLE_FAIL);
+            throw new CommonException(ExceptionType.WIKI_SEARCH_FUZZY_TITLE_FAIL);
         }
     }
 
@@ -118,7 +124,7 @@ public class WikiServiceTitle {
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e.getMessage());
-            throw new CommonException(ExceptionType.SEARCH_NGRAM_TITLE_FAIL);
+            throw new CommonException(ExceptionType.WIKI_SEARCH_NGRAM_TITLE_FAIL);
         }
     }
 
@@ -186,7 +192,7 @@ public class WikiServiceTitle {
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());
-            throw new CommonException(ExceptionType.SEARCH_FUZZY_AND_NGRAM_TITLE_FAIL);
+            throw new CommonException(ExceptionType.WIKI_SEARCH_FUZZY_AND_NGRAM_TITLE_FAIL);
         }
     }
 }
