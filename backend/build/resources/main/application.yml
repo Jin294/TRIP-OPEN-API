@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+
+spring:
+  jackson:
+    time-zone: Asia/Seoul
+  data:
+    mongodb:
+      uri: mongodb+srv://S09P31B205:z5HxUpl4gB@ssafy.ngivl.mongodb.net/S09B31B205?authSource=admin
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://k9b205.p.ssafy.io:3306/b205
+    username: b205
+    password: 9gi_ssafy_final
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+  redis:
+    host: k9b205.p.ssafy.io
+    port: 6379
+    password: 9gi_ssafy_final
+jwt:
+  secretKey: itsSecrentkeyyouknowheyfuckyoufudmfsdkfmaskfsdkfsadfklsdflksdfsklfmdsklfsmdfklmsdflksdmf=
+
+
+

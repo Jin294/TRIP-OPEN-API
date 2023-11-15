@@ -1,5 +1,7 @@
 package com.sch.sch_elasticsearch.domain.wiki.entity;
 
+import com.sch.sch_elasticsearch.domain.wiki.dto.ResponseWikiDto;
+import com.sch.sch_elasticsearch.domain.wiki.dto.WikiDTO;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -58,5 +60,9 @@ public class Wiki {
     public void setWikiContentAndWikiTitleNull() {
         this.wiki_content = null;
         this.wiki_title = null;
+    }
+
+    public ResponseWikiDto toDto(){
+        return new ResponseWikiDto(score, contentId, attractionName, wiki_title, wiki_content, overview, matchTerm, totalTerm);
     }
 }

@@ -1,5 +1,6 @@
 package com.sch.sch_elasticsearch.domain.wiki.service;
 
+import com.sch.sch_elasticsearch.domain.wiki.dto.ResponseWikiDto;
 import com.sch.sch_elasticsearch.domain.wiki.entity.Wiki;
 import com.sch.sch_elasticsearch.domain.wiki.repository.WikiRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -38,7 +40,7 @@ public class WikiServiceBasic {
      * @param useReliableSearch 신뢰성 검색 사용 유무
      * @return List<Wiki> 결과값
      */
-    public List<Wiki> searchExact(int typeNum, String inputString, boolean useReliableSearch, int maxResults) {
+    public List<ResponseWikiDto> searchExact(int typeNum, String inputString, boolean useReliableSearch, int maxResults) {
         String type = toolsForWikiService.getType(typeNum);
 
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
@@ -47,7 +49,10 @@ public class WikiServiceBasic {
                 .build();
 
         // Elasticsearch에서 쿼리 실행
-        return toolsForWikiService.getListBySearchHits(elasticsearchOperations.search(searchQuery, Wiki.class), useReliableSearch);
+        return toolsForWikiService.getListBySearchHits(elasticsearchOperations.search(searchQuery, Wiki.class), useReliableSearch)
+                .stream()
+                .map(wiki -> wiki.toDto())
+                .collect(Collectors.toList());
     }
 
 
@@ -58,7 +63,7 @@ public class WikiServiceBasic {
      * @param useReliableSearch 신뢰성 검색 사용 유무
      * @return List<Wiki> 결과값
      */
-    public List<Wiki> searchPartial(int typeNum, String inputString, boolean useReliableSearch, int maxResults) {
+    public List<ResponseWikiDto> searchPartial(int typeNum, String inputString, boolean useReliableSearch, int maxResults) {
         String type = toolsForWikiService.getType(typeNum);
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(QueryBuilders.matchQuery(type, inputString))
@@ -66,7 +71,10 @@ public class WikiServiceBasic {
                 .build();
 
         // Elasticsearch에서 쿼리 실행 후 결과값 가져오기
-        return toolsForWikiService.getListBySearchHits(elasticsearchOperations.search(searchQuery, Wiki.class), useReliableSearch);
+        return toolsForWikiService.getListBySearchHits(elasticsearchOperations.search(searchQuery, Wiki.class), useReliableSearch)
+                .stream()
+                .map(wiki -> wiki.toDto())
+                .collect(Collectors.toList());
     }
 
 
