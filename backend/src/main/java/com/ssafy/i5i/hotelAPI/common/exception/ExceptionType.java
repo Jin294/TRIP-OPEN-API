@@ -13,7 +13,7 @@ public enum ExceptionType {
     USER_WRONGPASSWORD_EXCEPTION(3000,"비밀번호가 틀렸습니다."),
     USER_INVALID_EXCEPTION(3001, "유저 정보가 없습니다"),
     USER_DUPLICATE_EXCEPTION(3002, "유저가 정보가 있습니다."),
-    USER_EMAIL_UNAUTHORIZED(3003, "이메일 인증이 되지 않은 유저입니다"),
+    USER_EMAIL_UNAUTHORIZED(3003, "이메일 인증이 되지 않았거나 인증 코드가 잘못되었습니다."),
     //4000번은 jwt 와 관련된 에러
     JWT_TOKEN_EXPIRED(4000, "토큰이 만료되었습니다."),
     JWT_PARSER_FAILED(4001, "토큰 파싱에 실패했습니다."),

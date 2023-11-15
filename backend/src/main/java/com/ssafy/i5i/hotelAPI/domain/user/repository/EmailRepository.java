@@ -23,4 +23,8 @@ public interface EmailRepository extends JpaRepository<Email, Long> {
     @Modifying
     @Query("update Email e set e.isAuthorized = true where e.email =:email and e.code =:code")
     int setAuthorizedStatusTrueWithCode(@Param("email") String email, @Param("code") Long code);
+
+    @Modifying
+    @Query("delete from Email e where e.email =:email")
+    int deleteEmail(@Param("email") String email);
 }

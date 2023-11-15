@@ -32,7 +32,7 @@ public class EmailService {
             log.error("UserService signUp, userId dupplicate error");
             throw new CommonException(ExceptionType.EMAIL_EXIST_EXCEPTION);
         }
-
+        emailRepository.deleteEmail(email);
         long verifiedCode = Math.round(100000 + Math.random() * 899999);
         Email newEmail = Email.builder()
                 .email(email)
