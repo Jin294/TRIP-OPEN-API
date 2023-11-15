@@ -21,7 +21,7 @@ public class Email {
     @Column(name="email", length = 255, nullable = false)
     private String email;
 
-    @Column(name="crated_time")
+    @Column(name="created_time")
     private LocalDateTime createdTime;
 
     @Column(name="authorized_time")

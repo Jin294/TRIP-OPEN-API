@@ -18,5 +18,9 @@ public class EmailController {
         return new CommonResponse(200, "success");
     }
 
-//    @GetMapping("auth")
+    @GetMapping("auth/{email}/{code}")
+    public CommonResponse authMail(@PathVariable("email") String email, @PathVariable("code") Long code) {
+        emailService.checkMail(email, code);
+        return new CommonResponse(200, "success");
+    }
 }

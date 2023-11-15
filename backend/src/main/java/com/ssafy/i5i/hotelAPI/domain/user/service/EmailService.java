@@ -5,6 +5,7 @@ import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
 import com.ssafy.i5i.hotelAPI.domain.user.entity.Email;
 import com.ssafy.i5i.hotelAPI.domain.user.repository.EmailRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EmailService {
     private final JavaMailSender javaMailSender;
     private final EmailRepository emailRepository;
@@ -36,20 +39,33 @@ public class EmailService {
                     .isAuthorized(false)
                     .code(verifiedCode)
                     .build();
+            emailRepository.save(newEmail);
         }
         else {
             emailRepository.setCode(verifiedCode, checkEmail.get().getEmailId());
             emailRepository.setCreatedTime(LocalDateTime.now(), checkEmail.get().getEmailId());
         }
-        sendMail(email, verifiedCode);
+        sendAuthCode(email, verifiedCode);
     }
 
     @Transactional
     public void checkMail(String email, Long checkCode) {
-
+        Email checkEmail = emailRepository.selectUnAuthorizedEmail(email).orElseThrow(() -> {
+            throw new CommonException(ExceptionType.EMAIL_INVALID_EXCEPTION);
+        });
+        if(checkEmail.getCode().longValue() != checkCode.longValue()) {
+            log.info("EmailService checkMail, checkEmail.getCode() = {}", checkEmail.getCode());
+            log.info("EmailService checkMail, checkCode() = {}", checkCode);
+            throw new CommonException(ExceptionType.CODE_INVALID_EXCEPTION);
+        }
+        if(ChronoUnit.MINUTES.between(checkEmail.getCreatedTime(), LocalDateTime.now()) > 5) {
+            throw new CommonException(ExceptionType.CODE_TIME_FAIL);
+        }
+        emailRepository.setAuthorizedTime(LocalDateTime.now(), checkEmail.getEmailId());
+        emailRepository.setAuthorizedStatusTrue(checkEmail.getEmailId());
     }
 
-    private void sendMail(String email, long verifiedCode) {
+    private void sendAuthCode(String email, long verifiedCode) {
         MimeMessageHelper messageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage(), "UTF-8");
         try {
             messageHelper.setTo(email);

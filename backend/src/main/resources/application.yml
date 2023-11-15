@@ -37,6 +37,8 @@ spring:
     port: 587
     username: ***REMOVED***
     password: ***REMOVED***
+#    username: ***REMOVED***
+#    password: ***REMOVED***
     properties:
       mail:
         smtp:
