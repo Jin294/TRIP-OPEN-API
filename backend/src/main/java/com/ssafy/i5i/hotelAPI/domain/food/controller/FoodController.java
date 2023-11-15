@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/food")
+@RequestMapping("/api/restaurant")
 @Slf4j
 public class FoodController {
 	private final FoodServiceImpl foodServiceImpl;
@@ -27,7 +27,7 @@ public class FoodController {
 	}
 	@GetMapping("/by-coordinate")
 	public List<FoodResponseDto.Coordi> getFoodFromLngLatv(
-			@RequestParam("longtitude") Double longitude,
+			@RequestParam("longitude") Double longitude,
 			@RequestParam("latitude") Double latitude,
 			@RequestParam("distance") Long distance,
 			@RequestParam("sorted") String sorted){

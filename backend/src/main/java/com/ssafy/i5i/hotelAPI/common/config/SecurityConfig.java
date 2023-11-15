@@ -35,6 +35,7 @@ public class SecurityConfig {
     }
 
     private final TokenService tokenService;
+    private final CorsConfigurationSource corsConfigurationSource;
 
     private static final String[] PERMIT_URL = {
             "/docs/data/**",
