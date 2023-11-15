@@ -20,8 +20,6 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class TestController {
 
-
-    private final WikiServiceBasic wikiService;
     private final RestHighLevelClient client;
     private final WikiServiceTermSimilary wikiServiceTermSimilary;
 
@@ -29,26 +27,15 @@ public class TestController {
     public String Test() {
         try {
             MainResponse response = client.info(RequestOptions.DEFAULT);
-            System.out.println("Elasticsearch 연결 성공: " + response.getVersion().toString());
-            return "Well Done";
+            return "Well Done : " + response.getVersion().toString();
         } catch (Exception e) {
-            System.out.println("Elasticsearch 연결 실패: " + e.getMessage());
-            return "fail to boot";
+            return "fail to boot : " + e.getMessage();
         }
     }
 
-//    @GetMapping("t2")
-//    public List<Wiki> t2(@RequestParam("typeNum") int typeNum, @RequestParam("input") String inputString) {
-//        return wikiService.searchExact(typeNum, inputString);
-//    }
 
-    @GetMapping("t3")
-    public HashMap<String, Integer> t3() {
-        return wikiServiceTermSimilary.useAnalyzerAndGetTokens("산과 바람, 별과 바다가 아름다운 곳");
-    }
-
-    @GetMapping("t4")
-    public List<Wiki> t4(@RequestParam("searchCount") int searchCount) {
+    @GetMapping("term")
+    public String t4(@RequestParam("searchCount") int searchCount) {
         while(true) {
             //1. searchCount만큼 데이터를 긁어온다.
             List<Wiki> result = wikiServiceTermSimilary.findWikiMatchTermIsNull(searchCount);
@@ -61,8 +48,7 @@ public class TestController {
                 wikiServiceTermSimilary.updateNewTerms(wiki); //아닐 경우 계산 후 새로운 값 업데이트
             }
         }
-
-        return null;
+        return "Finish Set Terms";
     }
 
 }

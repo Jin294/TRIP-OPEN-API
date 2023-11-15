@@ -51,7 +51,7 @@ public class WikiServiceTitle {
             return result.get(0).toDto();
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.SEARCH_TITLE_CORRECT_FAIL);
+            throw new CommonException(ExceptionType.SEARCH_CORRECT_TITLE_FAIL);
         }
     }
 
@@ -63,34 +63,6 @@ public class WikiServiceTitle {
      * @param reliable
      * @return
      */
-    public List<Wiki> searchTitleUseFuzzy(String title, int maxResults, int fuzziness, boolean reliable) {
-        try {
-            // fuzziness 설정
-            Fuzziness fuzzinessLevel;
-            if (fuzziness > 0) {
-                fuzzinessLevel = Fuzziness.build(fuzziness);
-            } else {
-                fuzzinessLevel = Fuzziness.AUTO;
-            }
-
-            NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
-                    .withQuery(
-                            new FuzzyQueryBuilder("attraction_name.keyword", title)
-                                    .fuzziness(fuzzinessLevel)
-                    )
-                    .withPageable(PageRequest.of(0, maxResults)) // 결과 개수 제한
-                    .withCollapseField("content_id")
-                    .build();
-
-            SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
-            return toolsForWikiService.getListBySearchHits(searchHits, reliable);
-        } catch (Exception e) {
-            log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.ATTRACTION_NAME_FUZZYSEARCH_FAIL);
-        }
-    }
-
-
     public List<ResponseWikiDto> searchTitleUseFuzzyDto(String title, int maxResults, int fuzziness, boolean reliable) {
         try {
             // fuzziness 설정
@@ -117,7 +89,7 @@ public class WikiServiceTitle {
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.ATTRACTION_NAME_FUZZYSEARCH_FAIL);
+            throw new CommonException(ExceptionType.SEARCH_FUZZY_TITLE_FAIL);
         }
     }
 
@@ -146,28 +118,10 @@ public class WikiServiceTitle {
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e.getMessage());
-            throw new CommonException(ExceptionType.ATTRACTION_NAME_NGRAMSEARCH_FAIL);
+            throw new CommonException(ExceptionType.SEARCH_NGRAM_TITLE_FAIL);
         }
     }
 
-    public List<Wiki> searchTitleUseNgram(String title, int maxResults, boolean reliable) {
-        try {
-            QueryBuilder queryBuilder = new QueryStringQueryBuilder(title)
-                    .defaultField("attraction_name")
-                    .analyzer(ngramAnalyzer);
-            NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
-                    .withQuery(queryBuilder)
-                    .withPageable(PageRequest.of(0, maxResults)) // 결과 개수 제한
-                    .withCollapseField("content_id")
-                    .build();
-
-            SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
-            return toolsForWikiService.getListBySearchHits(searchHits, reliable);
-        } catch (Exception e) {
-            log.error("[ERR LOG]{}", e.getMessage());
-            throw new CommonException(ExceptionType.ATTRACTION_NAME_NGRAMSEARCH_FAIL);
-        }
-    }
 
     /**
      * Fuzzy와 Ngram 둘 다 사용하여 집계. 가장 스코어가 높은 기준대로 리턴
@@ -179,22 +133,22 @@ public class WikiServiceTitle {
      */
     public List<ResponseWikiDto> searchFuzzyAndNgram(String title, int maxResults, int fuzziness, boolean reliable) {
         try {
-            List<Wiki> fuzzyList = searchTitleUseFuzzy(title, maxResults, fuzziness, reliable);
-            List<Wiki> ngramList = searchTitleUseNgram(title, maxResults, reliable);
+            List<ResponseWikiDto> fuzzyList = searchTitleUseFuzzyDto(title, maxResults, fuzziness, reliable);
+            List<ResponseWikiDto> ngramList = searchTitleUseNgramDto(title, maxResults, reliable);
 
 
             //두개 리스트를 새로 합치고, 스코어가 있다면 가중. < 지명 : 스코어 > 로 집계
             HashMap<String, Float> alladdHashMap = new HashMap<>();
             for(int i = 0; i < fuzzyList.size(); i++) { //FuzzyList 결과 삽입
-                Wiki wiki = fuzzyList.get(i);
-                alladdHashMap.put(wiki.getAttractionName(), wiki.getScore());
+                ResponseWikiDto responseWikiDto = fuzzyList.get(i);
+                alladdHashMap.put(responseWikiDto.getAttractionName(), responseWikiDto.getScore());
             }
 
             for (int i = 0; i < ngramList.size(); i++) { //Ngram 결과 추가 삽입 및 집계
-                Wiki wiki = ngramList.get(i);
-                if(alladdHashMap.containsKey(wiki.getAttractionName())) {
-                    alladdHashMap.put(wiki.getAttractionName(), alladdHashMap.get(wiki.getAttractionName()) + wiki.getScore());
-                } else alladdHashMap.put(wiki.getAttractionName(), wiki.getScore());
+                ResponseWikiDto responseWikiDto = ngramList.get(i);
+                if(alladdHashMap.containsKey(responseWikiDto.getAttractionName())) {
+                    alladdHashMap.put(responseWikiDto.getAttractionName(), alladdHashMap.get(responseWikiDto.getAttractionName()) + responseWikiDto.getScore());
+                } else alladdHashMap.put(responseWikiDto.getAttractionName(), responseWikiDto.getScore());
             }
 
             //스코어링 기준으로 해시맵 스트림 정렬
@@ -223,7 +177,7 @@ public class WikiServiceTitle {
              * AttractionName List대로 재정렬 로직 구현
              * 1. resultAttractionName 리스트를 순회 (소스)
              * 2. 중간 연산 : 각 name에 대해 searchResults 스트림을 열고 attraction Name이 일치하는 객체 필터링
-             * 3. 종단 연산 : 결과를 List<Wiki>로 수집
+             * 3. 종단 연산 : 결과를 List<responseWikiDto>로 수집
              */
             return resultAttractionName.stream()
                     .flatMap(name -> searchResult.stream()
@@ -232,7 +186,7 @@ public class WikiServiceTitle {
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());
-            throw new CommonException(ExceptionType.SEARCH_FUZZY_AND_NGRAM_FAIL);
+            throw new CommonException(ExceptionType.SEARCH_FUZZY_AND_NGRAM_TITLE_FAIL);
         }
     }
 }

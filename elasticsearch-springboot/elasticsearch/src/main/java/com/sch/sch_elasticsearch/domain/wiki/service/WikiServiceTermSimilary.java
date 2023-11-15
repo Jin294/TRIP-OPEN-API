@@ -64,10 +64,8 @@ public class WikiServiceTermSimilary {
             //2. 맞는 용어 수를 세기
             for(String key : hashMapA.keySet()) {
                 if(hashMapB.containsKey(key)) {
-//                    log.info("[calculateSimilarityByTerm] 동일 Key값 : ", key);
                     matchTermCount += hashMapA.get(key);
                     matchTermCount += hashMapB.get(key);
-//                    log.info("[calculateSimilarityByTerm] A.get : {} + B.get : {} ", hashMapA.get(key), hashMapB.get(key));
                 }
             }
 
@@ -75,7 +73,7 @@ public class WikiServiceTermSimilary {
             return new int[] {totalTermCount, matchTermCount};
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.CALCULATE_SIMILARY_TERMS);
+            throw new CommonException(ExceptionType.CALCULATE_SIMILARY_OVERVIEW_AND_CONTENT);
         }
     }
 
@@ -102,7 +100,7 @@ public class WikiServiceTermSimilary {
             return hashMap;
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.GET_TERMS_USING_ANALYZER_FAIL);
+            throw new CommonException(ExceptionType.USE_ANALYZER_AND_GET_TERMS_FAIL);
         }
     }
 
@@ -130,7 +128,7 @@ public class WikiServiceTermSimilary {
             return toolsForWikiService.getListBySearchHits(searchHits, false);
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.SEARCH_NULL_TERMS_FAIL);
+            throw new CommonException(ExceptionType.FIND_WIKI_NOT_EXIST_TERMS);
         }
     }
 
@@ -152,11 +150,14 @@ public class WikiServiceTermSimilary {
             return false;
         } catch (Exception e) {
             log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.UPDATE_NULL_TERMS_NO_WIKICONTENTS_FAIL);
+            throw new CommonException(ExceptionType.CHECK_CONTENT_IS_NULL);
         }
     }
 
-
+    /**
+     * 도큐먼트를 입력받아 문장 간 유사도를 추출하고, 나온 결과값(match_term / total_term)을 보정하여 갱신
+     * @param wiki
+     */
     public void updateNewTerms(Wiki wiki) {
         try {
             //1차 비교 : overview : wiki_content

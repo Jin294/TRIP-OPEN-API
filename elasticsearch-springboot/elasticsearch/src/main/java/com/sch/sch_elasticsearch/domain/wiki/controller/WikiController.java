@@ -55,6 +55,13 @@ public class WikiController {
         return wikiServiceExtend.searchAll(searchAllDTO);
     }
 
+    //통합 내용 검색(전문 검색) : 간단한 버전
+    @PostMapping("/search")
+    public List<ResponseWikiDto> searchAll(@RequestParam("inputString") String inputString,
+                                           @RequestParam("maxResults") int maxResults, @RequestParam("reliable") boolean reliable) {
+        return wikiServiceExtend.searchAll(inputString, maxResults, reliable);
+    }
+
     //통합 제목 검색 : 제목 일치 or (Fuzzy + ngram)
     @GetMapping("/title/aggregate-search")
     public List<ResponseWikiDto> searchTitleComprehensive(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
@@ -70,7 +77,7 @@ public class WikiController {
             return wikiServiceTitle.searchFuzzyAndNgram(title, maxResults, fuzziness, reliable); //2. 아니라면 두개 검색 비교후 리턴
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());
-            throw new CommonException(ExceptionType.CALCULATE_SIMILARY_TERMS);
+            throw new CommonException(ExceptionType.AGGREGATE_TITLE_SEARCH_FAIL);
         }
     }
 

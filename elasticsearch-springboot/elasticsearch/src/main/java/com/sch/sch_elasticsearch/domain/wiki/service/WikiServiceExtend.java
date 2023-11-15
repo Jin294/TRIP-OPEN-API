@@ -51,37 +51,44 @@ public class WikiServiceExtend {
      * Attraction_name과 Wiki_Title이 입력 검색어와 같은 쿼리 반환
      * @return List<Wiki>
      */
-    public List<Wiki> getSameAttNameAndWikiTitle(String inputString, boolean useReliableSearch) {
+    public List<ResponseWikiDto> getSameAttNameAndWikiTitle(String inputString, boolean reliable) {
+        try {
 
-        // Script 문자열을 정의한다.
-        String scriptStr = "if (doc['attraction_name.keyword'].size() != 0 && doc['wiki_title.keyword'].size() != 0) { " +
-                "String attName = doc['attraction_name.keyword'].value.replace(' ', ''); " +
-                "String wikiTitle = doc['wiki_title.keyword'].value.replace(' ', ''); " +
-                "return attName.equals(wikiTitle) && attName.equals(params.inputString); " +
-                "} return false;";
+            // Script 문자열을 정의한다.
+            String scriptStr = "if (doc['attraction_name.keyword'].size() != 0 && doc['wiki_title.keyword'].size() != 0) { " +
+                    "String attName = doc['attraction_name.keyword'].value.replace(' ', ''); " +
+                    "String wikiTitle = doc['wiki_title.keyword'].value.replace(' ', ''); " +
+                    "return attName.equals(wikiTitle) && attName.equals(params.inputString); " +
+                    "} return false;";
 
-        // 파라미터 맵을 생성하고 inputString을 추가한다. painless에서는 이렇게 param을 통해 값을 넣어야한다. (pstmt를 지원하지 않는다..)
-        Map<String, Object> params = new HashMap<>();
-        params.put("inputString", inputString);
+            // 파라미터 맵을 생성하고 inputString을 추가한다. painless에서는 이렇게 param을 통해 값을 넣어야한다. (pstmt를 지원하지 않는다..)
+            Map<String, Object> params = new HashMap<>();
+            params.put("inputString", inputString);
 
-        // Script 객체를 생성한다. (params를 넘겨줘야 해서 인자를 변경해줄 것)
-        Script script = new Script(ScriptType.INLINE, "painless", scriptStr, params);
+            // Script 객체를 생성한다. (params를 넘겨줘야 해서 인자를 변경해줄 것)
+            Script script = new Script(ScriptType.INLINE, "painless", scriptStr, params);
 
-        // 스크립트 쿼리 빌더를 생성한다.
-        QueryBuilder scriptQueryBuilder = QueryBuilders.scriptQuery(script);
+            // 스크립트 쿼리 빌더를 생성한다.
+            QueryBuilder scriptQueryBuilder = QueryBuilders.scriptQuery(script);
 
-        // Elasticsearch의 bool 쿼리를 생성한다.
-        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery().must(scriptQueryBuilder);
+            // Elasticsearch의 bool 쿼리를 생성한다.
+            BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery().must(scriptQueryBuilder);
 
-        // NativeSearchQuery를 생성한다.
-        NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(boolQueryBuilder)
-                .withSourceFilter(new FetchSourceFilter(new String[]{"pk_id","attraction_name", "content_id", "wiki_title", "wiki_content"}, null)) // 필요한 필드만 가져오기 위한 설정
-                .build();
+            // NativeSearchQuery를 생성한다.
+            NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
+                    .withQuery(boolQueryBuilder)
+                    .withSourceFilter(new FetchSourceFilter(new String[]{"pk_id","attraction_name", "content_id", "wiki_title", "wiki_content"}, null)) // 필요한 필드만 가져오기 위한 설정
+                    .build();
 
-        // Elasticsearch에서 쿼리 실행 후 결과값 가져오기
-        SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
-        return toolsForWikiService.getListBySearchHits(searchHits, useReliableSearch);
+            // Elasticsearch에서 쿼리 실행 후 결과값 가져오기
+            SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
+            return toolsForWikiService.getListBySearchHits(searchHits, reliable)
+                    .stream()
+                    .map(wiki -> wiki.toDto())
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new CommonException(ExceptionType.GET_SAME_ATTNAME_AND_WIKITITLE_FAIL);
+        }
     }
 
     /**
@@ -91,29 +98,35 @@ public class WikiServiceExtend {
      * @param fuzziness
      * @return List<Wiki>
      */
-    public List<ResponseWikiDto> fuzzinessSearch(int typeNum, String inputString, boolean useReliableSearch, int maxResults, int fuzziness) {
-        String type = toolsForWikiService.getType(typeNum);
-        Fuzziness fuzzinessLevel;
-        if (fuzziness > 0) {
-            fuzzinessLevel = Fuzziness.build(fuzziness);
-        } else {
-            fuzzinessLevel = Fuzziness.AUTO;
+    public List<ResponseWikiDto> fuzzinessSearch(int typeNum, String inputString, boolean reliable, int maxResults, int fuzziness) {
+        try {
+            String type = toolsForWikiService.getType(typeNum);
+            Fuzziness fuzzinessLevel;
+            if (fuzziness > 0) {
+                fuzzinessLevel = Fuzziness.build(fuzziness);
+            } else {
+                fuzzinessLevel = Fuzziness.AUTO;
+            }
+
+            QueryBuilder fuzzyBuilder = new FuzzyQueryBuilder(type, inputString)
+                    .fuzziness(fuzzinessLevel);
+            //NativeQuery 생성
+            NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
+                    .withQuery(fuzzyBuilder)
+                    .withPageable(PageRequest.of(0, maxResults)) // 결과 개수 제한
+                    .build();
+
+            // Elasticsearch에서 쿼리 실행 후 결과값 가져오기
+            SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
+            return toolsForWikiService.getListBySearchHits(searchHits, reliable)
+                    .stream()
+                    .map(wiki -> wiki.toDto())
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            log.error("[ERR LOG]{}", e.getMessage());
+            throw new CommonException(ExceptionType.FUZZINESS_SEARCH_FAIL);
         }
 
-        QueryBuilder fuzzyBuilder = new FuzzyQueryBuilder(type, inputString)
-                .fuzziness(fuzzinessLevel);
-        //NativeQuery 생성
-        NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(fuzzyBuilder)
-                .withPageable(PageRequest.of(0, maxResults)) // 결과 개수 제한
-                .build();
-
-        // Elasticsearch에서 쿼리 실행 후 결과값 가져오기
-        SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
-        return toolsForWikiService.getListBySearchHits(searchHits, useReliableSearch)
-                .stream()
-                .map(wiki -> wiki.toDto())
-                .collect(Collectors.toList());
     }
 
     /**
@@ -147,8 +160,8 @@ public class WikiServiceExtend {
                     .collect(Collectors.toList());
 
         } catch (Exception e) {
-            log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.CALCULATE_SIMILARY_TERMS);
+            log.error("[ERR LOG]{}", e.getMessage());
+            throw new CommonException(ExceptionType.SEARCH_ALL_BY_DTO_FAIL);
         }
     }
 
@@ -157,7 +170,7 @@ public class WikiServiceExtend {
      * @param inputString, maxResults, useReliableSearch
      * @return searchAll
      */
-    public List<Wiki> searchAll(String inputString, int maxResults, boolean useReliableSearch ) {
+    public List<ResponseWikiDto> searchAll(String inputString, int maxResults, boolean reliable) {
         try {
             QueryBuilder multiyMatchQuery = new MultiMatchQueryBuilder(
                     inputString, // 검색어
@@ -176,10 +189,13 @@ public class WikiServiceExtend {
 
             // Elasticsearch에서 쿼리 실행 후 결과값 가져오기
             SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
-            return toolsForWikiService.getListBySearchHits(searchHits, useReliableSearch);
+            return toolsForWikiService.getListBySearchHits(searchHits, reliable)
+                    .stream()
+                    .map(wiki -> wiki.toDto())
+                    .collect(Collectors.toList());
         } catch (Exception e) {
-            log.error("[ERR LOG]{}", e);
-            throw new CommonException(ExceptionType.CALCULATE_SIMILARY_TERMS);
+            log.error("[ERR LOG]{}", e.getMessage());
+            throw new CommonException(ExceptionType.SEARCH_ALL_BY_PARAM_FAIL);
         }
     }
 
