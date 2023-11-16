@@ -28,40 +28,40 @@ public class ElasticController {
     //특정 컬럼의 Keyword 매칭 검색 ->
     //사용자에게 제공하지 않는 서비스
     @GetMapping("/keyword")
-    public DataResponse<List<ResponseWikiDto>> searchExact(@RequestParam("typeNum") int typeNum,
+    public List<ResponseWikiDto> searchExact(@RequestParam("typeNum") int typeNum,
                                                            @RequestParam("inputString") String inputString,
                                                            @RequestParam("reliable") boolean reliable,
                                                            @RequestParam("maxResults") int maxResults) {
         List<ResponseWikiDto> data = elasticService.searchExact(typeNum, inputString, reliable, maxResults);
-        return new DataResponse<>(200, "success", data);
+        return data;
     }
 
     //특정 컬럼의 match 검색
     //사용자에게 제공하지 않는 서비스
     @GetMapping("/partial")
-    public DataResponse<List<ResponseWikiDto>> searchPartial(@RequestParam("typeNum") int typeNum,
+    public List<ResponseWikiDto> searchPartial(@RequestParam("typeNum") int typeNum,
                                                              @RequestParam("inputString") String inputString,
                                                              @RequestParam("reliable") boolean reliable,
                                                              @RequestParam("maxResults") int maxResults) {
         List<ResponseWikiDto> data = elasticService.searchPartial(typeNum, inputString, reliable, maxResults);
-        return new DataResponse<>(200, "success", data);
+        return data;
     }
 
     //특정 칼럼의 fuzzy 검색
     //사용자에게 제공하지 않는 서비스
     @GetMapping("/fuzzy")
-    public DataResponse<List<ResponseWikiDto>> searchFuzzy(@RequestParam("typeNum") int typeNum, @RequestParam("inputString") String inputString,
+    public List<ResponseWikiDto> searchFuzzy(@RequestParam("typeNum") int typeNum, @RequestParam("inputString") String inputString,
                                                            @RequestParam("reliable") boolean reliable, @RequestParam("maxResults") int maxResults ,@RequestParam("fuzziness") int fuzziness) {
         List<ResponseWikiDto> data = elasticService.fuzzinessSearch(typeNum, inputString, reliable, maxResults, fuzziness);
-        return new DataResponse<>(200, "success", data);
+        return data;
     }
 
     //통합 내용 검색(전문 검색)
     //사용자에게 제공되는 검색어 기반의 전문 검색 서비스
     @GetMapping("/search")
-    public DataResponse<List<ResponseWikiDto>> searchAll(@RequestParam("content") String content, @RequestParam("maxResults") int maxResults) {
+    public List<ResponseWikiDto> searchAll(@RequestParam("content") String content, @RequestParam("maxResults") int maxResults) {
         List<ResponseWikiDto> data = elasticService.searchAll(content, maxResults);
-        return new DataResponse<>(200, "success", data);
+        return data;
     }
 
     //통합 제목 검색 : 제목 일치 or (Fuzzy + ngram)
@@ -79,9 +79,9 @@ public class ElasticController {
     //제목 일치 여부 검색
     //사용자에게 제공하지 않는 서비스
     @GetMapping("/title/correct")
-    public DataResponse<ResponseWikiDto> searchTitleCorrect(@RequestParam("title") String title, @RequestParam("reliable") boolean reliable) {
+    public ResponseWikiDto searchTitleCorrect(@RequestParam("title") String title, @RequestParam("reliable") boolean reliable) {
         ResponseWikiDto data = elasticService.searchTitleCorrect(title, reliable);
-        return new DataResponse<>(200, "success", data);
+        return data;
     }
 
     //Fuzzy 제목 검색
