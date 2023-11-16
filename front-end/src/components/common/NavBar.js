@@ -51,7 +51,7 @@ const NavBar = () => {
                         <Link className={styles.navMenu} to="/">
                             Home
                         </Link>
-                        <Link className={styles.navMenu} to="/apidocs/financialdata">
+                        <Link className={styles.navMenu} to="/apidocs/accommodation">
                             API문서
                         </Link>
                     </div>
