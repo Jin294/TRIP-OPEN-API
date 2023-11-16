@@ -78,6 +78,7 @@ public class  AccommodationService {
                 .map(data -> {
                     AccommodationResponseDto now = data.toDto();
                     now.setRelativeDistance(calculateDistance(nowLatitude, nowLongitude, now.getAccommodationLatitude(), now.getAccommodationLongitude()));
+                    now.setAttractionName(wiki.getAttractionName());
                     return now;
                 })
                 .filter(dto -> dto.getRelativeDistance() < requestDto.getDistance())

@@ -26,4 +26,6 @@ public class AccommodationResponseDto {
     private Double accommodationLongitude;
 
     private Double relativeDistance;
+
+    private String attractionName;
 }

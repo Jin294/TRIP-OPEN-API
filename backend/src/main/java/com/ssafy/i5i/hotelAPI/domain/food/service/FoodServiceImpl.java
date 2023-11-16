@@ -77,6 +77,7 @@ public class FoodServiceImpl implements FoodService{
 			.map(data -> {
 				FoodResponseDto.Coordi now = data.convertToDto();
 				now.setDistance(calculateDistance(attraction.getLatitude(), attraction.getLongitude(), now.getRestaurantLatitude(), now.getRestaurantLongitude()));
+				now.setAttractionName(wiki.getAttractionName());
 				return now;
 			})
 			.filter(dto -> dto.getDistance() < requestDto.getDistance())
