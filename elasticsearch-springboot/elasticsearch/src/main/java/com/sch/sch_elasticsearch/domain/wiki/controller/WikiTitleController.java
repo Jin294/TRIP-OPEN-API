@@ -31,7 +31,7 @@ public class WikiTitleController {
 
     //통합 제목 검색 : 제목 일치 or (Fuzzy + ngram)
     @GetMapping("/title/aggregate-search")
-    public DataResponse<List<ResponseWikiDto>> searchTitleComprehensive(@RequestParam("title") String title,
+    public List<ResponseWikiDto> searchTitleComprehensive(@RequestParam("title") String title,
                                                                         @RequestParam("maxResults") int maxResults,
                                                                         @RequestParam("fuzziness") int fuzziness,
                                                                         @RequestParam("reliable") boolean reliable,
@@ -42,10 +42,10 @@ public class WikiTitleController {
             if (wiki != null) {
                 List<ResponseWikiDto> data = new ArrayList<>();
                 data.add(wiki);
-                return new DataResponse<>(200, "success", data);
+                return data;
             } //1. 일치 제목 검색이 있다면 이를 리스트에 추가 후 리턴
             List<ResponseWikiDto> data = wikiServiceTitle.searchFuzzyAndNgram(title, maxResults, fuzziness, reliable, fuzzyPrimary); //2. 아니라면 두개 검색 비교후 리턴
-            return new DataResponse<>(200, "success", data);
+            return data;
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e);
             throw new CommonException(ExceptionType.WIKI_AGGREGATE_TITLE_SEARCH_FAIL);
@@ -54,25 +54,25 @@ public class WikiTitleController {
 
     //제목 일치 여부 검색
     @GetMapping("/title/correct")
-    public DataResponse<ResponseWikiDto> searchTitleCorrect(@RequestParam("title") String title, @RequestParam("reliable") boolean reliable) {
+    public ResponseWikiDto searchTitleCorrect(@RequestParam("title") String title, @RequestParam("reliable") boolean reliable) {
         ResponseWikiDto data = wikiServiceTitle.searchTitleCorrect(title, reliable);
-        return new DataResponse<>(200, "success", data);
+        return data;
     }
 
     //Fuzzy 제목 검색
     @GetMapping("/title/fuzzy")
-    public DataResponse<List<ResponseWikiDto>> searchTitleFuzzy(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
+    public List<ResponseWikiDto> searchTitleFuzzy(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                                   @RequestParam("fuzziness") int fuzziness, @RequestParam("reliable") boolean reliable)
     {
         List<ResponseWikiDto> data = wikiServiceTitle.searchTitleUseFuzzyDto(title, maxResults, fuzziness, reliable);
-        return new DataResponse<>(200, "success", data);
+        return data;
     }
     //ngram 제목 검색
     @GetMapping("/title/ngram")
-    public DataResponse<List<ResponseWikiDto>> searchTitleNgram(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
+    public List<ResponseWikiDto> searchTitleNgram(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                                   @RequestParam("reliable") boolean reliable)
     {
         List<ResponseWikiDto> data = wikiServiceTitle.searchTitleUseNgramDto(title, maxResults, reliable);
-        return new DataResponse<>(200, "success", data);
+        return data;
     }
 }

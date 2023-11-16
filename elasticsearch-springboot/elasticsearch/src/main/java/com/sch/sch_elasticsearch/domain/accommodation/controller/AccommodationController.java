@@ -18,11 +18,11 @@ public class AccommodationController {
 
     //1. 데이터 저장 기능
     @PostMapping("/save")
-    public DataResponse<ResponseEntity<String>> saveData(@RequestBody AccommodationDTO accommodationDTO) {
+    public ResponseEntity<String> saveData(@RequestBody AccommodationDTO accommodationDTO) {
         try {
             accommodationService.saveData(accommodationDTO);
             ResponseEntity data = ResponseEntity.ok("숙소 저장 완료");
-            return new DataResponse<>(200, "success", data);
+            return data;
         } catch (Exception e) {
             throw new CommonException(ExceptionType.ACCOMMODATION_SAVE_FAIL);
         }
