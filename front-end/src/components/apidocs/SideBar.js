@@ -9,6 +9,9 @@ const SideBar = ({ onSetId }) => {
   const [tabsData, setTabsData] = useState([]);
   const [selectedTab, setSelectedTab] = useState("숙소 API");
   const [selectedSub, setSelectedSub] = useState(1);
+  const [searchnum, setSearchNum] = useState(0);
+  const [searchapi, setSearchApi] = useState(0);
+
   const setId = (data) => {
     onSetId(data);
   };
@@ -21,15 +24,15 @@ const SideBar = ({ onSetId }) => {
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
-
-    if (tab === "음식점 API") handleSubClick(3);
-    else if (tab === "검색 API") handleSubClick(5);
-    else handleSubClick(1);
+    console.log("searchNum", searchnum);
+    if (tab === "음식점 API") handleSubClick(3, 3);
+    else if (tab === "검색 API") handleSubClick(searchnum, searchapi);
+    else handleSubClick(1, 1);
   };
 
-  const handleSubClick = (sub) => {
+  const handleSubClick = (sub, api_num) => {
     setSelectedSub(sub);
-    setId(sub);
+    setId(api_num);
   };
 
   useEffect(() => {
@@ -37,7 +40,7 @@ const SideBar = ({ onSetId }) => {
       try {
         const response = await basicHttp.get(`/docs/data/apilist`);
         const responseData = response.data;
-        console.log("responseData", responseData);
+        // console.log("responseData", responseData);
         // console.log(responseData.data.length);
 
         if (responseData.data) {
@@ -55,10 +58,14 @@ const SideBar = ({ onSetId }) => {
             {
               title: "검색 API",
               url: "/apidocs/search",
-              subTabs: responseData.data.slice(4, responseData.data.length),
+              subTabs: responseData.data
+                .slice(4, responseData.data.length)
+                .sort((a, b) => a.apiFrontId - b.apiFrontId),
             },
           ];
           setTabsData(groupedTabs);
+          setSearchNum(groupedTabs[2].subTabs[0].apiFrontId);
+          setSearchApi(groupedTabs[2].subTabs[0].api_data_id);
         }
       } catch (error) {
         console.log("Error fetching API data", error);
@@ -95,14 +102,16 @@ const SideBar = ({ onSetId }) => {
               <ul>
                 {selectedTab === group.title &&
                   group.subTabs.map((tab) => (
-                    <li key={tab.api_data_id}>
+                    <li key={tab.apiFrontId}>
                       <div
                         className={
-                          selectedSub === tab.api_data_id
+                          selectedSub === tab.apiFrontId
                             ? styles.selected
                             : styles.noSelected
                         }
-                        onClick={() => handleSubClick(tab.api_data_id)}
+                        onClick={() =>
+                          handleSubClick(tab.apiFrontId, tab.api_data_id)
+                        }
                       >
                         {tab.title}
                       </div>

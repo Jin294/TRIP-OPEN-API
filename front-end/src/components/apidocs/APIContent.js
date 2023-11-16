@@ -68,10 +68,8 @@ const APIContent = (props) => {
   apiData.forEach((item) => {
     if (item.is_request) {
       isRequestTrueData.push(item);
-      console.log(isRequestTrueData);
     } else {
       isRequestFalseData.push(item);
-      console.log(isRequestFalseData);
     }
   });
 
