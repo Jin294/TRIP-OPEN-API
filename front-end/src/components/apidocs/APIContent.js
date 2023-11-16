@@ -101,7 +101,8 @@ const APIContent = (props) => {
         setTestResponseData({ error: "API 요청 중 에러가 발생했습니다." });
       });
   };
-
+  const str =
+    "데이터들의 정렬 기준을 위한 옵션이며 입력 가능한 값은 다음과 같습니다. (정렬순서는 내림차순입니다)\n- like : 찜순\n- score : 점수순\n- star : 별점순\n- distance : 거리순 ";
   return (
     <div className={styles.contentBody}>
       <div>
@@ -198,7 +199,18 @@ const APIContent = (props) => {
                     {dataItem.is_essential ? " O " : " X "}
                   </td>
                   <td>{dataItem.type}</td>
-                  <td>{dataItem.detail}</td>
+                  <td>
+                    {dataItem.detail.split("\n").map((line) => {
+                      console.log(line);
+                      return (
+                        <>
+                          {line}
+                          <br />
+                        </>
+                      );
+                    })}
+                    {/* {dataItem.detail} */}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -221,7 +233,18 @@ const APIContent = (props) => {
               <tr key={index}>
                 <td>{dataItem.title}</td>
                 <td>{dataItem.type}</td>
-                <td>{dataItem.detail}</td>
+                <td>
+                  {dataItem.detail.split("\n").map((line) => {
+                    console.log(line);
+                    return (
+                      <>
+                        {line}
+                        <br />
+                      </>
+                    );
+                  })}
+                  {/* {dataItem.detail} */}
+                </td>
               </tr>
             ))}
           </tbody>
