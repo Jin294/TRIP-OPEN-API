@@ -38,7 +38,7 @@ public class AccommodationController {
             @RequestParam("sorted") String sorted,
             @RequestParam("maxResults") Integer maxResults,
             @RequestParam("page") Integer page){
-        AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(longitude, latitude, distance, sorted, maxResults, page);
+        AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(latitude, longitude, distance, sorted, maxResults, page);
 
         List<AccommodationResponseDto> data = accommodationService.getAccommodationByCoordinate(attractionCoordinateRequestDto);
         return data;
