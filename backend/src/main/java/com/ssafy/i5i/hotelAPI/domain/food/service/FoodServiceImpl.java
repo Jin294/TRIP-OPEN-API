@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.ssafy.i5i.hotelAPI.domain.elastic.dto.ResponseWikiDto;
+import com.ssafy.i5i.hotelAPI.domain.elastic.service.ElasticService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,7 @@ public class FoodServiceImpl implements FoodService{
 
 	private final FoodRepository foodRepository;
 	private final AttractionRepository attractionRepository;
+	private final ElasticService elasticService;
 
 	public static final Double EARTH_RADIUS = 6371.0;
 	@Override
@@ -45,6 +48,11 @@ public class FoodServiceImpl implements FoodService{
 	// 		.collect(Collectors.toList());
 	// }
 	public List<FoodResponseDto.Coordi> getFoodFromTravle(FoodRequestDto.Title requestDto) {
+		if(requestDto.getPage() <= 0 || requestDto.getMaxResults() <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
+
+		ResponseWikiDto wiki = elasticService.searchFuzzyAndNgram(requestDto.getAttractionName(),1,1,false, true).get(0);
+		requestDto.setAttractionName(wiki.getAttractionName());
+
 		Attraction attraction = attractionRepository.findByTitle(requestDto.getAttractionName())
 			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION));
 
@@ -65,21 +73,27 @@ public class FoodServiceImpl implements FoodService{
 		double maxX = nowLongitude +(requestDto.getDistance()* mForLongitude);
 		double minX = nowLongitude -(requestDto.getDistance()* mForLongitude);
 
-		return foodRepository.getFoodFromLngLatv(maxY, maxX, minY, minX)
+		List<FoodResponseDto.Coordi> response = foodRepository.getFoodFromLngLatv(maxY, maxX, minY, minX)
 			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
 			.stream()
 			.map(data -> {
 				FoodResponseDto.Coordi now = data.convertToDto();
 				now.setDistance(calculateDistance(attraction.getLatitude(), attraction.getLongitude(), now.getRestaurantLatitude(), now.getRestaurantLongitude()));
+				now.setAttractionName(wiki.getAttractionName());
 				return now;
 			})
 			.filter(dto -> dto.getDistance() < requestDto.getDistance())
 			.sorted(getFoodCoordiComparator(requestDto.getSorted()))
 			.collect(Collectors.toList());
+
+		int fromIndex = (requestDto.getPage() - 1) * requestDto.getMaxResults();
+		return response.subList(fromIndex, Math.min(fromIndex + requestDto.getMaxResults(),response.size()));
 	}
 
 	@Override
 	public List<FoodResponseDto.Coordi> getFoodFromLngLatv(FoodRequestDto.Coordi requestDto) {
+		if(requestDto.getPage() <= 0 || requestDto.getMaxResults() <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
+
 		//현재 위도 좌표 (y 좌표)
 		double nowLatitude = requestDto.getLatitude();
 
@@ -98,7 +112,7 @@ public class FoodServiceImpl implements FoodService{
 		double minX = nowLongitude -(requestDto.getDistance()* mForLongitude);
 
 
-		return foodRepository.getFoodFromLngLatv(maxY, maxX, minY, minX)
+		List<FoodResponseDto.Coordi> response = foodRepository.getFoodFromLngLatv(maxY, maxX, minY, minX)
 			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
 			.stream()
 			.map(data -> {
@@ -109,6 +123,9 @@ public class FoodServiceImpl implements FoodService{
 			.filter(dto -> dto.getDistance() < requestDto.getDistance())
 			.sorted(getFoodCoordiComparator(requestDto.getSorted()))
 			.collect(Collectors.toList());
+
+		int fromIndex = (requestDto.getPage() - 1) * requestDto.getMaxResults();
+		return response.subList(fromIndex, Math.min(fromIndex + requestDto.getMaxResults(),response.size()));
 	}
 
 	//두 지점 간의 거리 계산
@@ -125,14 +142,14 @@ public class FoodServiceImpl implements FoodService{
 
 	//정렬
 	private Comparator<FoodResponseDto.Coordi> getFoodCoordiComparator(String sortingKey) {
-		if(sortingKey.isEmpty() || sortingKey == null || sortingKey.equals("distance")){
+		if(sortingKey.isEmpty() || sortingKey == null || sortingKey.equalsIgnoreCase("distance")){
 			return Comparator.comparing(FoodResponseDto.Coordi::getDistance);
 		}
-		else if ("like".equals(sortingKey)) {
+		else if ("like".equalsIgnoreCase(sortingKey)) {
 			return Comparator.comparing(FoodResponseDto.Coordi::getRestaurantLike);
-		} else if ("score".equals(sortingKey)) {
+		} else if ("score".equalsIgnoreCase(sortingKey)) {
 			return Comparator.comparing(FoodResponseDto.Coordi::getRestaurantScore);
-		} else if ("star".equals(sortingKey)) {
+		} else if ("star".equalsIgnoreCase(sortingKey)) {
 			return Comparator.comparing(FoodResponseDto.Coordi::getRestaurantStar);
 		}else {
 			throw new CommonException(ExceptionType.SORTED_TYPE_EXCEPTION);

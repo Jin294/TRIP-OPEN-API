@@ -1,9 +1,6 @@
 package com.ssafy.i5i.hotelAPI.domain.food.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 public class FoodResponseDto {
 	@Getter
@@ -32,6 +29,7 @@ public class FoodResponseDto {
 	@Setter
 	@NoArgsConstructor
 	@AllArgsConstructor
+	@Builder
 	public static class Coordi {
 		private Long id;
 		private String restaurantName;
@@ -43,5 +41,6 @@ public class FoodResponseDto {
 		private Double restaurantStar;
 		private Integer restaurantStarUser;
 		private Double Distance;
+		private String attractionName;
 	}
 }
