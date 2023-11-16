@@ -45,4 +45,10 @@ public class ApiData {
 
     @Column(name = "return_example", columnDefinition = "TEXT")
     private String returnExample;
+
+    @Column(name= "request_url_example")
+    private String requestUrlExample;
+
+    @Column(name = "api_front_id")
+    private Long apiFrontId;
 }

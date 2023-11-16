@@ -8,6 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 public class AttractionNameRequestDto {
     private String attractionName;
-    private int distance;
+    private Double distance;
     private String sorted;
+    private Integer maxResults;
+    private Integer page;
 }

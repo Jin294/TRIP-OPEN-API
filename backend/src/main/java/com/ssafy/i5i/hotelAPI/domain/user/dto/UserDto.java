@@ -39,6 +39,7 @@ public class UserDto {
     public static class SignUp {
         private String id;
         private String password;
+        private Long code;
     }
 
     @Getter
