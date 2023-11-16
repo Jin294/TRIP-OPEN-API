@@ -209,6 +209,9 @@
   font-weight: bolder;
   margin-top: 10px;
 }
+.linkUrlText {
+  color: white;
+}
 
 .text-hovered {
   color: #036844;
