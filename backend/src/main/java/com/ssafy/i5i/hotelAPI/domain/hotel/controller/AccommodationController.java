@@ -22,8 +22,10 @@ public class AccommodationController {
     public DataResponse<List<AccommodationResponseDto>> getAccommodationByName(
             @RequestParam("name") String name,
             @RequestParam("distance") Double distance,
-            @RequestParam("sorted") String sorted){
-        AttractionNameRequestDto attractionNameRequestDto = new AttractionNameRequestDto(name, distance, sorted);
+            @RequestParam("sorted") String sorted,
+            @RequestParam("maxResults") Integer maxResults,
+            @RequestParam("page") Integer page){
+        AttractionNameRequestDto attractionNameRequestDto = new AttractionNameRequestDto(name, distance, sorted, maxResults, page);
         List<AccommodationResponseDto> data = accommodationService.getAccommodationByName(attractionNameRequestDto);
         return new DataResponse<>(200, "success", data);
     }
@@ -33,8 +35,10 @@ public class AccommodationController {
             @RequestParam("latitude") Double latitude,
             @RequestParam("longtitude") Double longitude,
             @RequestParam("distance") Double distance,
-            @RequestParam("sorted") String sorted){
-        AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(latitude, longitude, distance, sorted);
+            @RequestParam("sorted") String sorted,
+            @RequestParam("maxResults") Integer maxResults,
+            @RequestParam("page") Integer page){
+        AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(latitude, longitude, distance, sorted, maxResults, page);
 
         List<AccommodationResponseDto> data = accommodationService.getAccommodationByCoordinate(attractionCoordinateRequestDto);
         return new DataResponse<>(200, "success", data);

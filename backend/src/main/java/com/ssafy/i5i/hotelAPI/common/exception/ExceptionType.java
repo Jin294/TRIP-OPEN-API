@@ -20,6 +20,7 @@ public enum ExceptionType {
     //5000번은 데이터와 관련된 에러
     NULL_POINT_EXCEPTION(5001, "데이터가 없습니다."),
     SORTED_TYPE_EXCEPTION(5002,"정렬 타입이 잘못되었습니다."),
+    PAGE_MAXRESULTS_EXCEPTION(5003,"페이지네이션 or 최대 데이터 수가 잘못되었습니다."),
     //6000번은 api token 관련 에러
 
     API_TOKEN_EXCEPTION(6000, "pk와 일치하는 api 토큰이 없습니다."),

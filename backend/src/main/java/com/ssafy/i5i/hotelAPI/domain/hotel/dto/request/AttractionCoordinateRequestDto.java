@@ -13,4 +13,6 @@ public class AttractionCoordinateRequestDto {
     private Double longitude;
     private Double distance;
     private String sorted;
+    private Integer maxResults;
+    private Integer page;
 }
