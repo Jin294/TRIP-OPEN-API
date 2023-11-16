@@ -9,6 +9,12 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { vs } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const APIContent = (props) => {
+  const handleScroll = () => {
+    window.scrollTo(0, 0);
+  };
+
+  handleScroll(); // 초기 렌더링 시에도 스크롤을 최상단으로 이동
+  
   const [api_docs_id, setApiId] = useState("");
   const [apiContent, setApiContent] = useState([]);
   const [apiData, setApiData] = useState([]);
