@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import basicHttp from "../../api/basicHttp";
 import { useParams } from "react-router-dom";
 
+
+
 const SideBar = ({ onSetId }) => {
   const { tab } = useParams();
   const [tabsData, setTabsData] = useState([]);
