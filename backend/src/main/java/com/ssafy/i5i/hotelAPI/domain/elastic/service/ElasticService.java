@@ -6,6 +6,7 @@ import com.ssafy.i5i.hotelAPI.domain.elastic.dto.ResponseWikiDto;
 import com.ssafy.i5i.hotelAPI.domain.elastic.dto.SearchAllDto;
 import com.ssafy.i5i.hotelAPI.domain.elastic.dto.WikiDto;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -86,7 +87,8 @@ public class ElasticService {
 
     public List<ResponseWikiDto> searchAll(SearchAllDto searchAllDTO) {
         List<ResponseWikiDto> result = webClient.post()
-                .uri(uriBuilder -> uriBuilder.path("/fuzzy").build())
+                .uri(uriBuilder -> uriBuilder.path("/search").build())
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(searchAllDTO))
                 .retrieve()

@@ -19,12 +19,14 @@ import java.util.List;
 public class ElasticController {
     private final ElasticService elasticService;
 
+    //테스트용
     @GetMapping("/test")
     public Mono<String> test(){
         return elasticService.test();
     }
 
     //특정 컬럼의 Keyword 매칭 검색 ->
+    //사용자에게 제공하지 않는 서비스
     @GetMapping("/keyword")
     public DataResponse<List<ResponseWikiDto>> searchExact(@RequestParam("typeNum") int typeNum,
                                      @RequestParam("inputString") String inputString,
@@ -35,6 +37,7 @@ public class ElasticController {
     }
 
     //특정 컬럼의 match 검색
+    //사용자에게 제공하지 않는 서비스
     @GetMapping("/partial")
     public DataResponse<List<ResponseWikiDto>> searchPartial(@RequestParam("typeNum") int typeNum,
                                                @RequestParam("inputString") String inputString,
@@ -45,6 +48,7 @@ public class ElasticController {
     }
 
     //특정 칼럼의 fuzzy 검색
+    //사용자에게 제공하지 않는 서비스
     @GetMapping("/fuzzy")
     public DataResponse<List<ResponseWikiDto>> searchFuzzy(@RequestParam("typeNum") int typeNum, @RequestParam("inputString") String inputString,
                                              @RequestParam("reliable") boolean reliable, @RequestParam("maxResults") int maxResults ,@RequestParam("fuzziness") int fuzziness) {
@@ -60,6 +64,7 @@ public class ElasticController {
     }
 
     //통합 제목 검색 : 제목 일치 or (Fuzzy + ngram)
+    //사용자에게 제공되는 제목 기반의 검색 기능
     @GetMapping("/title/aggregate-search")
     public DataResponse<List<ResponseWikiDto>> searchTitleComprehensive(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                                           @RequestParam("fuzziness") int fuzziness, @RequestParam("reliable") boolean reliable){
@@ -68,6 +73,7 @@ public class ElasticController {
     }
 
     //제목 일치 여부 검색
+    //사용자에게 제공하지 않는 서비스
     @GetMapping("/title/correct")
     public DataResponse<ResponseWikiDto> searchTitleCorrect(@RequestParam("title") String title, @RequestParam("reliable") boolean reliable) {
         ResponseWikiDto data = elasticService.searchTitleCorrect(title, reliable);
@@ -75,6 +81,7 @@ public class ElasticController {
     }
 
     //Fuzzy 제목 검색
+    //사용자에게 제공하지 않는 서비스
     @GetMapping("/title/fuzzy")
     public DataResponse<List<ResponseWikiDto>> searchTitleFuzzy(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                                   @RequestParam("fuzziness") int fuzziness, @RequestParam("reliable") boolean reliable)
@@ -83,6 +90,7 @@ public class ElasticController {
         return new DataResponse<>(200, "success", data);
     }
     //ngram 제목 검색
+    //사용자에게 제공하지 않는 서비스
     @GetMapping("/title/ngram")
     public DataResponse<List<ResponseWikiDto>> searchTitleNgram(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                                   @RequestParam("reliable") boolean reliable)
