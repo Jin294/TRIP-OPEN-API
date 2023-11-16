@@ -95,14 +95,14 @@ const SideBar = ({ onSetId }) => {
               <ul>
                 {selectedTab === group.title &&
                   group.subTabs.map((tab) => (
-                    <li key={tab.apiFrontId}>
+                    <li key={tab.api_data_id}>
                       <div
                         className={
-                          selectedSub === tab.apiFrontId
+                          selectedSub === tab.api_data_id
                             ? styles.selected
                             : styles.noSelected
                         }
-                        onClick={() => handleSubClick(tab.apiFrontId)}
+                        onClick={() => handleSubClick(tab.api_data_id)}
                       >
                         {tab.title}
                       </div>
