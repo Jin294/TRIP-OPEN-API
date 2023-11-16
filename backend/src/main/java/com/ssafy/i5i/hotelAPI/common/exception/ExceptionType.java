@@ -32,7 +32,7 @@ public enum ExceptionType {
 
     //8000번 웹 클라이언트 에러
     WEBCLIENT_INVALID_EXCEPTION(8001, "WebClient 데이터 손실이 있습니다"),
-
+    SEARCH_NODATA_EXCEPTION(8002,"검색 결과가 없습니다."),
     //9000번 email 에러
     EMAIL_EXIST_EXCEPTION(9000, "이미 회원가입된 이메일입니다"),
     EMAIL_SEND_FAIL(9001, "이메일 전송에 실패하였습니다"),

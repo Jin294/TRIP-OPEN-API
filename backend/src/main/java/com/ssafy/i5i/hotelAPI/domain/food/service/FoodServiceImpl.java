@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.ssafy.i5i.hotelAPI.domain.elastic.service.ElasticService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,7 @@ public class FoodServiceImpl implements FoodService{
 
 	private final FoodRepository foodRepository;
 	private final AttractionRepository attractionRepository;
+	private final ElasticService elasticService;
 
 	public static final Double EARTH_RADIUS = 6371.0;
 	@Override
@@ -125,14 +127,14 @@ public class FoodServiceImpl implements FoodService{
 
 	//정렬
 	private Comparator<FoodResponseDto.Coordi> getFoodCoordiComparator(String sortingKey) {
-		if(sortingKey.isEmpty() || sortingKey == null || sortingKey.equals("distance")){
+		if(sortingKey.isEmpty() || sortingKey == null || sortingKey.equalsIgnoreCase("distance")){
 			return Comparator.comparing(FoodResponseDto.Coordi::getDistance);
 		}
-		else if ("like".equals(sortingKey)) {
+		else if ("like".equalsIgnoreCase(sortingKey)) {
 			return Comparator.comparing(FoodResponseDto.Coordi::getRestaurantLike);
-		} else if ("score".equals(sortingKey)) {
+		} else if ("score".equalsIgnoreCase(sortingKey)) {
 			return Comparator.comparing(FoodResponseDto.Coordi::getRestaurantScore);
-		} else if ("star".equals(sortingKey)) {
+		} else if ("star".equalsIgnoreCase(sortingKey)) {
 			return Comparator.comparing(FoodResponseDto.Coordi::getRestaurantStar);
 		}else {
 			throw new CommonException(ExceptionType.SORTED_TYPE_EXCEPTION);
