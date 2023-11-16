@@ -49,7 +49,7 @@ public class  AccommodationService {
         ResponseWikiDto wiki = elasticService.searchFuzzyAndNgram(requestDto.getAttractionName(),1,1,false,true).get(0);
         requestDto.setAttractionName(wiki.getAttractionName());
 
-        Attraction attraction = attractionRepository.findByTitle(requestDto.getAttractionName())
+        Attraction attraction = attractionRepository.findTopByTitle(requestDto.getAttractionName())
                 .orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION));
 
         //현재 위도 좌표 (y 좌표)
