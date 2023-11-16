@@ -57,9 +57,10 @@ public class ElasticController {
     }
 
     //통합 내용 검색(전문 검색)
-    @PostMapping("/search")
-    public DataResponse<List<ResponseWikiDto>> searchAll(@RequestBody SearchAllDto searchAllDTO) {
-        List<ResponseWikiDto> data = elasticService.searchAll(searchAllDTO);
+    //사용자에게 제공되는 검색어 기반의 전문 검색 서비스
+    @GetMapping("/search")
+    public DataResponse<List<ResponseWikiDto>> searchAll(@RequestParam("content") String content, @RequestParam("maxResults") int maxResults) {
+        List<ResponseWikiDto> data = elasticService.searchAll(content, maxResults);
         return new DataResponse<>(200, "success", data);
     }
 

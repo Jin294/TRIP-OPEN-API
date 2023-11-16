@@ -85,12 +85,12 @@ public class ElasticService {
         return result;
     }
 
-    public List<ResponseWikiDto> searchAll(SearchAllDto searchAllDTO) {
+    public List<ResponseWikiDto> searchAll(String content, int maxResults) {
         List<ResponseWikiDto> result = webClient.post()
                 .uri(uriBuilder -> uriBuilder.path("/search").build())
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue(searchAllDTO))
+                .body(BodyInserters.fromValue(new SearchAllDto(content, maxResults)))
                 .retrieve()
                 .bodyToFlux(WikiDto.class)
                 .map(WikiDto::toResponse)
