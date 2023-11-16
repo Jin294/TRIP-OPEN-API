@@ -250,7 +250,7 @@ const APIContent = (props) => {
                             <tr>
                                 <td>Header</td>
                                 <td>Authorization</td>
-                                <td>Baerer</td>
+                                <td>Bearer</td>
                                 <td>
                                     <input value={authorizationValue} onChange={handleAuthorizationChange} />
                                 </td>
