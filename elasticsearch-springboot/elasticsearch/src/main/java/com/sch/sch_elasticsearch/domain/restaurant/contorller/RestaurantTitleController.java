@@ -1,5 +1,6 @@
 package com.sch.sch_elasticsearch.domain.restaurant.contorller;
 
+import com.sch.sch_elasticsearch.domain.global.DataResponse;
 import com.sch.sch_elasticsearch.domain.restaurant.dto.ResponseRestaurantDto;
 import com.sch.sch_elasticsearch.domain.restaurant.service.RestaurantServiceBasic;
 import com.sch.sch_elasticsearch.domain.restaurant.service.RestaurantTitleService;
@@ -30,32 +31,35 @@ public class RestaurantTitleController {
 
     //정확한 음식점명의 결과 조회
     @GetMapping("/exact-title")
-    public List<ResponseRestaurantDto> searchExactRestaurantName(
+    public DataResponse<List<ResponseRestaurantDto>> searchExactRestaurantName(
             @RequestParam("restaurantName") String restaurantName,
             @RequestParam("maxResults") int maxResults) {
-        return restaurantServiceBasic.searchExactRestaurantName(restaurantName, maxResults);
+        List<ResponseRestaurantDto> data = restaurantServiceBasic.searchExactRestaurantName(restaurantName, maxResults);
+        return new DataResponse<>(200, "success", data);
     }
 
     //Fuzzy 제목 검색
     @GetMapping("/title/fuzzy")
-    public List<ResponseRestaurantDto> searchTitleFuzzy(@RequestParam("title") String title,
+    public DataResponse<List<ResponseRestaurantDto>> searchTitleFuzzy(@RequestParam("title") String title,
                                                         @RequestParam("maxResults") int maxResults,
                                                         @RequestParam("fuzziness") int fuzziness)
     {
-        return restaurantTitleService.searchTitleUseFuzzyDto(title, maxResults, fuzziness);
+        List<ResponseRestaurantDto> data = restaurantTitleService.searchTitleUseFuzzyDto(title, maxResults, fuzziness);
+        return new DataResponse<>(200, "success", data);
     }
 
     //ngram 제목 검색
     @GetMapping("/title/ngram")
-    public List<ResponseRestaurantDto> searchTitleNgram(@RequestParam("title") String title,
+    public DataResponse<List<ResponseRestaurantDto>> searchTitleNgram(@RequestParam("title") String title,
                                                         @RequestParam("maxResults") int maxResults)
     {
-        return restaurantTitleService.searchTitleUseNgramDto(title, maxResults);
+        List<ResponseRestaurantDto> data = restaurantTitleService.searchTitleUseNgramDto(title, maxResults);
+        return new DataResponse<>(200, "success", data);
     }
 
     //통합 제목 검색 : 제목 일치 or (Fuzzy + ngram)
     @GetMapping("/title/aggregate-search")
-    public List<ResponseRestaurantDto> searchTitleComprehensive(@RequestParam("title") String title,
+    public DataResponse<List<ResponseRestaurantDto>> searchTitleComprehensive(@RequestParam("title") String title,
                                                                 @RequestParam("maxResults") int maxResults,
                                                                 @RequestParam("fuzziness") int fuzziness,
                                                                 @RequestParam("fuzzyPrimary") boolean fuzzyPrimary)
@@ -63,9 +67,11 @@ public class RestaurantTitleController {
         try {
             List<ResponseRestaurantDto> responseRestaurantDtoList = restaurantServiceBasic.searchExactRestaurantName(title, maxResults);
             if (responseRestaurantDtoList.size() != 0) {
-                return responseRestaurantDtoList;
+                List<ResponseRestaurantDto> data = responseRestaurantDtoList;
+                return new DataResponse<>(200, "success", data);
             } //1. 일치 제목 검색이 있다면 이를 리스트에 추가 후 리턴
-            return restaurantTitleService.searchFuzzyAndNgram(title, maxResults, fuzziness, fuzzyPrimary); //2. 결과가 없다면 두 검색 진행 후 유사도별로 정렬
+            List<ResponseRestaurantDto> data = restaurantTitleService.searchFuzzyAndNgram(title, maxResults, fuzziness, fuzzyPrimary); //2. 결과가 없다면 두 검색 진행 후 유사도별로 정렬
+            return new DataResponse<>(200, "success", data);
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());
             throw new CommonException(ExceptionType.RESTAURANT_AGGREGATE_TITLE_SEARCH_FAIL);

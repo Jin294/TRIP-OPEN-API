@@ -2,6 +2,7 @@ package com.sch.sch_elasticsearch.domain.accommodation.controller;
 
 import com.sch.sch_elasticsearch.domain.accommodation.dto.AccommodationDTO;
 import com.sch.sch_elasticsearch.domain.accommodation.service.AccommodationService;
+import com.sch.sch_elasticsearch.domain.global.DataResponse;
 import com.sch.sch_elasticsearch.exception.CommonException;
 import com.sch.sch_elasticsearch.exception.ExceptionType;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,11 @@ public class AccommodationController {
 
     //1. 데이터 저장 기능
     @PostMapping("/save")
-    public ResponseEntity<String> saveData(@RequestBody AccommodationDTO accommodationDTO) {
+    public DataResponse<ResponseEntity<String>> saveData(@RequestBody AccommodationDTO accommodationDTO) {
         try {
             accommodationService.saveData(accommodationDTO);
-            return ResponseEntity.ok("숙소 저장 완료");
+            ResponseEntity data = ResponseEntity.ok("숙소 저장 완료");
+            return new DataResponse<>(200, "success", data);
         } catch (Exception e) {
             throw new CommonException(ExceptionType.ACCOMMODATION_SAVE_FAIL);
         }
