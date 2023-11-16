@@ -8,6 +8,27 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { vs } from "react-syntax-highlighter/dist/esm/styles/prism";
 
+//더미 데이터
+const dummy = [
+  {
+    bearer: "token",
+    name: "비슬산자연휴양림",
+    distance: "10",
+    sorted: "distance",
+    maxResults: "10",
+    page: "1",
+  },
+  {
+    bearer: "token",
+    longitude: "128.99565180000000000",
+    latitude: "37.03918876000000000",
+    distance: "5",
+    sorted: "like",
+    maxResults: "5",
+    page: "1",
+  },
+];
+
 const APIContent = (props) => {
 	// 렌더링 시 스크롤을 최상단으로 이동하는 함수
 	const handleScroll = () => {
@@ -37,14 +58,39 @@ const APIContent = (props) => {
 		setApiId(props.data);
 	}, [props]);
 
-	useEffect(() => {
-		setAuthorizationValue("");
-		setRequestParameterValues([]);
-		setTestResponseData([]);
-		const getApiDocsData = async (api_docs_id) => {
-			try {
-				const response = await basicHttp.get(`/docs/data/api/info/${api_docs_id}`);
-				const responseData = response.data;
+  useEffect(() => {
+    setAuthorizationValue("");
+    setRequestParameterValues([]);
+    if (api_docs_id == 4) {
+      setAuthorizationValue("token");
+      setRequestParameterValues([
+        dummy[1].longitude,
+        dummy[1].latitude,
+        dummy[1].distance,
+        dummy[1].sorted,
+        dummy[1].maxResults,
+        dummy[1].page,
+      ]);
+    } else if (api_docs_id == 1) {
+      setAuthorizationValue("token");
+      setRequestParameterValues([
+        dummy[0].name,
+        dummy[0].distance,
+        dummy[0].sorted,
+        dummy[0].maxResults,
+        dummy[0].page,
+      ]);
+
+      //   console.log(requestParameterValues);
+    }
+
+    setTestResponseData([]);
+    const getApiDocsData = async (api_docs_id) => {
+      try {
+        const response = await basicHttp.get(
+          `/docs/data/api/info/${api_docs_id}`
+        );
+        const responseData = response.data;
 
 				if (responseData.data) {
 					setApiContent(responseData.data);
@@ -81,30 +127,30 @@ const APIContent = (props) => {
 			queryParams.append(dataItem.title, value);
 		});
 
-		const fullUrl = `${baseURL}?${queryParams.toString()}`;
-		// const fullUrl = `https://k9b205.p.ssafy.io/api/accommodation/by-name?name=비슬산자연휴양림&distance=2&sorted=distance`;
-		// const fullUrl = `https://k9b205.p.ssafy.io/api/accommodation/by-name?${queryParams.toString()}`;
-
-		// Axios를 사용하여 POST 요청 보내기
-		axios
-			.get(fullUrl, {
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + authorizationValue,
-					// Authorization: `Bearer ${authorizationValue}`
-					// Authorization: `Bearer 31da9460a4be6a0e82022fd1d10a3ed0d72c77289f036f8c2f5dff4c559973d07177657240676d61696c2e636f6d`,
-				},
-			})
-			.then((response) => {
-				// setTestResponseData(response.data);
-				console.log(response);
-				setTestResponseData(response.data.data);
-			})
-			.catch((error) => {
-				console.error("API 요청 에러:", error);
-				setTestResponseData({ error: "API 요청 중 에러가 발생했습니다." });
-			});
-	};
+    const fullUrl = `${baseURL}?${queryParams.toString()}`;
+    // const fullUrl = `https://k9b205.p.ssafy.io/api/accommodation/by-name?name=비슬산자연휴양림&distance=2&sorted=distance`;
+    // const fullUrl = `https://k9b205.p.ssafy.io/api/accommodation/by-name?${queryParams.toString()}`;
+    console.log(fullUrl);
+    // Axios를 사용하여 POST 요청 보내기
+    axios
+      .get(fullUrl, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + authorizationValue,
+          // Authorization: `Bearer ${authorizationValue}`
+          // Authorization: `Bearer 31da9460a4be6a0e82022fd1d10a3ed0d72c77289f036f8c2f5dff4c559973d07177657240676d61696c2e636f6d`,
+        },
+      })
+      .then((response) => {
+        // setTestResponseData(response.data);
+        console.log(response);
+        setTestResponseData(response.data.data);
+      })
+      .catch((error) => {
+        console.error("API 요청 에러:", error);
+        setTestResponseData({ error: "API 요청 중 에러가 발생했습니다." });
+      });
+  };
 
 	return (
 		<div className={styles.contentBody}>
