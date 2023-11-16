@@ -9,8 +9,12 @@ const SideBar = ({ onSetId }) => {
   const [tabsData, setTabsData] = useState([]);
   const [selectedTab, setSelectedTab] = useState("숙소 API");
   const [selectedSub, setSelectedSub] = useState(1);
-  const [searchnum, setSearchNum] = useState(0);
-  const [searchapi, setSearchApi] = useState(0);
+  const [searchnumv1, setSearchNumV1] = useState(0);
+  const [searchapiv1, setSearchApiV1] = useState(0);
+  const [searchnumv2, setSearchNumV2] = useState(0);
+  const [searchapiv2, setSearchApiV2] = useState(0);
+  const [searchnumv3, setSearchNumV3] = useState(0);
+  const [searchapiv3, setSearchApiV3] = useState(0);
 
   const setId = (data) => {
     onSetId(data);
@@ -18,15 +22,22 @@ const SideBar = ({ onSetId }) => {
 
   useEffect(() => {
     if (tab === "restaurant") handleTabClick("음식점 API");
-    else if (tab === "search") handleTabClick("검색 API");
+    else if (tab === "search_v1") handleTabClick("검색 API : 여행지");
+    else if (tab === "search_v2") handleTabClick("검색 API : 숙소");
+    else if (tab === "search_v3") handleTabClick("검색 API : 음식점");
     else handleTabClick("숙소 API");
   }, [tab]);
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
-    console.log("searchNum", searchnum);
+    // console.log("searchNum", searchnum);
     if (tab === "음식점 API") handleSubClick(3, 3);
-    else if (tab === "검색 API") handleSubClick(searchnum, searchapi);
+    else if (tab === "검색 API : 여행지")
+      handleSubClick(searchnumv1, searchapiv1);
+    else if (tab === "검색 API : 숙소")
+      handleSubClick(searchnumv2, searchapiv2);
+    else if (tab === "검색 API : 음식점")
+      handleSubClick(searchnumv3, searchapiv3);
     else handleSubClick(1, 1);
   };
 
@@ -56,16 +67,34 @@ const SideBar = ({ onSetId }) => {
               subTabs: responseData.data.slice(2, 4),
             },
             {
-              title: "검색 API",
+              title: "검색 API : 여행지",
               url: "/apidocs/search",
               subTabs: responseData.data
-                .slice(4, responseData.data.length)
+                .filter((item) => item.api_type === 1)
+                .sort((a, b) => a.apiFrontId - b.apiFrontId),
+            },
+            {
+              title: "검색 API : 숙소",
+              url: "/apidocs/search",
+              subTabs: responseData.data
+                .filter((item) => item.api_type === 4)
+                .sort((a, b) => a.apiFrontId - b.apiFrontId),
+            },
+            {
+              title: "검색 API : 음식점",
+              url: "/apidocs/search",
+              subTabs: responseData.data
+                .filter((item) => item.api_type === 5)
                 .sort((a, b) => a.apiFrontId - b.apiFrontId),
             },
           ];
           setTabsData(groupedTabs);
-          setSearchNum(groupedTabs[2].subTabs[0].apiFrontId);
-          setSearchApi(groupedTabs[2].subTabs[0].api_data_id);
+          setSearchNumV1(groupedTabs[2].subTabs[0].apiFrontId);
+          setSearchApiV1(groupedTabs[2].subTabs[0].api_data_id);
+          setSearchNumV2(groupedTabs[3].subTabs[0].apiFrontId);
+          setSearchApiV2(groupedTabs[3].subTabs[0].api_data_id);
+          setSearchNumV3(groupedTabs[4].subTabs[0].apiFrontId);
+          setSearchApiV3(groupedTabs[4].subTabs[0].api_data_id);
         }
       } catch (error) {
         console.log("Error fetching API data", error);
