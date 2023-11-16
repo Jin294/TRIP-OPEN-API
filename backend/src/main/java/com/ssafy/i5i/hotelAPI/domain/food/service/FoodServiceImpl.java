@@ -87,6 +87,9 @@ public class FoodServiceImpl implements FoodService{
 			.collect(Collectors.toList());
 
 		int fromIndex = (requestDto.getPage() - 1) * requestDto.getMaxResults();
+
+		if(response.isEmpty()) throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);
+
 		return response.subList(fromIndex, Math.min(fromIndex + requestDto.getMaxResults(),response.size()));
 	}
 
@@ -125,6 +128,9 @@ public class FoodServiceImpl implements FoodService{
 			.collect(Collectors.toList());
 
 		int fromIndex = (requestDto.getPage() - 1) * requestDto.getMaxResults();
+
+		if(response.isEmpty()) throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);
+
 		return response.subList(fromIndex, Math.min(fromIndex + requestDto.getMaxResults(),response.size()));
 	}
 
