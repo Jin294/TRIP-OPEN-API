@@ -43,13 +43,15 @@ public class ToolsForRestauantService {
      * @return 위도와 경도의 범위를 포함하는 배열
      */
     public static double[][] calculateLatLonRange(double lat, double lon, double distance) {
-        double latChange = distance / EARTH_RADIUS; // 위도 변화 계산
-        double lonChange = Math.asin(Math.sin(latChange) / Math.cos(Math.toRadians(lat))); // 경도 변화 계산
+        final double R = EARTH_RADIUS; // 지구의 평균 반지름 (km)
 
-        double minLat = lat - Math.toDegrees(latChange);
-        double maxLat = lat + Math.toDegrees(latChange);
-        double minLon = lon - Math.toDegrees(lonChange);
-        double maxLon = lon + Math.toDegrees(lonChange);
+        double latChange = Math.toDegrees(distance / R);
+        double lonChange = Math.toDegrees(distance / (R * Math.cos(Math.toRadians(lat))));
+
+        double minLat = lat - latChange;
+        double maxLat = lat + latChange;
+        double minLon = lon - lonChange;
+        double maxLon = lon + lonChange;
 
         return new double[][]{{minLat, minLon}, {maxLat, maxLon}};
     }

@@ -37,11 +37,43 @@ public class RestaurantController {
         return restaurantServiceExtend.fuzzinessSearch(typeNum, inputString, maxResults, fuzziness);
     }
 
-//    //통합 내용 검색(전문 검색)
-//    @PostMapping("/search")
-//    public List<ResponseRestaurantDto> searchAll(DTO) {
-//        return restaurantServiceExtend.searchAll();
-//    }
+    //통합 내용 검색(전문 검색) - 간단 버전
+    @GetMapping("/search")
+    public List<ResponseRestaurantDto> searchAll(@RequestParam("inputString") String inputString,
+                                                 @RequestParam("maxResults") int maxResults) {
+        return restaurantServiceExtend.searchAll(inputString, maxResults);
+    }
 
+    //통합 내용 검색(전문 검색) - 복잡한 버전 : 별점, 점수의 정량 지표 추가, includeZero의 경우 둘 중 하나의 파라미터가 0일 경우 포함
+    @GetMapping("/search/score")
+    public List<ResponseRestaurantDto> searchAllExtendScore(@RequestParam("inputString") String inputString,
+                                                 @RequestParam("maxResults") int maxResults,
+                                                       @RequestParam("includeZero") boolean includeZero,
+                                                       @RequestParam("starScore") float starScore,
+                                                       @RequestParam("foodScore") int foodScore) {
+        return restaurantServiceExtend.searchAllExtendScore(inputString, maxResults, includeZero, starScore, foodScore);
+    }
 
+    //현재 위치에서 Nkm 이내의 통합 검색
+    @GetMapping("/search/distance")
+    public List<ResponseRestaurantDto> searchAllExtendDistance(@RequestParam("inputString") String inputString,
+                                                                       @RequestParam("maxResults") int maxResults,
+                                                                       @RequestParam("lat") float lat,
+                                                                       @RequestParam("lng") float lng,
+                                                                       @RequestParam("kilo") int kilo) {
+        return restaurantServiceExtend.searchAllExtendDistance(inputString, maxResults, lat, lng, kilo);
+    }
+
+    //현재 위치에서 Nkm 이내, 별점의 통합 내용 검색
+    @GetMapping("/search/score/distance")
+    public List<ResponseRestaurantDto> searchAllExtendScoreAndDistance(@RequestParam("inputString") String inputString,
+                                                            @RequestParam("maxResults") int maxResults,
+                                                            @RequestParam("includeZero") boolean includeZero,
+                                                            @RequestParam("starScore") float starScore,
+                                                            @RequestParam("foodScore") int foodScore,
+                                                            @RequestParam("lat") float lat,
+                                                            @RequestParam("lng") float lng,
+                                                            @RequestParam("kilo") int km) {
+        return restaurantServiceExtend.searchAllExtendScoreAndDistance(inputString, maxResults, includeZero, starScore, foodScore, lat, lng, km);
+    }
 }

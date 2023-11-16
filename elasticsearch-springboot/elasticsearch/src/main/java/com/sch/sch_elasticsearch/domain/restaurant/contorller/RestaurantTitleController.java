@@ -68,8 +68,7 @@ public class RestaurantTitleController {
             return restaurantTitleService.searchFuzzyAndNgram(title, maxResults, fuzziness, fuzzyPrimary); //2. 결과가 없다면 두 검색 진행 후 유사도별로 정렬
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());
-//            throw new CommonException(ExceptionType.RESTAURANT_AGGREGATE_TITLE_SEARCH_FAIL);
-            return null;
+            throw new CommonException(ExceptionType.RESTAURANT_AGGREGATE_TITLE_SEARCH_FAIL);
         }
     }
 
