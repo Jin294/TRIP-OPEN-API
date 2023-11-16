@@ -16,4 +16,8 @@ public class ResponseWikiDto {
     String overview;
     Integer matchTerm;
     Integer totalTerm;
+
+    public ResponseWikiDto() {
+
+    }
 }

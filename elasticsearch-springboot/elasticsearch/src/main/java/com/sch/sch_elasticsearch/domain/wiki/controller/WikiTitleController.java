@@ -30,8 +30,11 @@ public class WikiTitleController {
 
     //통합 제목 검색 : 제목 일치 or (Fuzzy + ngram)
     @GetMapping("/title/aggregate-search")
-    public List<ResponseWikiDto> searchTitleComprehensive(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
-                                                          @RequestParam("fuzziness") int fuzziness, @RequestParam("reliable") boolean reliable)
+    public List<ResponseWikiDto> searchTitleComprehensive(@RequestParam("title") String title,
+                                                          @RequestParam("maxResults") int maxResults,
+                                                          @RequestParam("fuzziness") int fuzziness,
+                                                          @RequestParam("reliable") boolean reliable,
+                                                          @RequestParam("fuzzyPrimary") boolean fuzzyPrimary)
     {
         try {
             ResponseWikiDto wiki = wikiServiceTitle.searchTitleCorrect(title, reliable);
@@ -40,9 +43,9 @@ public class WikiTitleController {
                 wikiList.add(wiki);
                 return wikiList;
             } //1. 일치 제목 검색이 있다면 이를 리스트에 추가 후 리턴
-            return wikiServiceTitle.searchFuzzyAndNgram(title, maxResults, fuzziness, reliable); //2. 아니라면 두개 검색 비교후 리턴
+            return wikiServiceTitle.searchFuzzyAndNgram(title, maxResults, fuzziness, reliable, fuzzyPrimary); //2. 아니라면 두개 검색 비교후 리턴
         } catch (Exception e) {
-            log.error("[ERR LOG] {}", e.getMessage());
+            log.error("[ERR LOG] {}", e);
             throw new CommonException(ExceptionType.WIKI_AGGREGATE_TITLE_SEARCH_FAIL);
         }
     }

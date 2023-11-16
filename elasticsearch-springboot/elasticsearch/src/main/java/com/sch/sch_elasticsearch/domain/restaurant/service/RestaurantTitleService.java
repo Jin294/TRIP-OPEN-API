@@ -96,7 +96,7 @@ public class RestaurantTitleService {
             } else alladdHashMap.put(dto.getRestaurantName(), (dto.getScore() * ngramWeight));
         }
 
-        //스트림을 통해 해시맵 내림차순 정렬 후 리스트화 : A 로직
+        //스트림을 통해 해시맵 내림차순 정렬 후 리스트화
         List<String> nameList = alladdHashMap.entrySet()
                 .stream() //HashMap을 스트림으로 변환
                 .sorted(Map.Entry.<String, Float>comparingByValue().reversed()) //value를 기준으로 내림차순 정렬
@@ -107,7 +107,7 @@ public class RestaurantTitleService {
         //추려진 값들을 should를 사용하여 동시적으로 조회 (리스트 내부에 있는 제목의 검색 결과는 리턴됨)
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
         for (String name : nameList) {
-            boolQueryBuilder.should(QueryBuilders.matchQuery("food_name.keyword", name));
+            boolQueryBuilder.should(QueryBuilders.termQuery("food_name.keyword", name));
         }
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(boolQueryBuilder)

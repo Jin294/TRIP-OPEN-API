@@ -59,7 +59,6 @@ public class RestaurantTitleController {
                                                                 @RequestParam("maxResults") int maxResults,
                                                                 @RequestParam("fuzziness") int fuzziness,
                                                                 @RequestParam("fuzzyPrimary") boolean fuzzyPrimary)
-
     {
         try {
             List<ResponseRestaurantDto> responseRestaurantDtoList = restaurantServiceBasic.searchExactRestaurantName(title, maxResults);

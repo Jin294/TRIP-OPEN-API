@@ -137,43 +137,57 @@ public class WikiServiceTitle {
      * @param reliable
      * @return
      */
-    public List<ResponseWikiDto> searchFuzzyAndNgram(String title, int maxResults, int fuzziness, boolean reliable) {
-        try {
-            List<ResponseWikiDto> fuzzyList = searchTitleUseFuzzyDto(title, maxResults, fuzziness, reliable);
-            List<ResponseWikiDto> ngramList = searchTitleUseNgramDto(title, maxResults, reliable);
+    public List<ResponseWikiDto> searchFuzzyAndNgram(String title, int maxResults, int fuzziness, boolean reliable, boolean fuzzyPrimary) {
+        {
+            //maxResult가 적으면 적은 List셋에 고만고만한 값만 나와 유의미한 검색 결과가 나오지 않음. 가장 큰 이슈였다.
+            int searchCount = Math.max(maxResults, 40); //최소 40개로 검색 결과를 보장 : 10개 정도라면 비슷한 값만 나올 수도 있음. (최종 결과는 maxResults로 리턴)
+            int fuzzyWeight, ngramWeight; //가중치 여부 : fuzzyPrimary에 따라 다름
+            if(fuzzyPrimary) { //가중치 부여
+                fuzzyWeight = 7;
+                ngramWeight = 3;
+            } else {
+                fuzzyWeight = 3;
+                ngramWeight = 7;
+            }
 
+            List<ResponseWikiDto> fuzzyList = searchTitleUseFuzzyDto(title, searchCount, fuzziness, reliable);
+            List<ResponseWikiDto> ngramList = searchTitleUseNgramDto(title, searchCount, reliable);
 
             //두개 리스트를 새로 합치고, 스코어가 있다면 가중. < 지명 : 스코어 > 로 집계
             HashMap<String, Float> alladdHashMap = new HashMap<>();
-            for(int i = 0; i < fuzzyList.size(); i++) { //FuzzyList 결과 삽입
-                ResponseWikiDto responseWikiDto = fuzzyList.get(i);
-                alladdHashMap.put(responseWikiDto.getAttractionName(), responseWikiDto.getScore());
+            //1. Fuzzy 삽입
+            for (ResponseWikiDto dto : fuzzyList) {
+                alladdHashMap.put(dto.getAttractionName(), (dto.getScore() * fuzzyWeight));
+            }
+            //2. ngram 삽입, fuzzy와 동일한 지명이 있다면 스코어 가중
+            for (ResponseWikiDto dto : ngramList) {
+                if(alladdHashMap.containsKey(dto.getAttractionName())) { //동일 지명
+                    float existingScore = alladdHashMap.get(dto.getAttractionName());
+                    float newScore = dto.getScore() * ngramWeight;
+                    alladdHashMap.put(dto.getAttractionName(), existingScore + newScore);;
+                } else {
+                    alladdHashMap.put(dto.getAttractionName(), dto.getScore() * ngramWeight);
+                }
             }
 
-            for (int i = 0; i < ngramList.size(); i++) { //Ngram 결과 추가 삽입 및 집계
-                ResponseWikiDto responseWikiDto = ngramList.get(i);
-                if(alladdHashMap.containsKey(responseWikiDto.getAttractionName())) {
-                    alladdHashMap.put(responseWikiDto.getAttractionName(), alladdHashMap.get(responseWikiDto.getAttractionName()) + responseWikiDto.getScore());
-                } else alladdHashMap.put(responseWikiDto.getAttractionName(), responseWikiDto.getScore());
-            }
-
-            //스코어링 기준으로 해시맵 스트림 정렬
-            List<String> resultAttractionName =  alladdHashMap.entrySet()
-                    .stream() //HashMap을 스트림으로 변환
-                    .sorted(Map.Entry.<String, Float>comparingByValue().reversed()) // value을 기준으로 내림차순 정렬
+            //스트림을 통해 해시맵 내림차순 정렬 후 리스트화
+            List<String> nameList = alladdHashMap.entrySet()
+                    .stream()
+                    .sorted(Map.Entry.<String, Float>comparingByValue().reversed())
                     .limit(maxResults)
-                    .map(Map.Entry::getKey) //각 Entry에서 key(String) 추출
-                    .collect(Collectors.toList()); //결과를 리스트화
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toList());
 
 
             //추려진 값들을 should를 사용하여 동시적으로 조회
             BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-            for (String name : resultAttractionName) {
-                boolQueryBuilder.should(QueryBuilders.matchQuery("attraction_name", name));
+            for (String name : nameList) {
+                boolQueryBuilder.should(QueryBuilders.termQuery("attraction_name.keyword", name)); //here
             }
             NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
                     .withQuery(boolQueryBuilder)
-                    .withCollapseField("content_id")
+                    .withCollapseField("content_id") //해당 컬럼으로 묶기(중복 제거)
+                    .withPageable(PageRequest.of(0, maxResults)) // maxResults만큼 결과
                     .build();
 
             SearchHits<Wiki> searchHits = elasticsearchRestTemplate.search(searchQuery, Wiki.class);
@@ -185,14 +199,11 @@ public class WikiServiceTitle {
              * 2. 중간 연산 : 각 name에 대해 searchResults 스트림을 열고 attraction Name이 일치하는 객체 필터링
              * 3. 종단 연산 : 결과를 List<responseWikiDto>로 수집
              */
-            return resultAttractionName.stream()
+            return nameList.stream()
                     .flatMap(name -> searchResult.stream()
                             .filter(wiki -> wiki.getAttractionName().equals(name)))
                     .map(wiki -> wiki.toDto())
                     .collect(Collectors.toList());
-        } catch (Exception e) {
-            log.error("[ERR LOG] {}", e.getMessage());
-            throw new CommonException(ExceptionType.WIKI_SEARCH_FUZZY_AND_NGRAM_TITLE_FAIL);
         }
     }
 }
