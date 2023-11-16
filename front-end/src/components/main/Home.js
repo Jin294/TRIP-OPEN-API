@@ -136,7 +136,7 @@ const Home = () => {
   const linkUrl = [
     "/apidocs/accommodation",
     "/apidocs/restaurant",
-    "/apidocs/search",
+    "/apidocs/search_v1",
   ];
   return (
     <div className="home">
