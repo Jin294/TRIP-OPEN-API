@@ -24,7 +24,7 @@ public class FoodController {
 	private final FoodServiceImpl foodServiceImpl;
 
 	@GetMapping("/by-name")
-	public DataResponse<List<FoodResponseDto.Coordi>> getFoodFromTravle(
+	public List<FoodResponseDto.Coordi> getFoodFromTravle(
 			@RequestParam("name") String name,
 			@RequestParam("distance") Double distance,
 			@RequestParam(value = "sorted", required = false) String sorted,
@@ -34,10 +34,10 @@ public class FoodController {
 
 		FoodRequestDto.Title attractionTitleRequestDto = new FoodRequestDto.Title(name, distance, sorted, maxResults, page);
 		List<FoodResponseDto.Coordi> data = foodServiceImpl.getFoodFromTravle(attractionTitleRequestDto);
-		return new DataResponse<>(200, "success", data);
+		return data;
 	}
 	@GetMapping("/by-coordinate")
-	public DataResponse<List<FoodResponseDto.Coordi>> getFoodFromLngLatv(
+	public List<FoodResponseDto.Coordi> getFoodFromLngLatv(
 			@RequestParam("longitude") Double longitude,
 			@RequestParam("latitude") Double latitude,
 			@RequestParam("distance") Double distance,
@@ -46,6 +46,6 @@ public class FoodController {
 			@RequestParam("page") Integer page){
 		FoodRequestDto.Coordi attractionCoordiRequestDto = new FoodRequestDto.Coordi(latitude, longitude, distance, sorted, maxResults, page);
 		List<FoodResponseDto.Coordi> data = foodServiceImpl.getFoodFromLngLatv(attractionCoordiRequestDto);
-		return new DataResponse<>(200, "success", data);
+		return data;
 	}
 }

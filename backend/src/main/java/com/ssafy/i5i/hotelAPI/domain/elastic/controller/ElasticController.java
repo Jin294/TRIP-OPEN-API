@@ -67,13 +67,13 @@ public class ElasticController {
     //통합 제목 검색 : 제목 일치 or (Fuzzy + ngram)
     //사용자에게 제공되는 제목 기반의 검색 기능
     @GetMapping("/title/aggregate-search")
-    public DataResponse<List<ResponseWikiDto>> searchTitleComprehensive(@RequestParam("title") String title,
+    public List<ResponseWikiDto> searchTitleComprehensive(@RequestParam("title") String title,
                                                                         @RequestParam("maxResults") int maxResults,
                                                                         @RequestParam("fuzziness") int fuzziness,
                                                                         @RequestParam("reliable") boolean reliable,
                                                                         @RequestParam("fuzzyPrimary") boolean fuzzyPrimary){
         List<ResponseWikiDto> data = elasticService.searchFuzzyAndNgram(title, maxResults, fuzziness, reliable, fuzzyPrimary);
-        return new DataResponse<>(200, "success", data);
+        return data;
     }
 
     //제목 일치 여부 검색
@@ -87,20 +87,20 @@ public class ElasticController {
     //Fuzzy 제목 검색
     //사용자에게 제공하지 않는 서비스
     @GetMapping("/title/fuzzy")
-    public DataResponse<List<ResponseWikiDto>> searchTitleFuzzy(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
+    public List<ResponseWikiDto> searchTitleFuzzy(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                                                 @RequestParam("fuzziness") int fuzziness, @RequestParam("reliable") boolean reliable)
     {
         List<ResponseWikiDto> data =  elasticService.searchTitleUseFuzzyDto(title, maxResults, fuzziness, reliable);
-        return new DataResponse<>(200, "success", data);
+        return data;
     }
     //ngram 제목 검색
     //사용자에게 제공하지 않는 서비스
     @GetMapping("/title/ngram")
-    public DataResponse<List<ResponseWikiDto>> searchTitleNgram(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
+    public List<ResponseWikiDto> searchTitleNgram(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                                                 @RequestParam("reliable") boolean reliable)
     {
         List<ResponseWikiDto> data =  elasticService.searchTitleUseNgramDto(title, maxResults, reliable);
-        return new DataResponse<>(200, "success", data);
+        return data;
     }
 
 }
