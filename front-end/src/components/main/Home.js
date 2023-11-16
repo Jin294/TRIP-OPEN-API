@@ -33,11 +33,7 @@ const CardComponent = ({ index }) => {
     "거리순, 찜순, 점수순, 별점순",
     "거리순, 인기순",
   ];
-  const linkUrl = [
-    "/apidocs/accommodation",
-    "/apidocs/restaurant",
-    "/apidocs/search",
-  ];
+
   const [isCardHovered, setIsCardHovered] = useState(false);
 
   const handleCardHover = () => {
@@ -128,9 +124,7 @@ const CardComponent = ({ index }) => {
             isCardHovered ? styles["button-hovered"] : ""
           }`}
         >
-          <Link className={styles.linkUrlText} to={linkUrl[index]}>
-            보러가기
-          </Link>
+          보러가기
         </button>
       </div>
     </div>
@@ -138,6 +132,11 @@ const CardComponent = ({ index }) => {
 };
 
 const Home = () => {
+  const linkUrl = [
+    "/apidocs/accommodation",
+    "/apidocs/restaurant",
+    "/apidocs/search",
+  ];
   return (
     <div className="home">
       <div className={styles["home"]}>
@@ -173,9 +172,15 @@ const Home = () => {
       </div>
       <div className={styles["home-info"]}>
         <div className={styles["card-list"]}>
-          <CardComponent index={0} />
-          <CardComponent index={1} />
-          <CardComponent index={2} />
+          <Link className={styles.linkUrlText} to={linkUrl[0]}>
+            <CardComponent index={0} />
+          </Link>
+          <Link className={styles.linkUrlText} to={linkUrl[1]}>
+            <CardComponent index={1} />
+          </Link>
+          <Link className={styles.linkUrlText} to={linkUrl[2]}>
+            <CardComponent index={2} />
+          </Link>
         </div>
       </div>
     </div>
