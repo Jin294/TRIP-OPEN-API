@@ -41,8 +41,8 @@ public class ElasticService {
                 .collectList()
                 .block();
 
-        return Optional.ofNullable(result)
-                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
+        if(result.size() == 0)throw new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION);
+        return result;
     }
 
     public List<ResponseWikiDto> searchPartial(int typeNum, String inputString, boolean reliable, int maxResults) {
@@ -60,8 +60,8 @@ public class ElasticService {
                 .map(WikiDto::toResponse)
                 .collectList()
                 .block();
-        return Optional.ofNullable(result)
-                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
+        if(result.size() == 0)throw new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION);
+        return result;
     }
 
     public List<ResponseWikiDto> fuzzinessSearch(int typeNum, String inputString, boolean reliable, int maxResults, int fuzziness) {
@@ -80,8 +80,8 @@ public class ElasticService {
                 .map(WikiDto::toResponse)
                 .collectList()
                 .block();
-        return Optional.ofNullable(result)
-                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
+        if(result.size() == 0)throw new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION);
+        return result;
     }
 
     public List<ResponseWikiDto> searchAll(SearchAllDto searchAllDTO) {
@@ -94,8 +94,8 @@ public class ElasticService {
                 .map(WikiDto::toResponse)
                 .collectList()
                 .block();
-        return Optional.ofNullable(result)
-                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
+        if(result.size() == 0)throw new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION);
+        return result;
     }
 
     public List<ResponseWikiDto> searchFuzzyAndNgram(String title, int maxResults, int fuzziness, boolean reliable) {
@@ -113,8 +113,8 @@ public class ElasticService {
                 .map(WikiDto::toResponse)
                 .collectList()
                 .block();
-        return Optional.ofNullable(result)
-                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
+        if(result.size() == 0)throw new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION);
+        return result;
     }
 
     public ResponseWikiDto searchTitleCorrect(String title, boolean reliable) {
@@ -129,8 +129,8 @@ public class ElasticService {
                 .bodyToMono(WikiDto.class)
                 .map(WikiDto::toResponse)
                 .block();
-        return Optional.ofNullable(result)
-                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
+        if(result.equals(null))throw new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION);
+        return result;
     }
 
     public List<ResponseWikiDto> searchTitleUseFuzzyDto(String title, int maxResults, int fuzziness, boolean reliable) {
@@ -148,8 +148,8 @@ public class ElasticService {
                 .map(WikiDto::toResponse)
                 .collectList()
                 .block();
-        return Optional.ofNullable(result)
-                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
+        if(result.size() == 0)throw new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION);
+        return result;
     }
 
     public List<ResponseWikiDto> searchTitleUseNgramDto(String title, int maxResults, boolean reliable) {
@@ -166,8 +166,9 @@ public class ElasticService {
                 .map(WikiDto::toResponse)
                 .collectList()
                 .block();
-        return Optional.ofNullable(result)
-                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
+
+        if(result.size() == 0)throw new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION);
+        return result;
     }
 
     public Mono<String> test(){

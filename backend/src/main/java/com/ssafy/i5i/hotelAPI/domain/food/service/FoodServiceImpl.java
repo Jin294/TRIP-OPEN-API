@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.ssafy.i5i.hotelAPI.domain.elastic.dto.ResponseWikiDto;
 import com.ssafy.i5i.hotelAPI.domain.elastic.service.ElasticService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +48,9 @@ public class FoodServiceImpl implements FoodService{
 	// 		.collect(Collectors.toList());
 	// }
 	public List<FoodResponseDto.Coordi> getFoodFromTravle(FoodRequestDto.Title requestDto) {
+		ResponseWikiDto wiki = elasticService.searchFuzzyAndNgram(requestDto.getAttractionName(),1,2,false).get(0);
+		requestDto.setAttractionName(wiki.getAttractionName());
+
 		Attraction attraction = attractionRepository.findByTitle(requestDto.getAttractionName())
 			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION));
 

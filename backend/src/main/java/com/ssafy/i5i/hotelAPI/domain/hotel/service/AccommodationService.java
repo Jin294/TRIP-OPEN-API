@@ -2,6 +2,8 @@ package com.ssafy.i5i.hotelAPI.domain.hotel.service;
 
 import com.ssafy.i5i.hotelAPI.common.exception.CommonException;
 import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
+import com.ssafy.i5i.hotelAPI.domain.elastic.dto.ResponseWikiDto;
+import com.ssafy.i5i.hotelAPI.domain.elastic.service.ElasticService;
 import com.ssafy.i5i.hotelAPI.domain.hotel.entity.Accommodation;
 import com.ssafy.i5i.hotelAPI.domain.hotel.entity.Attraction;
 import com.ssafy.i5i.hotelAPI.domain.hotel.dto.request.AttractionCoordinateRequestDto;
@@ -28,7 +30,8 @@ import java.util.stream.Stream;
 public class  AccommodationService {
     private final AttractionRepository attractionRepository;
     private final AccommodationRepository accommodationRepository;
-//  private final AttractionAccommdodationRepository attractionAccommdodationRepository;
+    private final ElasticService elasticService;
+
     public static final Double RADIUS_OF_EARTH = 6371.0;
 
     // sort
@@ -47,6 +50,9 @@ public class  AccommodationService {
 
     // input: attraction_id -> output: Accommodation
     public List<AccommodationResponseDto> getAccommodationByName(AttractionNameRequestDto requestDto){
+        ResponseWikiDto wiki = elasticService.searchFuzzyAndNgram(requestDto.getAttractionName(),1,2,false).get(0);
+        requestDto.setAttractionName(wiki.getAttractionName());
+
         Attraction attraction = attractionRepository.findByTitle(requestDto.getAttractionName())
                 .orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION));
 
