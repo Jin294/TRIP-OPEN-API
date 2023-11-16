@@ -14,7 +14,7 @@
   width: 200px;
   border-left: 3px solid #005006;
   padding: 10px 15px;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   font-weight: 600;
 
   /* border-radius: 5px; */
@@ -26,7 +26,7 @@
 }
 .sidebar {
   width: 270px;
-  margin: 0;
+  margin-top: 20px;
   padding: 10px 0;
   display: flex;
   flex-direction: column;
@@ -54,9 +54,9 @@
   /* border-bottom: 1px solid rgb(157, 157, 157); */
   text-shadow: 2px 2px 3px rgb(157, 157, 157, 0.2);
   font-weight: 600;
-  width: 200px;
+  /* width: 200px; */
   cursor: pointer;
-  white-space: nowrap;
+  /* white-space: nowrap; */
 }
 
 .subTabs {

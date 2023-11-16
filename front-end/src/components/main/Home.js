@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import styles from "./Home.module.css";
 import Accept from "../../assets/img/accept-green-128.png";
+import { Link } from "react-router-dom";
 
 const CardComponent = ({ index }) => {
   const icons = [
@@ -16,15 +17,11 @@ const CardComponent = ({ index }) => {
   ];
   const titleArray = ["숙소 API", "음식점 API", "검색 API"];
   const descArray1 = [
-    `여행지명이나 사용자의 위치에 기반하여`,
-    `여행지명이나 사용자의 위치에 기반하여`,
-    `검색 API 짧은 설명`,
+    `여행지명이나 사용자의 위치에 기반하여 숙소 데이터를 제공합니다.`,
+    `여행지명이나 사용자의 위치에 기반하여 음식점 데이터를 제공합니다.`,
+    `검색 API 짧은 설명 검색 API 짧은 설명`,
   ];
-  const descArray2 = [
-    `숙소 데이터를 제공합니다.`,
-    `음식점 데이터를 제공합니다.`,
-    `검색 API 짧은 설명`,
-  ];
+
   const subtitle1Array = ["숙소 정보", "음식점 정보", "검색 정보"];
   const subDesc1Array = [
     "숙소명, 주소, 점수, 이미지, 가격, 위도, 경도, 거리",
@@ -86,7 +83,6 @@ const CardComponent = ({ index }) => {
           }`}
         >
           <p>{descArray1[index]}</p>
-          <p>{descArray2[index]}</p>
         </div>
       </div>
       <div
@@ -136,6 +132,11 @@ const CardComponent = ({ index }) => {
 };
 
 const Home = () => {
+  const linkUrl = [
+    "/apidocs/accommodation",
+    "/apidocs/restaurant",
+    "/apidocs/search",
+  ];
   return (
     <div className="home">
       <div className={styles["home"]}>
@@ -171,9 +172,15 @@ const Home = () => {
       </div>
       <div className={styles["home-info"]}>
         <div className={styles["card-list"]}>
-          <CardComponent index={0} />
-          <CardComponent index={1} />
-          <CardComponent index={2} />
+          <Link className={styles.linkUrlText} to={linkUrl[0]}>
+            <CardComponent index={0} />
+          </Link>
+          <Link className={styles.linkUrlText} to={linkUrl[1]}>
+            <CardComponent index={1} />
+          </Link>
+          <Link className={styles.linkUrlText} to={linkUrl[2]}>
+            <CardComponent index={2} />
+          </Link>
         </div>
       </div>
     </div>

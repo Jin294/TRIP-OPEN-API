@@ -27,6 +27,8 @@ public class ApiDataDto {
         private String content_type;
         private String endpoint;
         private String return_example;
+        private String requestUrlExample;
+        private Long apiFrontId;
     }
 
     @Getter
@@ -43,6 +45,8 @@ public class ApiDataDto {
         private String content_type;
         private String endpoint;
         private String return_example;
+        private String requestUrlExample;
+        private Long apiFrontId;
         @Builder.Default
         public List<VariableDto> variable_info = new ArrayList<>();
 
@@ -56,6 +60,8 @@ public class ApiDataDto {
                     .content_type(apiData.getContentType())
                     .endpoint(apiData.getEndpoint())
                     .return_example(apiData.getReturnExample())
+                .requestUrlExample(apiData.getRequestUrlExample())
+                .apiFrontId(apiData.getApiFrontId())
                     .variable_info(new ArrayList<>())
                     .build();
             apiData.getVariable().forEach((variable) -> {

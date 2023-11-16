@@ -22,12 +22,12 @@
   border-collapse: collapse;
   border-spacing: 0;
   margin-bottom: 5%;
+  text-align: center;
 }
 
 .firstTable th {
   background-color: #f0f0f0;
   color: #333;
-  text-align: left;
   padding: 10px;
   border-bottom: 2px solid #ccc;
 }
@@ -46,6 +46,33 @@
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   font-size: 14px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+.testDiv {
+  display: flex;
+  flex-direction: column;
+}
+.testRequestBtn {
+  color: white;
+  background-color: #15a656;
+  border-radius: 10px;
+  box-sizing: border-box;
+  border: 3px solid #15a656;
+  width: 20%;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0 10px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 80%;
+}
+.testRequestBtn:hover {
+  background-color: #fff;
+  color: #15a656;
 }
 
 .apiRequestDataTable {
@@ -55,6 +82,7 @@
   line-height: 1.5;
   word-break: keep-all;
   margin-bottom: 5%;
+  text-align: center;
 }
 
 .apiRequestDataTable th {
@@ -63,6 +91,7 @@
   text-align: left;
   padding: 10px;
   border-bottom: 2px solid #ccc;
+  text-align: center;
 }
 
 .apiRequestDataTable td {
@@ -89,6 +118,7 @@
   line-height: 1.5;
   word-break: keep-all;
   margin-bottom: 5%;
+  text-align: center;
 }
 
 .apiResponseDataTable th {
@@ -97,6 +127,7 @@
   text-align: left;
   padding: 10px;
   border-bottom: 2px solid #ccc;
+  text-align: center;
 }
 
 .apiResponseDataTable td {
