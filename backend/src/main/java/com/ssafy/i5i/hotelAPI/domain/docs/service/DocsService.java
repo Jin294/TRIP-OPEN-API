@@ -55,6 +55,7 @@ public class DocsService {
                 .map(api -> {
                     return ApiDataDto.ApiDataList.builder()
                             .api_data_id(api.getApiDataId())
+                            .api_type(api.getApiType().getApiTypeId())
                             .title(api.getTitle())
                             .content(api.getContent())
                             .name(api.getName())

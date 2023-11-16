@@ -19,6 +19,7 @@ public class ApiDataDto {
     @AllArgsConstructor
     public static class ApiDataList {
         private Long api_data_id;
+        private Long api_type;
         private String title;
         private String name;
         private String content;

@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface AttractionRepository extends JpaRepository<Attraction, Long> {
 
     @Query("SELECT a FROM Attraction a WHERE a.title = :title")
-    Optional<Attraction> findByTitle(@Param("title") String title);
+    Optional<Attraction> findTopByTitle(@Param("title") String title);
 }
