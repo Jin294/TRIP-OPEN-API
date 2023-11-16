@@ -44,6 +44,10 @@ const SideBar = ({ onSetId }) => {
   };
 
   const handleSubClick = (sub, api_num) => {
+    if (sub === 0 && api_num === 0) {
+      sub = 6;
+      api_num = 6;
+    }
     setSelectedSub(sub);
     setId(api_num);
   };
