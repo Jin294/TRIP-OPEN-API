@@ -13,7 +13,7 @@ public enum ExceptionType {
 
     /** +========= Wiki Domain : 0xxx =========+ **/
     /** ETC : 00xx **/
-    /** WikiController**/
+    /** WikiTitleController**/
     WIKI_AGGREGATE_TITLE_SEARCH_FAIL(0001, "제목 검색 : 제목 일치 or (Fuzzy + ngram) 에 실패하였습니다."),
     /** ToolsForWikiService **/
     WIKI_TYPENUM_IS_INVALID(0002, "키워드 검색용 TypeNum 번호가 유효하지 않습니다."),
@@ -48,8 +48,10 @@ public enum ExceptionType {
 
     /** +========= Restaurant Domain : 1xxx =========+ **/
     /** ETC : 00xx **/
-    /** ToolsForRestaurantService **/
-    RESTAURANT_TYPENUM_IS_INVALID(0101, "키워드 검색용 TypeNum 번호가 유효하지 않습니다."),
+    /* RestaurantTitleController */
+    RESTAURANT_AGGREGATE_TITLE_SEARCH_FAIL(1001, "제목 검색 : 제목 일치 or (Fuzzy + ngram) 에 실패하였습니다."),
+    /*ToolsForRestaurantService */
+    RESTAURANT_TYPENUM_IS_INVALID(1002, "키워드 검색용 TypeNum 번호가 유효하지 않습니다."),
 
     /** RestaurantServiceBasic : 01xx **/
     RESTAURANT_SEARCH_EXACT_RESTAURANT_NAME_FAIL(0102, "일치하는 제목을 찾는 중 오류가 발생했습니다." ),

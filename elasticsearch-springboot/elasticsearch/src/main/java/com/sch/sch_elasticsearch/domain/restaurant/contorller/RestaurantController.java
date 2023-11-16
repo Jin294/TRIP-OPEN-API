@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 특정 컬럼이나 필드 검색 결과를 조회하는 컨트롤러
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/restaurant")
@@ -16,13 +19,6 @@ public class RestaurantController {
     private final RestaurantServiceExtend restaurantServiceExtend;
     private final RestaurantServiceBasic restaurantServiceBasic;
 
-    //정확한 음식점명의 결과 조회
-    @GetMapping("/exact-restaurant")
-    public List<ResponseRestaurantDto> searchExactRestaurantName(
-                                                   @RequestParam("restaurantName") String restaurantName,
-                                                   @RequestParam("maxResults") int maxResults) {
-        return restaurantServiceBasic.searchExactRestaurantName(restaurantName, maxResults);
-    }
 
     //특정 필드의 match 쿼리 조회
     @GetMapping("/partial")
@@ -43,7 +39,7 @@ public class RestaurantController {
 
 //    //통합 내용 검색(전문 검색)
 //    @PostMapping("/search")
-//    public List<ResponseRestaurantDto> searchAll() {
+//    public List<ResponseRestaurantDto> searchAll(DTO) {
 //        return restaurantServiceExtend.searchAll();
 //    }
 
