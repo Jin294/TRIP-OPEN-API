@@ -1,11 +1,11 @@
 server:
   port: 8080
   tomcat:
-    accept-count: 400
+    accept-count: 600
     connection-timeout: 5000
     threads:
-      max: 400
-      min-spare: 150
+      max: 500
+      min-spare: 200
 #    max-connections: 200
 
 url:
