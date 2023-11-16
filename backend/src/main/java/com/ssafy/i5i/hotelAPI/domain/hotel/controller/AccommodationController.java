@@ -32,13 +32,13 @@ public class AccommodationController {
 
     @GetMapping("/by-coordinate")
     public List<AccommodationResponseDto> getAccomodationByCoordinate(
-            @RequestParam("longitude") Double longitude,
             @RequestParam("latitude") Double latitude,
+            @RequestParam("longitude") Double longitude,
             @RequestParam("distance") Double distance,
             @RequestParam("sorted") String sorted,
             @RequestParam("maxResults") Integer maxResults,
             @RequestParam("page") Integer page){
-        AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(latitude, longitude, distance, sorted, maxResults, page);
+        AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(longitude, latitude, distance, sorted, maxResults, page);
 
         List<AccommodationResponseDto> data = accommodationService.getAccommodationByCoordinate(attractionCoordinateRequestDto);
         return data;
