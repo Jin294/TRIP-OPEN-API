@@ -234,72 +234,75 @@ const APIContent = (props) => {
                         {apiContent.return_example}
                     </SyntaxHighlighter>
                 </pre>
-
-                <h3>5. 테스트(미리 보기)</h3>
-                <h4>* 요청 헤더(Header)</h4>
-                <table className={styles.apiRequestDataTable}>
-                    <thead>
-                        <tr>
-                            <th>HTTP</th>
-                            <th>필드</th>
-                            <th> 타입 </th>
-                            <th>샘플 데이터</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Header</td>
-                            <td>Authorization</td>
-                            <td>Baerer</td>
-                            <td>
-                                <input value={authorizationValue} onChange={handleAuthorizationChange} />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h4>* 요청 변수(Request Parameter)</h4>
-                {isRequestTrueData.length > 0 && (
+                <div className={styles.testDiv}>
+                    <h3>5. 테스트(미리 보기)</h3>
+                    <h4>* 요청 헤더(Header)</h4>
                     <table className={styles.apiRequestDataTable}>
                         <thead>
                             <tr>
                                 <th>HTTP</th>
-                                <th>항목명</th>
-                                <th> 필수 </th>
-                                <th>타입</th>
+                                <th>필드</th>
+                                <th> 타입 </th>
                                 <th>샘플 데이터</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {isRequestTrueData.map((dataItem, index) => (
-                                <tr key={index}>
-                                    {index === 0 && (
-                                        <td rowSpan={isRequestTrueData.length}>
-                                            {dataItem.is_parameter ? 'Parameter' : 'Body'}
-                                        </td>
-                                    )}
-                                    <td>{dataItem.title}</td>
-                                    <td style={{ color: dataItem.is_essential ? 'red' : 'black' }}>
-                                        {dataItem.is_essential ? ' O ' : ' X '}
-                                    </td>
-                                    <td>{dataItem.type}</td>
-                                    <td>
-                                        <input
-                                            value={requestParameterValues[index] || ''}
-                                            onChange={(event) => handleRequestParameterChange(index, event)}
-                                        />
-                                    </td>
-                                </tr>
-                            ))}
+                            <tr>
+                                <td>Header</td>
+                                <td>Authorization</td>
+                                <td>Baerer</td>
+                                <td>
+                                    <input value={authorizationValue} onChange={handleAuthorizationChange} />
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
-                )}
-                <button onClick={handleApiRequest}>요청 보내기</button>
-                <h4>* 응답</h4>
-                <pre id="json" className={styles.code}>
-                    <SyntaxHighlighter language="json" style={vs}>
-                        {JSON.stringify(testResponseData, null, 2)}
-                    </SyntaxHighlighter>
-                </pre>
+                    <h4>* 요청 변수(Request Parameter)</h4>
+                    {isRequestTrueData.length > 0 && (
+                        <table className={styles.apiRequestDataTable}>
+                            <thead>
+                                <tr>
+                                    <th>HTTP</th>
+                                    <th>항목명</th>
+                                    <th> 필수 </th>
+                                    <th>타입</th>
+                                    <th>샘플 데이터</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {isRequestTrueData.map((dataItem, index) => (
+                                    <tr key={index}>
+                                        {index === 0 && (
+                                            <td rowSpan={isRequestTrueData.length}>
+                                                {dataItem.is_parameter ? 'Parameter' : 'Body'}
+                                            </td>
+                                        )}
+                                        <td>{dataItem.title}</td>
+                                        <td style={{ color: dataItem.is_essential ? 'red' : 'black' }}>
+                                            {dataItem.is_essential ? ' O ' : ' X '}
+                                        </td>
+                                        <td>{dataItem.type}</td>
+                                        <td>
+                                            <input
+                                                value={requestParameterValues[index] || ''}
+                                                onChange={(event) => handleRequestParameterChange(index, event)}
+                                            />
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                    <button className={styles.testRequestBtn} onClick={handleApiRequest}>
+                        요청 보내기
+                    </button>
+                    <h4>* 응답</h4>
+                    <pre id="json" className={styles.code}>
+                        <SyntaxHighlighter language="json" style={vs}>
+                            {JSON.stringify(testResponseData, null, 2)}
+                        </SyntaxHighlighter>
+                    </pre>
+                </div>
             </div>
         </div>
     );
