@@ -62,8 +62,10 @@ const APIContent = (props) => {
   apiData.forEach((item) => {
     if (item.is_request) {
       isRequestTrueData.push(item);
+      console.log(isRequestTrueData);
     } else {
       isRequestFalseData.push(item);
+      console.log(isRequestFalseData);
     }
   });
 
@@ -227,9 +229,7 @@ const APIContent = (props) => {
             </tr>
           </thead>
           <tbody>
-            {isRequestFalseData.map((dataItem, index) => {
-              //   const dd = dataItem.detail;
-              //   console.log(dd);
+            {isRequestFalseData.map((dataItem, index) => (
               <tr key={index}>
                 <td>{dataItem.title}</td>
                 <td>{dataItem.type}</td>
@@ -244,8 +244,8 @@ const APIContent = (props) => {
                     );
                   })}
                 </td>
-              </tr>;
-            })}
+              </tr>
+            ))}
           </tbody>
         </table>
 

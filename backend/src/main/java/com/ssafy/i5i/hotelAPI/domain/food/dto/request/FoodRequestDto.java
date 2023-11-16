@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public class FoodRequestDto {
 	@Getter
@@ -12,8 +13,10 @@ public class FoodRequestDto {
 	@AllArgsConstructor
 	public static class Title {
 		private String attractionName;
-		private Long distance;
+		private Double distance;
 		private String sorted;
+		private Integer maxResults;
+		private Integer page;
 	}
 
 	@Getter
@@ -23,7 +26,9 @@ public class FoodRequestDto {
 	public static class Coordi {
 		private Double latitude;
 		private Double longitude;
-		private Long distance;
+		private Double distance;
 		private String sorted;
+		private Integer maxResults;
+		private Integer page;
 	}
 }

@@ -1,5 +1,6 @@
 package com.ssafy.i5i.hotelAPI.domain.hotel.controller;
 
+import com.ssafy.i5i.hotelAPI.common.response.DataResponse;
 import com.ssafy.i5i.hotelAPI.domain.hotel.dto.request.AttractionCoordinateRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.hotel.dto.request.AttractionNameRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.hotel.dto.response.AccommodationResponseDto;
@@ -13,27 +14,33 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/accommodation")
+@CrossOrigin(origins = "*")
 public class AccommodationController {
     private final AccommodationService accommodationService;
 
     @GetMapping("/by-name")
-    public List<AccommodationResponseDto> getAccommodationByName(
+    public DataResponse<List<AccommodationResponseDto>> getAccommodationByName(
             @RequestParam("name") String name,
-            @RequestParam("distance") int distance,
-            @RequestParam("sorted") String sorted){
-        AttractionNameRequestDto attractionNameRequestDto = new AttractionNameRequestDto(name, distance, sorted);
-        System.out.println("!!!!");
-        return accommodationService.getAccommodationByName(attractionNameRequestDto);
+            @RequestParam("distance") Double distance,
+            @RequestParam("sorted") String sorted,
+            @RequestParam("maxResults") Integer maxResults,
+            @RequestParam("page") Integer page){
+        AttractionNameRequestDto attractionNameRequestDto = new AttractionNameRequestDto(name, distance, sorted, maxResults, page);
+        List<AccommodationResponseDto> data = accommodationService.getAccommodationByName(attractionNameRequestDto);
+        return new DataResponse<>(200, "success", data);
     }
 
     @GetMapping("/by-coordinate")
-    public List<AccommodationResponseDto> getAccomodationByCoordinate(
+    public DataResponse<List<AccommodationResponseDto>> getAccomodationByCoordinate(
+            @RequestParam("longitude") Double longitude,
             @RequestParam("latitude") Double latitude,
-            @RequestParam("longtitude") Double longitude,
-            @RequestParam("distance") int distance,
-            @RequestParam("sorted") String sorted){
-        AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(latitude, longitude, distance, sorted);
+            @RequestParam("distance") Double distance,
+            @RequestParam("sorted") String sorted,
+            @RequestParam("maxResults") Integer maxResults,
+            @RequestParam("page") Integer page){
+        AttractionCoordinateRequestDto attractionCoordinateRequestDto = new AttractionCoordinateRequestDto(longitude, latitude, distance, sorted, maxResults, page);
 
-        return accommodationService.getAccommodationByCoordinate(attractionCoordinateRequestDto);
+        List<AccommodationResponseDto> data = accommodationService.getAccommodationByCoordinate(attractionCoordinateRequestDto);
+        return new DataResponse<>(200, "success", data);
     }
 }
