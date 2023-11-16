@@ -70,7 +70,7 @@ const SideBar = ({ onSetId }) => {
               title: "검색 API : 여행지",
               url: "/apidocs/search_v1",
               subTabs: responseData.data
-                .filter((item) => item.api_type === 3)
+                .filter((item) => item.api_type === 1)
                 .sort((a, b) => a.apiFrontId - b.apiFrontId),
             },
             {
