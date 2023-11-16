@@ -27,9 +27,12 @@ public class FoodController {
 	public DataResponse<List<FoodResponseDto.Coordi>> getFoodFromTravle(
 			@RequestParam("name") String name,
 			@RequestParam("distance") Double distance,
-			@RequestParam(value = "sorted", required = false) String sorted){
+			@RequestParam(value = "sorted", required = false) String sorted,
+			@RequestParam("maxResults") Integer maxResults,
+			@RequestParam("page") Integer page
+			){
 
-		FoodRequestDto.Title attractionTitleRequestDto = new FoodRequestDto.Title(name, distance, sorted);
+		FoodRequestDto.Title attractionTitleRequestDto = new FoodRequestDto.Title(name, distance, sorted, maxResults, page);
 		List<FoodResponseDto.Coordi> data = foodServiceImpl.getFoodFromTravle(attractionTitleRequestDto);
 		return new DataResponse<>(200, "success", data);
 	}
@@ -38,8 +41,10 @@ public class FoodController {
 			@RequestParam("longitude") Double longitude,
 			@RequestParam("latitude") Double latitude,
 			@RequestParam("distance") Double distance,
-			@RequestParam("sorted") String sorted){
-		FoodRequestDto.Coordi attractionCoordiRequestDto = new FoodRequestDto.Coordi(latitude, longitude, distance, sorted);
+			@RequestParam("sorted") String sorted,
+			@RequestParam("maxResults") Integer maxResults,
+			@RequestParam("page") Integer page){
+		FoodRequestDto.Coordi attractionCoordiRequestDto = new FoodRequestDto.Coordi(latitude, longitude, distance, sorted, maxResults, page);
 		List<FoodResponseDto.Coordi> data = foodServiceImpl.getFoodFromLngLatv(attractionCoordiRequestDto);
 		return new DataResponse<>(200, "success", data);
 	}

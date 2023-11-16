@@ -48,6 +48,8 @@ public class FoodServiceImpl implements FoodService{
 	// 		.collect(Collectors.toList());
 	// }
 	public List<FoodResponseDto.Coordi> getFoodFromTravle(FoodRequestDto.Title requestDto) {
+		if(requestDto.getPage() <= 0 || requestDto.getMaxResults() <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
+
 		ResponseWikiDto wiki = elasticService.searchFuzzyAndNgram(requestDto.getAttractionName(),1,2,false).get(0);
 		requestDto.setAttractionName(wiki.getAttractionName());
 
@@ -71,7 +73,7 @@ public class FoodServiceImpl implements FoodService{
 		double maxX = nowLongitude +(requestDto.getDistance()* mForLongitude);
 		double minX = nowLongitude -(requestDto.getDistance()* mForLongitude);
 
-		return foodRepository.getFoodFromLngLatv(maxY, maxX, minY, minX)
+		List<FoodResponseDto.Coordi> response = foodRepository.getFoodFromLngLatv(maxY, maxX, minY, minX)
 			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
 			.stream()
 			.map(data -> {
@@ -83,10 +85,15 @@ public class FoodServiceImpl implements FoodService{
 			.filter(dto -> dto.getDistance() < requestDto.getDistance())
 			.sorted(getFoodCoordiComparator(requestDto.getSorted()))
 			.collect(Collectors.toList());
+
+		int fromIndex = (requestDto.getPage() - 1) * requestDto.getMaxResults();
+		return response.subList(fromIndex, Math.min(fromIndex + requestDto.getMaxResults(),response.size()));
 	}
 
 	@Override
 	public List<FoodResponseDto.Coordi> getFoodFromLngLatv(FoodRequestDto.Coordi requestDto) {
+		if(requestDto.getPage() <= 0 || requestDto.getMaxResults() <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
+
 		//현재 위도 좌표 (y 좌표)
 		double nowLatitude = requestDto.getLatitude();
 
@@ -105,7 +112,7 @@ public class FoodServiceImpl implements FoodService{
 		double minX = nowLongitude -(requestDto.getDistance()* mForLongitude);
 
 
-		return foodRepository.getFoodFromLngLatv(maxY, maxX, minY, minX)
+		List<FoodResponseDto.Coordi> response = foodRepository.getFoodFromLngLatv(maxY, maxX, minY, minX)
 			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
 			.stream()
 			.map(data -> {
@@ -116,6 +123,9 @@ public class FoodServiceImpl implements FoodService{
 			.filter(dto -> dto.getDistance() < requestDto.getDistance())
 			.sorted(getFoodCoordiComparator(requestDto.getSorted()))
 			.collect(Collectors.toList());
+
+		int fromIndex = (requestDto.getPage() - 1) * requestDto.getMaxResults();
+		return response.subList(fromIndex, Math.min(fromIndex + requestDto.getMaxResults(),response.size()));
 	}
 
 	//두 지점 간의 거리 계산

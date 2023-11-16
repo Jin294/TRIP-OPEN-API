@@ -50,6 +50,7 @@ public class  AccommodationService {
 
     // input: attraction_id -> output: Accommodation
     public List<AccommodationResponseDto> getAccommodationByName(AttractionNameRequestDto requestDto){
+        if(requestDto.getPage() <= 0 || requestDto.getMaxResults() <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
         ResponseWikiDto wiki = elasticService.searchFuzzyAndNgram(requestDto.getAttractionName(),1,2,false).get(0);
         requestDto.setAttractionName(wiki.getAttractionName());
 
@@ -83,12 +84,14 @@ public class  AccommodationService {
                 })
                 .filter(dto -> dto.getRelativeDistance() < requestDto.getDistance())
                 .collect(Collectors.toList());
+        int fromIndex = (requestDto.getPage() - 1) * requestDto.getMaxResults();
 
-        return sort(response, requestDto.getSorted());
+        return sort(response, requestDto.getSorted()).subList(fromIndex, Math.min(fromIndex + requestDto.getMaxResults(),response.size()));
     }
 
     // input: coordinate -> output: Accommodation
     public List<AccommodationResponseDto> getAccommodationByCoordinate(AttractionCoordinateRequestDto requestDto){
+        if(requestDto.getPage() <= 0 || requestDto.getMaxResults() <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
         //현재 위도 좌표 (y 좌표)
         double nowLatitude = requestDto.getLatitude();
         //현재 경도 좌표 (x 좌표)
@@ -116,7 +119,10 @@ public class  AccommodationService {
                 .filter(dto -> dto.getRelativeDistance() < requestDto.getDistance())
                 .collect(Collectors.toList());
 
-        return sort(response, requestDto.getSorted());
+        int fromIndex = (requestDto.getPage() - 1) * requestDto.getMaxResults();
+
+        return sort(response, requestDto.getSorted()).subList(fromIndex, Math.min(fromIndex + requestDto.getMaxResults(),response.size()));
+
     }
 
     private Double calculateDistance(Double lat1, Double lon1, Double lat2, Double lon2) {

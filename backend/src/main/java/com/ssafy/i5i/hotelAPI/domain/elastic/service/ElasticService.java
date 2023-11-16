@@ -27,6 +27,8 @@ public class ElasticService {
     }
 
     public List<ResponseWikiDto> searchExact(int typeNum, String inputString, boolean reliable, int maxResults) {
+        if(maxResults <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
+
         List<ResponseWikiDto> result = webClient.get().uri(uriBuilder -> {
             uriBuilder
                     .path("/keyword")
@@ -47,6 +49,7 @@ public class ElasticService {
     }
 
     public List<ResponseWikiDto> searchPartial(int typeNum, String inputString, boolean reliable, int maxResults) {
+        if(maxResults <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
         List<ResponseWikiDto> result = webClient.get().uri(uriBuilder -> {
                     uriBuilder
                             .path("/partial")
@@ -66,6 +69,7 @@ public class ElasticService {
     }
 
     public List<ResponseWikiDto> fuzzinessSearch(int typeNum, String inputString, boolean reliable, int maxResults, int fuzziness) {
+        if(maxResults <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
         List<ResponseWikiDto> result = webClient.get().uri(uriBuilder -> {
                     uriBuilder
                             .path("/fuzzy")
@@ -86,6 +90,7 @@ public class ElasticService {
     }
 
     public List<ResponseWikiDto> searchAll(String content, int maxResults) {
+        if(maxResults <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
         List<ResponseWikiDto> result = webClient.post()
                 .uri(uriBuilder -> uriBuilder.path("/search").build())
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -101,6 +106,7 @@ public class ElasticService {
     }
 
     public List<ResponseWikiDto> searchFuzzyAndNgram(String title, int maxResults, int fuzziness, boolean reliable) {
+        if(maxResults <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
         List<ResponseWikiDto> result = webClient.get().uri(uriBuilder -> {
                     uriBuilder
                             .path("/title/aggregate-search")
@@ -136,6 +142,7 @@ public class ElasticService {
     }
 
     public List<ResponseWikiDto> searchTitleUseFuzzyDto(String title, int maxResults, int fuzziness, boolean reliable) {
+        if(maxResults <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
         List<ResponseWikiDto> result =  webClient.get().uri(uriBuilder -> {
                     uriBuilder
                             .path("/title/fuzzy")
@@ -155,6 +162,7 @@ public class ElasticService {
     }
 
     public List<ResponseWikiDto> searchTitleUseNgramDto(String title, int maxResults, boolean reliable) {
+        if(maxResults <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
         List<ResponseWikiDto> result =  webClient.get().uri(uriBuilder -> {
                     uriBuilder
                             .path("/title/ngram")

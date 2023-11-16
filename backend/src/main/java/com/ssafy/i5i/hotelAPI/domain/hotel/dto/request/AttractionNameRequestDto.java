@@ -10,4 +10,6 @@ public class AttractionNameRequestDto {
     private String attractionName;
     private Double distance;
     private String sorted;
+    private Integer maxResults;
+    private Integer page;
 }
