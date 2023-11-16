@@ -2,6 +2,8 @@ package com.ssafy.i5i.hotelAPI.domain.food.controller;
 
 import java.util.List;
 
+import com.ssafy.i5i.hotelAPI.common.response.DataResponse;
+import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodTitleResponseDto;
 import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.i5i.hotelAPI.domain.food.dto.request.FoodRequestDto;
@@ -19,20 +21,22 @@ import lombok.extern.slf4j.Slf4j;
 public class FoodController {
 	private final FoodServiceImpl foodServiceImpl;
 	@GetMapping("/by-name")
-	public List<FoodResponseDto.Coordi> getFoodFromTravle(
+	public DataResponse<List<FoodResponseDto.Coordi>> getFoodFromTravle(
 			@RequestParam("name") String name,
 			@RequestParam("distance") Double distance,
 			@RequestParam(value = "sorted", required = false) String sorted){
 		FoodRequestDto.Title attractionTitleRequestDto = new FoodRequestDto.Title(name, distance, sorted);
-		return foodServiceImpl.getFoodFromTravle(attractionTitleRequestDto);
+		List<FoodResponseDto.Coordi> data = foodServiceImpl.getFoodFromTravle(attractionTitleRequestDto);
+		return new DataResponse<>(200, "success", data);
 	}
 	@GetMapping("/by-coordinate")
-	public List<FoodResponseDto.Coordi> getFoodFromLngLatv(
+	public DataResponse<List<FoodResponseDto.Coordi>> getFoodFromLngLatv(
 			@RequestParam("longitude") Double longitude,
 			@RequestParam("latitude") Double latitude,
 			@RequestParam("distance") Double distance,
 			@RequestParam("sorted") String sorted){
 		FoodRequestDto.Coordi attractionCoordiRequestDto = new FoodRequestDto.Coordi(latitude, longitude, distance, sorted);
-		return foodServiceImpl.getFoodFromLngLatv(attractionCoordiRequestDto);
+		List<FoodResponseDto.Coordi> data = foodServiceImpl.getFoodFromLngLatv(attractionCoordiRequestDto);
+		return new DataResponse<>(200, "success", data);
 	}
 }

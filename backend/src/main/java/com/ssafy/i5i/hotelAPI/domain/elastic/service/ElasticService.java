@@ -1,5 +1,8 @@
 package com.ssafy.i5i.hotelAPI.domain.elastic.service;
 
+import com.ssafy.i5i.hotelAPI.common.exception.CommonException;
+import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
+import com.ssafy.i5i.hotelAPI.domain.elastic.dto.ResponseWikiDto;
 import com.ssafy.i5i.hotelAPI.domain.elastic.dto.SearchAllDto;
 import com.ssafy.i5i.hotelAPI.domain.elastic.dto.WikiDto;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ElasticService {
@@ -21,8 +25,8 @@ public class ElasticService {
                 .build();
     }
 
-    public List<WikiDto> searchExact(int typeNum, String inputString, boolean reliable, int maxResults) {
-        return webClient.get().uri(uriBuilder -> {
+    public List<ResponseWikiDto> searchExact(int typeNum, String inputString, boolean reliable, int maxResults) {
+        List<ResponseWikiDto> result = webClient.get().uri(uriBuilder -> {
             uriBuilder
                     .path("/keyword")
                     .queryParam("typeNum",typeNum)
@@ -33,12 +37,16 @@ public class ElasticService {
             })
                 .retrieve()
                 .bodyToFlux(WikiDto.class)
+                .map(WikiDto::toResponse)
                 .collectList()
                 .block();
+
+        return Optional.ofNullable(result)
+                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
     }
 
-    public List<WikiDto> searchPartial(int typeNum, String inputString, boolean reliable, int maxResults) {
-        return webClient.get().uri(uriBuilder -> {
+    public List<ResponseWikiDto> searchPartial(int typeNum, String inputString, boolean reliable, int maxResults) {
+        List<ResponseWikiDto> result = webClient.get().uri(uriBuilder -> {
                     uriBuilder
                             .path("/partial")
                             .queryParam("typeNum",typeNum)
@@ -49,12 +57,15 @@ public class ElasticService {
                 })
                 .retrieve()
                 .bodyToFlux(WikiDto.class)
+                .map(WikiDto::toResponse)
                 .collectList()
                 .block();
+        return Optional.ofNullable(result)
+                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
     }
 
-    public List<WikiDto> fuzzinessSearch(int typeNum, String inputString, boolean reliable, int maxResults, int fuzziness) {
-        return webClient.get().uri(uriBuilder -> {
+    public List<ResponseWikiDto> fuzzinessSearch(int typeNum, String inputString, boolean reliable, int maxResults, int fuzziness) {
+        List<ResponseWikiDto> result = webClient.get().uri(uriBuilder -> {
                     uriBuilder
                             .path("/fuzzy")
                             .queryParam("typeNum",typeNum)
@@ -66,23 +77,29 @@ public class ElasticService {
                 })
                 .retrieve()
                 .bodyToFlux(WikiDto.class)
+                .map(WikiDto::toResponse)
                 .collectList()
                 .block();
+        return Optional.ofNullable(result)
+                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
     }
 
-    public List<WikiDto> searchAll(SearchAllDto searchAllDTO) {
-        return webClient.post()
+    public List<ResponseWikiDto> searchAll(SearchAllDto searchAllDTO) {
+        List<ResponseWikiDto> result = webClient.post()
                 .uri(uriBuilder -> uriBuilder.path("/fuzzy").build())
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(searchAllDTO))
                 .retrieve()
                 .bodyToFlux(WikiDto.class)
+                .map(WikiDto::toResponse)
                 .collectList()
                 .block();
+        return Optional.ofNullable(result)
+                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
     }
 
-    public List<WikiDto> searchFuzzyAndNgram(String title, int maxResults, int fuzziness, boolean reliable) {
-        return webClient.get().uri(uriBuilder -> {
+    public List<ResponseWikiDto> searchFuzzyAndNgram(String title, int maxResults, int fuzziness, boolean reliable) {
+        List<ResponseWikiDto> result = webClient.get().uri(uriBuilder -> {
                     uriBuilder
                             .path("/title/aggregate-search")
                             .queryParam("title",title)
@@ -93,12 +110,15 @@ public class ElasticService {
                 })
                 .retrieve()
                 .bodyToFlux(WikiDto.class)
+                .map(WikiDto::toResponse)
                 .collectList()
                 .block();
+        return Optional.ofNullable(result)
+                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
     }
 
-    public WikiDto searchTitleCorrect(String title, boolean reliable) {
-        return webClient.get().uri(uriBuilder -> {
+    public ResponseWikiDto searchTitleCorrect(String title, boolean reliable) {
+        ResponseWikiDto result = webClient.get().uri(uriBuilder -> {
                     uriBuilder
                             .path("/title/correct")
                             .queryParam("title",title)
@@ -107,12 +127,14 @@ public class ElasticService {
                 })
                 .retrieve()
                 .bodyToMono(WikiDto.class)
+                .map(WikiDto::toResponse)
                 .block();
+        return Optional.ofNullable(result)
+                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
     }
 
-    public List<WikiDto> searchTitleUseFuzzyDto(String title, int maxResults, int fuzziness, boolean reliable) {
-        System.out.println(webClient.get());
-        return webClient.get().uri(uriBuilder -> {
+    public List<ResponseWikiDto> searchTitleUseFuzzyDto(String title, int maxResults, int fuzziness, boolean reliable) {
+        List<ResponseWikiDto> result =  webClient.get().uri(uriBuilder -> {
                     uriBuilder
                             .path("/title/fuzzy")
                             .queryParam("title",title)
@@ -123,12 +145,15 @@ public class ElasticService {
                 })
                 .retrieve()
                 .bodyToFlux(WikiDto.class)
+                .map(WikiDto::toResponse)
                 .collectList()
                 .block();
+        return Optional.ofNullable(result)
+                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
     }
 
-    public List<WikiDto> searchTitleUseNgramDto(String title, int maxResults, boolean reliable) {
-        return webClient.get().uri(uriBuilder -> {
+    public List<ResponseWikiDto> searchTitleUseNgramDto(String title, int maxResults, boolean reliable) {
+        List<ResponseWikiDto> result =  webClient.get().uri(uriBuilder -> {
                     uriBuilder
                             .path("/title/ngram")
                             .queryParam("title",title)
@@ -138,8 +163,11 @@ public class ElasticService {
                 })
                 .retrieve()
                 .bodyToFlux(WikiDto.class)
+                .map(WikiDto::toResponse)
                 .collectList()
                 .block();
+        return Optional.ofNullable(result)
+                .orElseThrow(() -> new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION));
     }
 
     public Mono<String> test(){
