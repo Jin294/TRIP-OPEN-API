@@ -10,13 +10,12 @@ import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const APIContent = (props) => {
     const [api_docs_id, setApiId] = useState('');
-    // const { api_docs_id, setApiId } = useParams();
     const [apiContent, setApiContent] = useState([]);
     const [apiData, setApiData] = useState([]);
-    const [nParam, setNParam] = useState(0);
     // 상태 설정
     const [authorizationValue, setAuthorizationValue] = useState('');
     const [requestParameterValues, setRequestParameterValues] = useState([]);
+    const [testResponseData, setTestResponseData] = useState([]);
     // 값 변경 핸들러
     const handleAuthorizationChange = (event) => {
         setAuthorizationValue(event.target.value);
@@ -30,21 +29,20 @@ const APIContent = (props) => {
 
     useEffect(() => {
         setApiId(props.data);
-        console.log(props.data);
     }, [props]);
 
     useEffect(() => {
+        setAuthorizationValue('');
+        setRequestParameterValues([]);
+        setTestResponseData([]);
         const getApiDocsData = async (api_docs_id) => {
             try {
                 const response = await basicHttp.get(`/docs/data/api/info/${api_docs_id}`);
                 const responseData = response.data;
-                // console.log("responseData", responseData.data);
-                // console.log("api_docs_id", api_docs_id);
 
                 if (responseData.data) {
                     setApiContent(responseData.data);
                     setApiData(responseData.data.variable_info);
-                    console.log(responseData.data.variable_info);
                 }
             } catch (error) {
                 console.log('Error fetching API data', error);
@@ -67,16 +65,8 @@ const APIContent = (props) => {
         }
     });
 
-    // const isRequestTrueData = apiData.filter(
-    //   (dataItem) => dataItem.is_request === true
-    // );
-    // const isRequestFalseData = apiData.filter(
-    //   (dataItem) => dataItem.is_request === false
-    // );
-
     // 5.test button function
     const handleApiRequest = () => {
-        console.log('Authorization Value:', authorizationValue);
         const baseURL = apiContent.endpoint;
         const queryParams = new URLSearchParams();
 
@@ -100,11 +90,13 @@ const APIContent = (props) => {
                 },
             })
             .then((response) => {
-                console.log(response.data);
+                // setTestResponseData(response.data);
+                console.log(response);
+                setTestResponseData(response.data.data);
             })
             .catch((error) => {
                 console.error('API 요청 에러:', error);
-                // 에러를 처리하는 로직 추가
+                setTestResponseData({ error: 'API 요청 중 에러가 발생했습니다.' });
             });
     };
 
@@ -305,7 +297,7 @@ const APIContent = (props) => {
                 <h4>* 응답</h4>
                 <pre id="json" className={styles.code}>
                     <SyntaxHighlighter language="json" style={vs}>
-                        {apiContent.return_example}
+                        {JSON.stringify(testResponseData, null, 2)}
                     </SyntaxHighlighter>
                 </pre>
             </div>
