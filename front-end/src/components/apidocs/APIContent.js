@@ -198,7 +198,17 @@ const APIContent = (props) => {
                     {dataItem.is_essential ? " O " : " X "}
                   </td>
                   <td>{dataItem.type}</td>
-                  <td>{dataItem.detail}</td>
+                  <td>
+                    {/* {dataItem.detail} */}
+                    {dataItem.detail.split("\n").map((line) => {
+                      return (
+                        <>
+                          {line}
+                          <br />
+                        </>
+                      );
+                    })}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -217,13 +227,25 @@ const APIContent = (props) => {
             </tr>
           </thead>
           <tbody>
-            {isRequestFalseData.map((dataItem, index) => (
+            {isRequestFalseData.map((dataItem, index) => {
+              //   const dd = dataItem.detail;
+              //   console.log(dd);
               <tr key={index}>
                 <td>{dataItem.title}</td>
                 <td>{dataItem.type}</td>
-                <td>{dataItem.detail}</td>
-              </tr>
-            ))}
+                <td>
+                  {/* {dataItem.detail} */}
+                  {dataItem.detail.split("\n").map((line) => {
+                    return (
+                      <>
+                        {line}
+                        <br />
+                      </>
+                    );
+                  })}
+                </td>
+              </tr>;
+            })}
           </tbody>
         </table>
 
