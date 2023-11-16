@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import styles from "./Home.module.css";
 import Accept from "../../assets/img/accept-green-128.png";
+import { Link } from "react-router-dom";
 
 const CardComponent = ({ index }) => {
   const icons = [
@@ -32,7 +33,11 @@ const CardComponent = ({ index }) => {
     "거리순, 찜순, 점수순, 별점순",
     "거리순, 인기순",
   ];
-
+  const linkUrl = [
+    "/apidocs/accommodation",
+    "/apidocs/restaurant",
+    "/apidocs/search",
+  ];
   const [isCardHovered, setIsCardHovered] = useState(false);
 
   const handleCardHover = () => {
@@ -123,7 +128,9 @@ const CardComponent = ({ index }) => {
             isCardHovered ? styles["button-hovered"] : ""
           }`}
         >
-          보러가기
+          <Link className={styles.linkUrlText} to={linkUrl[index]}>
+            보러가기
+          </Link>
         </button>
       </div>
     </div>

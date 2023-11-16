@@ -26,11 +26,11 @@ function App() {
         '/signup',
         '/login',
         '/mypage',
-        '/serviceinfo',
+        // '/serviceinfo',
         '/apidocs',
-        '/exexchange',
-        '/excard',
-        '/excardcontent',
+        // '/exexchange',
+        // '/excard',
+        // '/excardcontent',
     ]);
 
     useEffect(() => {
