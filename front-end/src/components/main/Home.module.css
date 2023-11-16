@@ -208,6 +208,7 @@
   font-size: medium;
   font-weight: bolder;
   margin-top: 10px;
+  cursor: pointer;
 }
 .linkUrlText {
   color: white;
@@ -219,6 +220,7 @@
 
 .button-hovered {
   background-color: #15a656;
+  cursor: pointer;
 }
 
 .up-hovered {
