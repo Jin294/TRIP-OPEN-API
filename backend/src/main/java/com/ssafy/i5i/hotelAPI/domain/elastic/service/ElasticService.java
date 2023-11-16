@@ -105,7 +105,7 @@ public class ElasticService {
         return result;
     }
 
-    public List<ResponseWikiDto> searchFuzzyAndNgram(String title, int maxResults, int fuzziness, boolean reliable) {
+    public List<ResponseWikiDto> searchFuzzyAndNgram(String title, int maxResults, int fuzziness, boolean reliable, boolean fuzzyPrimary) {
         if(maxResults <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
         List<ResponseWikiDto> result = webClient.get().uri(uriBuilder -> {
                     uriBuilder
@@ -113,7 +113,8 @@ public class ElasticService {
                             .queryParam("title",title)
                             .queryParam("maxResults",maxResults)
                             .queryParam("fuzziness",fuzziness)
-                            .queryParam("reliable",reliable);
+                            .queryParam("reliable",reliable)
+                            .queryParam("fuzzyPrimary",fuzzyPrimary);
                     return uriBuilder.build();
                 })
                 .retrieve()

@@ -50,7 +50,7 @@ public class FoodServiceImpl implements FoodService{
 	public List<FoodResponseDto.Coordi> getFoodFromTravle(FoodRequestDto.Title requestDto) {
 		if(requestDto.getPage() <= 0 || requestDto.getMaxResults() <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
 
-		ResponseWikiDto wiki = elasticService.searchFuzzyAndNgram(requestDto.getAttractionName(),1,2,false).get(0);
+		ResponseWikiDto wiki = elasticService.searchFuzzyAndNgram(requestDto.getAttractionName(),1,1,false, true).get(0);
 		requestDto.setAttractionName(wiki.getAttractionName());
 
 		Attraction attraction = attractionRepository.findByTitle(requestDto.getAttractionName())

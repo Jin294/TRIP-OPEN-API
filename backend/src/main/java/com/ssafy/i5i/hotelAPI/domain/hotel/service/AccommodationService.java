@@ -16,13 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +46,7 @@ public class  AccommodationService {
     // input: attraction_id -> output: Accommodation
     public List<AccommodationResponseDto> getAccommodationByName(AttractionNameRequestDto requestDto){
         if(requestDto.getPage() <= 0 || requestDto.getMaxResults() <= 0) throw new CommonException(ExceptionType.PAGE_MAXRESULTS_EXCEPTION);
-        ResponseWikiDto wiki = elasticService.searchFuzzyAndNgram(requestDto.getAttractionName(),1,2,false).get(0);
+        ResponseWikiDto wiki = elasticService.searchFuzzyAndNgram(requestDto.getAttractionName(),1,1,false,true).get(0);
         requestDto.setAttractionName(wiki.getAttractionName());
 
         Attraction attraction = attractionRepository.findByTitle(requestDto.getAttractionName())
