@@ -57,7 +57,7 @@ public class Food {
 	private Integer restaurantStarUser;
 
 	public FoodResponseDto.Coordi convertToDto (){
-		return new FoodResponseDto.Coordi(this.id, this.restaurantName, this.restaurantType, this.restaurantLongitude, this.restaurantLatitude, this.restaurantLike, this.restaurantScore, this.restaurantStar, this.restaurantStarUser, null);
+		return new FoodResponseDto.Coordi(this.id, this.restaurantName, this.restaurantType, this.restaurantLongitude, this.restaurantLatitude, this.restaurantLike, this.restaurantScore, this.restaurantStar, this.restaurantStarUser, null,null);
 	}
 
 }

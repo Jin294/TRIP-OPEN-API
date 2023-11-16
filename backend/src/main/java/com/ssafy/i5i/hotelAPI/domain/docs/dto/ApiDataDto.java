@@ -43,6 +43,7 @@ public class ApiDataDto {
         private String content_type;
         private String endpoint;
         private String return_example;
+        @Builder.Default
         public List<VariableDto> variable_info = new ArrayList<>();
 
         public static ApiDataInfo setApiInfo(ApiData apiData) {

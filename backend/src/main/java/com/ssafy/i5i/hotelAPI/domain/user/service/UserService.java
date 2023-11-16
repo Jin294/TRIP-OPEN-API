@@ -7,6 +7,7 @@ import com.ssafy.i5i.hotelAPI.common.userSecurity.JwtUtill;
 import com.ssafy.i5i.hotelAPI.domain.user.dto.UserDto;
 import com.ssafy.i5i.hotelAPI.domain.user.entity.Token;
 import com.ssafy.i5i.hotelAPI.domain.user.entity.User;
+import com.ssafy.i5i.hotelAPI.domain.user.repository.EmailRepository;
 import com.ssafy.i5i.hotelAPI.domain.user.repository.TokenRedisRepository;
 import com.ssafy.i5i.hotelAPI.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class UserService {
     private final SecureRandom secureRandom;
     private final TokenRedisRepository tokenRedisRepository;
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
+    private final EmailRepository emailRepository;
     private static final int TOKEN_LENGTH = 32;
 
     public boolean isValidToken(String tokenId) {
@@ -60,8 +62,11 @@ public class UserService {
     public void signUp(UserDto.SignUp signUp) {
         signUp.setPassword(passwordEncoder.encode(signUp.getPassword()));
         if(userRepository.selectAllUserById(signUp.getId()).isPresent()) {
-            log.error("UserService 50 lines, userId dupplicate error");
+            log.error("UserService signUp, userId dupplicate error");
             throw new CommonException(ExceptionType.USER_DUPLICATE_EXCEPTION);
+        }
+        if(emailRepository.selectAuthorizedEmailWithCode(signUp.getId(), signUp.getCode()).isEmpty()) {
+            throw new CommonException(ExceptionType.USER_EMAIL_UNAUTHORIZED);
         }
         User user = User.builder()
                 .id(signUp.getId())

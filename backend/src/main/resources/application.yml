@@ -1,6 +1,15 @@
 server:
   port: 8080
+#  tomcat:
+#    threads:
+#      max: 300
+#      min-spare: 200
+#    accept-count: 150
+#    max-connections: 200
+#    connection-timeout: 20000
 
+url:
+  host: https://api4u.site
 
 spring:
   jackson:
@@ -25,6 +34,20 @@ spring:
     level:
       org.hibernate.SQL: debug
       org.hibernate.type: trace
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ***REMOVED***
+    password: ***REMOVED***
+#    username: ***REMOVED***
+#    password: ***REMOVED***
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
   redis:
     host: k9b205.p.ssafy.io

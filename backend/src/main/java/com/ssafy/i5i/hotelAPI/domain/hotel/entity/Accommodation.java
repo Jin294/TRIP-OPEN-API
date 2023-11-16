@@ -45,7 +45,7 @@ public class Accommodation {
     private Double accommodationLongitude;
 
     public AccommodationResponseDto toDto (){
-        return new AccommodationResponseDto(this.accommodationName, this.accommodationType, this.accommodationAddr, this.accommodationScore, this.accommodationImg, this.accommodationPrice, this.accommodationLatitude, this.accommodationLongitude, null);
+        return new AccommodationResponseDto(this.accommodationName, this.accommodationType, this.accommodationAddr, this.accommodationScore, this.accommodationImg, this.accommodationPrice, this.accommodationLatitude, this.accommodationLongitude, null, null);
     }
 }
 

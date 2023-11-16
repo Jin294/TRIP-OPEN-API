@@ -19,7 +19,7 @@ import java.util.List;
 public class CorsConfig {
 
     //허가 페이지 목록
-    private List<String> allowedSite = List.of("http://localhost:3000", "http://localhost:8080", "http://localhost:5173","http://localhost:13744", "http://localhost:5000", "https://j9b209.p.ssafy.io/");
+    private List<String> allowedSite = List.of("http://localhost:3000", "http://localhost:8080", "http://localhost:5173","http://localhost:13744", "http://localhost:5000", "https://k9b209.p.ssafy.io/", "http://k9b209.p.ssafy.io/", "https://j9b209.p.ssafy.io/","https://api4u.site", "https://api4u.site/");
     private List<String> allowedHeader = List.of("*","Access-Token", "Refresh-Token"); //허용되는 헤더
     private List<String> allowedExposeHeader = List.of("*","Access-Token", "Refresh-Token"); //서버가 클라이언트에게 응답할 때 브라우저에서 노출되어야 하는 헤더(응답 헤더)를 지정
 
