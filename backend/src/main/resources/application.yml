@@ -1,12 +1,12 @@
 server:
   port: 8080
-#  tomcat:
+  tomcat:
+    accept-count: 150
+    connection-timeout: 5000
 #    threads:
 #      max: 300
 #      min-spare: 200
-#    accept-count: 150
 #    max-connections: 200
-#    connection-timeout: 20000
 
 url:
   host: https://api4u.site

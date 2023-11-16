@@ -8,6 +8,7 @@ import com.ssafy.i5i.hotelAPI.domain.elastic.dto.SearchAllDto;
 import com.ssafy.i5i.hotelAPI.domain.elastic.dto.WikiDto;
 import com.ssafy.i5i.hotelAPI.domain.elastic.service.ElasticService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/elastic")
+@Slf4j
 public class ElasticController {
     private final ElasticService elasticService;
 
@@ -63,6 +65,7 @@ public class ElasticController {
     @GetMapping("/title/aggregate-search")
     public DataResponse<List<ResponseWikiDto>> searchTitleComprehensive(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                                           @RequestParam("fuzziness") int fuzziness, @RequestParam("reliable") boolean reliable){
+        log.info("ElasticController, searchTitleComprehensive");
         List<ResponseWikiDto> data = elasticService.searchFuzzyAndNgram(title, maxResults, fuzziness, reliable);
         return new DataResponse<>(200, "success", data);
     }
