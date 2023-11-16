@@ -42,6 +42,10 @@ const SideBar = ({ onSetId }) => {
   };
 
   const handleSubClick = (sub, api_num) => {
+    if (sub === 0 && api_num === 0) {
+      sub = 6;
+      api_num = 6;
+    }
     setSelectedSub(sub);
     setId(api_num);
   };
@@ -68,21 +72,21 @@ const SideBar = ({ onSetId }) => {
             },
             {
               title: "검색 API : 여행지",
-              url: "/apidocs/search",
+              url: "/apidocs/search_v1",
               subTabs: responseData.data
                 .filter((item) => item.api_type === 1)
                 .sort((a, b) => a.apiFrontId - b.apiFrontId),
             },
             {
               title: "검색 API : 숙소",
-              url: "/apidocs/search",
+              url: "/apidocs/search_v2",
               subTabs: responseData.data
                 .filter((item) => item.api_type === 4)
                 .sort((a, b) => a.apiFrontId - b.apiFrontId),
             },
             {
               title: "검색 API : 음식점",
-              url: "/apidocs/search",
+              url: "/apidocs/search_v3",
               subTabs: responseData.data
                 .filter((item) => item.api_type === 5)
                 .sort((a, b) => a.apiFrontId - b.apiFrontId),
