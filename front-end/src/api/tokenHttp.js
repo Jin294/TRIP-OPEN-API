@@ -2,8 +2,6 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
-import { useDispatch } from 'react-redux';
-import { logout } from '../redux/userInfo';
 
 // 토큰이 필요한 인증에 사용
 
@@ -13,6 +11,7 @@ const tokenHttp = axios.create({
     baseURL,
     header: {
         'Content-Type': 'application/json',
+        
     },
 });
 
@@ -34,13 +33,13 @@ tokenHttp.interceptors.request.use(async (req) => {
         return req;
     }
 
+
     // 만료되었다면 강제 로그아웃
     console.log('api/tokenHttp.js : access token 만료');
-    const dispatch = useDispatch();
-    dispatch(logout());
-    localStorage.removeItem('access-token');
-    localStorage.removeItem('refresh-token');
 
+    localStorage.removeItem('access-token');
+    // window.location.href = `http://localhost:3000/login`;
+    // localStorage.removeItem('refresh-token');
     // 만료된 토큰으로 인한 오류를 던집니다.
     throw new Error('expire token');
 });

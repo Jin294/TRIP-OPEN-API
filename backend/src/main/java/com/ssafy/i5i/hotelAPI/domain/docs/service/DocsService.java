@@ -63,6 +63,8 @@ public class DocsService {
                             .content_type(api.getContentType())
                             .endpoint(api.getEndpoint())
                             .return_example(api.getReturnExample())
+                            .requestUrlExample(api.getRequestUrlExample())
+                            .apiFrontId(api.getApiFrontId())
                             .build();
                 })
                 .collect(Collectors.toList());
@@ -100,6 +102,8 @@ public class DocsService {
                             .content_type(apiData.getContentType())
                             .endpoint(apiData.getEndpoint())
                             .return_example(apiData.getReturnExample())
+                        .requestUrlExample(apiData.getRequestUrlExample())
+                        .apiFrontId(apiData.getApiFrontId())
                             .build();
                 })
                 .collect(Collectors.toList());
