@@ -76,35 +76,31 @@ const APIContent = (props) => {
 
     // 5.test button function
     const handleApiRequest = () => {
-        const baseURL = process.env.REACT_APP_SERVER_URL;
+        console.log('Authorization Value:', authorizationValue);
+        const baseURL = apiContent.endpoint;
         const queryParams = new URLSearchParams();
 
-        queryParams.append('authorization', authorizationValue);
-
-        requestParameterValues.forEach((value, index) => {
-            // 빈 문자열이나 null 체크하여 파라미터 추가
-            queryParams.append(`param${index + 1}`, value || '');
+        isRequestTrueData.forEach((dataItem, index) => {
+            const value = requestParameterValues[index] || '';
+            queryParams.append(dataItem.title, value);
         });
 
         const fullUrl = `${baseURL}?${queryParams.toString()}`;
+        // const fullUrl = `https://k9b205.p.ssafy.io/api/accommodation/by-name?name=비슬산자연휴양림&distance=2&sorted=distance`;
+        // const fullUrl = `https://k9b205.p.ssafy.io/api/accommodation/by-name?${queryParams.toString()}`;
 
         // Axios를 사용하여 POST 요청 보내기
         axios
-            .get(
-                fullUrl,
-                {
-                    // 여기에 요청 본문 데이터 추가
+            .get(fullUrl, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + authorizationValue,
+                    // Authorization: `Bearer ${authorizationValue}`
+                    // Authorization: `Bearer 31da9460a4be6a0e82022fd1d10a3ed0d72c77289f036f8c2f5dff4c559973d07177657240676d61696c2e636f6d`,
                 },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${authorizationValue}`,
-                    },
-                }
-            )
+            })
             .then((response) => {
-                console.log('API 응답:', response.data);
-                // 응답을 처리하는 로직 추가
+                console.log(response.data);
             })
             .catch((error) => {
                 console.error('API 요청 에러:', error);
@@ -194,7 +190,7 @@ const APIContent = (props) => {
                         <tbody>
                             {isRequestTrueData.map((dataItem, index) => (
                                 <tr key={index}>
-                                    {index == 0 && (
+                                    {index === 0 && (
                                         <td rowSpan={isRequestTrueData.length}>
                                             {dataItem.is_parameter ? 'Parameter' : 'Body'}
                                         </td>
@@ -284,7 +280,7 @@ const APIContent = (props) => {
                         <tbody>
                             {isRequestTrueData.map((dataItem, index) => (
                                 <tr key={index}>
-                                    {index == 0 && (
+                                    {index === 0 && (
                                         <td rowSpan={isRequestTrueData.length}>
                                             {dataItem.is_parameter ? 'Parameter' : 'Body'}
                                         </td>
