@@ -129,7 +129,7 @@ public class ElasticService {
                 .bodyToMono(WikiDto.class)
                 .map(WikiDto::toResponse)
                 .block();
-        if(result.equals(null))throw new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION);
+        if(result == null)throw new CommonException(ExceptionType.SEARCH_NODATA_EXCEPTION);
         return result;
     }
 
