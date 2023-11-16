@@ -98,7 +98,7 @@ const APIContent = (props) => {
 			.then((response) => {
 				// setTestResponseData(response.data);
 				console.log(response);
-				setTestResponseData(response.data.data);
+				setTestResponseData(response.data);
 			})
 			.catch((error) => {
 				console.error("API 요청 에러:", error);
