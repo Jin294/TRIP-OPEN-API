@@ -103,7 +103,7 @@ const SideBar = ({ onSetId }) => {
           setSearchApiV3(groupedTabs[4].subTabs[0].api_data_id);
         }
       } catch (error) {
-        console.log("Error fetching API data", error);
+        // console.log("Error fetching API data", error);
       }
     };
 

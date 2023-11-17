@@ -20,7 +20,7 @@ tokenHttp.interceptors.request.use(async (req) => {
     const accessToken = localStorage.getItem('access-token');
 
     if (!accessToken) {
-        console.log('token 이 존재하지 않습니다.');
+        // console.log('token 이 존재하지 않습니다.');
         throw new Error('no token');
     }
 
@@ -35,7 +35,7 @@ tokenHttp.interceptors.request.use(async (req) => {
 
 
     // 만료되었다면 강제 로그아웃
-    console.log('api/tokenHttp.js : access token 만료');
+    // console.log('api/tokenHttp.js : access token 만료');
 
     localStorage.removeItem('access-token');
     // window.location.href = `http://localhost:3000/login`;

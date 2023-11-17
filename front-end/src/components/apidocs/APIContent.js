@@ -95,7 +95,7 @@ const APIContent = (props) => {
 					setApiData(responseData.data.variable_info);
 				}
 			} catch (error) {
-				console.log("Error fetching API data", error);
+				// console.log("Error fetching API data", error);
 			}
 		};
 
@@ -125,30 +125,30 @@ const APIContent = (props) => {
 			queryParams.append(dataItem.title, value);
 		});
 
-		const fullUrl = `${baseURL}?${queryParams.toString()}`;
-		// const fullUrl = `https://k9b205.p.ssafy.io/api/accommodation/by-name?name=비슬산자연휴양림&distance=2&sorted=distance`;
-		// const fullUrl = `https://k9b205.p.ssafy.io/api/accommodation/by-name?${queryParams.toString()}`;
-
-		// Axios를 사용하여 POST 요청 보내기
-		axios
-			.get(fullUrl, {
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + authorizationValue,
-					// Authorization: `Bearer ${authorizationValue}`
-					// Authorization: `Bearer 31da9460a4be6a0e82022fd1d10a3ed0d72c77289f036f8c2f5dff4c559973d07177657240676d61696c2e636f6d`,
-				},
-			})
-			.then((response) => {
-				// setTestResponseData(response.data);
-				console.log(response);
-				setTestResponseData(response.data);
-			})
-			.catch((error) => {
-				console.error("API 요청 에러:", error);
-				setTestResponseData({ error: "API 요청 중 에러가 발생했습니다." });
-			});
-	};
+    const fullUrl = `${baseURL}?${queryParams.toString()}`;
+    // const fullUrl = `https://k9b205.p.ssafy.io/api/accommodation/by-name?name=비슬산자연휴양림&distance=2&sorted=distance`;
+    // const fullUrl = `https://k9b205.p.ssafy.io/api/accommodation/by-name?${queryParams.toString()}`;
+    // console.log(fullUrl);
+    // Axios를 사용하여 POST 요청 보내기
+    axios
+      .get(fullUrl, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + authorizationValue,
+          // Authorization: `Bearer ${authorizationValue}`
+          // Authorization: `Bearer 31da9460a4be6a0e82022fd1d10a3ed0d72c77289f036f8c2f5dff4c559973d07177657240676d61696c2e636f6d`,
+        },
+      })
+      .then((response) => {
+        // setTestResponseData(response.data);
+        // console.log(response);
+        setTestResponseData(response.data.data);
+      })
+      .catch((error) => {
+        // console.error("API 요청 에러:", error);
+        setTestResponseData({ error: "API 요청 중 에러가 발생했습니다." });
+      });
+  };
 
 	return (
 		<div className={styles.contentBody}>

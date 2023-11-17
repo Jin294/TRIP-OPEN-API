@@ -7,7 +7,7 @@ import wave from "../../assets/img/wave.png";
 const APIDocs = () => {
   const [docsId, setDocsId] = useState("");
   const handleDocsId = (data) => {
-    console.log("data_docs_id=====", data);
+    // console.log("data_docs_id=====", data);
     setDocsId(data);
   };
 
