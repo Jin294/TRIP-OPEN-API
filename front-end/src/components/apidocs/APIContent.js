@@ -10,23 +10,23 @@ import { vs } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 //더미 데이터
 const dummy = [
-  {
-    bearer: "token",
-    name: "비슬산자연휴양림",
-    distance: "10",
-    sorted: "distance",
-    maxResults: "10",
-    page: "1",
-  },
-  {
-    bearer: "token",
-    longitude: "128.99565180000000000",
-    latitude: "37.03918876000000000",
-    distance: "5",
-    sorted: "like",
-    maxResults: "5",
-    page: "1",
-  },
+	{
+		bearer: "token",
+		name: "비슬산자연휴양림",
+		distance: "10",
+		sorted: "distance",
+		maxResults: "10",
+		page: "1",
+	},
+	{
+		bearer: "token",
+		longitude: "128.99565180000000000",
+		latitude: "37.03918876000000000",
+		distance: "5",
+		sorted: "like",
+		maxResults: "5",
+		page: "1",
+	},
 ];
 
 const APIContent = (props) => {
@@ -58,39 +58,37 @@ const APIContent = (props) => {
 		setApiId(props.data);
 	}, [props]);
 
-  useEffect(() => {
-    setAuthorizationValue("");
-    setRequestParameterValues([]);
-    if (api_docs_id == 4) {
-      setAuthorizationValue("token");
-      setRequestParameterValues([
-        dummy[1].longitude,
-        dummy[1].latitude,
-        dummy[1].distance,
-        dummy[1].sorted,
-        dummy[1].maxResults,
-        dummy[1].page,
-      ]);
-    } else if (api_docs_id == 1) {
-      setAuthorizationValue("token");
-      setRequestParameterValues([
-        dummy[0].name,
-        dummy[0].distance,
-        dummy[0].sorted,
-        dummy[0].maxResults,
-        dummy[0].page,
-      ]);
+	useEffect(() => {
+		setAuthorizationValue("");
+		setRequestParameterValues([]);
+		if (api_docs_id == 4) {
+			setAuthorizationValue("token");
+			setRequestParameterValues([
+				dummy[1].longitude,
+				dummy[1].latitude,
+				dummy[1].distance,
+				dummy[1].sorted,
+				dummy[1].maxResults,
+				dummy[1].page,
+			]);
+		} else if (api_docs_id == 1) {
+			setAuthorizationValue("token");
+			setRequestParameterValues([
+				dummy[0].name,
+				dummy[0].distance,
+				dummy[0].sorted,
+				dummy[0].maxResults,
+				dummy[0].page,
+			]);
 
-      //   console.log(requestParameterValues);
-    }
+			//   console.log(requestParameterValues);
+		}
 
-    setTestResponseData([]);
-    const getApiDocsData = async (api_docs_id) => {
-      try {
-        const response = await basicHttp.get(
-          `/docs/data/api/info/${api_docs_id}`
-        );
-        const responseData = response.data;
+		setTestResponseData([]);
+		const getApiDocsData = async (api_docs_id) => {
+			try {
+				const response = await basicHttp.get(`/docs/data/api/info/${api_docs_id}`);
+				const responseData = response.data;
 
 				if (responseData.data) {
 					setApiContent(responseData.data);
