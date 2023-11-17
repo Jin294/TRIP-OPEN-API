@@ -97,7 +97,7 @@ const APIContent = (props) => {
 					setApiData(responseData.data.variable_info);
 				}
 			} catch (error) {
-				console.log("Error fetching API data", error);
+				// console.log("Error fetching API data", error);
 			}
 		};
 
@@ -130,7 +130,7 @@ const APIContent = (props) => {
     const fullUrl = `${baseURL}?${queryParams.toString()}`;
     // const fullUrl = `https://k9b205.p.ssafy.io/api/accommodation/by-name?name=비슬산자연휴양림&distance=2&sorted=distance`;
     // const fullUrl = `https://k9b205.p.ssafy.io/api/accommodation/by-name?${queryParams.toString()}`;
-    console.log(fullUrl);
+    // console.log(fullUrl);
     // Axios를 사용하여 POST 요청 보내기
     axios
       .get(fullUrl, {
@@ -143,11 +143,11 @@ const APIContent = (props) => {
       })
       .then((response) => {
         // setTestResponseData(response.data);
-        console.log(response);
+        // console.log(response);
         setTestResponseData(response.data.data);
       })
       .catch((error) => {
-        console.error("API 요청 에러:", error);
+        // console.error("API 요청 에러:", error);
         setTestResponseData({ error: "API 요청 중 에러가 발생했습니다." });
       });
   };

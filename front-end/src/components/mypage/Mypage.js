@@ -32,7 +32,7 @@ const Mypage = () => {
                 const res = await tokenHttp.get(`/docs/user`);
                 setApiToken(res.data.data.api_token);
             } catch (error) {
-                console.log(error.message);
+                // console.log(error.message);
                 if (error.message === 'no token' || error.message === 'expire token') {
                     dispatch(logout());
                     alert('다시 로그인해주세요(토큰 만료)');

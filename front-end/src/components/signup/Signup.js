@@ -33,7 +33,7 @@ const Signup = () => {
       if (timeLeft <= 0) {
         clearInterval(timer);
         setIsBtn(false);
-        console.log("타이머가 종료되었습니다.");
+        // console.log("타이머가 종료되었습니다.");
       }
 
       return () => {
@@ -59,7 +59,7 @@ const Signup = () => {
     if (email) {
       try {
         const res = await basicHttp.get(`/docs/email/${email}`);
-        console.log(res);
+        // console.log(res);
         alert("해당 이메일로 인증번호를 보냈습니다!");
         setIsCodeShow(true);
         setIsBtn(true);
@@ -70,7 +70,7 @@ const Signup = () => {
           setIsButtonDisabled(false);
         }, 15000);// 15초 후에 버튼 활성화
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     } else {
       alert("이메일을 입력해주세요.");
@@ -84,7 +84,7 @@ const Signup = () => {
     }
     try {
       const res = await basicHttp.get(`/docs/email/auth/${email}/${authCode}`);
-      console.log(res);
+      // console.log(res);
       setIsAuthorized(true);
       alert("이메일 인증이 완료되었습니다!");
     } catch (error) {
@@ -126,8 +126,8 @@ const Signup = () => {
 
     try {
       const res = await basicHttp.post(`/docs/service/login/signup`, userData);
-      console.log(res);
-      console.log("회원가입 성공");
+      // console.log(res);
+      // console.log("회원가입 성공");
       navigate("/login");
       alert("회원가입 성공");
     } catch (error) {
