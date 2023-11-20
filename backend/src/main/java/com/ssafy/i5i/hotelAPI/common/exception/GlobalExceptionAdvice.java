@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionAdvice {
 
     @ExceptionHandler(CommonException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public CommonResponse commonExceptionHandler(CommonException e) {
         /* for Debugging */
         e.printStackTrace();
