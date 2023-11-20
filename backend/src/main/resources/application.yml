@@ -4,11 +4,8 @@ server:
     accept-count: 600
     connection-timeout: 5000
     threads:
-      min-spare: 200
       max: 500
-#    threads:
-#      max: 500
-#      min-spare: 200
+      min-spare: 200
 #    max-connections: 200
 
 url:
