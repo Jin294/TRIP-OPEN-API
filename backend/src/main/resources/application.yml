@@ -3,6 +3,8 @@ server:
   tomcat:
     accept-count: 600
     connection-timeout: 5000
+  threads:
+    min-spare: 75
 #    threads:
 #      max: 500
 #      min-spare: 200
