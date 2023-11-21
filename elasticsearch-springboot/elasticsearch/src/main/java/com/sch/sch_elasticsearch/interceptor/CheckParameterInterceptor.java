@@ -15,10 +15,14 @@ public class CheckParameterInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String maxResults = request.getParameter("maxResults");
         String fuzziness = request.getParameter("fuzziness");
+        String kilo = request.getParameter("kilo");
         if (maxResults != null && Integer.parseInt(maxResults) > 100) {
             throw new CommonException(ExceptionType.INTERCEPTOR_TOO_MANY_MAX_RESULTS);
         }
-        if (maxResults != null && Integer.parseInt(maxResults) > 10) {
+        if (fuzziness != null && Integer.parseInt(fuzziness) > 10) {
+            throw new CommonException(ExceptionType.INTERCEPTOR_TOO_MANY_FUZZINESS);
+        }
+        if (kilo != null && Integer.parseInt(kilo) > 300) {
             throw new CommonException(ExceptionType.INTERCEPTOR_TOO_MANY_FUZZINESS);
         }
         return true;

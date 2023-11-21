@@ -19,20 +19,27 @@ public class Accommodation {
     @Field(name = "accommodation_id")
     private String pkId;
 
-    @Field(name = "accommodation_lng")
+    @Field(name = "accommodation_longitude")
     private String accommodationLng;
+
     @Field(name = "accommodation_latitude")
     private String accommodationLat;
-    @Field(name = "accommodation_longitude")
+
+    @Field(name = "accommodation_name")
     private String accommodationName;
+
     @Field(name = "accommodation_type")
     private String accommodationType;
+
     @Field(name = "accommodation_addr")
     private String accommodationAddr;
+
     @Field(name = "accommodation_img")
     private String accommodationPic;
+
     @Field(name = "accommodation_score")
     private String accommodationScore;
+
     @Field(name = "accommodation_price")
     private String accommodationPrice;
 

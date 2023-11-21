@@ -51,7 +51,7 @@ public class RestaurantTitleService {
             return toolsForRestauantService.getListBySearchHits(elasticsearchRestTemplate.search(searchQuery, Restaurant.class));
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());
-            throw new CommonException(RESTAURANT_SEARCH_FUZZY_TITLE_FAIL);
+            throw new CommonException(ExceptionType.RESTAURANT_SEARCH_FUZZY_TITLE_FAIL);
         }
     }
 
@@ -74,7 +74,7 @@ public class RestaurantTitleService {
             return toolsForRestauantService.getListBySearchHits(elasticsearchRestTemplate.search(searchQuery, Restaurant.class));
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());
-            throw new CommonException(RESTAURANT_SEARCH_NGRAM_TITLE_FAIL);
+            throw new CommonException(ExceptionType.RESTAURANT_SEARCH_NGRAM_TITLE_FAIL);
         }
     }
 
@@ -149,7 +149,7 @@ public class RestaurantTitleService {
             return results;
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());
-            throw new CommonException(RESTAURANT_SEARCH_FUZZY_AND_NGRAM_TITLE_FAIL);
+            throw new CommonException(ExceptionType.RESTAURANT_SEARCH_FUZZY_AND_NGRAM_TITLE_FAIL);
         }
     }
 }

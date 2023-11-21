@@ -80,6 +80,7 @@ public enum ExceptionType {
     /** +========= CheckParameterInterceptor : 9xxx +========= **/
     INTERCEPTOR_TOO_MANY_MAX_RESULTS(9001, "너무 많은 maxResult 매개변수입니다. (100 초과)"),
     INTERCEPTOR_TOO_MANY_FUZZINESS(9002, "너무 많은 fuzziness 매개변수입니다. (10 초과)"),
+    INTERCEPTOR_TOO_MANY_KILOS(9003, "너무 많은 kilo 매개변수입니다. (300 초과)"),
 
 
     ;

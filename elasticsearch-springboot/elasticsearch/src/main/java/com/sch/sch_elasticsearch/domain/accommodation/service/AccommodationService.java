@@ -6,6 +6,7 @@ import com.sch.sch_elasticsearch.domain.accommodation.repository.AccommodationRe
 import com.sch.sch_elasticsearch.domain.restaurant.entity.Restaurant;
 import com.sch.sch_elasticsearch.domain.shared_query.ToolsForQuery;
 import com.sch.sch_elasticsearch.exception.CommonException;
+import com.sch.sch_elasticsearch.exception.ExceptionType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -53,7 +54,7 @@ public class AccommodationService {
             return toolsForAccommodationService.getListBySearchHits(elasticsearchRestTemplate.search(searchQuery, Accommodation.class));
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());
-            throw new CommonException(ACCOMMODATION_SEARCH_FUZZY_TITLE_FAIL);
+            throw new CommonException(ExceptionType.ACCOMMODATION_SEARCH_FUZZY_TITLE_FAIL);
         }
     }
 
@@ -76,7 +77,7 @@ public class AccommodationService {
             return toolsForAccommodationService.getListBySearchHits(elasticsearchRestTemplate.search(searchQuery, Accommodation.class));
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());
-            throw new CommonException(ACCOMMODATION_SEARCH_NGRAM_TITLE_FAIL);
+            throw new CommonException(ExceptionType.ACCOMMODATION_SEARCH_NGRAM_TITLE_FAIL);
         }
    }
 
@@ -149,7 +150,7 @@ public class AccommodationService {
 
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());
-            throw new CommonException(ACCOMMODATION_SEARCH_FUZZY_AND_NGRAM_TITLE_FAIL);
+            throw new CommonException(ExceptionType.ACCOMMODATION_SEARCH_FUZZY_AND_NGRAM_TITLE_FAIL);
         }
 
    }
