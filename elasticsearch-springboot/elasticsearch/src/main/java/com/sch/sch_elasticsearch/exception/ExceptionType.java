@@ -60,8 +60,10 @@ public enum ExceptionType {
     /** RestaurantServiceExtend : 02xx **/
 //    RESTAURANT_GET_SAME_ATTNAME_AND_WIKITITLE_FAIL(0201, "동일 제목 결과를 찾는 데 실패하였습니다."),
     RESTAURANT_FUZZINESS_SEARCH_FAIL(0202, "fuzziness 검색에 실패하였습니다."),
-//    RESTAURANT_SEARCH_ALL_BY_DTO_FAIL(0203, "가장 유사도가 높은 내용을 검색하는 데 실패하였습니다. "),
-//    RESTAURANT_SEARCH_ALL_BY_PARAM_FAIL(0204, "가장 유사도가 높은 내용을 검색하는 데 실패하였습니다. "),
+    RESTAURANT_SEARCH_ALL_BY_PARAM_FAIL(0203, "가장 유사도가 높은 내용을 검색하는 데 실패하였습니다. "),
+    RESTAURANT_SEARCH_ALL_EXTEND_SCORE_FAIL(0204, "가장 유사도가 높은 내용, 스코어 점수를 포함한 내용 검색에 실패했습니다. "),
+    RESTAURANT_SEARCH_ALL_EXTEND_SCORE_AND_DISTANCE_FAIL(0205, "가장 유사도가 높은 내용, 스코어 점수, 거리를 포함한 내용 검색에 실패했습니다. "),
+
 
     /** +========= Accommodation Domain : 2xxx =========+ **/
     ACCOMMODATION_SAVE_FAIL(2008, "숙소 데이터 저장 실패"),

@@ -160,7 +160,7 @@ public class WikiServiceTermSimilary {
      */
     public void updateNewTerms(Wiki wiki) {
         try {
-            //1차 비교 : overview : wiki_content
+            //1차 비교 : overview : wiki_content, 리턴값은 {totalTermCount, matchTermCount}
             int termsOne[] = calculateTermOverviewAndContent(
                     useAnalyzerAndGetTokens(wiki.getOverview()),
                     useAnalyzerAndGetTokens(wiki.getWiki_content())

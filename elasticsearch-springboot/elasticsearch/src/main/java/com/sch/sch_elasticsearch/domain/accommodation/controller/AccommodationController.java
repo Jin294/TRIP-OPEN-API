@@ -2,11 +2,12 @@ package com.sch.sch_elasticsearch.domain.accommodation.controller;
 
 import com.sch.sch_elasticsearch.domain.accommodation.dto.AccommodationDTO;
 import com.sch.sch_elasticsearch.domain.accommodation.service.AccommodationService;
-import com.sch.sch_elasticsearch.exception.CommonException;
-import com.sch.sch_elasticsearch.exception.ExceptionType;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,26 +16,32 @@ public class AccommodationController {
 
     private final AccommodationService accommodationService;
 
-    //1. 데이터 저장 기능
-    @PostMapping("/save")
-    public ResponseEntity<String> saveData(@RequestBody AccommodationDTO accommodationDTO) {
-        try {
-            accommodationService.saveData(accommodationDTO);
-            return ResponseEntity.ok("숙소 저장 완료");
-        } catch (Exception e) {
-            throw new CommonException(ExceptionType.ACCOMMODATION_SAVE_FAIL);
-        }
+
+    //Fuzzy 제목 검색
+    @GetMapping("/title/fuzzy")
+    public List<AccommodationDTO> searchTitleFuzzy(@RequestParam("title") String title,
+                                                        @RequestParam("maxResults") int maxResults,
+                                                        @RequestParam("fuzziness") int fuzziness)
+    {
+        return accommodationService.searchTitleUseFuzzyDto(title, maxResults, fuzziness);
     }
 
-    //2. 데이터 수정 기능
-    //
+    //ngram 제목 검색
+    @GetMapping("/title/ngram")
+    public List<AccommodationDTO> searchTitleNgram(@RequestParam("title") String title,
+                                                        @RequestParam("maxResults") int maxResults)
+    {
+        return accommodationService.searchTitleUseNgramDto(title, maxResults);
+    }
 
-    //3. 제목 검색 후 유사도 출력 : 가장 높음, 상위 N개
-    // 추후 데이터 나오면 할 것.
-
-
-
-    //3. 전문 검색
-
+    //통합 제목 검색 : 제목 일치 or (Fuzzy + ngram)
+    @GetMapping("/title/aggregate-search")
+    public List<AccommodationDTO> searchTitleComprehensive(@RequestParam("title") String title,
+                                                                @RequestParam("maxResults") int maxResults,
+                                                                @RequestParam("fuzziness") int fuzziness,
+                                                                @RequestParam("fuzzyPrimary") boolean fuzzyPrimary)
+    {
+        return accommodationService.searchFuzzyAndNgram(title, maxResults, fuzziness, fuzzyPrimary); //2. 결과가 없다면 두 검색 진행 후 유사도별로 정렬
+    }
 
 }

@@ -12,12 +12,12 @@ public interface AccommodationRepository extends ElasticsearchRepository<Accommo
     List<Accommodation> findByAccommodationName(String name);
 
     @Query("{\"match\":{\"accommodation_name\":\"?0\"}}")
-    List<Accommodation> querytest2(String name);
+    List<Accommodation> matchAccommoName(String name);
 
     @Query("{\"fuzzy\":{\"accommodation_name\":{\"value\":\"?0\",\"fuzziness\":1}}}}")
-    List<Accommodation> querytest3(String name);
+    List<Accommodation> fuzzyAccommoName(String name);
 
     @Query("{\"_source\":[\"accommodation_lng\",\"accommodation_price\",\"accommodation_addr\",\"accommodation_lat\",\"accommodation_score\",\"accommodation_name\",\"accommodation_pic\"],\"fuzzy\":{\"accommodation_name\":{\"value\":\"?0\",\"fuzziness\":1}}}")
-    List<Accommodation> querytest4(String name);
+    List<Accommodation> getSource(String name);
 
 }

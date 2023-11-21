@@ -1,8 +1,5 @@
 package com.sch.sch_elasticsearch;
 
-import com.sch.sch_elasticsearch.domain.accommodation.service.AccommodationService;
-import com.sch.sch_elasticsearch.domain.test.TestService;
-import com.sch.sch_elasticsearch.domain.wiki.dto.TermDTO;
 import com.sch.sch_elasticsearch.domain.wiki.entity.Wiki;
 import com.sch.sch_elasticsearch.domain.wiki.service.*;
 import lombok.RequiredArgsConstructor;
@@ -11,14 +8,11 @@ import org.elasticsearch.client.core.MainResponse;
 import org.springframework.web.bind.annotation.*;
 import org.elasticsearch.client.RequestOptions;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequiredArgsConstructor
-public class TestController {
+public class AddOnController {
 
     private final RestHighLevelClient client;
     private final WikiServiceTermSimilary wikiServiceTermSimilary;
