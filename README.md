@@ -41,26 +41,21 @@
 ## 🛠️ 서비스 화면 
 
 <details>
-
 홈 페이지
 <summary>Home</summary>
-
-![메인 페이지](./image/main-page.png)
-<img src="./image/main-page.png" width="50" height="50"/>
+<img src="./image/main-page.png" width="25%" height="25%"/>
 </details></br>
 
 <details>
 API 사용을 위한 Docs 페이지
 <summary>Docs</summary>
-
-![메인 페이지](./image/api-docs-accommodation1.png)
+<img src="./image/api-docs-accommodation1.png" width="25%" height="25%"/>
 </details></br>
 
 <details>
 API 사용을 위한 Token 발급 페이지
 <summary>TokenPage</summary>
-![Alt text](./image/user-api-token-page.png)
-
+<img src="./image/user-api-token-page.png" width="25%" height="25%"/>
 </details></br>
 
 
