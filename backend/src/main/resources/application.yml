@@ -1,6 +1,6 @@
 server:
   port: 8080
-  tomcat:
+#  tomcat:
 #    accept-count: 600
 #    connection-timeout: 5000
 #    accept-count: 400
