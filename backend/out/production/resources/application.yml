@@ -1,11 +1,17 @@
 server:
-  port: 8080
-  tomcat:
-    accept-count: 600
-    connection-timeout: 5000
-    threads:
-      max: 500
-      min-spare: 200
+  port: 8082
+#  tomcat:
+#    accept-count: 1000
+#    connection-timeout: 5000
+#    accept-count: 400
+#    threads:
+#      max: 300
+#      min: 200
+#      max: 500
+#      min-spare: 200
+
+#      max: 400
+#      min-spare: 150
 #    max-connections: 200
 
 url:
@@ -19,21 +25,25 @@ spring:
       uri: mongodb+srv://S09P31B205:z5HxUpl4gB@ssafy.ngivl.mongodb.net/S09B31B205?authSource=admin
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://k9b205.p.ssafy.io:4000/b205
-    username: b205
-    password: 9gi_ssafy_final
+#    url: jdbc:mysql://k9b205.p.ssafy.io:4000/b205
+#    username: b205
+#    password: 9gi_ssafy_final
+    url: jdbc:mysql://k9b205a.p.ssafy.io:4000/b205
+    username: your-mysql-user
+    password: your-mysql-password
   jpa:
     open-in-view: false
     properties:
       hibernate:
-        show_sql: true
+        show_sql: false
         format_sql: true
-        use_sql_comments: true
+        use_sql_comments: false
         ddl-auto: none
   logging:
     level:
       org.hibernate.SQL: debug
       org.hibernate.type: trace
+      org.springframework: DEBUG
 
   mail:
     host: smtp.gmail.com

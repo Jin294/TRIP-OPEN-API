@@ -72,7 +72,7 @@ public class FoodServiceImpl implements FoodService{
 		double minY = nowLatitude -(requestDto.getDistance()* mForLatitude);
 		double maxX = nowLongitude +(requestDto.getDistance()* mForLongitude);
 		double minX = nowLongitude -(requestDto.getDistance()* mForLongitude);
-
+		log.info("location maxY = {}", maxY);
 		List<FoodResponseDto.Coordi> response = foodRepository.getFoodFromLngLatv(maxY, maxX, minY, minX)
 			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
 			.stream()

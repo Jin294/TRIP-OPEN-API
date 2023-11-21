@@ -16,7 +16,7 @@ import com.ssafy.i5i.hotelAPI.domain.food.entity.Food;
 public interface FoodRepository extends JpaRepository<Food, Long> {
 
 	@Query("SELECT f FROM Food f WHERE f.restaurantLongitude >= :minX AND f.restaurantLongitude <= :maxX AND f.restaurantLatitude >= :minY AND f.restaurantLatitude <= :maxY")
-	Optional<List<Food>> getFoodFromLngLatv(double maxY, double maxX, double minY, double minX);
+	Optional<List<Food>> getFoodFromLngLatv(@Param("maxY") double maxY, @Param("maxX") double maxX, @Param("minY") double minY, @Param("minX") double minX);
 
 	@Query("SELECT new com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodTitleResponseDto(a.contentId, a.title, a.longitude, a.latitude, " +
 		"f.id, f.restaurantName, f.restaurantType, f.restaurantLongitude, f.restaurantLatitude, " +
