@@ -1,7 +1,7 @@
 server:
   port: 8080
   tomcat:
-    accept-count: 500
+    accept-count: 1000
 #    connection-timeout: 5000
 #    accept-count: 400
 #    threads:
@@ -32,9 +32,9 @@ spring:
     open-in-view: false
     properties:
       hibernate:
-        show_sql: true
+        show_sql: false
         format_sql: true
-        use_sql_comments: true
+        use_sql_comments: false
         ddl-auto: none
   logging:
     level:
