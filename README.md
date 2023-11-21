@@ -1,99 +1,73 @@
-# 👨‍💻 SSAFY FINANCE OPEN API
-**마이데이터 규격에 맞게 금융 데이터를 제공하는 OPEN API**<br><br>
-**바로가기 : https://j9b309.p.ssafy.io**
+# 👨‍💻 SSAFY TRIP OPEN API
+**여행 서비스를 위한 OPEN API**<br><br>
+**바로가기 : https://k9b205.p.ssafy.io**
 <br>
 
 
 ## ⬇️⬇️프로젝트 소개 (youtube로 보러가기)⬇️⬇️
   
-현대 교육은 디지털 기술의 발전과 함께 많은 변화를 겪고 있습니다.  
-특히, 온라인 학습은 교육의 패러다임을 바꾸며 학습 방식과 환경을 혁신하고 있습니다.  
-이에 따라 학생과 선생님 모두에게 효과적인 학습 도구와 플랫폼이 필요하게 되었습니다.  
-Forest는 이러한 변화에 발맞춰 개발된 온라인 학습 플랫폼입니다.  
-학생들이 온라인 상에서 학습을 진행하고 성적을 분석하여 개인의 학습 상태를 파악할 수 있는 기능을 제공합니다.  
-또한, 선생님들은 커스텀 학습지를 만들고 배포하여 학생들의 학습을 관리할 수 있습니다.  
-온라인 학습지 Forest로 더 효과적인 학습을 경험해 보세요!  
+싸피 1학기 개발자들이 진행하는 여행 웹 서비스 개발을 좀 더 풍성하게 해주기위한 여행관련 openAPI
 
+기존 싸피 1학기 개발자들이 제공받는 여행지 데이터베이스를 이용, 그와 관련한 숙소, 음식점, 위키 데이터를 추가적으로 수집하여다양한 openAPI를 만들어 제공한다.
 [![동영상 제목](https://img.youtube.com/vi/Qzm23sjetHo/0.jpg)](https://www.youtube.com/watch?v=Qzm23sjetHo)
 
 
-**목표 : 다양한 금융 데이터를 제공하는 OPEN API**  
+**목표 : 여행지 관련 데이터를 제공하는 OPEN API**  
 
-1. OAuth 2.0 사용자 인증
+1. 여행지 관련 숙소 API
+ - 여행지 이름 기준으로 주변 숙소 정보를 얻는다
+ - 위경도 기준으로 주변 숙소 정보를 얻는다
 
- - 개인신용정보 전송요구에 OAuth2.0 방식 채택 
+2. 여행지 관련 음식점 API
+ - 여행지 이름 기준으로 주변 음식점 정보를 얻는다 
+ - 위경도 기준으로 주변 숙소 정보를 얻는다
 
-2. 개인 카드목록 조회 & 카드 사용내역 조회 API
+3. 검색 보정 API
+ -  
 
- - 개인 카드 사용내역을 통한 소비패턴 분석
-
-3. 한 눈에 보는 나의 투자정보 API
-
- - 증권사 별, 계좌 별로 흩어져 있는 나의 투자내역를 한 번에 조회할 수 있는 서비스
-
-4. 환율 API
-
- - 실시간 은행별, 나라별 환율 정보 제공
-
+4. 스크래핑
+ -
+ 
  <br>
 
 
 ## 📅프로젝트 기간
 
-**23.08.28 ~ 23.10.06 (6주간)**    
+**23.10.10 ~ 23.11.16 (6주간)**    
 
 ## 🛠️주요 기능  
 
 <details>
-<summary>1. 로그인</summary>
 
-![Alt text](readme사진/image-3.png)
-![Alt text](readme사진/image-21.png)
-![Alt text](readme사진/image-22.png)
+설명 한두줄 하고 토글
+<summary>Home</summary>
+
+![Alt text](image/home1.png)
 </details></br>
 
 <details>
-<summary>2. 소개팅</summary>
+<summary>Docs</summary>
 
-![Alt text](readme사진/image-4.png)
-![Alt text](readme사진/image-7.png)
-![Alt text](readme사진/image-6.png)
+![Alt text](image/docs2.png)
 </details></br>
 
 <details>
-<summary>3. 프로젝트</summary>
-![Alt text](readme사진/image-8.png)
-![Alt text](readme사진/image-9.png)
-![Alt text](readme사진/image-10.png)
-![Alt text](readme사진/image-11.png)
+<summary>TokenPage</summary>
+![Alt text](image/i.png)
+
 </details></br>
 
-<details>
-<summary>4. 채팅</summary>
-![Alt text](readme사진/image-12.png)
-![Alt text](readme사진/image-13.png)
-![Alt text](readme사진/image-14.png)
-</details></br>
 
-<details>
-<summary>5. SSAFY-TOWN</summary>
-![Alt text](readme사진/image-15.png)
-![Alt text](readme사진/image-20.png)
-![Alt text](readme사진/image-16.png)
-![Alt text](readme사진/image-17.png)
-![Alt text](readme사진/image-18.png)
-![Alt text](readme사진/image-19.png)
-</details></br>
 
 ## 🧝‍♂️팀원 및 역할  
 
-| **팀장** | 홍유빈 (BE : OAuth 2.0, docs API)   |
+| **팀장** | 신창학 (BE: Elastic search, Elastic search API)   |
 |----------|---------------------|
-| **팀원** | 강현곤 (BE : )             |
-|          | 권기연 (BE : 개인 카드 목록 조회 및 카드 사용 내역 조회 API)  |
-|          | 김하영 (BE : 환율 API )  |
-|          | 이진호 (BE : 한 눈에 보는 나의 투자정보 API )     |
-|          | 정형준 (Infra) |
+| **팀원** | 강현곤 (BE: 숙소 데이터 크롤링, 숙소 데이터 API)             |
+|          | 이지현 (BE: 음식점 데이터 크롤링, 음식점 데이터 API )  |
+|          | 이진호 (Infra : EC2, nginx, docker, jenkins 세팅)     |
+|          | 정형준 (BE: 데이터 크롤링 보조, 숙소 데이터 API, Java Global 객체, 스프링풀 성능측정) |
+|          | 홍유빈 (BE: 환율 API )  |
 
 ## 👨‍👩‍👧협업 툴  
 
@@ -108,7 +82,7 @@ Forest는 이러한 변화에 발맞춰 개발된 온라인 학습 플랫폼입�
 🖱**Backend**
 
 - IntelliJ
-- spring boot 2.7.15
+- spring boot 2.7.17
 - spring-boot-jpa
 - Spring Security
 - Java 11
@@ -177,14 +151,8 @@ Forest는 이러한 변화에 발맞춰 개발된 온라인 학습 플랫폼입�
 
 | 서비스                 | 포트  |
 |-----------------------|-------|
-| Spring Boot: Stock    | 8082  |
-| Spring Boot: FinancialData | 8083  |
-| Spring Boot: Exchange | 8084  |
-| Spring Boot: Oauth    | 8087  |
-| Spring Boot: Resource | 8088  |
-| Spring Boot: Security | 8089  |
+| Spring Boot | 8080  |
+| Spring Boot: Elastic search | 8081  |
 | React                 | 3000  |
-| MySQL                 | 3306  |
+| MySQL                 | 4000  |
 | Jenkins               | 9090  |
-
-
