@@ -42,18 +42,18 @@
 설명 한두줄 하고 토글
 <summary>Home</summary>
 
-![Alt text](image/home1.png)
+![Alt text](/image/home1.png)
 </details></br>
 
 <details>
 <summary>Docs</summary>
 
-![Alt text](image/docs2.png)
+![Alt text](/image/docs2.png)
 </details></br>
 
 <details>
 <summary>TokenPage</summary>
-![Alt text](image/i.png)
+![Alt text](/image/token3.png)
 
 </details></br>
 
