@@ -52,7 +52,7 @@
 API 사용을 위한 Docs 페이지
 <summary>Docs</summary>
 
-![메인 페이지](./image/api4u.site_(3).png)
+![메인 페이지](./image/api-docs-accommodation1.png)
 </details></br>
 
 <details>
