@@ -161,8 +161,8 @@ API 사용을 위한 Token 발급 페이지<br>
 | Jenkins               | 9090  |
 
 ## 처리율 제한 동기화 문제 해결
-####문제 정의 : 사용자 별 하루 당 10만회의 API 사용을 제한하기 위한 인터셉터 Count 함수에서 동기화 문제 발생
-####문제 설명 : 레디스의 {토큰 : cnt} 데이터를 여러 스레드에서 수정하는 과정에서 레이스컨디션 문제 발생
+####문제 정의 : 사용자 별 하루 당 10만회의 API 사용을 제한하기 위한 인터셉터 Count 함수에서 동기화 문제 발생<br>
+####문제 설명 : 레디스의 {토큰 : cnt} 데이터를 여러 스레드에서 수정하는 과정에서 레이스컨디션 문제 발생<br>
 ####문제 해결 : Java의 Synchronized ( Monitor ) / MySQL Lock / Redis Redisson ( distributed lock )의 성능 측정 후 가장 성능이 좋았던 Synchronized 활용
 ####성능 측정 : Ngrinder를 통해 각각의 동기화에 대한 초당 처리율 (TPS) 측정 결과 Synchronized : 302 / MySQL : 167 / Redisson : 217
 ####확장에 대한 고려 : 단일 프로세스 환경에서는 Synchronized로 충분했으나, 로드밸런싱을 고려할 경우 DB를 사용하여 Redisson으로의 전환을 고려
