@@ -53,20 +53,28 @@ public enum ExceptionType {
     /*ToolsForRestaurantService */
     RESTAURANT_TYPENUM_IS_INVALID(1002, "키워드 검색용 TypeNum 번호가 유효하지 않습니다."),
 
-    /** RestaurantServiceBasic : 01xx **/
-    RESTAURANT_SEARCH_EXACT_RESTAURANT_NAME_FAIL(0102, "일치하는 제목을 찾는 중 오류가 발생했습니다." ),
-    RESTAURANT_SEARCH_PARTIAL_FAIL(0102, "부분 일치 검색에 실패하였습니다. (searchPartial)"),
+    /** RestaurantServiceBasic : 11xx **/
+    RESTAURANT_SEARCH_EXACT_RESTAURANT_NAME_FAIL(1102, "일치하는 제목을 찾는 중 오류가 발생했습니다." ),
+    RESTAURANT_SEARCH_PARTIAL_FAIL(1102, "부분 일치 검색에 실패하였습니다. (searchPartial)"),
 
-    /** RestaurantServiceExtend : 02xx **/
+    /** RestaurantServiceExtend : 12xx **/
 //    RESTAURANT_GET_SAME_ATTNAME_AND_WIKITITLE_FAIL(0201, "동일 제목 결과를 찾는 데 실패하였습니다."),
-    RESTAURANT_FUZZINESS_SEARCH_FAIL(0202, "fuzziness 검색에 실패하였습니다."),
-    RESTAURANT_SEARCH_ALL_BY_PARAM_FAIL(0203, "가장 유사도가 높은 내용을 검색하는 데 실패하였습니다. "),
-    RESTAURANT_SEARCH_ALL_EXTEND_SCORE_FAIL(0204, "가장 유사도가 높은 내용, 스코어 점수를 포함한 내용 검색에 실패했습니다. "),
-    RESTAURANT_SEARCH_ALL_EXTEND_SCORE_AND_DISTANCE_FAIL(0205, "가장 유사도가 높은 내용, 스코어 점수, 거리를 포함한 내용 검색에 실패했습니다. "),
+    RESTAURANT_FUZZINESS_SEARCH_FAIL(1202, "fuzziness 검색에 실패하였습니다."),
+    RESTAURANT_SEARCH_ALL_BY_PARAM_FAIL(1203, "가장 유사도가 높은 내용을 검색하는 데 실패하였습니다. "),
+    RESTAURANT_SEARCH_ALL_EXTEND_SCORE_FAIL(1204, "가장 유사도가 높은 내용, 스코어 점수를 포함한 내용 검색에 실패했습니다. "),
+    RESTAURANT_SEARCH_ALL_EXTEND_DISTANCE_FAIL(1205, "가장 유사도가 높은 내용, 거리를 포함한 내용 검색에 실패했습니다. "),
+    RESTAURANT_SEARCH_ALL_EXTEND_SCORE_AND_DISTANCE_FAIL(1206, "가장 유사도가 높은 내용, 스코어 점수, 거리를 포함한 내용 검색에 실패했습니다. "),
 
+    /** RestaurantServiceTitle : 13xx **/
+    RESTAURANT_SEARCH_FUZZY_TITLE_FAIL(1301, "Fuzzyniss 제목 유사 검색이 실패하였습니다."),
+    RESTAURANT_SEARCH_NGRAM_TITLE_FAIL(1302, "Ngram 제목 유사 검색이 실패하였습니다."),
+    RESTAURANT_SEARCH_FUZZY_AND_NGRAM_TITLE_FAIL(1303, "Fuzzy 검색과 Ngram 통합 검색을 집계하는 과정이 실패했습니다."),
 
     /** +========= Accommodation Domain : 2xxx =========+ **/
-    ACCOMMODATION_SAVE_FAIL(2008, "숙소 데이터 저장 실패"),
+    ACCOMMODATION_SAVE_FAIL(2000, "숙소 데이터 저장 실패"),
+    ACCOMMODATION_SEARCH_FUZZY_TITLE_FAIL(2001, "Fuzzyniss 제목 유사 검색이 실패하였습니다."),
+    ACCOMMODATION_SEARCH_NGRAM_TITLE_FAIL(2002, "Ngram 제목 유사 검색이 실패하였습니다."),
+    ACCOMMODATION_SEARCH_FUZZY_AND_NGRAM_TITLE_FAIL(2003, "Fuzzy 검색과 Ngram 통합 검색을 집계하는 과정이 실패했습니다."),
 
 
     /** +========= CheckParameterInterceptor : 9xxx +========= **/

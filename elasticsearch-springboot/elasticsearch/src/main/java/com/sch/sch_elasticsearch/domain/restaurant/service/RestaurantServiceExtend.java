@@ -80,52 +80,70 @@ public class RestaurantServiceExtend {
             log.error("[ERR LOG] {}", e.getMessage());
             throw new CommonException(ExceptionType.RESTAURANT_SEARCH_ALL_EXTEND_SCORE_FAIL);
         }
-        
+
     }
 
+    /**
+     * 가장 연관관계가 있으며, 일정 거리 이내인 값들을 리턴.
+     * @param inputString
+     * @param maxResults
+     * @param lat
+     * @param lng
+     * @param kilo
+     * @return
+     */
     public List<ResponseRestaurantDto> searchAllExtendDistance(String inputString, int maxResults, float lat, float lng, int kilo) {
         try {
 
+            QueryBuilder multiMatchQuery = getMultiMatchQuery(inputString); //MultiMatch로직 모듈화
+            BoolQueryBuilder boolQueryBuilder = addBoolQueryBuilderDistanceConditions(lat, lng, kilo); //거리 계산 boolQuery must 로직
+            boolQueryBuilder.should(multiMatchQuery); // 기본 MultiMatchQuery
+
+            // NativeQuery 생성
+            NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
+                    .withQuery(boolQueryBuilder)
+                    .withPageable(PageRequest.of(0, maxResults)) // 결과 개수 제한
+                    .build();
+
+            return toolsForRestauantService.getListBySearchHits(elasticsearchRestTemplate.search(searchQuery, Restaurant.class));
+
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());
-            throw new CommonException(ExceptionType.ACCOMMODATION_SAVE_FAIL);
+            throw new CommonException(ExceptionType.RESTAURANT_SEARCH_ALL_EXTEND_DISTANCE_FAIL);
         }
-
-        QueryBuilder multiMatchQuery = getMultiMatchQuery(inputString); //MultiMatch로직 모듈화
-        BoolQueryBuilder boolQueryBuilder = addBoolQueryBuilderDistanceConditions(lat, lng, kilo); //거리 계산 boolQuery must 로직
-        boolQueryBuilder.should(multiMatchQuery); // 기본 MultiMatchQuery
-
-        // NativeQuery 생성
-        NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(boolQueryBuilder)
-                .withPageable(PageRequest.of(0, maxResults)) // 결과 개수 제한
-                .build();
-
-        return toolsForRestauantService.getListBySearchHits(elasticsearchRestTemplate.search(searchQuery, Restaurant.class));
-    }
+   }
 
 
+    /**
+     * 가장 연관관계가 있으며, 일정 기준점 스코어 이상인 값, 일정 거리 이내인 값들을 리턴. 0 포함 여부도 조회
+     * @param inputString
+     * @param maxResults
+     * @param includeZero
+     * @param starScore
+     * @param foodScore
+     * @param lat
+     * @param lng
+     * @param kilo
+     * @return
+     */
     public List<ResponseRestaurantDto> searchAllExtendScoreAndDistance(String inputString, int maxResults, boolean includeZero, float starScore, int foodScore, float lat, float lng, int kilo) {
         try {
+            QueryBuilder multiMatchQuery = getMultiMatchQuery(inputString); //MultiMatch로직 모듈화
+            BoolQueryBuilder boolQueryBuilder = addBoolQueryBuilderDistanceConditions(lat, lng, kilo); //거리 계산 boolQuery must 로직
+            boolQueryBuilder.should(multiMatchQuery); // 기본 MultiMatchQuery
 
+            BoolQueryBuilder finalBoolQueryBuilder = addBoolQueryBuilderScoreConditions(boolQueryBuilder, includeZero, starScore,foodScore); //스코어 제한 로직 모듈화 적용
+
+            // NativeQuery 생성
+            NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
+                    .withQuery(finalBoolQueryBuilder)
+                    .withPageable(PageRequest.of(0, maxResults)) // 결과 개수 제한
+                    .build();
+            return toolsForRestauantService.getListBySearchHits(elasticsearchRestTemplate.search(searchQuery, Restaurant.class));
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());
-            throw new CommonException(ExceptionType.ACCOMMODATION_SAVE_FAIL);
+            throw new CommonException(ExceptionType.RESTAURANT_SEARCH_ALL_EXTEND_SCORE_AND_DISTANCE_FAIL);
         }
-
-        QueryBuilder multiMatchQuery = getMultiMatchQuery(inputString); //MultiMatch로직 모듈화
-        BoolQueryBuilder boolQueryBuilder = addBoolQueryBuilderDistanceConditions(lat, lng, kilo); //거리 계산 boolQuery must 로직
-        boolQueryBuilder.should(multiMatchQuery); // 기본 MultiMatchQuery
-
-        BoolQueryBuilder finalBoolQueryBuilder = addBoolQueryBuilderScoreConditions(boolQueryBuilder, includeZero, starScore,foodScore); //스코어 제한 로직 모듈화 적용
-
-        // NativeQuery 생성
-        NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(finalBoolQueryBuilder)
-                .withPageable(PageRequest.of(0, maxResults)) // 결과 개수 제한
-                .build();
-
-        return toolsForRestauantService.getListBySearchHits(elasticsearchRestTemplate.search(searchQuery, Restaurant.class));
     }
 
     //MultiMatch 내부 모듈화

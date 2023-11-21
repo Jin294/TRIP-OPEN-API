@@ -3,7 +3,6 @@ package com.sch.sch_elasticsearch.domain.restaurant.contorller;
 import com.sch.sch_elasticsearch.domain.restaurant.dto.ResponseRestaurantDto;
 import com.sch.sch_elasticsearch.domain.restaurant.service.RestaurantServiceBasic;
 import com.sch.sch_elasticsearch.domain.restaurant.service.RestaurantTitleService;
-import com.sch.sch_elasticsearch.domain.wiki.dto.ResponseWikiDto;
 import com.sch.sch_elasticsearch.exception.CommonException;
 import com.sch.sch_elasticsearch.exception.ExceptionType;
 import lombok.RequiredArgsConstructor;
