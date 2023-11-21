@@ -8,10 +8,7 @@
 [동영상 링크](https://www.youtube.com/watch?v=DyyWZVai3vw)
   
 싸피 1학기 개발자들이 진행하는 여행 웹 서비스 개발을 좀 더 풍성하게 해주기위한 여행관련 openAPI
-- 기존 싸피 1학기 개발자들이 제공받는 여행지 데이터베이스를 이용, 그와 관련한 숙소, 음식점, 위키 데이터를 추가적으로 수집하여다양한 openAPI를 만들어 제공한다.
-
-![메인 페이지](./image/main-page.png)
-**목표 : 여행지 관련 데이터를 제공하는 OPEN API**  
+- 기존 싸피 1학기 개발자들이 제공받는 여행지 데이터베이스를 이용, 그와 관련한 숙소, 음식점, 위키 데이터를 추가적으로 수집하여다양한 openAPI를 만들어 제공한다.  
 
 1. 여행지 관련 숙소 API
  - 여행지 이름 기준으로 주변 숙소 정보를 얻는다
@@ -48,20 +45,20 @@
 홈 페이지
 <summary>Home</summary>
 
-![Alt text](image/home1.png)
+![메인 페이지](./image/main-page.png)
 </details></br>
 
 <details>
 API 사용을 위한 Docs 페이지
 <summary>Docs</summary>
 
-![Alt text](image/docs2.png)
+![메인 페이지](./image/api4u.site_ (3).png)
 </details></br>
 
 <details>
 API 사용을 위한 Token 발급 페이지
 <summary>TokenPage</summary>
-![Alt text](image/i.png)
+![Alt text](./image/user-api-token-page.png)
 
 </details></br>
 
