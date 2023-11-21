@@ -161,15 +161,15 @@ API 사용을 위한 Token 발급 페이지<br>
 | Jenkins               | 9090  |
 
 ## 처리율 제한 동기화 문제 해결
-#### 문제 정의 : 사용자 별 하루 당 10만회의 API 사용을 제한하기 위한 인터셉터 Count 함수에서 동기화 문제 발생
-#### 문제 설명 : 레디스의 {토큰 : cnt} 데이터를 여러 스레드에서 수정하는 과정에서 레이스컨디션 문제 발생
-#### 문제 해결 : Java의 Synchronized ( Monitor ) / MySQL Lock / Redis Redisson ( distributed lock )의 성능 측정 후 가장 성능이 좋았던 Synchronized 활용
-#### 성능 측정 : Ngrinder를 통해 각각의 동기화에 대한 초당 처리율 (TPS) 측정 결과 Synchronized : 302 / MySQL : 167 / Redisson : 217
-#### 확장에 대한 고려 : 단일 프로세스 환경에서는 Synchronized로 충분했으나, 로드밸런싱을 고려할 경우 DB를 사용하여 Redisson으로의 전환을 고려
+###### - 문제 정의 : 사용자 별 하루 당 10만회의 API 사용을 제한하기 위한 인터셉터 Count 함수에서 동기화 문제 발생
+###### -  문제 설명 : 레디스의 {토큰 : cnt} 데이터를 여러 스레드에서 수정하는 과정에서 레이스컨디션 문제 발생
+###### -  문제 해결 : Java의 Synchronized ( Monitor ) / MySQL Lock / Redis Redisson ( distributed lock )의 성능 측정 후 가장 성능이 좋았던 Synchronized 활용
+###### -  성능 측정 : Ngrinder를 통해 각각의 동기화에 대한 초당 처리율 (TPS) 측정 결과 Synchronized : 302 / MySQL : 167 / Redisson : 217
+###### -  확장에 대한 고려 : 단일 프로세스 환경에서는 Synchronized로 충분했으나, 로드밸런싱을 고려할 경우 DB를 사용하여 Redisson으로의 전환을 고려
 
 ## 부하테스트 이슈 발생
-#### 문제 정의 : Ngrinder로 최악의 상황을 가정하여 100명의 유저가 끊임없이 request를 보내는 환경에서 error의 비율과 response 속도 측정
-#### 문제 설명 : ThreadPool을 default로 설정했을 경우 평균 응답시간 2.5초 / error 비율 26.9% 를 확인
-#### 문제 해결 : ThreadPool의 최대 Thread, 최소 동작 Tread, WaitQueue 사이즈를 조절하여 평균 응답시간 2.7초 / error 비율 0%로 개선
-#### 연구 결과 : Synchronized에 의해 대기하고있는 스레드가 많아 최대 Thread수를 조절하여 error를 줄이는 것에 성공
+###### -  문제 정의 : Ngrinder로 최악의 상황을 가정하여 100명의 유저가 끊임없이 request를 보내는 환경에서 error의 비율과 response 속도 측정
+###### -  문제 설명 : ThreadPool을 default로 설정했을 경우 평균 응답시간 2.5초 / error 비율 26.9% 를 확인
+###### -  문제 해결 : ThreadPool의 최대 Thread, 최소 동작 Tread, WaitQueue 사이즈를 조절하여 평균 응답시간 2.7초 / error 비율 0%로 개선
+###### -  연구 결과 : Synchronized에 의해 대기하고있는 스레드가 많아 최대 Thread수를 조절하여 error를 줄이는 것에 성공
 
