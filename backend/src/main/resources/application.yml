@@ -6,7 +6,7 @@ server:
 #    accept-count: 400
     threads:
       min: 100
-#      max: 300
+      max: 300
 #      max: 500
 #      min-spare: 200
 
