@@ -45,19 +45,19 @@
 <details>
 홈 페이지<br>
 <summary>Home</summary>
-<img src="./image/main-page.png" width="25%" height="25%"/>
+<img src="./image/main-page.png" width="75%" height="75%"/>
 </details></br>
 
 <details>
 API 사용을 위한 Docs 페이지<br>
 <summary>Docs</summary>
-<img src="./image/api-docs-accommodation1.png" width="25%" height="25%"/>
+<img src="./image/api-docs-accommodation1.png" width="75%" height="75%"/>
 </details></br>
 
 <details>
 API 사용을 위한 Token 발급 페이지<br>
 <summary>TokenPage</summary>
-<img src="./image/user-api-token-page.png" width="25%" height="25%"/>
+<img src="./image/user-api-token-page.png" width="75%" height="75%"/>
 </details></br>
 
 
@@ -113,7 +113,7 @@ API 사용을 위한 Token 발급 페이지<br>
 
 ## 🔧 서비스 아키텍쳐  
 
-<img src="./image/architec.png" width="40%" height="40%"/>
+<img src="./image/architec.png" width="75%" height="75%"/>
 
 ## 📑 API 명세서  
 
@@ -122,7 +122,7 @@ API 사용을 위한 Token 발급 페이지<br>
 
 ## ✨ERD  
 
-<img src="./image/erd.png" width="40%" height="40%"/>
+<img src="./image/erd.png" width="75%" height="75%"/>
 
 ## 📚 커밋 컨벤션 규칙
 
