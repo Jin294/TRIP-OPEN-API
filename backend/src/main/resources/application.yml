@@ -40,6 +40,7 @@ spring:
     level:
       org.hibernate.SQL: debug
       org.hibernate.type: trace
+      org.springframework: DEBUG
 
   mail:
     host: smtp.gmail.com
