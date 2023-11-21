@@ -46,6 +46,7 @@
 <summary>Home</summary>
 
 ![메인 페이지](./image/main-page.png)
+<img src="./image/main-page.png" width="50" height="50"/>
 </details></br>
 
 <details>
