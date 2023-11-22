@@ -5,10 +5,10 @@ server:
 #    connection-timeout: 5000
 #    accept-count: 400
     threads:
-#      max: 300
+      max: 30
 #      min: 200
-      max: 500
-      min-spare: 200
+#      max: 500
+#      min-spare: 200
 
 #      max: 400
 #      min-spare: 150
