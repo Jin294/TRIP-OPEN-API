@@ -8,5 +8,9 @@ WORKDIR /app
 # 호스트 머신에서 JAR 파일을 복사합니다.
 COPY build/libs/*.jar app.jar
 
+# scouter agent를 복사
+COPY /scouter/agent.java /app/scouter/agent.java
+
+
 # JAR 파일 실행
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-javaagent:scouter/agent.java/scouter.agent.jar", "-jar", "app.jar"]

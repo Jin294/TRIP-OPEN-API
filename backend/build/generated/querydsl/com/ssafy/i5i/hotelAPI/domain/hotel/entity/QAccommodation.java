@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -18,11 +17,11 @@ public class QAccommodation extends EntityPathBase<Accommodation> {
 
     private static final long serialVersionUID = 550517531L;
 
-    private static final PathInits INITS = PathInits.DIRECT2;
-
     public static final QAccommodation accommodation = new QAccommodation("accommodation");
 
     public final StringPath accommodationAddr = createString("accommodationAddr");
+
+    public final NumberPath<Long> accommodationId = createNumber("accommodationId", Long.class);
 
     public final StringPath accommodationImg = createString("accommodationImg");
 
@@ -38,29 +37,16 @@ public class QAccommodation extends EntityPathBase<Accommodation> {
 
     public final StringPath accommodationType = createString("accommodationType");
 
-    public final QAttraction attraction;
-
-    public final NumberPath<Long> id = createNumber("id", Long.class);
-
     public QAccommodation(String variable) {
-        this(Accommodation.class, forVariable(variable), INITS);
+        super(Accommodation.class, forVariable(variable));
     }
 
     public QAccommodation(Path<? extends Accommodation> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        super(path.getType(), path.getMetadata());
     }
 
     public QAccommodation(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
-    }
-
-    public QAccommodation(PathMetadata metadata, PathInits inits) {
-        this(Accommodation.class, metadata, inits);
-    }
-
-    public QAccommodation(Class<? extends Accommodation> type, PathMetadata metadata, PathInits inits) {
-        super(type, metadata, inits);
-        this.attraction = inits.isInitialized("attraction") ? new QAttraction(forProperty("attraction")) : null;
+        super(Accommodation.class, metadata);
     }
 
 }

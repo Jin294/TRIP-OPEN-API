@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -18,49 +17,36 @@ public class QFood extends EntityPathBase<Food> {
 
     private static final long serialVersionUID = -866241453L;
 
-    private static final PathInits INITS = PathInits.DIRECT2;
-
     public static final QFood food = new QFood("food");
-
-    public final com.ssafy.i5i.hotelAPI.domain.hotel.entity.QAttraction attraction;
-
-    public final NumberPath<Integer> foodJjim = createNumber("foodJjim", Integer.class);
-
-    public final NumberPath<java.math.BigDecimal> foodLatitude = createNumber("foodLatitude", java.math.BigDecimal.class);
-
-    public final NumberPath<java.math.BigDecimal> foodLongtitude = createNumber("foodLongtitude", java.math.BigDecimal.class);
-
-    public final StringPath foodName = createString("foodName");
-
-    public final NumberPath<Integer> foodScore = createNumber("foodScore", Integer.class);
-
-    public final NumberPath<Double> foodStar = createNumber("foodStar", Double.class);
-
-    public final NumberPath<Integer> foodStarUser = createNumber("foodStarUser", Integer.class);
-
-    public final StringPath foodType = createString("foodType");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final NumberPath<Double> restaurantLatitude = createNumber("restaurantLatitude", Double.class);
+
+    public final NumberPath<Integer> restaurantLike = createNumber("restaurantLike", Integer.class);
+
+    public final NumberPath<Double> restaurantLongitude = createNumber("restaurantLongitude", Double.class);
+
+    public final StringPath restaurantName = createString("restaurantName");
+
+    public final NumberPath<Integer> restaurantScore = createNumber("restaurantScore", Integer.class);
+
+    public final NumberPath<Double> restaurantStar = createNumber("restaurantStar", Double.class);
+
+    public final NumberPath<Integer> restaurantStarUser = createNumber("restaurantStarUser", Integer.class);
+
+    public final StringPath restaurantType = createString("restaurantType");
+
     public QFood(String variable) {
-        this(Food.class, forVariable(variable), INITS);
+        super(Food.class, forVariable(variable));
     }
 
     public QFood(Path<? extends Food> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        super(path.getType(), path.getMetadata());
     }
 
     public QFood(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
-    }
-
-    public QFood(PathMetadata metadata, PathInits inits) {
-        this(Food.class, metadata, inits);
-    }
-
-    public QFood(Class<? extends Food> type, PathMetadata metadata, PathInits inits) {
-        super(type, metadata, inits);
-        this.attraction = inits.isInitialized("attraction") ? new com.ssafy.i5i.hotelAPI.domain.hotel.entity.QAttraction(forProperty("attraction")) : null;
+        super(Food.class, metadata);
     }
 
 }
