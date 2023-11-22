@@ -1,5 +1,6 @@
 package com.sch.sch_elasticsearch.domain.restaurant.contorller;
 
+import com.sch.sch_elasticsearch.aop.SaveLogging;
 import com.sch.sch_elasticsearch.domain.restaurant.dto.ResponseRestaurantDto;
 import com.sch.sch_elasticsearch.domain.restaurant.service.RestaurantServiceBasic;
 import com.sch.sch_elasticsearch.domain.restaurant.service.RestaurantTitleService;
@@ -29,6 +30,7 @@ public class RestaurantTitleController {
 
     //정확한 음식점명의 결과 조회
     @GetMapping("/exact-title")
+    @SaveLogging
     public List<ResponseRestaurantDto> searchExactRestaurantName(
             @RequestParam("restaurantName") String restaurantName,
             @RequestParam("maxResults") int maxResults) {
@@ -36,6 +38,7 @@ public class RestaurantTitleController {
     }
 
     //Fuzzy 제목 검색
+    @SaveLogging
     @GetMapping("/title/fuzzy")
     public List<ResponseRestaurantDto> searchTitleFuzzy(@RequestParam("title") String title,
                                                         @RequestParam("maxResults") int maxResults,
@@ -45,6 +48,7 @@ public class RestaurantTitleController {
     }
 
     //ngram 제목 검색
+    @SaveLogging
     @GetMapping("/title/ngram")
     public List<ResponseRestaurantDto> searchTitleNgram(@RequestParam("title") String title,
                                                         @RequestParam("maxResults") int maxResults)
@@ -53,6 +57,7 @@ public class RestaurantTitleController {
     }
 
     //통합 제목 검색 : 제목 일치 or (Fuzzy + ngram)
+    @SaveLogging
     @GetMapping("/title/aggregate-search")
     public List<ResponseRestaurantDto> searchTitleComprehensive(@RequestParam("title") String title,
                                                                 @RequestParam("maxResults") int maxResults,

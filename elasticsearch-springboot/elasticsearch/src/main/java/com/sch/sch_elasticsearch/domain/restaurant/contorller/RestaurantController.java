@@ -1,5 +1,6 @@
 package com.sch.sch_elasticsearch.domain.restaurant.contorller;
 
+import com.sch.sch_elasticsearch.aop.SaveLogging;
 import com.sch.sch_elasticsearch.domain.restaurant.dto.ResponseRestaurantDto;
 import com.sch.sch_elasticsearch.domain.restaurant.service.RestaurantServiceBasic;
 import com.sch.sch_elasticsearch.domain.restaurant.service.RestaurantServiceExtend;
@@ -21,6 +22,7 @@ public class RestaurantController {
 
 
     //특정 필드의 match 쿼리 조회
+    @SaveLogging
     @GetMapping("/partial")
     public List<ResponseRestaurantDto> searchPartial(@RequestParam("typeNum") int typeNum,
                                                      @RequestParam("inputString") String inputString,
@@ -29,6 +31,7 @@ public class RestaurantController {
     }
 
     //특정 필드의 Fuzzy 쿼리 조회
+    @SaveLogging
     @GetMapping("/fuzzy")
     public List<ResponseRestaurantDto> searchFuzzy(@RequestParam("typeNum") int typeNum,
                                              @RequestParam("inputString") String inputString,
@@ -38,6 +41,7 @@ public class RestaurantController {
     }
 
     //통합 내용 검색(전문 검색) - 간단 버전
+    @SaveLogging
     @GetMapping("/search")
     public List<ResponseRestaurantDto> searchAll(@RequestParam("inputString") String inputString,
                                                  @RequestParam("maxResults") int maxResults) {
@@ -45,6 +49,7 @@ public class RestaurantController {
     }
 
     //통합 내용 검색(전문 검색) - 복잡한 버전 : 별점, 점수의 정량 지표 추가, includeZero의 경우 둘 중 하나의 파라미터가 0일 경우 포함
+    @SaveLogging
     @GetMapping("/search/score")
     public List<ResponseRestaurantDto> searchAllExtendScore(@RequestParam("inputString") String inputString,
                                                  @RequestParam("maxResults") int maxResults,
@@ -55,6 +60,7 @@ public class RestaurantController {
     }
 
     //현재 위치에서 Nkm 이내의 통합 검색
+    @SaveLogging
     @GetMapping("/search/distance")
     public List<ResponseRestaurantDto> searchAllExtendDistance(@RequestParam("inputString") String inputString,
                                                                        @RequestParam("maxResults") int maxResults,
@@ -65,6 +71,7 @@ public class RestaurantController {
     }
 
     //현재 위치에서 Nkm 이내, 별점의 통합 내용 검색
+    @SaveLogging
     @GetMapping("/search/score/distance")
     public List<ResponseRestaurantDto> searchAllExtendScoreAndDistance(@RequestParam("inputString") String inputString,
                                                             @RequestParam("maxResults") int maxResults,

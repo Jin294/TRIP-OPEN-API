@@ -13,6 +13,7 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
@@ -29,13 +30,17 @@ import java.util.stream.Collectors;
 import static com.sch.sch_elasticsearch.exception.ExceptionType.*;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class AccommodationService {
-    private final AccommodationRepository accommodationRepository;
-    private final ElasticsearchRestTemplate elasticsearchRestTemplate;
-    private final ToolsForQuery toolsForQuery;
-    private final ToolsForAccommodationService toolsForAccommodationService;
+    private ElasticsearchRestTemplate elasticsearchRestTemplate;
+    private ToolsForQuery toolsForQuery;
+    private ToolsForAccommodationService toolsForAccommodationService;
+
+    public  AccommodationService(@Qualifier("ElasticsearchTemplateBean") ElasticsearchRestTemplate elasticsearchRestTemplate, ToolsForQuery toolsForQuery, ToolsForAccommodationService toolsForAccommodationService) {
+        this.elasticsearchRestTemplate = elasticsearchRestTemplate;
+        this.toolsForQuery = toolsForQuery;
+        this.toolsForAccommodationService = toolsForAccommodationService;
+    }
 
     @Value("${info.analyzer.nori-ngram}")
     String ngramAnalyzer;
