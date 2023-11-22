@@ -1,53 +1,55 @@
 {
   "properties" : {
-    "pk_id" : {"type" : "keyword"},
-    "accommodation_pic" : {"type" : "keyword"},
-    "accommodation_lat" : {"type" : "keyword"},
-    "accommodation_lng" : {"type" : "keyword"},
-    "accommodation_addr" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
+    "accommodation_addr": {
+      "fielddata": true,
+      "analyzer": "korean",
+      "type": "text",
+      "fields": {
+        "keyword": {
+          "ignore_above": 256,
+          "type": "keyword"
         }
       }
     },
-    "accommodation_name" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
+    "accommodation_name": {
+      "fielddata": true,
+      "analyzer": "korean",
+      "type": "text",
+      "fields": {
+        "keyword": {
+          "ignore_above": 256,
+          "type": "keyword"
         }
       }
     },
-    "accommodation_price" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
+    "accommodation_type": {
+      "fielddata": true,
+      "analyzer": "korean",
+      "type": "text",
+      "fields": {
+        "keyword": {
+          "ignore_above": 256,
+          "type": "keyword"
         }
       }
     },
-    "accommodation_score" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
-        }
-      }
+    "accommodation_id": {
+      "type": "keyword"
     },
-    "accommodation_type" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
-        }
-      }
+    "accommodation_pic": {
+      "type": "keyword"
+    },
+    "accommodation_lat": {
+      "type": "float"
+    },
+    "accommodation_lng": {
+      "type": "float"
+    },
+    "accommodation_price": {
+      "type": "float"
+    },
+    "accommodation_score": {
+      "type": "float"
     }
   }
 }

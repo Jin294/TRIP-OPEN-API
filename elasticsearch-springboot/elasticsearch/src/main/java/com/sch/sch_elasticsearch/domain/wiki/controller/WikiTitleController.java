@@ -1,5 +1,6 @@
 package com.sch.sch_elasticsearch.domain.wiki.controller;
 
+import com.sch.sch_elasticsearch.aop.SaveLogging;
 import com.sch.sch_elasticsearch.domain.wiki.dto.ResponseWikiDto;
 import com.sch.sch_elasticsearch.domain.wiki.service.WikiServiceBasic;
 import com.sch.sch_elasticsearch.domain.wiki.service.WikiServiceExtend;
@@ -30,6 +31,7 @@ public class WikiTitleController {
 
     //통합 제목 검색 : 제목 일치 or (Fuzzy + ngram)
     @GetMapping("/title/aggregate-search")
+    @SaveLogging
     public List<ResponseWikiDto> searchTitleComprehensive(@RequestParam("title") String title,
                                                           @RequestParam("maxResults") int maxResults,
                                                           @RequestParam("fuzziness") int fuzziness,
@@ -52,12 +54,14 @@ public class WikiTitleController {
 
     //제목 일치 여부 검색
     @GetMapping("/title/correct")
+    @SaveLogging
     public ResponseWikiDto searchTitleCorrect(@RequestParam("title") String title, @RequestParam("reliable") boolean reliable) {
         return wikiServiceTitle.searchTitleCorrect(title, reliable);
     }
 
     //Fuzzy 제목 검색
     @GetMapping("/title/fuzzy")
+    @SaveLogging
     public List<ResponseWikiDto> searchTitleFuzzy(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                                   @RequestParam("fuzziness") int fuzziness, @RequestParam("reliable") boolean reliable)
     {
@@ -65,6 +69,7 @@ public class WikiTitleController {
     }
     //ngram 제목 검색
     @GetMapping("/title/ngram")
+    @SaveLogging
     public List<ResponseWikiDto> searchTitleNgram(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                                   @RequestParam("reliable") boolean reliable)
     {

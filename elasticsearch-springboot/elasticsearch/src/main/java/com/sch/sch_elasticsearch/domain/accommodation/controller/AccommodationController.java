@@ -1,5 +1,6 @@
 package com.sch.sch_elasticsearch.domain.accommodation.controller;
 
+import com.sch.sch_elasticsearch.aop.SaveLogging;
 import com.sch.sch_elasticsearch.domain.accommodation.dto.AccommodationDTO;
 import com.sch.sch_elasticsearch.domain.accommodation.service.AccommodationService;
 
@@ -18,6 +19,7 @@ public class AccommodationController {
 
 
     //Fuzzy 제목 검색
+    @SaveLogging
     @GetMapping("/title/fuzzy")
     public List<AccommodationDTO> searchTitleFuzzy(@RequestParam("title") String title,
                                                         @RequestParam("maxResults") int maxResults,
@@ -27,6 +29,7 @@ public class AccommodationController {
     }
 
     //ngram 제목 검색
+    @SaveLogging
     @GetMapping("/title/ngram")
     public List<AccommodationDTO> searchTitleNgram(@RequestParam("title") String title,
                                                         @RequestParam("maxResults") int maxResults)
@@ -35,6 +38,7 @@ public class AccommodationController {
     }
 
     //통합 제목 검색 : 제목 일치 or (Fuzzy + ngram)
+    @SaveLogging
     @GetMapping("/title/aggregate-search")
     public List<AccommodationDTO> searchTitleComprehensive(@RequestParam("title") String title,
                                                                 @RequestParam("maxResults") int maxResults,

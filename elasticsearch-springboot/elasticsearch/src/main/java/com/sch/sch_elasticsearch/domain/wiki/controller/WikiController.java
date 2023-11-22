@@ -1,5 +1,6 @@
 package com.sch.sch_elasticsearch.domain.wiki.controller;
 
+import com.sch.sch_elasticsearch.aop.SaveLogging;
 import com.sch.sch_elasticsearch.domain.wiki.dto.ResponseWikiDto;
 import com.sch.sch_elasticsearch.domain.wiki.dto.SearchAllDTO;
 import com.sch.sch_elasticsearch.domain.wiki.service.WikiServiceBasic;
@@ -24,6 +25,7 @@ public class WikiController {
 
     //특정 컬럼의 Keyword 매칭 검색 ->
     @GetMapping("/keyword")
+    @SaveLogging
     public List<ResponseWikiDto> searchExact(@RequestParam("typeNum") int typeNum,
                                              @RequestParam("inputString") String inputString,
                                              @RequestParam("reliable") boolean reliable,
@@ -33,6 +35,7 @@ public class WikiController {
 
     //특정 컬럼의 match 검색
     @GetMapping("/partial")
+    @SaveLogging
     public List<ResponseWikiDto> searchPartial(@RequestParam("typeNum") int typeNum,
                                     @RequestParam("inputString") String inputString,
                                     @RequestParam("reliable") boolean reliable,
@@ -42,6 +45,7 @@ public class WikiController {
 
     //특정 칼럼의 fuzzy 검색
     @GetMapping("/fuzzy")
+    @SaveLogging
     public List<ResponseWikiDto> searchFuzzy(@RequestParam("typeNum") int typeNum,
                                              @RequestParam("inputString") String inputString,
                                              @RequestParam("reliable") boolean reliable,
@@ -52,12 +56,14 @@ public class WikiController {
 
     //통합 내용 검색(전문 검색)
     @PostMapping("/search")
+    @SaveLogging
     public List<ResponseWikiDto> searchAll(@RequestBody SearchAllDTO searchAllDTO) {
         return wikiServiceExtend.searchAll(searchAllDTO);
     }
 
     //통합 내용 검색(전문 검색) : 간단한 버전
     @GetMapping("/search")
+    @SaveLogging
     public List<ResponseWikiDto> searchAll(@RequestParam("inputString") String inputString,
                                            @RequestParam("maxResults") int maxResults,
                                            @RequestParam("reliable") boolean reliable) {
