@@ -14,7 +14,10 @@ spring:
 logging:
   level:
     org.springframework.data.elasticsearch.client.WIRE: TRACE
+<<<<<<< HEAD
   config: classpath:logback-spring.xml
+=======
+>>>>>>> develop-back
 
 
 info:
@@ -27,4 +30,8 @@ info:
 
 server:
   servlet:
+<<<<<<< HEAD
     context-path: "/elastic/api"
+=======
+    context-path: "/elastic"
+>>>>>>> develop-back

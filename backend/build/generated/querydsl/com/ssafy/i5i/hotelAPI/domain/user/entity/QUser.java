@@ -19,10 +19,6 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
-    public final DateTimePath<java.util.Date> createdTime = createDateTime("createdTime", java.util.Date.class);
-
-    public final DateTimePath<java.util.Date> deletedTime = createDateTime("deletedTime", java.util.Date.class);
-
     public final StringPath id = createString("id");
 
     public final BooleanPath isDeleted = createBoolean("isDeleted");

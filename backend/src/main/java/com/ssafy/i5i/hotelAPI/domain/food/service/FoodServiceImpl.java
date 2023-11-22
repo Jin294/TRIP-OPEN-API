@@ -54,7 +54,7 @@ public class FoodServiceImpl implements FoodService{
 		requestDto.setAttractionName(wiki.getAttractionName());
 
 		Attraction attraction = attractionRepository.findTopByTitle(requestDto.getAttractionName())
-			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION));
+				.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION));
 
 		//현재 위도 좌표 (y 좌표)
 		double nowLatitude = attraction.getLatitude();
@@ -72,21 +72,23 @@ public class FoodServiceImpl implements FoodService{
 		double minY = nowLatitude -(requestDto.getDistance()* mForLatitude);
 		double maxX = nowLongitude +(requestDto.getDistance()* mForLongitude);
 		double minX = nowLongitude -(requestDto.getDistance()* mForLongitude);
-
 		List<FoodResponseDto.Coordi> response = foodRepository.getFoodFromLngLatv(maxY, maxX, minY, minX)
-			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
-			.stream()
-			.map(data -> {
-				FoodResponseDto.Coordi now = data.convertToDto();
-				now.setDistance(calculateDistance(attraction.getLatitude(), attraction.getLongitude(), now.getRestaurantLatitude(), now.getRestaurantLongitude()));
-				now.setAttractionName(wiki.getAttractionName());
-				return now;
-			})
-			.filter(dto -> dto.getDistance() < requestDto.getDistance())
-			.sorted(getFoodCoordiComparator(requestDto.getSorted()))
-			.collect(Collectors.toList());
+				.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
+				.stream()
+				.map(data -> {
+					FoodResponseDto.Coordi now = data.convertToDto();
+					now.setDistance(calculateDistance(attraction.getLatitude(), attraction.getLongitude(), now.getRestaurantLatitude(), now.getRestaurantLongitude()));
+					now.setAttractionName(wiki.getAttractionName());
+					return now;
+				})
+				.filter(dto -> dto.getDistance() < requestDto.getDistance())
+				.sorted(getFoodCoordiComparator(requestDto.getSorted()))
+				.collect(Collectors.toList());
 
 		int fromIndex = (requestDto.getPage() - 1) * requestDto.getMaxResults();
+
+		if(response.isEmpty()) throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);
+
 		return response.subList(fromIndex, Math.min(fromIndex + requestDto.getMaxResults(),response.size()));
 	}
 
@@ -113,18 +115,21 @@ public class FoodServiceImpl implements FoodService{
 
 
 		List<FoodResponseDto.Coordi> response = foodRepository.getFoodFromLngLatv(maxY, maxX, minY, minX)
-			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
-			.stream()
-			.map(data -> {
-				FoodResponseDto.Coordi now = data.convertToDto();
-				now.setDistance(calculateDistance(requestDto.getLatitude(), requestDto.getLongitude(),  now.getRestaurantLatitude(), now.getRestaurantLongitude()));
-				return now;
-			})
-			.filter(dto -> dto.getDistance() < requestDto.getDistance())
-			.sorted(getFoodCoordiComparator(requestDto.getSorted()))
-			.collect(Collectors.toList());
+				.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
+				.stream()
+				.map(data -> {
+					FoodResponseDto.Coordi now = data.convertToDto();
+					now.setDistance(calculateDistance(requestDto.getLatitude(), requestDto.getLongitude(),  now.getRestaurantLatitude(), now.getRestaurantLongitude()));
+					return now;
+				})
+				.filter(dto -> dto.getDistance() < requestDto.getDistance())
+				.sorted(getFoodCoordiComparator(requestDto.getSorted()))
+				.collect(Collectors.toList());
 
 		int fromIndex = (requestDto.getPage() - 1) * requestDto.getMaxResults();
+
+		if(response.isEmpty()) throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);
+
 		return response.subList(fromIndex, Math.min(fromIndex + requestDto.getMaxResults(),response.size()));
 	}
 
@@ -134,7 +139,7 @@ public class FoodServiceImpl implements FoodService{
 		double dLon = Math.toRadians(lon2 - lon1);
 
 		double a = Math.sin(dLat/2)* Math.sin(dLat/2)
-			+ Math.cos(Math.toRadians(lat1))* Math.cos(Math.toRadians(lat2))* Math.sin(dLon/2)* Math.sin(dLon/2);
+				+ Math.cos(Math.toRadians(lat1))* Math.cos(Math.toRadians(lat2))* Math.sin(dLon/2)* Math.sin(dLon/2);
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 		double d =EARTH_RADIUS* c;
 		return d;

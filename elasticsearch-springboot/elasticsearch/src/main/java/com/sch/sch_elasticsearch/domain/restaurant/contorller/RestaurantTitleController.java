@@ -1,6 +1,10 @@
 package com.sch.sch_elasticsearch.domain.restaurant.contorller;
 
+<<<<<<< HEAD
 import com.sch.sch_elasticsearch.aop.SaveLogging;
+=======
+import com.sch.sch_elasticsearch.domain.global.DataResponse;
+>>>>>>> develop-back
 import com.sch.sch_elasticsearch.domain.restaurant.dto.ResponseRestaurantDto;
 import com.sch.sch_elasticsearch.domain.restaurant.service.RestaurantServiceBasic;
 import com.sch.sch_elasticsearch.domain.restaurant.service.RestaurantTitleService;
@@ -34,7 +38,8 @@ public class RestaurantTitleController {
     public List<ResponseRestaurantDto> searchExactRestaurantName(
             @RequestParam("restaurantName") String restaurantName,
             @RequestParam("maxResults") int maxResults) {
-        return restaurantServiceBasic.searchExactRestaurantName(restaurantName, maxResults);
+        List<ResponseRestaurantDto> data = restaurantServiceBasic.searchExactRestaurantName(restaurantName, maxResults);
+        return data;
     }
 
     //Fuzzy 제목 검색
@@ -44,7 +49,8 @@ public class RestaurantTitleController {
                                                         @RequestParam("maxResults") int maxResults,
                                                         @RequestParam("fuzziness") int fuzziness)
     {
-        return restaurantTitleService.searchTitleUseFuzzyDto(title, maxResults, fuzziness);
+        List<ResponseRestaurantDto> data = restaurantTitleService.searchTitleUseFuzzyDto(title, maxResults, fuzziness);
+        return data;
     }
 
     //ngram 제목 검색
@@ -53,7 +59,8 @@ public class RestaurantTitleController {
     public List<ResponseRestaurantDto> searchTitleNgram(@RequestParam("title") String title,
                                                         @RequestParam("maxResults") int maxResults)
     {
-        return restaurantTitleService.searchTitleUseNgramDto(title, maxResults);
+        List<ResponseRestaurantDto> data = restaurantTitleService.searchTitleUseNgramDto(title, maxResults);
+        return data;
     }
 
     //통합 제목 검색 : 제목 일치 or (Fuzzy + ngram)
@@ -67,9 +74,11 @@ public class RestaurantTitleController {
         try {
             List<ResponseRestaurantDto> responseRestaurantDtoList = restaurantServiceBasic.searchExactRestaurantName(title, maxResults);
             if (responseRestaurantDtoList.size() != 0) {
-                return responseRestaurantDtoList;
+                List<ResponseRestaurantDto> data = responseRestaurantDtoList;
+                return data;
             } //1. 일치 제목 검색이 있다면 이를 리스트에 추가 후 리턴
-            return restaurantTitleService.searchFuzzyAndNgram(title, maxResults, fuzziness, fuzzyPrimary); //2. 결과가 없다면 두 검색 진행 후 유사도별로 정렬
+            List<ResponseRestaurantDto> data = restaurantTitleService.searchFuzzyAndNgram(title, maxResults, fuzziness, fuzzyPrimary); //2. 결과가 없다면 두 검색 진행 후 유사도별로 정렬
+            return data;
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e.getMessage());
             throw new CommonException(ExceptionType.RESTAURANT_AGGREGATE_TITLE_SEARCH_FAIL);

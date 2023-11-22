@@ -51,7 +51,8 @@ public class  AccommodationService {
 
         Attraction attraction = attractionRepository.findTopByTitle(requestDto.getAttractionName())
                 .orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION));
-
+        System.out.println(attraction.getTitle());
+        System.out.println(wiki.getAttractionName());
         //현재 위도 좌표 (y 좌표)
         double nowLatitude = attraction.getLatitude();
         //현재 경도 좌표 (x 좌표)
@@ -80,6 +81,8 @@ public class  AccommodationService {
                 .filter(dto -> dto.getRelativeDistance() < requestDto.getDistance())
                 .collect(Collectors.toList());
         int fromIndex = (requestDto.getPage() - 1) * requestDto.getMaxResults();
+
+        if(response.isEmpty()) throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);
 
         return sort(response, requestDto.getSorted()).subList(fromIndex, Math.min(fromIndex + requestDto.getMaxResults(),response.size()));
     }
@@ -115,6 +118,8 @@ public class  AccommodationService {
                 .collect(Collectors.toList());
 
         int fromIndex = (requestDto.getPage() - 1) * requestDto.getMaxResults();
+
+        if(response.isEmpty()) throw new CommonException(ExceptionType.NULL_POINT_EXCEPTION);
 
         return sort(response, requestDto.getSorted()).subList(fromIndex, Math.min(fromIndex + requestDto.getMaxResults(),response.size()));
 
@@ -186,3 +191,4 @@ public class  AccommodationService {
 //    }
 
 }
+

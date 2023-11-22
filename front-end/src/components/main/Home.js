@@ -19,20 +19,31 @@ const CardComponent = ({ index }) => {
   const descArray1 = [
     `여행지명이나 사용자의 위치에 기반하여 숙소 데이터를 제공합니다.`,
     `여행지명이나 사용자의 위치에 기반하여 음식점 데이터를 제공합니다.`,
+<<<<<<< HEAD
     `검색어를 기반하여 유사한 여행지를 제공합니다.    `,
+=======
+    `검색 API 짧은 설명 검색 API 짧은 설명`,
+>>>>>>> develop-back
   ];
 
   const subtitle1Array = ["숙소 정보", "음식점 정보", "검색 정보"];
   const subDesc1Array = [
     "숙소명, 주소, 점수, 이미지, 가격, 위도, 경도, 거리",
     "음식점명, 유형, 위도, 경도, 찜, 점수, 별점, 별점 유저수, 거리",
+<<<<<<< HEAD
     "관광지 이름, 관광지 설명",
+=======
+>>>>>>> develop-back
   ];
   const subtitle2Array = ["정렬", "정렬", "정렬"];
   const subDesc2Array = [
     "거리순, 점수순, 타입순",
     "거리순, 찜순, 점수순, 별점순",
+<<<<<<< HEAD
     "유사도순",
+=======
+    "거리순, 인기순",
+>>>>>>> develop-back
   ];
 
   const [isCardHovered, setIsCardHovered] = useState(false);
@@ -136,7 +147,11 @@ const Home = () => {
   const linkUrl = [
     "/apidocs/accommodation",
     "/apidocs/restaurant",
+<<<<<<< HEAD
     "/apidocs/search_v1",
+=======
+    "/apidocs/search",
+>>>>>>> develop-back
   ];
   return (
     <div className="home">
