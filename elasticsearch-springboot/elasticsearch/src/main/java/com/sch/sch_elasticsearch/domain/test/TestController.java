@@ -39,6 +39,17 @@ public class TestController {
         }
     }
 
+    @SaveLogging
+    @RequestMapping("boot3")
+    public String bootCheck3() {
+        try {
+            MainResponse response = client.info(RequestOptions.DEFAULT);
+            return "Well Done : " + response.getVersion().toString();
+        } catch (Exception e) {
+            return "fail to boot : " + e.getMessage();
+        }
+    }
+
 
     @GetMapping("term")
     public String setTerm(@RequestParam("searchCount") int searchCount) {

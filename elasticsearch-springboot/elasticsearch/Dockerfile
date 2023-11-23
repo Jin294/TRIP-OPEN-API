@@ -4,6 +4,8 @@ FROM openjdk:11-jre-slim
 
 # 작업 디렉토리를 설정합니다.
 WORKDIR /app
+
+# 이 폴더를 외부
 VOLUME ["/app/logs"]
 
 # 호스트 머신에서 JAR 파일을 복사합니다.
