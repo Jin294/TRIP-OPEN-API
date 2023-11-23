@@ -4,6 +4,7 @@ FROM openjdk:11-jre-slim
 
 # 작업 디렉토리를 설정합니다.
 WORKDIR /app
+VOLUME ["/app/logs"]
 
 # 호스트 머신에서 JAR 파일을 복사합니다.
 COPY build/libs/*.jar app.jar
