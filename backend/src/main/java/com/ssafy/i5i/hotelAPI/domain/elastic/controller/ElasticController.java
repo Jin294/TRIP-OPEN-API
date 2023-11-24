@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/elastic")
+@CrossOrigin(origins = "*")
 public class ElasticController {
     private final ElasticService elasticService;
 
