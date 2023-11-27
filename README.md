@@ -1,6 +1,9 @@
 # 👨‍💻 SSAFY TRIP OPEN API
 **여행 서비스를 위한 OPEN API**<br><br>
-**바로가기 : https://api4u.site/**
+**바로가기 : https://api4u.site/**  
+
+<img src="./image/page/main-page.png" width="75%" height="75%"/>  
+
 <br>
 
 
