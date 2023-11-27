@@ -113,7 +113,18 @@ API 사용을 위한 Token 발급 페이지<br>
 
 ## 🔧 서비스 아키텍쳐  
 
-<img src="./image/architec.png" width="75%" height="75%"/>
+### System Architecture
+<img src="./image/architecture/system_architecture.PNG" width="75%" height="75%"/>
+
+### Log Data architecture
+<img src="./image/architecture/data_architecture_1.PNG" width="75%" height="75%"/>
+<img src="./image/architecture/system_architecture.PNG" width="75%" height="75%"/>
+
+### Business Logic
+<img src="./image/architecture/business_logic.png" width="75%" height="75%"/>
+
+### Total Flow
+<img src="./image/architecture/total_flow.PNG" width="75%" height="75%"/>
 
 ## 📑 API 명세서  
 
@@ -154,11 +165,13 @@ API 사용을 위한 Token 발급 페이지<br>
 
 | 서비스                 | 포트  |
 |-----------------------|-------|
-| Spring Boot | 8080  |
-| Spring Boot: Elastic search | 8081  |
+| Spring Boot - Main API Server | 8080  |
+| Spring Boot - ElasticSearch API Server | 8081  |
 | React                 | 3000  |
 | MySQL                 | 4000  |
 | Jenkins               | 9090  |
+| Elasticsearch         | 9091  |
+| Kibana                | 5601  |
 
 ## 처리율 제한 동기화 문제 해결
 ###### - 문제 정의 : 사용자 별 하루 당 10만회의 API 사용을 제한하기 위한 인터셉터 Count 함수에서 동기화 문제 발생
