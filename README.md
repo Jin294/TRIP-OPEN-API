@@ -23,15 +23,15 @@
  - [전문 검색] 입력 문장을 기준으로 데이터의 모든 필드를 환산하여 가장 유사한 내용을 가진 결과값을 반환한다.
  - 입력 문장과 거리, 점수, 입력 파라미터의 조건을 기준으로 가장 높은 검색 결과를 반환한다.
 
-4. 데이터 신뢰성 측정 및 데이터시각화
+4. 데이터 신뢰성 측정 및 데이터 시각화, 로그 수집
  - 수집하여 저장된 데이터의 내용 유사도를 판단하여 신뢰성 있는 결과를 제공한다.
  - 수집된 인덱스의 도큐먼트 중, 가장 많은 검색 결과를 Kibana를 활용하여 차트의 형태로 제공한다.
- - logstash를 사용하여 API 요청 회수와 종류를 데이터로 수집하고, 차트의 형태로 제공한다.
+ - logstash를 사용하여 API 요청 회수와 사용자 요청 로그를 데이터로 수집하고, 차트의 형태로 제공한다.
 
 5. 스크래핑
  - python으로 스크래핑 코드 작성
- - robots.txt 확인
- - '여기어때', '다이닝코드' 사이트에서 숙소정보와 음식점정보 
+ - robots.txt 를 통한 스크래핑 허가 유무를 확인하였다
+ - '나무위키', '여기어때', '다이닝코드' 사이트에서 숙소정보와 음식점정보를 서버에 부하를 주지 않는 선에서 수집하였다.
  
  <br>
 
@@ -45,24 +45,24 @@
 <details>
 홈 페이지<br>
 <summary>Home</summary>
-<img src="./image/main-page.png" width="75%" height="75%"/>
+<img src="./image/page/main-page.png" width="75%" height="75%"/>
 </details></br>
 
 <details>
 API 사용을 위한 Docs 페이지<br>
 <summary>Docs</summary>
-<img src="./image/api-docs-accommodation1.png" width="75%" height="75%"/>
+<img src="./image/page/api-docs-accommodation1.png" width="75%" height="75%"/>
 </details></br>
 
 <details>
 API 사용을 위한 Token 발급 페이지<br>
 <summary>TokenPage</summary>
-<img src="./image/user-api-token-page.png" width="75%" height="75%"/>
+<img src="./image/page/user-api-token-page.png" width="75%" height="75%"/>
 </details></br>
 
 <detatls>
 Kibana Dashboard를 통한 데이터시각화<br>
-<img src="./image/user-api-token-page.png" width="75%" height="75%"/>
+<img src="./image/page/user-api-token-page.png" width="75%" height="75%"/>
 </details></br>
 
 ## 🧝‍♂️팀원 및 역할  
