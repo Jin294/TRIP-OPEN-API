@@ -8,6 +8,7 @@
 
 
 ## ⬇️⬇️프로젝트 소개 (youtube로 보러가기)⬇️⬇️
+
 [동영상 링크](https://www.youtube.com/watch?v=DyyWZVai3vw)
   
 개발에 갓 진입한 주니어 개발자들이 진행하는 서비스 개발을 위한 여행관련 open API를 제공.  
@@ -48,25 +49,31 @@
 ## 🛠️ 서비스 화면 
 
 <details>
-홈 페이지<br>
-<summary>Home</summary>
+### 홈페이지<br>
+<summary>HomePage</summary>
+<img src="./image/gif/main-page-gif.gif" width="75%" height="75%"/>
 <img src="./image/page/main-page.png" width="75%" height="75%"/>
 </details></br>
 
 <details>
-API 사용을 위한 Docs 페이지<br>
+### API 사용을 위한 Docs 페이지<br>
 <summary>Docs</summary>
-<img src="./image/page/api-docs-accommodation1.png" width="75%" height="75%"/>
+### API Info
+<img src="./image/gif/api-info-gif.gif" width="75%" height="75%"/>
+<img src="./image/page/api-docs-accommodation1.png" width="75%" height="75%"/>  
+### 요청 및 반환  
+<img src="./image/gif/request-response-gif.gif" width="75%" height="75%"/>  
+
 </details></br>
 
 <details>
-API 사용을 위한 Token 발급 페이지<br>
+### API 사용을 위한 Token 발급 페이지<br>
 <summary>TokenPage</summary>
 <img src="./image/page/user-api-token-page.png" width="75%" height="75%"/>
 </details></br>
 
 <details>
-Kibana Dashboard를 통한 데이터시각화<br>
+### Kibana Dashboard를 통한 데이터시각화<br>
 <summary>Dashboard</summary>
 <img src="./image/page/dashboard_1.png" width="75%" height="75%"/>
 </details></br>
