@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "index" : {
     "analysis" : {
       "tokenizer": {
@@ -76,52 +75,5 @@
       }
     },
     "number_of_shards" : "1"
-=======
-  "analysis": {
-    "analyzer": {
-      "korean": {
-        "type": "custom",
-        "tokenizer": "nori_tokenizer",
-        "filter": ["nori_readingform", "nori_filter"]
-      }
-    },
-    "filter" : {
-      "nori_filter": {
-        "type": "nori_part_of_speech",
-        "stoptags": [
-          "E",
-          "IC",
-          "J",
-          "MAG",
-          "MM",
-          "NA",
-          "NR",
-          "SC",
-          "SE",
-          "SF",
-          "SH",
-          "SL",
-          "SN",
-          "SP",
-          "SSC",
-          "SSO",
-          "SY",
-          "UNA",
-          "UNKNOWN",
-          "VA",
-          "VCN",
-          "VCP",
-          "VSV",
-          "VV",
-          "VX",
-          "XPN",
-          "XR",
-          "XSA",
-          "XSN",
-          "XSV"
-        ]
-      }
-    }
->>>>>>> develop-back
   }
 }

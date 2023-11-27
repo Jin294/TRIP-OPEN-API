@@ -29,7 +29,7 @@ public class TestController {
     }
 
     @SaveLogging
-    @RequestMapping("boot2")
+    @RequestMapping("boot-logger")
     public String bootCheck2() {
         try {
             MainResponse response = client.info(RequestOptions.DEFAULT);

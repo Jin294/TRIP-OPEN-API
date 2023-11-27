@@ -1,6 +1,5 @@
 {
   "properties" : {
-<<<<<<< HEAD
     "accommodation_addr": {
       "fielddata": true,
       "analyzer": "korean",
@@ -51,56 +50,6 @@
     },
     "accommodation_score": {
       "type": "float"
-=======
-    "pk_id" : {"type" : "keyword"},
-    "accommodation_pic" : {"type" : "keyword"},
-    "accommodation_lat" : {"type" : "keyword"},
-    "accommodation_lng" : {"type" : "keyword"},
-    "accommodation_addr" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
-        }
-      }
-    },
-    "accommodation_name" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
-        }
-      }
-    },
-    "accommodation_price" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
-        }
-      }
-    },
-    "accommodation_score" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
-        }
-      }
-    },
-    "accommodation_type" : {
-      "type" : "text",
-      "fields" : {
-        "keyword" : {
-          "type" : "keyword",
-          "ignore_above" : 256
-        }
-      }
->>>>>>> develop-back
     }
   }
 }

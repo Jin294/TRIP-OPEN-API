@@ -1,10 +1,6 @@
 package com.sch.sch_elasticsearch.domain.wiki.controller;
 
-<<<<<<< HEAD
 import com.sch.sch_elasticsearch.aop.SaveLogging;
-=======
-import com.sch.sch_elasticsearch.domain.global.DataResponse;
->>>>>>> develop-back
 import com.sch.sch_elasticsearch.domain.wiki.dto.ResponseWikiDto;
 import com.sch.sch_elasticsearch.domain.wiki.service.WikiServiceBasic;
 import com.sch.sch_elasticsearch.domain.wiki.service.WikiServiceExtend;
@@ -37,20 +33,19 @@ public class WikiTitleController {
     @GetMapping("/title/aggregate-search")
     @SaveLogging
     public List<ResponseWikiDto> searchTitleComprehensive(@RequestParam("title") String title,
-                                                                        @RequestParam("maxResults") int maxResults,
-                                                                        @RequestParam("fuzziness") int fuzziness,
-                                                                        @RequestParam("reliable") boolean reliable,
-                                                                        @RequestParam("fuzzyPrimary") boolean fuzzyPrimary)
+                                                          @RequestParam("maxResults") int maxResults,
+                                                          @RequestParam("fuzziness") int fuzziness,
+                                                          @RequestParam("reliable") boolean reliable,
+                                                          @RequestParam("fuzzyPrimary") boolean fuzzyPrimary)
     {
         try {
             ResponseWikiDto wiki = wikiServiceTitle.searchTitleCorrect(title, reliable);
             if (wiki != null) {
-                List<ResponseWikiDto> data = new ArrayList<>();
-                data.add(wiki);
-                return data;
+                List<ResponseWikiDto> wikiList = new ArrayList<>();
+                wikiList.add(wiki);
+                return wikiList;
             } //1. 일치 제목 검색이 있다면 이를 리스트에 추가 후 리턴
-            List<ResponseWikiDto> data = wikiServiceTitle.searchFuzzyAndNgram(title, maxResults, fuzziness, reliable, fuzzyPrimary); //2. 아니라면 두개 검색 비교후 리턴
-            return data;
+            return wikiServiceTitle.searchFuzzyAndNgram(title, maxResults, fuzziness, reliable, fuzzyPrimary); //2. 아니라면 두개 검색 비교후 리턴
         } catch (Exception e) {
             log.error("[ERR LOG] {}", e);
             throw new CommonException(ExceptionType.WIKI_AGGREGATE_TITLE_SEARCH_FAIL);
@@ -61,8 +56,7 @@ public class WikiTitleController {
     @GetMapping("/title/correct")
     @SaveLogging
     public ResponseWikiDto searchTitleCorrect(@RequestParam("title") String title, @RequestParam("reliable") boolean reliable) {
-        ResponseWikiDto data = wikiServiceTitle.searchTitleCorrect(title, reliable);
-        return data;
+        return wikiServiceTitle.searchTitleCorrect(title, reliable);
     }
 
     //Fuzzy 제목 검색
@@ -71,8 +65,7 @@ public class WikiTitleController {
     public List<ResponseWikiDto> searchTitleFuzzy(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                                   @RequestParam("fuzziness") int fuzziness, @RequestParam("reliable") boolean reliable)
     {
-        List<ResponseWikiDto> data = wikiServiceTitle.searchTitleUseFuzzyDto(title, maxResults, fuzziness, reliable);
-        return data;
+        return wikiServiceTitle.searchTitleUseFuzzyDto(title, maxResults, fuzziness, reliable);
     }
     //ngram 제목 검색
     @GetMapping("/title/ngram")
@@ -80,7 +73,6 @@ public class WikiTitleController {
     public List<ResponseWikiDto> searchTitleNgram(@RequestParam("title") String title, @RequestParam("maxResults") int maxResults,
                                                   @RequestParam("reliable") boolean reliable)
     {
-        List<ResponseWikiDto> data = wikiServiceTitle.searchTitleUseNgramDto(title, maxResults, reliable);
-        return data;
+        return wikiServiceTitle.searchTitleUseNgramDto(title, maxResults, reliable);
     }
 }

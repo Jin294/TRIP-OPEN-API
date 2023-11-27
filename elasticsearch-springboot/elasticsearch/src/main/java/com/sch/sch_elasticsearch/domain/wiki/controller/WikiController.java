@@ -1,10 +1,6 @@
 package com.sch.sch_elasticsearch.domain.wiki.controller;
 
-<<<<<<< HEAD
 import com.sch.sch_elasticsearch.aop.SaveLogging;
-=======
-import com.sch.sch_elasticsearch.domain.global.DataResponse;
->>>>>>> develop-back
 import com.sch.sch_elasticsearch.domain.wiki.dto.ResponseWikiDto;
 import com.sch.sch_elasticsearch.domain.wiki.dto.SearchAllDTO;
 import com.sch.sch_elasticsearch.domain.wiki.service.WikiServiceBasic;
@@ -34,8 +30,7 @@ public class WikiController {
                                              @RequestParam("inputString") String inputString,
                                              @RequestParam("reliable") boolean reliable,
                                              @RequestParam("maxResults") int maxResults) {
-        List<ResponseWikiDto> data = wikiServiceBasic.searchExact(typeNum, inputString, reliable, maxResults);
-        return data;
+        return wikiServiceBasic.searchExact(typeNum, inputString, reliable, maxResults);
     }
 
     //특정 컬럼의 match 검색
@@ -45,8 +40,7 @@ public class WikiController {
                                     @RequestParam("inputString") String inputString,
                                     @RequestParam("reliable") boolean reliable,
                                     @RequestParam("maxResults") int maxResults) {
-        List<ResponseWikiDto>data = wikiServiceBasic.searchPartial(typeNum, inputString, reliable, maxResults);
-        return data;
+        return wikiServiceBasic.searchPartial(typeNum, inputString, reliable, maxResults);
     }
 
     //특정 칼럼의 fuzzy 검색
@@ -57,16 +51,14 @@ public class WikiController {
                                              @RequestParam("reliable") boolean reliable,
                                              @RequestParam("maxResults") int maxResults,
                                              @RequestParam("fuzziness") int fuzziness) {
-        List<ResponseWikiDto>data = wikiServiceExtend.fuzzinessSearch(typeNum, inputString, reliable, maxResults, fuzziness);
-        return data;
+        return wikiServiceExtend.fuzzinessSearch(typeNum, inputString, reliable, maxResults, fuzziness);
     }
 
     //통합 내용 검색(전문 검색)
     @PostMapping("/search")
     @SaveLogging
     public List<ResponseWikiDto> searchAll(@RequestBody SearchAllDTO searchAllDTO) {
-        List<ResponseWikiDto>data = wikiServiceExtend.searchAll(searchAllDTO);
-        return data;
+        return wikiServiceExtend.searchAll(searchAllDTO);
     }
 
     //통합 내용 검색(전문 검색) : 간단한 버전
@@ -75,8 +67,7 @@ public class WikiController {
     public List<ResponseWikiDto> searchAll(@RequestParam("inputString") String inputString,
                                            @RequestParam("maxResults") int maxResults,
                                            @RequestParam("reliable") boolean reliable) {
-        List<ResponseWikiDto>data = wikiServiceExtend.searchAll(inputString, maxResults, reliable);
-        return data;
+        return wikiServiceExtend.searchAll(inputString, maxResults, reliable);
     }
 
 }

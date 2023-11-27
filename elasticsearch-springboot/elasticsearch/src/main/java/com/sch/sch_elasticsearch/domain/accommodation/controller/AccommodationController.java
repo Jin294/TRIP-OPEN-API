@@ -3,13 +3,7 @@ package com.sch.sch_elasticsearch.domain.accommodation.controller;
 import com.sch.sch_elasticsearch.aop.SaveLogging;
 import com.sch.sch_elasticsearch.domain.accommodation.dto.AccommodationDTO;
 import com.sch.sch_elasticsearch.domain.accommodation.service.AccommodationService;
-<<<<<<< HEAD
 
-=======
-import com.sch.sch_elasticsearch.domain.global.DataResponse;
-import com.sch.sch_elasticsearch.exception.CommonException;
-import com.sch.sch_elasticsearch.exception.ExceptionType;
->>>>>>> develop-back
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +17,6 @@ public class AccommodationController {
 
     private final AccommodationService accommodationService;
 
-<<<<<<< HEAD
 
     //Fuzzy 제목 검색
     @SaveLogging
@@ -33,18 +26,6 @@ public class AccommodationController {
                                                         @RequestParam("fuzziness") int fuzziness)
     {
         return accommodationService.searchTitleUseFuzzyDto(title, maxResults, fuzziness);
-=======
-    //1. 데이터 저장 기능
-    @PostMapping("/save")
-    public ResponseEntity<String> saveData(@RequestBody AccommodationDTO accommodationDTO) {
-        try {
-            accommodationService.saveData(accommodationDTO);
-            ResponseEntity data = ResponseEntity.ok("숙소 저장 완료");
-            return data;
-        } catch (Exception e) {
-            throw new CommonException(ExceptionType.ACCOMMODATION_SAVE_FAIL);
-        }
->>>>>>> develop-back
     }
 
     //ngram 제목 검색
