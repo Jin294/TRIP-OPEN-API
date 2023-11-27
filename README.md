@@ -100,26 +100,28 @@
 - Notion
 - Mattermost
 
-
-## 🖥️ 개발 환경  
+## 🖥️ 기술 스택
 
 🖱**Backend**
 
-- IntelliJ
+- Java 11
 - spring boot 2.7.17
 - spring-boot-jpa
 - Spring Security
-- Java 11
+- Spring Data Elasticsearch
+- Logback
+- Logstash
+- Kibana
 
 🖱**DB**
 
 - mysql 8.0.23
 - Redis 7.2.1
 - MongoDB Cloud
+- Elasticsearch 7.11.2
 
 🖱**Frontend**
 
-- Visual Studio Code
 - React.js 18.2.0
 - node.js 18.16.1
 - axios 1.4.0
@@ -149,7 +151,7 @@
 
 ## 📑 API 명세서  
 
-![Alt text](readme사진/image-2.png)
+https://safe-bagpipe-21e.notion.site/53032bd640bf4ac2af297b882635c6e9?v=076fc8f6b75d4bd5a47a6c27a1901f28&pvs=4
 
 
 ## ✨ERD  
