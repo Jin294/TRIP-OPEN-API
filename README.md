@@ -67,7 +67,8 @@ API 사용을 위한 Token 발급 페이지<br>
 
 <detatls>
 Kibana Dashboard를 통한 데이터시각화<br>
-<img src="./image/page/user-api-token-page.png" width="75%" height="75%"/>
+<summary>Dashboard</summary>
+<img src="./image/page/dashboard_1.png" width="75%" height="75%"/>
 </details></br>
 
 ## 🧝‍♂️팀원 및 역할  
