@@ -49,33 +49,38 @@
 ## 🛠️ 서비스 화면 
 
 <details>
-### 홈페이지<br>
-<summary>HomePage</summary>
+<h3> 홈페이지 </h3><br>
+<summary><h3>HomePage</h3></summary>
 <img src="./image/gif/main-page-gif.gif" width="75%" height="75%"/>
 <img src="./image/page/main-page.png" width="75%" height="75%"/>
 </details></br>
 
 <details>
-### API 사용을 위한 Docs 페이지<br>
-<summary>Docs</summary>
-### API Info
+<h3> API 사용을 위한 Docs 페이지 </h3><br>
+<summary><h3>Docs</h3></summary>
+<h3>API Info</h3> <br>
 <img src="./image/gif/api-info-gif.gif" width="75%" height="75%"/>
-<img src="./image/page/api-docs-accommodation1.png" width="75%" height="75%"/>  
-### 요청 및 반환  
+
+<h3>요청 및 반환</h3> <br> 
 <img src="./image/gif/request-response-gif.gif" width="75%" height="75%"/>  
+
+<h3> 전체 사진 </h3> <br>
+<img src="./image/page/api-docs-accommodation1.png" width="75%" height="75%"/>  
 
 </details></br>
 
 <details>
-### API 사용을 위한 Token 발급 페이지<br>
-<summary>TokenPage</summary>
+<h3> API 사용을 위한 Token 발급 페이지</h3> <br>
+<summary><h3>TokenPage</h3></summary>
 <img src="./image/page/user-api-token-page.png" width="75%" height="75%"/>
 </details></br>
 
 <details>
-### Kibana Dashboard를 통한 데이터시각화<br>
-<summary>Dashboard</summary>
+<h3> Kibana Dashboard를 통한 데이터시각화 </h3><br>
+<summary><h3>Dashboard</h3></summary>
 <img src="./image/page/dashboard_1.png" width="75%" height="75%"/>
+<img src="./image/page/dashboard_2.png" width="75%" height="75%"/>
+<img src="./image/page/dashboard_3.png" width="75%" height="75%"/>
 </details></br>
 
 ## 🧝‍♂️팀원 및 역할  
