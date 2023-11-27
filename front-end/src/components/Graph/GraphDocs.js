@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import styles from "./APIDocs.module.css";
+import styles from "./GraphDocs.module.css";
 import SideBar from "./SideBar";
-import APIContent from "./APIContent";
-import wave from "../../assets/img/wave.png";
+import GraphContent from "./GraphContent";
 
-const APIDocs = () => {
+
+const GraphDocs = () => {
   const [docsId, setDocsId] = useState("");
   const handleDocsId = (data) => {
-    console.log("data_docs_id=====", data);
+    // console.log("data_docs_id=====", data);
     setDocsId(data);
   };
 
@@ -19,11 +19,11 @@ const APIDocs = () => {
         </div> */}
         <div className={styles.boardContent}>
           <SideBar onSetId={handleDocsId} />
-          <APIContent data={docsId} />
+          <GraphContent data={docsId} />
         </div>
       </div>
     </div>
   );
 };
 
-export default APIDocs;
+export default GraphDocs;

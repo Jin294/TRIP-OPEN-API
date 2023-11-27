@@ -12,9 +12,11 @@ import Mypage from './components/mypage/Mypage';
 // 서비스 소개
 import APIDocs from './components/apidocs/APIDocs';
 // API문서
+import GraphDocs from './components/Graph/GraphDocs';
 // 예시 페이지
 
 import { useEffect, useRef } from 'react';
+
 
 function App() {
     const navigate = useNavigate();
@@ -28,6 +30,7 @@ function App() {
         '/mypage',
         // '/serviceinfo',
         '/apidocs',
+        '/graphs'
         // '/exexchange',
         // '/excard',
         // '/excardcontent',
@@ -50,6 +53,8 @@ function App() {
                 <Route path="/mypage" element={<Mypage />}></Route>
                 <Route path="/apidocs" element={<APIDocs />} />
                 <Route path="/apidocs/:tab" element={<APIDocs />}></Route>
+                <Route path="/graphs" element={<GraphDocs />} />
+                <Route path="/graphs/:tab" element={<GraphDocs />}></Route>
                 <Route path="/*" element={<Home />} />
             </Routes>
         </div>

@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import basicHttp from "../../api/basicHttp";
 import { useParams } from "react-router-dom";
 
+
+
 const SideBar = ({ onSetId }) => {
   const { tab } = useParams();
   const [tabsData, setTabsData] = useState([]);
@@ -77,20 +79,20 @@ const SideBar = ({ onSetId }) => {
                 .filter((item) => item.api_type === 1)
                 .sort((a, b) => a.apiFrontId - b.apiFrontId),
             },
-            // {
-            //   title: "검색 API : 숙소",
-            //   url: "/apidocs/search_v2",
-            //   subTabs: responseData.data
-            //     .filter((item) => item.api_type === 4)
-            //     .sort((a, b) => a.apiFrontId - b.apiFrontId),
-            // },
-            // {
-            //   title: "검색 API : 음식점",
-            //   url: "/apidocs/search_v3",
-            //   subTabs: responseData.data
-            //     .filter((item) => item.api_type === 5)
-            //     .sort((a, b) => a.apiFrontId - b.apiFrontId),
-            // },
+            {
+              title: "검색 API : 숙소",
+              url: "/apidocs/search_v2",
+              subTabs: responseData.data
+                .filter((item) => item.api_type === 4)
+                .sort((a, b) => a.apiFrontId - b.apiFrontId),
+            },
+            {
+              title: "검색 API : 음식점",
+              url: "/apidocs/search_v3",
+              subTabs: responseData.data
+                .filter((item) => item.api_type === 5)
+                .sort((a, b) => a.apiFrontId - b.apiFrontId),
+            },
           ];
           setTabsData(groupedTabs);
           setSearchNumV1(groupedTabs[2].subTabs[0].apiFrontId);
@@ -101,7 +103,7 @@ const SideBar = ({ onSetId }) => {
           setSearchApiV3(groupedTabs[4].subTabs[0].api_data_id);
         }
       } catch (error) {
-        // console.log("Error fetching API data", error);
+        console.log("Error fetching API data", error);
       }
     };
 
