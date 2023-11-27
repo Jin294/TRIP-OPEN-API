@@ -151,12 +151,28 @@
 
 ## 📑 API 명세서  
 
-https://safe-bagpipe-21e.notion.site/53032bd640bf4ac2af297b882635c6e9?v=076fc8f6b75d4bd5a47a6c27a1901f28&pvs=4
+<br>
+[명세서 링크](https://safe-bagpipe-21e.notion.site/53032bd640bf4ac2af297b882635c6e9?v=076fc8f6b75d4bd5a47a6c27a1901f28&pvs=4)
+
+<br>
+<img src="./image/api-bill/api_1.PNG" width="75%" height="75%"/>
+<img src="./image/api-bill/api_2.PNG" width="75%" height="75%"/>
 
 
 ## ✨ERD  
 
-<img src="./image/erd.png" width="75%" height="75%"/>
+<details>
+<summary><h3>ERD</h3></summary>
+<img src="./image/erd/total.PNG" width="75%" height="75%"/>
+<img src="./image/erd/1.PNG" width="50%" height="50%"/>
+<img src="./image/erd/2.PNG" width="50%" height="50%"/>
+<img src="./image/erd/3.PNG" width="50%" height="50%"/>
+<img src="./image/erd/4.PNG" width="50%" height="50%"/>
+<img src="./image/erd/5.PNG" width="50%" height="50%"/>
+<img src="./image/erd/6.PNG" width="50%" height="50%"/>
+<img src="./image/erd/7.PNG" width="50%" height="50%"/>
+</details></br>
+
 
 ## 📚 커밋 컨벤션 규칙
 
