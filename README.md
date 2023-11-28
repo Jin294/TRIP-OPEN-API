@@ -134,7 +134,7 @@
 - nginx
 - jenkins
 
-## 🔧 서비스 아키텍쳐  
+## 🔧 시스템 아키텍쳐  
 
 ### System Architecture
 <img src="./image/architecture/system_architecture.PNG" width="75%" height="75%"/>
