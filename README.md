@@ -141,7 +141,7 @@
 
 ### Log Data architecture
 <img src="./image/architecture/data_architecture_1.PNG" width="75%" height="75%"/>
-<img src="./image/architecture/system_architecture.PNG" width="75%" height="75%"/>
+<img src="./image/architecture/data_architecture_2.PNG" width="75%" height="75%"/>
 
 ### Business Logic
 <img src="./image/architecture/business_logic.png" width="75%" height="75%"/>
