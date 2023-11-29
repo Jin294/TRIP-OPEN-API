@@ -9,9 +9,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodResponseDto;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodTitleResponseDto;
 import com.ssafy.i5i.hotelAPI.domain.food.entity.Food;
-
+import com.ssafy.i5i.hotelAPI.domain.food.entity.FoodResponseDtoInterface;
 
 public interface FoodRepository extends JpaRepository<Food, Long> {
 
@@ -26,4 +27,30 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
 		"LEFT JOIN Food f ON f.id = af.food.id " +
 		"WHERE a.title = :title")
 	Optional<List<FoodTitleResponseDto>> getFoodFromTravle(@Param("title") String title);
+
+	@Query(value = "SELECT f.food_id as id, f.food_name as restaurantName, f.food_type as restaurantType, "
+		+ "f.food_longitude as restaurantLongitude, f.food_latitude as restaurantLatitude, "
+		+ "f.food_jjim as restaurantLike, f.food_score as restaurantScore, "
+		+ "f.food_star as restaurantStar, f.food_staruser as restaurantStarUser, "
+		+ "ST_Distance_Sphere(POINT(:longitude, :latitude), POINT(food_longitude, food_latitude)) as Distance "
+		+ "From food as f "
+		+ "HAVING distance <= :distance", nativeQuery = true)
+
+	Optional<List<FoodResponseDtoInterface>> findByCoordinatev1(@Param("latitude") Double latitude, @Param("longitude") Double longitude,
+		@Param("distance") Double distance);
+
+
+	@Query(value = "SELECT f.food_id as id, f.food_name as restaurantName, f.food_type as restaurantType, "
+		+ "f.food_longitude as restaurantLongitude, f.food_latitude as restaurantLatitude, "
+		+ "f.food_jjim as restaurantLike, f.food_score as restaurantScore, "
+		+ "f.food_star as restaurantStar, f.food_staruser as restaurantStarUser, "
+		+ "(6371*acos(cos(radians(:latitude))*cos(radians(food_latitude))*cos(radians(food_longitude) "
+		+ "-radians(:longitude))+sin(radians(:latitude))*sin(radians(food_latitude)))) "
+		+ "as Distance "
+		+ "From food as f "
+		+ "HAVING distance <= :distance", nativeQuery = true)
+	Optional<List<FoodResponseDtoInterface>> findByCoordinatev2(@Param("latitude") Double latitude, @Param("longitude") Double longitude,
+		@Param("distance") Double distance);
+
+
 }

@@ -14,6 +14,7 @@ import com.ssafy.i5i.hotelAPI.common.exception.CommonException;
 import com.ssafy.i5i.hotelAPI.common.exception.ExceptionType;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.request.FoodRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodeResponseDtov2;
 import com.ssafy.i5i.hotelAPI.domain.food.repository.FoodRepository;
 import com.ssafy.i5i.hotelAPI.domain.hotel.entity.Attraction;
 import com.ssafy.i5i.hotelAPI.domain.hotel.repository.AttractionRepository;
@@ -175,5 +176,48 @@ public class FoodServiceImpl implements FoodService{
 	// 		throw new CommonException(ExceptionType.SORTED_TYPE_EXCEPTION);
 	// 	}
 	// }
+
+
+
+	public List<FoodeResponseDtov2> getFoodFromLngLatvv1(FoodRequestDto.Coordi attractionCoordiRequestDto){
+		return foodRepository.findByCoordinatev1(attractionCoordiRequestDto.getLatitude(), attractionCoordiRequestDto.getLongitude(), attractionCoordiRequestDto.getDistance())
+			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
+			.stream()
+			.map(FoodeResponseDtov2::new)
+			.sorted(getFoodComparator(attractionCoordiRequestDto.getSorted()))
+			.collect(Collectors.toList());
+	}
+
+
+
+	public List<FoodeResponseDtov2> getFoodFromLngLatvv2(FoodRequestDto.Coordi attractionCoordiRequestDto){
+		return foodRepository.findByCoordinatev2(attractionCoordiRequestDto.getLatitude(), attractionCoordiRequestDto.getLongitude(), attractionCoordiRequestDto.getDistance())
+			.orElseThrow(() -> new CommonException(ExceptionType.NULL_POINT_EXCEPTION))
+			.stream()
+			.map(FoodeResponseDtov2::new)
+			.sorted(getFoodComparator(attractionCoordiRequestDto.getSorted()))
+			.collect(Collectors.toList());
+
+	}
+	//정렬
+	private Comparator<FoodeResponseDtov2> getFoodComparator(String sortingKey) {
+		if(sortingKey.isEmpty() || sortingKey == null || sortingKey.equalsIgnoreCase("distance")){
+			return Comparator.comparing(FoodeResponseDtov2::getDistance);
+		}
+		else if ("like".equalsIgnoreCase(sortingKey)) {
+			return Comparator.comparing(FoodeResponseDtov2::getRestaurantLike);
+		} else if ("score".equalsIgnoreCase(sortingKey)) {
+			return Comparator.comparing(FoodeResponseDtov2::getRestaurantScore);
+		} else if ("star".equalsIgnoreCase(sortingKey)) {
+			return Comparator.comparing(FoodeResponseDtov2::getRestaurantStar);
+		}else {
+			throw new CommonException(ExceptionType.SORTED_TYPE_EXCEPTION);
+		}
+	}
+
+
+
+
+
 }
 

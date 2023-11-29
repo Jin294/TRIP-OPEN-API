@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.i5i.hotelAPI.domain.food.dto.request.FoodRequestDto;
 import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodResponseDto;
+import com.ssafy.i5i.hotelAPI.domain.food.dto.response.FoodeResponseDtov2;
 import com.ssafy.i5i.hotelAPI.domain.food.service.FoodServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,32 @@ public class FoodController {
 			@RequestParam("page") Integer page){
 		FoodRequestDto.Coordi attractionCoordiRequestDto = new FoodRequestDto.Coordi(latitude, longitude, distance, sorted, maxResults, page);
 		List<FoodResponseDto.Coordi> data = foodServiceImpl.getFoodFromLngLatv(attractionCoordiRequestDto);
+		return data;
+	}
+
+	@GetMapping("/by-coordinate/v1")
+	public List<FoodeResponseDtov2> getFoodFromLngLatvv1(
+		@RequestParam("longitude") Double longitude,
+		@RequestParam("latitude") Double latitude,
+		@RequestParam("distance") Double distance,
+		@RequestParam("sorted") String sorted,
+		@RequestParam("maxResults") Integer maxResults,
+		@RequestParam("page") Integer page){
+		FoodRequestDto.Coordi attractionCoordiRequestDto = new FoodRequestDto.Coordi(latitude, longitude, distance, sorted, maxResults, page);
+		List<FoodeResponseDtov2> data = foodServiceImpl.getFoodFromLngLatvv1(attractionCoordiRequestDto);
+		return data;
+	}
+
+	@GetMapping("/by-coordinate/v2")
+	public List<FoodeResponseDtov2> getFoodFromLngLatvv2(
+		@RequestParam("longitude") Double longitude,
+		@RequestParam("latitude") Double latitude,
+		@RequestParam("distance") Double distance,
+		@RequestParam("sorted") String sorted,
+		@RequestParam("maxResults") Integer maxResults,
+		@RequestParam("page") Integer page){
+		FoodRequestDto.Coordi attractionCoordiRequestDto = new FoodRequestDto.Coordi(latitude, longitude, distance, sorted, maxResults, page);
+		List<FoodeResponseDtov2> data = foodServiceImpl.getFoodFromLngLatvv2(attractionCoordiRequestDto);
 		return data;
 	}
 }

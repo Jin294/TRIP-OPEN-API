@@ -1,5 +1,7 @@
 package com.ssafy.i5i.hotelAPI.domain.food.dto.response;
 
+import com.ssafy.i5i.hotelAPI.domain.food.entity.FoodResponseDtoInterface;
+
 import lombok.*;
 
 public class FoodResponseDto {
@@ -43,4 +45,5 @@ public class FoodResponseDto {
 		private Double Distance;
 		private String attractionName;
 	}
+
 }
