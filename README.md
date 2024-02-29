@@ -152,6 +152,7 @@
 ## 📑 API 명세서  
 
 <br>
+
 [명세서 링크](https://safe-bagpipe-21e.notion.site/53032bd640bf4ac2af297b882635c6e9?v=076fc8f6b75d4bd5a47a6c27a1901f28&pvs=4)
 
 <br>
